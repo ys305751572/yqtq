@@ -1,16 +1,18 @@
 package com.leoman.admin.entity;
 
 import com.leoman.common.entity.BaseEntity;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by Administrator on 2016/3/8.
  */
 @Entity
 @Table(name = "t_admin")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Admin extends BaseEntity{
 
     @Column(name = "username")

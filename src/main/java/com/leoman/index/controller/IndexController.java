@@ -61,7 +61,7 @@ public class IndexController extends CommonController {
             // 登录成功后，将用户名放入cookies
             int loginMaxAge = 30 * 24 * 60 * 60; // 定义cookies的生命周期，这里是一个月。单位为秒
             CookiesUtils.addCookie(response, "username", username, loginMaxAge);
-            return "redirect:/admin/aoluser/userslist";
+            return "redirect:/admin/dashboard";
         }
         model.addAttribute("error", "用户名或密码错误!");
         return "redirect:/admin/login";
@@ -77,7 +77,7 @@ public class IndexController extends CommonController {
 
     @RequestMapping(value = "/")
     public String index(){
-        return "redirect:/admin/aoluser/userslist";
+        return "redirect:/admin/dashboard";
     }
 
 
