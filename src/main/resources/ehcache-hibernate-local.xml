@@ -2,7 +2,7 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false">
 
-	<diskStore path="java.io.tmpdir/hibernate/gcs" />
+	<diskStore path="java.io.tmpdir/hibernate/leoman" />
 
 	<!-- DefaultCache setting. -->
 	<defaultCache 
@@ -16,7 +16,7 @@
 		
 	<!-- security entity-->		
 	<cache 
-		name="com.gcs.sysmgr.entity.main"
+		name="com.leoman"
 		maxEntriesLocalHeap="10000" 
 		eternal="true" 
 		overflowToDisk="true"
