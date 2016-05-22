@@ -103,24 +103,24 @@ public class MeasureController extends GenericEntityController<Measure, Measure,
         request.setAttribute("sendTimeQ", DateUtil.getDateBefore(10));
         //获取当前时间
         request.setAttribute("sendTimeZ", DateUtil.DateToStr(new Date()));
-        if ("0".equals(loginuser.getUserType())) {
-            //如果个人用户直接查找到数据,需要3个数据。
-            /**
-             * 1.用户名
-             * 2.设备ID
-             * 3.检测类型
-             */
-            //更具用户查找设备Id
-            DeciveSearchVO temp = new DeciveSearchVO();
-            temp.setUserName(loginuser.getUserId());
-            String deciveid = deviceManagerImpl.queryDeciveID(loginuser.getUserId(), "1");
-            strxml = makeXmlReport(deciveid, loginuser.getUserId(), "1", DateUtil.getDateBefore(10), DateUtil.DateToStr(new Date()));
-            request.setAttribute("strxml", strxml);
-        } else {
-            List<MeasureListVO> list = new ArrayList<MeasureListVO>();
-            strxml = ReportUtils.xyReportXml(list);
-            request.setAttribute("strxml", strxml);
-        }
+//        if ("0".equals(loginuser.getUserType())) {
+//            //如果个人用户直接查找到数据,需要3个数据。
+//            /**
+//             * 1.用户名
+//             * 2.设备ID
+//             * 3.检测类型
+//             */
+//            //更具用户查找设备Id
+//            DeciveSearchVO temp = new DeciveSearchVO();
+//            temp.setUserName(loginuser.getUserId());
+//            String deciveid = deviceManagerImpl.queryDeciveID(loginuser.getUserId(), "1");
+//            strxml = makeXmlReport(deciveid, loginuser.getUserId(), "1", DateUtil.getDateBefore(10), DateUtil.DateToStr(new Date()));
+//            request.setAttribute("strxml", strxml);
+//        } else {
+//            List<MeasureListVO> list = new ArrayList<MeasureListVO>();
+//            strxml = ReportUtils.xyReportXml(list);
+//            request.setAttribute("strxml", strxml);
+//        }
         return XYREPORT;
     }
 

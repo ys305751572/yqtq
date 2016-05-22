@@ -45,4 +45,9 @@ public class Admin extends BaseEntity{
     public void setLastLoginDate(Long lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
     }
+
+    @Override
+    public String toString() {
+        return "username :" + this.username + "password:" + this.password;
+    }
 }

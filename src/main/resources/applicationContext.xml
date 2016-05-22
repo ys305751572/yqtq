@@ -104,4 +104,5 @@
 	
 	<bean id="beanUtil" class="com.leoman.utils.BeanUtil"></bean>
 	<bean id="cacheTempCodeServiceImpl" class="com.leoman.cache.CacheTempCodeServiceImpl" />
+	<bean id="logService" class="com.leoman.common.log.service.impl.LogServiceImpl" />
 </beans>

@@ -26,6 +26,12 @@
             <!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->
             <bean class="com.leoman.common.filter.CommonInterceptor"/>
         </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->
+            <bean class="com.leoman.common.interceptor.LogInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 
     <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->

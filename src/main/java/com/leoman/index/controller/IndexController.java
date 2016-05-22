@@ -2,6 +2,7 @@ package com.leoman.index.controller;
 
 import com.leoman.common.controller.common.CommonController;
 import com.leoman.common.core.Constant;
+import com.leoman.common.log.entity.Log;
 import com.leoman.index.service.LoginService;
 import com.leoman.utils.CookiesUtils;
 import com.leoman.utils.Md5Util;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,19 +31,23 @@ public class IndexController extends CommonController {
                         HttpServletResponse response,
                         String error,
                         ModelMap model) {
-        if (StringUtils.isNotBlank(error)) {
-            model.addAttribute("error", error);
+        try {
+            if (StringUtils.isNotBlank(error)) {
+                model.addAttribute("error", error);
+            }
+            // 先读取cookies，如果存在，则将用户名回写到输入框
+            Map<String, Object> params = CookiesUtils.ReadCookieMap(request);
+            if (params != null && params.size() != 0) {
+                String username = (String) params.get("username");
+                model.put("username",username);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        // 先读取cookies，如果存在，则将用户名回写到输入框
-        Map<String, Object> params = CookiesUtils.ReadCookieMap(request);
-        if (params != null && params.size() != 0) {
-            String username = (String) params.get("username");
-            model.put("username",username);
-        }
-
         return "index/login";
     }
 
+    @Log(message = "{0}登录了系统")
     @RequestMapping(value = "/login/check")
     public String checkLogin(String username,
                              String password,

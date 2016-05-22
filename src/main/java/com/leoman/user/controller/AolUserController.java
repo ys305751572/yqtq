@@ -61,12 +61,12 @@ public class AolUserController extends GenericEntityController<AolUser, AolUser,
         PageVO pv = null;
         //获取登录用户
         Admin loginuser = (Admin) request.getSession().getAttribute(Constant.SESSION_MEMBER_GLOBLE);
-        if ("00000000000000000000000000000000".equals(loginuser.getUserId())) {
+        if ("00000000000000000000000000000000".equals(loginuser.getId())) {
             //管理员
             pv = this.getEntityManager().queryUsersDataList(start, length, "", usersname, "0");
         } else {
             //普通用户
-            pv = this.getEntityManager().queryUsersDataList(start, length, loginuser.getUserId(), usersname, "0");
+//            pv = this.getEntityManager().queryUsersDataList(start, length, loginuser.getId(), usersname, "0");
         }
 
         Long count = (long) pv.getCount();
@@ -124,7 +124,7 @@ public class AolUserController extends GenericEntityController<AolUser, AolUser,
         PageVO pv = null;
         List<AolUser> renderList = new ArrayList<AolUser>();
         try {
-            pv = this.getEntityManager().queryUsersDataList(pageNum, length, usersname, sexType, mobile, birthday, regTimeQ, regTimeZ, "1", loginuser.getUserId());
+//            pv = this.getEntityManager().queryUsersDataList(pageNum, length, usersname, sexType, mobile, birthday, regTimeQ, regTimeZ, "1", loginuser.getUserId());
             List<AolUser> tmpList = pv.getList();
             AolUser aolUser = new AolUser();
             aolUser.setName("admin");

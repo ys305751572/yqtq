@@ -152,9 +152,9 @@ public class DeviceController extends GenericEntityController<Device, Device, De
 		//获取登录用户
 		Admin loginuser = (Admin) request.getSession().getAttribute(Constant.SESSION_MEMBER_GLOBLE);
 		String organiseId = "";
-		if("1".equals(loginuser.getUserType())){
-			organiseId = "";
-		}
+//		if("1".equals(loginuser.getUserType())){
+//			organiseId = "";
+//		}
 		int pagenum = getPageNum(start,length);
 		PageVO pv = this.getEntityManager().queryDevicesDataList(pagenum,length, deviceSerial, organiseName, usedState,deviceType,starttime, organiseId);
 		Long count = (long)pv.getCount();
