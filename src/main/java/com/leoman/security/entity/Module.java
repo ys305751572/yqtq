@@ -2,16 +2,15 @@ package com.leoman.security.entity;
 
 import com.leoman.common.entity.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/5/22.
  */
 @Entity
 @Table(name = "t_module")
-public class Module extends BaseEntity{
+public class Module extends BaseEntity {
 
     @Column(name = "name")
     private String name;
@@ -24,6 +23,29 @@ public class Module extends BaseEntity{
 
     @Column(name = "admin_id")
     private Long adminId;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Module> childs;
+
+    @ManyToOne
+    @JoinTable(name = "t_module_relation", joinColumns = @JoinColumn(name = "parent_id"), inverseJoinColumns = @JoinColumn(name = "child_id"))
+    private Module parent;
+
+    public List<Module> getChilds() {
+        return childs;
+    }
+
+    public void setChilds(List<Module> childs) {
+        this.childs = childs;
+    }
+
+    public Module getParent() {
+        return parent;
+    }
+
+    public void setParent(Module parent) {
+        this.parent = parent;
+    }
 
     public String getName() {
         return name;

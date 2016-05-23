@@ -617,3 +617,15 @@ CREATE TABLE `t_log` (
   `modify_date` bigint,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='日志表';
+
+DROP TABLE IF EXISTS `t_module_relation`;
+
+/** 模块关联表 **/
+CREATE TABLE `t_module_relation` (
+  `id` bigint(32) NOT NULL auto_increment,
+  `parent_id` bigint not null,
+  `child_id` bigint not null,
+  `create_date` bigint,
+  `modify_date` bigint,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='模块关联表';
