@@ -22,23 +22,23 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">用户详情</h1>
+        <h1 class="page-title">散客详情</h1>
         <div class="block-area">
             <div class="col-md-2">
                 <div class="tile">
                     <h2 class="tile-title">基本信息</h2>
                     <div class="p-10" style="height:520px">
                         <div class="form-group">
-                            <label>账 号:</label>
-                            ${user.userId}
+                            <label>比赛时间:</label>
+                            ${reserve.startDate}
                         </div>
                         <div class="form-group">
-                            <label>电 话:</label>
-                            ${user.mobile}
+                            <label>城 市:</label>
+                            ${reserve.startDate}
                         </div>
                         <div class="form-group">
-                            <label>昵 称:</label>
-                            ${user.nickName}
+                            <label>球 场:</label>
+                            ${reserve.nickName}
                         </div>
                         <div class="form-group">
                             <label>年 龄:</label>

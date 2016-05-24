@@ -22,28 +22,42 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <label>手机号</label>
-                    <input type="text" class="input-sm form-control" id="mobile" name="mobile" placeholder="...">
+                    <label>城市</label>
+                    <input type="text" class="input-sm form-control" id="cityId" name="cityId" placeholder="...">
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>昵称</label>
-                    <input type="text" class="input-sm form-control" id="nickName" name="nickName"
+                    <label>球场</label>
+                    <input type="text" class="input-sm form-control" id="" name="stadiumId"
                            placeholder="..." readonly="readonly">
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>用户状态</label>
-                    <select id="status" name="status" class="select">
-                        <option value="">全部</option>
-                        <option value="0">正常</option>
-                        <option value="1">冻结</option>
+                    <label>赛制</label>
+                    <select id="matchType" name="matchType" class="select">
+                        <option value="0">三人制</option>
+                        <option value="1">五人制</option>
+                        <option value="2">七人制</option>
+                        <option value="3">十一人制</option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>会员状态</label>
-                    <select id="vipLevel" name="vipLevel" class="select">
-                        <option value="">全部</option>
-                        <option value="0">非会员</option>
-                        <option value="1">会员</option>
+                    <label>付款方式</label>
+                    <select id="payment" name="payment" class="select">
+                        <option value="0">AA制</option>
+                        <option value="1">全额</option>
+                    </select>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label>保险</label>
+                    <input type="text" class="input-sm form-control" id="1" name=""
+                           placeholder="..." readonly="readonly">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label>组队状态</label>
+                    <select id="status" name="status" class="select">
+                        <option value="0">正在组队</option>
+                        <option value="1">组队成功</option>
+                        <option value="2">组队失败</option>
+                        <option value="3">比赛结束</option>
                     </select>
                 </div>
             </div>
@@ -58,13 +72,16 @@
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    <th>手机号</th>
-                    <th>注册时间</th>
-                    <th>信誉度</th>
-                    <th>会员状态</th>
-                    <th>用户状态</th>
-                    <th>昵称</th>
-                    <th>总消费</th>
+                    <th>比赛时间</th>
+                    <th>城市</th>
+                    <th>球场</th>
+                    <th>创建者</th>
+                    <th>赛制</th>
+                    <th>付款方式</th>
+                    <th>保险</th>
+                    <th>已报人数</th>
+                    <th>预定人数</th>
+                    <th>状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -96,7 +113,7 @@
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/user/list",
+                        "url": "${contextPath}/admin/reserve/list",
                         "type": "POST"
                     },
                     "columns": [
@@ -108,14 +125,14 @@
                                 return checkbox;
                             }
                         },
-                        {"data": "mobile"},
-                        {"data": "createDate",
+                        {"data": "startDate",
                             render: function (data) {
                                 return new Date(data).format("yyyy-MM-dd hh:mm:ss")
                             }
                         },
-                        {"data": "credibility"},
-                        {"data": "vipLevel",
+                        {"data": "cityId"},
+                        {"data": "stadiumId"},
+                        {"data": "userId",
                             render:function(data){
                                 if(data==0){
                                     return "非会员";
@@ -124,17 +141,55 @@
                                 }
                             }
                         },
-                        {"data": "status",
+                        {"data": "matchType",
                             render:function(data){
                                 if(data==0){
-                                    return "正常";
-                                }else{
-                                    return "冻结";
+                                    return "三人制";
+                                }
+                                if(data==1){
+                                    return "五人制";
+                                }
+                                if(data==2){
+                                    return"七人制";
+                                }
+                                if(data==3){
+                                    return"十一人制";
                                 }
                             }
                         },
-                        {"data": "nickName"},
-                        {"data": "userId"},
+                        {"data": "payment",
+                            render:function(data) {
+                                if (data == 0) {
+                                    return "AA制";
+                                }
+                                if (data == 1) {
+                                    return "全额";
+                                }
+                            }
+                        },
+                        {"data": "insuranceId"},
+                        {"data":"insuranceId"},
+                        {"data": "createDate",
+                            render: function (data) {
+                                return new Date(data).format("yyyy-MM-dd hh:mm:ss")
+                            }
+                        },
+                        {"data": "status",
+                            render: function (data) {
+                                if (data==0){
+                                    return"正在组队";
+                                }
+                                if (data==1){
+                                    return"组队成功";
+                                }
+                                if (data==2){
+                                    return"组队失败";
+                                }
+                                if (data==3){
+                                    return"比赛结束";
+                                }
+                            }
+                        },
                         {
                             "data": "userId",
                             "render": function (data) {
@@ -154,10 +209,10 @@
             },
             rowCallback: function (row, data) {
                 var items = $user.v.list;
-                $('td', row).last().find(".add").attr("href", 'admin/user/detail?id=' + data.id);
+                $('td', row).last().find(".add").attr("href", 'admin/reserve/detail?id=' + data.id);
             },
             "detail" : function(userId) {
-                window.location.href = "${contextPath}/admin/user/detail?userId=" + userId;
+                window.location.href = "${contextPath}/admin/reserve/detail?userId=" + userId;
             },
 
             responseComplete: function (result, action) {
