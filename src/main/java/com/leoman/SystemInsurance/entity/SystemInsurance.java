@@ -1,4 +1,4 @@
-package com.leoman.SystemInsurance.entity;
+package com.leoman.systemInsurance.entity;
 
 import com.leoman.common.entity.BaseEntity;
 import com.sun.org.apache.xpath.internal.operations.String;

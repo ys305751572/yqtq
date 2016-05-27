@@ -1,9 +1,8 @@
 package com.leoman.reserve.entity;
 
-import com.leoman.SystemInsurance.entity.SystemInsurance;
+import com.leoman.systemInsurance.entity.SystemInsurance;
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.user.entity.User;
-import org.springframework.data.mapping.PersistentEntity;
 
 import javax.persistence.*;
 
