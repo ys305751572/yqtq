@@ -36,16 +36,15 @@
                 <span class="menu-item">用户管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/user/index">用户信息查询</a></li>
+                <li><a href="${contextPath}/admin/user/index">用户信息列表</a></li>
             </ul>
         </li>
         <li class="dropdown">
             <a class="sa-side-chart" href="">
-                <span class="menu-item">测量结果</span>
+                <span class="menu-item">散客管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/measure/xtlist">血糖预警</a></li>
-                <li><a href="${contextPath}/admin/measure/xylist">血压预警</a></li>
+                <li><a href="${contextPath}/admin/reserve/index">散客列表</a></li>
             </ul>
         </li>
         <li class="dropdown">

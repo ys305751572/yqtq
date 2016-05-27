@@ -1,5 +1,7 @@
 package com.leoman.reserve.service.impl;
 
+import com.leoman.SystemInsurance.controller.SystemInsuranceController;
+import com.leoman.SystemInsurance.entity.SystemInsurance;
 import com.leoman.reserve.dao.ReserveDao;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.service.ReserveService;
@@ -46,8 +48,8 @@ public class ReserveServiceImpl implements ReserveService {
                 if (reserve.getPayment() != null) {
                     list.add(criteriaBuilder.equal(root.get("payment").as(Integer.class), reserve.getPayment()));
                 }
-                if (reserve.getInsuranceId() != null) {
-                    list.add(criteriaBuilder.equal(root.get("insuranceId").as(Long.class), reserve.getInsuranceId()));
+                if (reserve.getName() != null) {
+                    list.add(criteriaBuilder.equal(root.get("name").as(Long.class), reserve.getName()));
                 }
                 if (reserve.getStatus() != null) {
                     list.add(criteriaBuilder.equal(root.get("status").as(Integer.class), reserve.getStatus()));

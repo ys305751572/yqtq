@@ -11,8 +11,7 @@ import javax.persistence.*;
 @Table(name = "t_user_info")
 public class User extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @Column(name = "user_id")
     private Long userId;
 
     @Column(name = "mobile")

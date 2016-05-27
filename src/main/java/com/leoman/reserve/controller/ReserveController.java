@@ -5,7 +5,6 @@ import com.leoman.common.exception.GeneralExceptionHandler;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.service.ReserveService;
-import com.leoman.user.entity.User;
 import com.leoman.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,7 +50,6 @@ public class ReserveController extends CommonController {
      * @param model
      */
     @RequestMapping(value = "/list")
-    @ResponseBody
     public void list(HttpServletRequest request,
                      HttpServletResponse response,
                      Integer draw,

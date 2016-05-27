@@ -1,10 +1,11 @@
 package com.leoman.reserve.entity;
 
+import com.leoman.SystemInsurance.entity.SystemInsurance;
 import com.leoman.common.entity.BaseEntity;
+import com.leoman.user.entity.User;
+import org.springframework.data.mapping.PersistentEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Administrator on 2016/5/24.
@@ -13,8 +14,9 @@ import javax.persistence.Table;
 @Table(name = "t_reserve")
 public class Reserve extends BaseEntity {
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User nickName ;
 
     @Column(name = "stadium_id")
     private Long stadiumId;
@@ -31,8 +33,9 @@ public class Reserve extends BaseEntity {
     @Column(name = "payment")
     private Integer payment;
 
-    @Column(name = "insurance_id")
-    private Long insuranceId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "insurance_id")
+    private SystemInsurance name;
 
     @Column(name = "type")
     private Integer type;
@@ -51,13 +54,6 @@ public class Reserve extends BaseEntity {
         this.status = status;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public Long getStadiumId() {
         return stadiumId;
@@ -99,12 +95,20 @@ public class Reserve extends BaseEntity {
         this.payment = payment;
     }
 
-    public Long getInsuranceId() {
-        return insuranceId;
+    public User getNickName() {
+        return nickName;
     }
 
-    public void setInsuranceId(Long insuranceId) {
-        this.insuranceId = insuranceId;
+    public void setNickName(User nickName) {
+        this.nickName = nickName;
+    }
+
+    public SystemInsurance getName() {
+        return name;
+    }
+
+    public void setName(SystemInsurance name) {
+        this.name = name;
     }
 
     public Integer getType() {
@@ -122,4 +126,5 @@ public class Reserve extends BaseEntity {
     public void setStartDate(Long startDate) {
         this.startDate = startDate;
     }
+
 }

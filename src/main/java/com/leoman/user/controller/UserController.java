@@ -46,7 +46,7 @@ public class UserController extends CommonController {
      * @param draw
      * @param start
      * @param length
-     * @param _user
+     * @param user
      * @param model
      */
     @RequestMapping(value = "/list")

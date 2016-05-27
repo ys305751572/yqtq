@@ -27,12 +27,12 @@
                 </div>
                 <div class="col-md-2 form-group">
                     <label>球场</label>
-                    <input type="text" class="input-sm form-control" id="" name="stadiumId"
-                           placeholder="..." readonly="readonly">
+                    <input type="text" class="input-sm form-control" id="stadiumId" name="stadiumId" placeholder="...">
                 </div>
                 <div class="col-md-2 form-group">
                     <label>赛制</label>
                     <select id="matchType" name="matchType" class="select">
+                        <option value="">全部</option>
                         <option value="0">三人制</option>
                         <option value="1">五人制</option>
                         <option value="2">七人制</option>
@@ -42,18 +42,24 @@
                 <div class="col-md-2 form-group">
                     <label>付款方式</label>
                     <select id="payment" name="payment" class="select">
+                        <option value="">全部</option>
                         <option value="0">AA制</option>
                         <option value="1">全额</option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>保险</label>
-                    <input type="text" class="input-sm form-control" id="1" name=""
-                           placeholder="..." readonly="readonly">
+                    <select id="name" name="name" class="select">
+                        <option value="">全部</option>
+                        <option value="1">5万元经济型意外保险</option>
+                        <option value="2">10万元基础型意外保险</option>
+                        <option value="3">100万元高端型意外保险</option>
+                    </select>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>组队状态</label>
                     <select id="status" name="status" class="select">
+                        <option value="">全部</option>
                         <option value="0">正在组队</option>
                         <option value="1">组队成功</option>
                         <option value="2">组队失败</option>
@@ -132,15 +138,7 @@
                         },
                         {"data": "cityId"},
                         {"data": "stadiumId"},
-                        {"data": "userId",
-                            render:function(data){
-                                if(data==0){
-                                    return "非会员";
-                                }else{
-                                    return "Lv" + data;
-                                }
-                            }
-                        },
+                        {"data": "user.nickName"},
                         {"data": "matchType",
                             render:function(data){
                                 if(data==0){
@@ -167,8 +165,8 @@
                                 }
                             }
                         },
-                        {"data": "insuranceId"},
-                        {"data":"insuranceId"},
+                        {"data": "systemInsurance.name"},
+                        {"data":"userId"},
                         {"data": "createDate",
                             render: function (data) {
                                 return new Date(data).format("yyyy-MM-dd hh:mm:ss")
@@ -200,10 +198,12 @@
                         }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.mobile = $("#mobile").val();
-                        aoData.nickName = $("#nickName").val();
+                        aoData.cityId = $("#cityId").val();
+                        aoData.stadiumId = $("#stadiumId").val();
+                        aoData.matchType = $("#matchType").val();
+                        aoData.payment = $("#payment").val();
+                        aoData.name = $("#name").val();
                         aoData.status = $("#status").val();
-                        aoData.vipLevel = $("#vipLevel").val();
                     }
                 });
             },
