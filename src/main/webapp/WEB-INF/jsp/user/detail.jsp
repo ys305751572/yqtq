@@ -76,7 +76,7 @@
                             <label>会员等级:</label>
                             <div class="col-sm-5">
                                 <h4><c:if test="${user.vipLevel eq 0}">非会员</c:if>
-                                    <c:if test="${user.vipLevel ne 0}">Lv + "${user.vipLevel}"</c:if>
+                                    <c:if test="${user.vipLevel ne 0}">Lv${user.vipLevel}</c:if>
                                 </h4>
                             </div>
                         </div>

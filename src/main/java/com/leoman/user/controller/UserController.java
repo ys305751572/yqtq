@@ -5,7 +5,9 @@ import com.leoman.common.exception.GeneralExceptionHandler;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.user.entity.User;
 import com.leoman.user.service.UserService;
+import com.leoman.utils.Result;
 import com.leoman.utils.WebUtil;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,7 +64,7 @@ public class UserController extends CommonController {
                      Model model) {
         try {
             int pageNum = getPageNum(start, length);
-            Page<User> page = service.findPage(user,sortId,pageNum,length);
+            Page<User> page = service.findPage(user, sortId, pageNum, length);
             Map<String, Object> result = DataTableFactory.fitting(draw, page);
             WebUtil.print(response, result);
         } catch (Exception e) {
@@ -68,21 +72,46 @@ public class UserController extends CommonController {
             WebUtil.print(response, emptyData);
         }
     }
+
     /**
      * 详情
-     * @param id
+     *
+     * @param userId
      * @param model
      * @return
      */
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public String detail(Long id,Model model) {
-
-        User user = service.getById(id);
-//        if(admin.getContent() != null) {
-//            admin.setContent(admin.getContent().replace("&lt","<").replace("&gt",">"));
-//        }
-        model.addAttribute("user",user);
+    public String detail(Long userId, Model model) {
+        User user = service.findByUserId(userId);
+        model.addAttribute("user", user);
         return "user/detail";
+    }
+
+    /**
+     *
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/status")
+    @ResponseBody
+    public Object status(Long userId){
+        Map<String,Object> map = new HashMap<String, Object>();
+        User user = service.findByUserId(userId);
+        Integer status = user.getStatus();
+        try{
+            if(status == 0) {
+                user.setStatus(1);
+                service.update(user);
+                return map.put("status",0);
+            }else {
+                user.setStatus(0);
+                service.update(user);
+                return map.put("status",0);
+            }
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
+        return map;
     }
 
 }

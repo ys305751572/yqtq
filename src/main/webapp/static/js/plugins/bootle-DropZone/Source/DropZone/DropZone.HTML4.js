@@ -76,7 +76,7 @@ DropZone.HTML4 = new Class({
 				
 					this.fileList[response.key].uploaded = true;
 
-					// Complete file information from server side
+					// Complete file information from service side
 					this.fileList[response.key].size = response.size;
 					
 					this._itemComplete(item, file, response);

@@ -338,7 +338,7 @@
             imageInit:function(){
                 var $input = $("#the_file");
                 $input.fileinput({
-                    uploadUrl: "common/file/save/images", // server upload action
+                    uploadUrl: "common/file/save/images", // service upload action
                     uploadAsync: false,
                     showUpload: true, // hide upload button
                     showRemove: false, // hide remove button

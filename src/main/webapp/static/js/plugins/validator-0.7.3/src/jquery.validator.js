@@ -1562,9 +1562,9 @@
                 3. json wrapper:
                     {"status": 1, "data": {"ok": ""}}  {"status": 1, "data": {"error": "Error Message"}}
          * @example:
-            The simplest:       remote(path/to/server.php);
-            With parameters:    remote(path/to/server.php, name1, name2, ...);
-            By GET:             remote(get:path/to/server.php, name1, name2, ...);
+            The simplest:       remote(path/to/service.php);
+            With parameters:    remote(path/to/service.php, name1, name2, ...);
+            By GET:             remote(get:path/to/service.php, name1, name2, ...);
          */
         remote: function(element, params) {
             if (!params) return;

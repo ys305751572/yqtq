@@ -22,28 +22,25 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <label>手机号</label>
-                    <input type="text" class="input-sm form-control" id="mobile" name="mobile" placeholder="...">
+                    <label>比赛</label>
+                    <input type="text" class="input-sm form-control" id="teamId" name="teamId" placeholder="...">
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>昵称</label>
-                    <input type="text" class="input-sm form-control" id="nickName" name="nickName"
-                           placeholder="..." readonly="readonly">
-                </div>
-                <div class="col-md-2 form-group">
-                    <label>用户状态</label>
-                    <select id="status" name="status" class="select">
-                        <option value="">全部</option>
-                        <option value="0">正常</option>
-                        <option value="1">冻结</option>
+                    <label>城市</label>
+                    <select id="cityId" name="cityId" class="select">
+                        <option value=""> </option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>会员状态</label>
-                    <select id="vipLevel" name="vipLevel" class="select">
-                        <option value="">全部</option>
-                        <option value="0">非会员</option>
-                        <option value="1">会员</option>
+                    <label>球场</label>
+                    <select id="stadiumId" name="stadiumId" class="select">
+                        <option value=""> </option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
                     </select>
                 </div>
             </div>
@@ -58,13 +55,9 @@
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    <th>手机号</th>
-                    <th>注册时间</th>
-                    <th>信誉度</th>
-                    <th>会员状态</th>
-                    <th>用户状态</th>
-                    <th>昵称</th>
-                    <th>总消费</th>
+                    <th>比赛队伍</th>
+                    <th>比赛地区</th>
+                    <th>比赛时间</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -77,114 +70,83 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    _userInfo = {
+    $teamRace = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                _userInfo.fn.dataTableInit();
-
+                $teamRace.fn.dataTableInit();
                 $("#c_search").click(function () {
-                    _userInfo.v.dTable.ajax.reload();
+                    $teamRace.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                _userInfo.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $teamRace.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/user/list",
+                        "url": "${contextPath}/admin/teamRace/list",
                         "type": "POST"
                     },
                     "columns": [
                         {
-                            "data": "userId",
+                            "data": "id",
                             "render": function (data) {
 //                                var checkbox = "<div class=\"icheckbox_minimal\" aria-checked=\"false\" aria-disabled=\"false\" style=\"position: relative;\"><input type=\"checkbox\" value="+ data +" class='pull-left list-check' style=\"position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);\"></div>";
                                 var checkbox = "<input type='checkbox' class='pull-left list-check' value=" + data + ">";
                                 return checkbox;
                             }
                         },
-                        {"data": "mobile"},
-                        {"data": "createDate",
-                            render: function (data) {
-                                return new Date(data).format("yyyy-MM-dd hh:mm:ss")
-                            }
-                        },
-                        {"data": "credibility"},
-                        {"data": "vipLevel",
-                            render:function(data){
-                                if(data==0){
-                                    return "非会员";
-                                }else{
-                                    return "Lv" + data;
-                                }
-                            }
-                        },
-                        {"data": "status",
-                            render:function(data){
-                                if(data==0){
-                                    return "正常";
-                                }else{
-                                    return "冻结";
-                                }
-                            }
-                        },
-                        {"data": "nickName"},
-                        {"data": "userId"},
                         {
-                            "data": "userId",
+                            "data": "",
+                            "render": function (data,type,full) {
+                                return full.homeTeamId+"&nbsp; VS &nbsp;"+full.visitingTeamId;
+                            }
+                        },
+                        {"data": "cityId"},
+                        {"data": "startDate"},
+                        {
+                            "data": "id",
                             "render": function (data) {
-                                var detail = "<button title='查看' class='btn btn-primary btn-circle detail' ONCLICK='_userInfo.fn.detail("+ data +")'> " +
+                                var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$teamRace.fn.sfTeamRaceInfo(\'" + data + "\')\">" +
                                         "<i class='fa fa-eye'></i></button>";
-                                var status = "<button title='' class='btn btn-primary btn-circle detail' ONCLICK='_userInfo.fn.status("+ data +")'> " +
-                                        "<i class='fa fa-eye'></i></button>";;
-                                return detail+ "&nbsp;" + status;
+                                return detail;
                             }
                         }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.mobile = $("#mobile").val();
-                        aoData.nickName = $("#nickName").val();
-                        aoData.status = $("#status").val();
-                        aoData.vipLevel = $("#vipLevel").val();
+                        aoData.team = $("#teamId").val();
+                        aoData.city = $("#cityId").val();
+                        aoData.stadium = $("#stadiumId").val();
                     }
                 });
             },
-            rowCallback: function (row, data) {
-                var items = _userInfo.v.list;
-                $('td', row).last().find(".add").attr("href", 'admin/user/detail?id=' + data.id);
-            },
-            detail : function(userId) {
-                window.location.href = "${contextPath}/admin/user/detail?userId=" + userId;
-            },
-            status : function(userId) {
+            sfTeamRaceInfo: function (id) {
                 $.ajax({
-                    "url": "${contextPath}/admin/user/status",
+                    "url": "${contextPath}/admin/teamRace/sfTeamRaceInfo",
                     "data": {
-                        "userId": userId
+                        "id": id
                     },
                     "dataType": "json",
                     "type": "POST",
                     "success": function (result) {
-                        $("#dataTables").dataTable().fnDraw(false);
-                        if (result.status==0) {
-                            $common.fn.notify("成功");
-                            $("#dataTables").dataTable().fnDraw(false);
+                        if (!result.status) {
+                            $common.fn.notify(result.msg);
+                            return;
                         }
+                        window.location.href = "${contextPath}/admin/teamRace/detail?id=" + id;
                     }
                 });
             },
-
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        _userInfo.v.dTable.ajax.reload(null, false);
+                        $teamRace.v.dTable.ajax.reload(null, false);
                     } else {
-                        _userInfo.v.dTable.ajax.reload();
+                        $teamRace.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -194,7 +156,7 @@
         }
     }
     $(function () {
-        _userInfo.fn.init();
+        $teamRace.fn.init();
     })
 </script>
 <script>

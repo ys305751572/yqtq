@@ -49,18 +49,19 @@
         </li>
         <li class="dropdown">
             <a class="sa-side-ui" href="">
-                <span class="menu-item">医师管理</span>
+                <span class="menu-item">球队管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/doctor/index">医师列表</a></li>
+                <li><a href="${contextPath}/admin/team/index">球队列表</a></li>
+                <li><a href="${contextPath}/admin/teamRace/index">赛事列表</a></li>
             </ul>
         </li>
         <li class="dropdown">
             <a class="sa-side-folder" href="">
-                <span class="menu-item">设备管理</span>
+                <span class="menu-item">约场地管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/devices/deviceslist">设备列表</a></li>
+                <li><a href="${contextPath}/admin/1/index">约场地列表</a></li>
             </ul>
         </li>
         <li class="dropdown">

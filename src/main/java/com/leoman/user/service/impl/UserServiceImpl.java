@@ -30,6 +30,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao dao;
 
+
+    @Override
+    public User findByUserId(Long userId) {
+        return dao.findByUserId(userId);
+    }
+
     @Override
     public Page<User> findPage(final User user, final Integer sortId, int pagenum, int pagesize) {
         boolean isDesc = false;
@@ -60,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return null;
+        return dao.findAll();
     }
 
     @Override

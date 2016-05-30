@@ -1286,7 +1286,7 @@ window.$ === undefined && (window.$ = Zepto)
         beforeSend: empty,
         // Callback that is executed if the request succeeds
         success: empty,
-        // Callback that is executed the the server drops error
+        // Callback that is executed the the service drops error
         error: empty,
         // Callback that is executed on request complete (both: error and success)
         complete: empty,

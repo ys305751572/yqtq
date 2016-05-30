@@ -2192,7 +2192,7 @@
 	 * parameters can have multiple forms, and backwards compatibility.
 	 *
 	 * @param {object} oSettings dataTables settings object
-	 * @param {array} data Data to send to the server, required by
+	 * @param {array} data Data to send to the service, required by
 	 *     DataTables - may be augmented by developer callbacks
 	 * @param {function} fn Callback function to run when data is obtained
 	 */
@@ -2330,7 +2330,7 @@
 	
 	
 	/**
-	 * Build up the parameters in an object needed for a server-side processing
+	 * Build up the parameters in an object needed for a service-side processing
 	 * request. Note that this is basically done twice, is different ways - a modern
 	 * method which is used by default in DataTables 1.10 which uses objects and
 	 * arrays, or the 1.9- method with is name / value pairs. 1.9 method is used if
@@ -2488,7 +2488,7 @@
 	 * `_fnGetObjectDataFn` allows the data to be sourced from a property of the
 	 * source object, or from a processing function.
 	 *  @param {object} oSettings dataTables settings object
-	 *  @param  {object} json Data source object / array from the server
+	 *  @param  {object} json Data source object / array from the service
 	 *  @return {array} Array of data to use
 	 */
 	function _fnAjaxDataSrc ( oSettings, json )
@@ -2602,7 +2602,7 @@
 		// @todo As per sort - can this be moved into an event handler?
 		_fnColumnTypes( oSettings );
 	
-		/* In server-side processing all filtering is done by the server, so no point hanging around here */
+		/* In service-side processing all filtering is done by the service, so no point hanging around here */
 		if ( _fnDataSource( oSettings ) != 'ssp' )
 		{
 			/* Global filter */
@@ -3029,7 +3029,7 @@
 	/**
 	 * Draw the table for the first time, adding all required features
 	 *  @param {object} oSettings dataTables settings object
-	 *  @param {object} [json] JSON from the server that completed the table, if using Ajax source
+	 *  @param {object} [json] JSON from the service that completed the table, if using Ajax source
 	 *    with client-side processing (optional)
 	 *  @memberof DataTable#oApi
 	 */
@@ -4216,7 +4216,7 @@
 			_fnSortData( oSettings, sortCol.col );
 		}
 	
-		/* No sorting required if server-side or no sorting array */
+		/* No sorting required if service-side or no sorting array */
 		if ( _fnDataSource( oSettings ) != 'ssp' && aSort.length !== 0 )
 		{
 			// Create a value - key array of the current row positions such that we can use their
@@ -4441,7 +4441,7 @@
 			setTimeout( function() {
 				_fnSortListener( settings, colIdx, e.shiftKey, callback );
 	
-				// In server-side processing, the draw callback will remove the
+				// In service-side processing, the draw callback will remove the
 				// processing display
 				if ( _fnDataSource( settings ) !== 'ssp' ) {
 					_fnProcessingDisplay( settings, false );
@@ -5028,8 +5028,8 @@
 		/**
 		 * Add a single new row or multiple rows of data to the table. Please note
 		 * that this is suitable for client-side processing only - if you are using
-		 * server-side processing (i.e. "bServerSide": true), then to add data, you
-		 * must add it to the data source, i.e. the server-side, through an Ajax call.
+		 * service-side processing (i.e. "bServerSide": true), then to add data, you
+		 * must add it to the data source, i.e. the service-side, through an Ajax call.
 		 *  @param {array|object} data The data to be added to the table. This can be:
 		 *    <ul>
 		 *      <li>1D array of data - add a single row with the data provided</li>
@@ -7150,10 +7150,10 @@
 	
 	/**
 	 * Get the JSON response from the last Ajax request that DataTables made to the
-	 * server. Note that this returns the JSON from the first table in the current
+	 * service. Note that this returns the JSON from the first table in the current
 	 * context.
 	 *
-	 * @return {object} JSON received from the server.
+	 * @return {object} JSON received from the service.
 	 */
 	_api_register( 'ajax.json()', function () {
 		var ctx = this.context;
@@ -9154,7 +9154,7 @@
 		 *
 		 * * `data` - As with jQuery, `data` can be provided as an object, but it
 		 *   can also be used as a function to manipulate the data DataTables sends
-		 *   to the server. The function takes a single parameter, an object of
+		 *   to the service. The function takes a single parameter, an object of
 		 *   parameters with the values that DataTables has readied for sending. An
 		 *   object may be returned which will be merged into the DataTables
 		 *   defaults, or you can add the items to the object that was passed in and
@@ -9163,17 +9163,17 @@
 		 *
 		 * * `dataSrc` - By default DataTables will look for the property `data` (or
 		 *   `aaData` for compatibility with DataTables 1.9-) when obtaining data
-		 *   from an Ajax source or for server-side processing - this parameter
+		 *   from an Ajax source or for service-side processing - this parameter
 		 *   allows that property to be changed. You can use Javascript dotted
 		 *   object notation to get a data source for multiple levels of nesting, or
 		 *   it my be used as a function. As a function it takes a single parameter,
-		 *   the JSON returned from the server, which can be manipulated as
+		 *   the JSON returned from the service, which can be manipulated as
 		 *   required, with the returned value being that used by DataTables as the
 		 *   data source for the table. This supersedes `sAjaxDataProp` from
 		 *   DataTables 1.9-.
 		 *
 		 * * `success` - Should not be overridden it is used internally in
-		 *   DataTables. To manipulate / transform the data returned by the server
+		 *   DataTables. To manipulate / transform the data returned by the service
 		 *   use `ajax.dataSrc`, or use `ajax` as a function (see below).
 		 *
 		 * `function`
@@ -9187,7 +9187,7 @@
 		 * The function is given four parameters and no return is required. The
 		 * parameters are:
 		 *
-		 * 1. _object_ - Data to send to the server
+		 * 1. _object_ - Data to send to the service
 		 * 2. _function_ - Callback function that must be executed when the required
 		 *    data has been obtained. That data should be passed into the callback
 		 *    as the only parameter
@@ -9230,7 +9230,7 @@
 		 *   } );
 		 *
 		 * @example
-		 *   // Manipulate the data returned from the server - add a link to data
+		 *   // Manipulate the data returned from the service - add a link to data
 		 *   // (note this can, should, be done using `render` for the column - this
 		 *   // is just a simple example of how the data can be manipulated).
 		 *   $('#example').dataTable( {
@@ -12029,7 +12029,7 @@
 			 * Delay the creation of TR and TD elements until they are actually
 			 * needed by a driven page draw. This can give a significant speed
 			 * increase for Ajax source and Javascript source data, but makes no
-			 * difference at all fro DOM and server-side processing tables.
+			 * difference at all fro DOM and service-side processing tables.
 			 * Note that this parameter will be set by the initialisation routine. To
 			 * set a default use {@link DataTable.defaults}.
 			 *  @type boolean
@@ -12075,7 +12075,7 @@
 	
 			/**
 			 * Processing indicator enable flag whenever DataTables is enacting a
-			 * user request - typically an Ajax request for server-side processing.
+			 * user request - typically an Ajax request for service-side processing.
 			 * Note that this parameter will be set by the initialisation routine. To
 			 * set a default use {@link DataTable.defaults}.
 			 *  @type boolean
@@ -12084,7 +12084,7 @@
 	
 			/**
 			 * Server-side processing enabled flag - when enabled DataTables will
-			 * get all data from the server for every draw - there is no filtering,
+			 * get all data from the service for every draw - there is no filtering,
 			 * sorting or paging done on the client-side.
 			 * Note that this parameter will be set by the initialisation routine. To
 			 * set a default use {@link DataTable.defaults}.
@@ -12464,7 +12464,7 @@
 		"nTableWrapper": null,
 	
 		/**
-		 * Indicate if when using server-side processing the loading of data
+		 * Indicate if when using service-side processing the loading of data
 		 * should be deferred until the second draw.
 		 * Note that this parameter will be set by the initialisation routine. To
 		 * set a default use {@link DataTable.defaults}.
@@ -12562,7 +12562,7 @@
 	
 		/**
 		 * Property from a given object from which to read the table data from. This
-		 * can be an empty string (when not server-side processing), in which case
+		 * can be an empty string (when not service-side processing), in which case
 		 * it is  assumed an an array is given directly.
 		 * Note that this parameter will be set by the initialisation routine. To
 		 * set a default use {@link DataTable.defaults}.
@@ -12578,7 +12578,7 @@
 		"bAjaxDataGet": true,
 	
 		/**
-		 * The last jQuery XHR object that was used for server-side data gathering.
+		 * The last jQuery XHR object that was used for service-side data gathering.
 		 * This can be used for working with the XHR information in one of the
 		 * callbacks
 		 *  @type object
@@ -12587,14 +12587,14 @@
 		"jqXHR": null,
 	
 		/**
-		 * JSON returned from the server in the last Ajax request
+		 * JSON returned from the service in the last Ajax request
 		 *  @type object
 		 *  @default undefined
 		 */
 		"json": undefined,
 	
 		/**
-		 * Function to get the server-side data.
+		 * Function to get the service-side data.
 		 * Note that this parameter will be set by the initialisation routine. To
 		 * set a default use {@link DataTable.defaults}.
 		 *  @type function
@@ -12603,7 +12603,7 @@
 	
 		/**
 		 * Functions which are called prior to sending an Ajax request so extra
-		 * parameters can easily be sent to the server
+		 * parameters can easily be sent to the service
 		 *  @type array
 		 *  @default []
 		 */
@@ -12637,7 +12637,7 @@
 	
 		/**
 		 * Counter for the draws that the table does. Also used as a tracker for
-		 * server-side processing
+		 * service-side processing
 		 *  @type int
 		 *  @default 0
 		 */
@@ -12675,7 +12675,7 @@
 		 * Server-side processing - number of records in the result set
 		 * (i.e. before filtering), Use fnRecordsTotal rather than
 		 * this property to get the value of the number of records, regardless of
-		 * the server-side processing setting.
+		 * the service-side processing setting.
 		 *  @type int
 		 *  @default 0
 		 *  @private
@@ -12686,7 +12686,7 @@
 		 * Server-side processing - number of records in the current display set
 		 * (i.e. after filtering). Use fnRecordsDisplay rather than
 		 * this property to get the value of the number of records, regardless of
-		 * the server-side processing setting.
+		 * the service-side processing setting.
 		 *  @type boolean
 		 *  @default 0
 		 *  @private
@@ -13018,7 +13018,7 @@
 		 */
 		legacy: {
 			/**
-			 * Enable / disable DataTables 1.9 compatible server-side processing
+			 * Enable / disable DataTables 1.9 compatible service-side processing
 			 * requests
 			 *
 			 *  @type boolean

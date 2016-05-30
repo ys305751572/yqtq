@@ -86,19 +86,19 @@ UE.I18N['en'] = {
     'elementPathTip':"Path",
     'wordCountTip':"Word Count",
     'wordCountMsg':'{#count} characters entered,{#leave} left. ',
-    'wordOverFlowMsg':'<span style="color:red;">The number of characters has exceeded allowable maximum values, the server may refuse to save!</span>',
+    'wordOverFlowMsg':'<span style="color:red;">The number of characters has exceeded allowable maximum values, the service may refuse to save!</span>',
     'ok':"OK",
     'cancel':"Cancel",
     'closeDialog':"closeDialog",
     'tableDrag':"You must import the file uiUtils.js before drag! ",
     'autofloatMsg':"The plugin AutoFloat depends on EditorUI!",
-    'loadconfigError': 'Get server config error.',
+    'loadconfigError': 'Get service config error.',
     'loadconfigFormatError': 'Server config format error.',
-    'loadconfigHttpError': 'Get server config http error.',
+    'loadconfigHttpError': 'Get service config http error.',
     'snapScreen_plugin':{
         'browserMsg':"Only IE supported!",
         'callBackErrorMsg':"The callback data is wrong,please check the config!",
-        'uploadErrorMsg':"Upload error,please check your server environment! "
+        'uploadErrorMsg':"Upload error,please check your service environment! "
     },
     'insertcode':{
         'as3':'ActionScript 3',
