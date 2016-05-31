@@ -26,6 +26,17 @@ public class StadiumSub extends BaseEntity {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "status")
+    private Integer status;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Long getStadiumId() {
         return stadiumId;
     }

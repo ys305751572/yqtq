@@ -94,7 +94,7 @@ public class UserController extends CommonController {
      */
     @RequestMapping(value = "/status")
     @ResponseBody
-    public Object status(Long userId){
+    public Result status(Long userId){
         Map<String,Object> map = new HashMap<String, Object>();
         User user = service.findByUserId(userId);
         Integer status = user.getStatus();
@@ -102,16 +102,15 @@ public class UserController extends CommonController {
             if(status == 0) {
                 user.setStatus(1);
                 service.update(user);
-                return map.put("status",0);
             }else {
                 user.setStatus(0);
                 service.update(user);
-                return map.put("status",0);
             }
         }catch (RuntimeException e){
             e.printStackTrace();
+            return Result.failure();
         }
-        return map;
+        return Result.success();
     }
 
 }

@@ -59,10 +59,10 @@ public class TeamRaceServiceImpl extends GenericManagerImpl<TeamRace, TeamRaceDa
                     list.add(cb.like(root.get("teamId").as(String.class), "%" + t.getHomeTeamId() + "% OR %"+t.getVisitingTeamId()+"%"));
                 }
                 if(t.getCityId() != null){
-                    list.add(cb.equal(root.get("cityId").as(String.class), t.getCityId()));
+                    list.add(cb.equal(root.get("cityId").as(Long.class), t.getCityId()));
                 }
                 if(t.getStadiumId() !=null){
-                    list.add(cb.equal(root.get("stadium").as(String.class), t.getStadiumId()));
+                    list.add(cb.equal(root.get("stadium").as(Long.class), t.getStadiumId()));
                 }
                 Predicate[] p = new Predicate[list.size()];
                 return cb.and(list.toArray(p));

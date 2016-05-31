@@ -29,9 +29,21 @@ public class TeamRace  extends BaseEntity{
     @Column(name = "stadium_id")
     private Long stadiumId;
 
+    //状态 0:成功 1:失败
+    @Column(name = "status")
+    private Integer status;
+
     //比赛开始时间
     @Column(name = "start_date")
     private Long startDate;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public Long getHomeTeamId() {
         return homeTeamId;

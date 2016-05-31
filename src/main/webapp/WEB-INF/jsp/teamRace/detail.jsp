@@ -53,11 +53,15 @@
                         </div>
                         <div class="form-group">
                             <label>预约状态:</label>
+                            <c:if test="${teamRace.status eq 0}">预约成功</c:if>
+                            <c:if test="${teamRace.status eq 1}">预约失败</c:if>
                         </div>
-                        <div class="form-group">
-                            <label>比赛地点:</label>
-                            ${teamRace.stadiumId}
-                        </div>
+                        <c:if test="${teamRace.status eq 0}">
+                            <div class="form-group">
+                                <label>比赛地点:</label>
+                                ${teamRace.stadiumId}
+                            </div>
+                        </c:if>
                         <div class="form-group">
                             <label>比赛时间:</label>
                             <date:date format="yyyy-MM-dd HH:mm:ss" value="${teamRace.startDate}"></date:date>

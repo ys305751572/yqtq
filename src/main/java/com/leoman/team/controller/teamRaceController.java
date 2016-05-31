@@ -38,17 +38,12 @@ public class TeamRaceController  extends GenericEntityController<TeamRace, TeamR
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length, Long teamId,Long cityId,Long stadiumId){
+    public Object list(Integer draw, Integer start, Integer length, TeamRace teamRace){
         Page<TeamRace> teamRacePage = null;
         try {
             TeamRace t = new TeamRace();
             int pagenum = getPageNum(start,length);
-//            t.setHomeTeamId();
-//            t.setVisitingTeamId();
-            t.setCityId(cityId);
-            t.setStadiumId(stadiumId);
-            teamRacePage = teamRaceService.findAll(t, pagenum, length);
-//            teamRaceService.findById(id);
+            teamRacePage = teamRaceService.findAll(teamRace, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -28,7 +28,7 @@
                 <div class="col-md-2 form-group">
                     <label>城市</label>
                     <select id="cityId" name="cityId" class="select">
-                        <option value=""> </option>
+                        <option value="">全部</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -37,7 +37,7 @@
                 <div class="col-md-2 form-group">
                     <label>球场</label>
                     <select id="stadiumId" name="stadiumId" class="select">
-                        <option value=""> </option>
+                        <option value="">全部 </option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -118,9 +118,9 @@
                         }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.team = $("#teamId").val();
-                        aoData.city = $("#cityId").val();
-                        aoData.stadium = $("#stadiumId").val();
+                        aoData.teamId = $("#teamId").val();
+                        aoData.cityId = $("#cityId").val();
+                        aoData.stadiumId = $("#stadiumId").val();
                     }
                 });
             },

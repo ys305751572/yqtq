@@ -1,12 +1,13 @@
 package com.leoman.reserve.entity;
 
-import com.leoman.systemInsurance.entity.SystemInsurance;
 import com.leoman.common.entity.BaseEntity;
+import com.leoman.systemInsurance.entity.SystemInsurance;
 import com.leoman.user.entity.User;
 
 import javax.persistence.*;
 
 /**
+ * 散人预约
  * Created by Administrator on 2016/5/24.
  */
 @Entity

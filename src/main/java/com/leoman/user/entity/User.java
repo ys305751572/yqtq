@@ -33,7 +33,7 @@ public class User extends BaseEntity {
     private Double weight;
 
     @Column(name = "position")
-    private String position;
+    private Integer position;
 
     @Column(name = "credibility")
     private Integer credibility;
@@ -118,11 +118,11 @@ public class User extends BaseEntity {
         this.weight = weight;
     }
 
-    public String getPosition() {
+    public Integer getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(Integer position) {
         this.position = position;
     }
 

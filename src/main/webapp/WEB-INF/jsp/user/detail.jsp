@@ -29,6 +29,10 @@
                     <h2 class="tile-title">基本信息</h2>
                     <div class="p-10" style="height:520px">
                         <div class="form-group">
+                            <label>头像</label>
+                            <img src="${contextPath}/${user.avater}" alt="">
+                        </div>
+                        <div class="form-group">
                             <label>账 号:</label>
                             ${user.userId}
                         </div>
@@ -54,15 +58,15 @@
                         </div>
                         <div class="form-group">
                             <label>位 置:</label>
-                            ${user.position}
+                            <c:if test="${user.position eq 0}">前锋</c:if>
+                            <c:if test="${user.position eq 1}">中锋</c:if>
+                            <c:if test="${user.position eq 2}">后卫</c:if>
+                            <c:if test="${user.position eq 3}">门卫</c:if>
                         </div>
                         <div class="form-group">
                             <label>用户状态:</label>
-                            <div class="col-sm-5">
-                                <h4><c:if test="${user.status eq 0}">正常</c:if>
-                                    <c:if test="${user.status eq 1}">冻结</c:if>
-                                </h4>
-                            </div>
+                            <c:if test="${user.status eq 0}">正常</c:if>
+                            <c:if test="${user.status eq 1}">冻结</c:if>
                         </div>
                         <div class="form-group">
                             <label>注册时间:</label>
@@ -74,11 +78,8 @@
                         </div>
                         <div class="form-group">
                             <label>会员等级:</label>
-                            <div class="col-sm-5">
-                                <h4><c:if test="${user.vipLevel eq 0}">非会员</c:if>
-                                    <c:if test="${user.vipLevel ne 0}">Lv${user.vipLevel}</c:if>
-                                </h4>
-                            </div>
+                            <c:if test="${user.vipLevel eq 0}">非会员</c:if>
+                            <c:if test="${user.vipLevel ne 0}">Lv${user.vipLevel}</c:if>
                         </div>
                         <div class="form-group">
                             <label>会员积分:</label>

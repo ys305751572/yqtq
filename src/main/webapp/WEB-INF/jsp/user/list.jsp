@@ -169,11 +169,10 @@
                     },
                     "dataType": "json",
                     "type": "POST",
-                    "success": function (result) {
-                        $("#dataTables").dataTable().fnDraw(false);
-                        if (result.status==0) {
+                    success: function (result) {
+                        if (result.status) {
                             $common.fn.notify("成功");
-                            $("#dataTables").dataTable().fnDraw(false);
+                            _userInfo.v.dTable.ajax.reload();
                         }
                     }
                 });

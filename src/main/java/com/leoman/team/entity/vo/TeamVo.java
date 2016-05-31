@@ -17,7 +17,6 @@ public class TeamVo {
     private Long name;
     @Column(name = "city_id")
     private Long city_id;
-
     @Column(name = "num")
     private Integer num;
     @Column(name = "season")

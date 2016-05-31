@@ -22,22 +22,41 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <label>姓名</label>
+                    <label>球场名称</label>
                     <input type="text" class="input-sm form-control" id="name" name="name" placeholder="...">
                 </div>
                 <div class="col-md-2 form-group">
                     <label>城市</label>
                     <select id="cityId" name="cityId" class="select">
-                        <option value=""> </option>
-                        <option value="0">1</option>
-                        <option value="1">2</option>
-                        <option value="2">3</option>
+                        <option value="">全部</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label>球场类型</label>
+                    <select id="stadiumId" name="stadiumId" class="select">
+                        <option value="">全部</option>
+                        <option value="0">私有</option>
+                        <option value="1">公有</option>
                     </select>
                 </div>
             </div>
         </div>
         <div class="block-area" id="alternative-buttons">
             <button id="c_search" class="btn btn-alt m-r-5">查询</button>
+        </div>
+        <div class="block-area">
+            <div class="row">
+                <ul class="list-inline list-mass-actions">
+                    <li>
+                        <a data-toggle="modal" href="${contextPath}/admin/stadium/add" title="新增" class="tooltips">
+                            <i class="sa-list-add"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <hr class="whiter m-t-20"/>
         <!-- form表格 -->
@@ -46,11 +65,13 @@
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    <th>队名</th>
-                    <th>地区</th>
-                    <th>人数</th>
-                    <th>比赛场次</th>
-                    <th>创建时间</th>
+                    <th>城市</th>
+                    <th>球场名称</th>
+                    <th>球场类型</th>
+                    <th>被预定总数</th>
+                    <th>当前预定数</th>
+                    <th>场地数</th>
+                    <th>状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -63,50 +84,64 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    $team = {
+    $stadium = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                $team.fn.dataTableInit();
-
+                $stadium.fn.dataTableInit();
                 $("#c_search").click(function () {
-                    $team.v.dTable.ajax.reload();
+                    $stadium.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                $team.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $stadium.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/team/list",
+                        "url": "${contextPath}/admin/stadium/list",
                         "type": "POST"
                     },
                     "columns": [
                         {
                             "data": "id",
                             "render": function (data) {
-//                                var checkbox = "<div class=\"icheckbox_minimal\" aria-checked=\"false\" aria-disabled=\"false\" style=\"position: relative;\"><input type=\"checkbox\" value="+ data +" class='pull-left list-check' style=\"position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);\"></div>";
                                 var checkbox = "<input type='checkbox' class='pull-left list-check' value=" + data + ">";
                                 return checkbox;
                             }
                         },
-                        {"data": "name"},
                         {"data": "cityId"},
-                        {"data": "tmSetNum"},
-                        {"data": "tmSize"},
-                        {"data": "createDate",
-                            render: function (data) {
-                                return new Date(data).format("yyyy-MM-dd hh:mm:ss")
+                        {"data": "name"},
+                        {
+                            "data": "type",
+                            "render":function(data){
+                                if(data==0){
+                                    return "私人球场";
+                                }else {
+                                    return "公共球场";
+                                }
+                            }
+                        },
+                        {"data": "stadiumNum","sDefaultContent" : ""},
+                        {"data": "availableStadiumNum","sDefaultContent" : ""},
+                        {"data": "siteNum","sDefaultContent" : ""},
+                        {
+                            "data": "isStatus",
+                            "render": function (data) {
+                                if(data==0){
+                                    return "无可预订场次";
+                                }else {
+                                    return "可预订";
+                                }
                             }
                         },
                         {
                             "data": "id",
                             "render": function (data) {
-                                var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$team.fn.sfTeamInfo(\'" + data + "\')\">" +
+                                var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$stadium.fn.sfStadiumInfo(\'" + data + "\')\">" +
                                         "<i class='fa fa-eye'></i></button>";
                                 return detail;
                             }
@@ -115,12 +150,13 @@
                     "fnServerParams": function (aoData) {
                         aoData.name = $("#name").val();
                         aoData.cityId = $("#cityId").val();
+                        aoData.type = $("#type").val();
                     }
                 });
             },
-            sfTeamInfo: function (id) {
+            sfStadiumInfo: function (id) {
                 $.ajax({
-                    "url": "${contextPath}/admin/team/sfTeamInfo",
+                    "url": "${contextPath}/admin/stadium/sfStadiumInfo",
                     "data": {
                         "id": id
                     },
@@ -131,16 +167,16 @@
                             $common.fn.notify(result.msg);
                             return;
                         }
-                        window.location.href = "${contextPath}/admin/team/detail?id=" + id;
+                        window.location.href = "${contextPath}/admin/stadium/detail?id=" + id;
                     }
                 });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        $team.v.dTable.ajax.reload(null, false);
+                        $stadium.v.dTable.ajax.reload(null, false);
                     } else {
-                        $team.v.dTable.ajax.reload();
+                        $stadium.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -150,7 +186,7 @@
         }
     }
     $(function () {
-        $team.fn.init();
+        $stadium.fn.init();
     })
 </script>
 <script>

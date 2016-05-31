@@ -44,26 +44,19 @@ public class TeamController extends GenericEntityController<Team, Team, TeamServ
 
     /**
      * 表格
-     * @param request
-     * @param response
      * @param draw
      * @param start
      * @param length
-     * @param name
-     * @param cityId
      * @return
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(HttpServletRequest request, HttpServletResponse response, Integer draw, Integer start, Integer length, Long name,Long cityId){
+    public Object list(Integer draw, Integer start, Integer length,Team team){
         Page<Team> teamPage = null;
 //        List<Team> list = null;
         try {
-            Team t = new Team();
             int pagenum = getPageNum(start,length);
-            t.setName(name);
-            t.setCityId(cityId);
-            teamPage = teamService.findAll(t, pagenum, length);
+            teamPage = teamService.findAll(team, pagenum, length);
 //            list = teamService.findList(null,null,null,start,length);
         } catch (Exception e) {
             e.printStackTrace();

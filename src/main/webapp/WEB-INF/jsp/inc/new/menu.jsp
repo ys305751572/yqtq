@@ -62,6 +62,7 @@
             </a>
             <ul class="list-unstyled menu-item">
                 <li><a href="${contextPath}/admin/1/index">约场地列表</a></li>
+                <li><a href="${contextPath}/admin/stadium/index">场地列表</a></li>
             </ul>
         </li>
         <li class="dropdown">
