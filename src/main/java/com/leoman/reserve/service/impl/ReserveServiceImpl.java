@@ -45,9 +45,9 @@ public class ReserveServiceImpl implements ReserveService {
                 if (reserve.getPayment() != null) {
                     list.add(criteriaBuilder.equal(root.get("payment").as(Integer.class), reserve.getPayment()));
                 }
-                if (reserve.getName() != null) {
-                    list.add(criteriaBuilder.equal(root.get("name").as(Long.class), reserve.getName()));
-                }
+//                if (reserve.getSystemInsurance().getName() != null) {
+//                    list.add(criteriaBuilder.equal(root.get("systemInsurance").get("name").as(Long.class), reserve.getSystemInsurance().getName()));
+//                }
                 if (reserve.getStatus() != null) {
                     list.add(criteriaBuilder.equal(root.get("status").as(Integer.class), reserve.getStatus()));
                 }

@@ -50,8 +50,8 @@ public class User extends BaseEntity {
     @Column(name = "avater")
     private String avater;
 
-    @Column(name = "provice_id")
-    private Long proviceId;
+    @Column(name = "province_id")
+    private Long provinceId;
 
     @Column(name = "vip_end_date")
     private Long vipEndDate;
@@ -166,12 +166,12 @@ public class User extends BaseEntity {
         this.avater = avater;
     }
 
-    public Long getProviceId() {
-        return proviceId;
+    public Long getProvinceId() {
+        return provinceId;
     }
 
-    public void setProviceId(Long proviceId) {
-        this.proviceId = proviceId;
+    public void setProvinceId(Long provinceId) {
+        this.provinceId = provinceId;
     }
 
     public Long getVipEndDate() {

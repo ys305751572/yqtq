@@ -34,6 +34,9 @@
                         <div class="form-group">
                             <label>球场名称:</label>
                             ${stadium.name}
+                            <a data-toggle="modal" href="${contextPath}/admin/stadium/edit?id=${stadium.id}" title="编辑" class="tooltips">
+                                <i>编辑</i>
+                            </a>
                         </div>
                         <div class="form-group">
                             <label>城市:</label>
@@ -41,16 +44,22 @@
                         </div>
                         <div class="form-group">
                             <label>厂主:</label>
-                            ${stadium.stadiumUserId}
+                            ${nickName}
                         </div>
                         <div class="form-group">
                             <label>球场基本信息:</label>
+                            <p>场地类型：<c:if test="${stadium.siteType eq 0}">室内</c:if><c:if test="${stadium.siteType eq 1}">室外</c:if></p>
+                            <p>草皮类型：${stadium.sodType}</p>
+                            <p>灯光：${stadium.light}</p>
+                            <p>停车场：<c:if test="${stadium.park eq 0}">无</c:if><c:if test="${stadium.park eq 1}">免费</c:if><c:if test="${stadium.park eq 2}">收费</c:if></p>
+                            <p> 赠送：${stadium.giving}</p>
                         </div>
                         <div class="form-group">
                             <label>球场场次:</label>
                         </div>
                         <div class="form-group">
                             <label>球场简介:</label>
+                            ${stadium.description}
                         </div>
                     </div>
                 </div>

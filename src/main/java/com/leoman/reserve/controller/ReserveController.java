@@ -5,6 +5,8 @@ import com.leoman.common.exception.GeneralExceptionHandler;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.service.ReserveService;
+import com.leoman.systemInsurance.entity.SystemInsurance;
+import com.leoman.systemInsurance.service.SystemInsuranceService;
 import com.leoman.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +30,9 @@ public class ReserveController extends CommonController {
     @Autowired
     private ReserveService service;
 
+    @Autowired
+    private SystemInsuranceService systemInsuranceService;
+
     /**
      * 列表页面
      *
@@ -41,6 +46,7 @@ public class ReserveController extends CommonController {
 
     /**
      * 查询列表
+     *
      * @param request
      * @param response
      * @param draw
@@ -70,18 +76,19 @@ public class ReserveController extends CommonController {
 
     /**
      * 详情
+     *
      * @param id
      * @param model
      * @return
      */
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public String detail(Long id,Model model) {
+    public String detail(Long id, Model model) {
 
         Reserve reserve = service.getById(id);
 //        if(admin.getContent() != null) {
 //            admin.setContent(admin.getContent().replace("&lt","<").replace("&gt",">"));
 //        }
-        model.addAttribute("reserve",reserve);
+        model.addAttribute("reserve", reserve);
         return "reserve/detail";
     }
 

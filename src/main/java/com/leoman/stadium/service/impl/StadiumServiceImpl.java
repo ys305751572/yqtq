@@ -4,6 +4,7 @@ import com.leoman.common.service.impl.GenericManagerImpl;
 import com.leoman.stadium.dao.StadiumDao;
 import com.leoman.stadium.entity.Stadium;
 import com.leoman.stadium.service.StadiumService;
+import com.leoman.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,6 +36,11 @@ public class StadiumServiceImpl extends GenericManagerImpl<Stadium, StadiumDao> 
     public Page<Stadium> findAll(Stadium stadium, Integer currentPage, Integer pageSize) throws Exception {
         Specification<Stadium> spec = buildSpecification(stadium);
         return dao.findAll(spec, new PageRequest(currentPage-1, pageSize, Sort.Direction.DESC, "id"));
+    }
+
+    @Override
+    public List<User> findByNickName(Long id) {
+        return dao.findByNickName(id);
     }
 
     public Specification<Stadium> buildSpecification(final Stadium s) {

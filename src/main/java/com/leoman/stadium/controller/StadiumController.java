@@ -6,6 +6,7 @@ import com.leoman.stadium.entity.Stadium;
 import com.leoman.stadium.service.StadiumService;
 import com.leoman.stadium.service.impl.StadiumServiceImpl;
 import com.leoman.team.entity.TeamRace;
+import com.leoman.user.entity.User;
 import com.leoman.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,6 +50,10 @@ public class StadiumController  extends GenericEntityController<Stadium, Stadium
         try{
             Stadium stadium = stadiumService.findById(id);
             model.addAttribute("stadium", stadium);
+            List<User> user = stadiumService.findByNickName(id);
+            if(user!=null && user.size()>0){
+                model.addAttribute("nickName", user.get(0).getNickName());
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -89,7 +94,16 @@ public class StadiumController  extends GenericEntityController<Stadium, Stadium
     }
 
     @RequestMapping(value = "/save")
-    public Result save(){
-        return null;
+    @ResponseBody
+    public Result save(Stadium stadium){
+        Long id = stadium.getId();
+        if(id!=null){
+            stadiumService.save(stadium);
+        }else {
+            stadiumService.save(stadium);
+        }
+
+
+        return Result.success();
     }
 }

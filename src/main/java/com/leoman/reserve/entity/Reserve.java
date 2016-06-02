@@ -14,9 +14,9 @@ import javax.persistence.*;
 @Table(name = "t_reserve")
 public class Reserve extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User nickName ;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
 
     @Column(name = "stadium_id")
     private Long stadiumId;
@@ -33,9 +33,8 @@ public class Reserve extends BaseEntity {
     @Column(name = "payment")
     private Integer payment;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "insurance_id")
-    private SystemInsurance name;
+    @Column(name = "insurance_id")
+    private Long insuranceId;
 
     @Column(name = "type")
     private Integer type;
@@ -45,6 +44,9 @@ public class Reserve extends BaseEntity {
 
     @Column(name = "status")
     private Integer status;
+
+    @Transient
+    private SystemInsurance systemInsurance;
 
     public Integer getStatus() {
         return status;
@@ -95,22 +97,6 @@ public class Reserve extends BaseEntity {
         this.payment = payment;
     }
 
-    public User getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(User nickName) {
-        this.nickName = nickName;
-    }
-
-    public SystemInsurance getName() {
-        return name;
-    }
-
-    public void setName(SystemInsurance name) {
-        this.name = name;
-    }
-
     public Integer getType() {
         return type;
     }
@@ -127,4 +113,27 @@ public class Reserve extends BaseEntity {
         this.startDate = startDate;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Long getInsuranceId() {
+        return insuranceId;
+    }
+
+    public void setInsuranceId(Long insuranceId) {
+        this.insuranceId = insuranceId;
+    }
+
+    public SystemInsurance getSystemInsurance() {
+        return systemInsurance;
+    }
+
+    public void setSystemInsurance(SystemInsurance systemInsurance) {
+        this.systemInsurance = systemInsurance;
+    }
 }

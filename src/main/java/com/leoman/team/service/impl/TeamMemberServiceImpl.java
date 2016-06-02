@@ -4,6 +4,7 @@ import com.leoman.common.service.impl.GenericManagerImpl;
 import com.leoman.team.dao.TeamMemberDao;
 import com.leoman.team.entity.TeamMember;
 import com.leoman.team.service.TeamMemberService;
+import com.leoman.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,11 @@ public class TeamMemberServiceImpl extends GenericManagerImpl<TeamMember, TeamMe
     @Override
     public List<TeamMember> findByTeamId(Long id) {
         return dao.findByTeamId(id);
+    }
+
+    @Override
+    public List<User> findByAvater(Long id) {
+        return dao.findByAvater(id);
     }
 
 }

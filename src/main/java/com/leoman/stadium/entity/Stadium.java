@@ -26,13 +26,34 @@ public class Stadium extends BaseEntity {
     private Long stadiumUserId;
     //球场名称
     @Column(name = "name")
-    private Long name;
+    private String name;
     //球场类型 0:私人球场 1:公共球场
     @Column(name = "type")
     private Integer type;
     //球场信息
     @Column(name = "description")
     private String description;
+    //场地类型 0:室内 1:室外
+    @Column(name = "site_type")
+    private Integer siteType;
+    //草皮类型
+    @Column(name = "sod_type")
+    private String sodType;
+    //灯光样式
+    @Column(name = "light")
+    private String light;
+    //停车场 0:无 1:免费 2:收费
+    @Column(name = "park")
+    private Integer park;
+    //赠送
+    @Column(name = "giving")
+    private String giving;
+    //球场地址
+    @Column(name = "address")
+    private String address;
+    //封面
+    @Column(name = "avater")
+    private String avater;
 
     //预定总数
     @OneToMany(fetch = FetchType.EAGER)
@@ -63,6 +84,62 @@ public class Stadium extends BaseEntity {
     private Set<StadiumSub> ssStatus;
     @Transient
     private Integer isStatus;
+
+    public Integer getSiteType() {
+        return siteType;
+    }
+
+    public void setSiteType(Integer siteType) {
+        this.siteType = siteType;
+    }
+
+    public String getSodType() {
+        return sodType;
+    }
+
+    public void setSodType(String sodType) {
+        this.sodType = sodType;
+    }
+
+    public String getLight() {
+        return light;
+    }
+
+    public void setLight(String light) {
+        this.light = light;
+    }
+
+    public Integer getPark() {
+        return park;
+    }
+
+    public void setPark(Integer park) {
+        this.park = park;
+    }
+
+    public String getGiving() {
+        return giving;
+    }
+
+    public void setGiving(String giving) {
+        this.giving = giving;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAvater() {
+        return avater;
+    }
+
+    public void setAvater(String avater) {
+        this.avater = avater;
+    }
 
     public Set<StadiumSub> getSsStatus() {
         return ssStatus;
@@ -144,11 +221,11 @@ public class Stadium extends BaseEntity {
         this.stadiumUserId = stadiumUserId;
     }
 
-    public Long getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Long name) {
+    public void setName(String name) {
         this.name = name;
     }
 

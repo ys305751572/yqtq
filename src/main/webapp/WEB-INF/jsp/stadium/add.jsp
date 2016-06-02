@@ -25,7 +25,7 @@
         <h1 class="page-title">场地编辑</h1>
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
-                <input type="hidden" id="id" name="id" value="">
+                <input type="hidden" id="id" name="id" value="${stadium.id}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>球场名称：</label>
@@ -46,9 +46,9 @@
                                     <option value="1">室外</option>
                                 </select>
                             <label>草皮类型：</label>
-                            <input type="text" id="sodType" name="sodType" value="" class="input-sm form-control validate[required]" placeholder="...">
+                            <input type="text" id="sodType" name="sodType" value="${stadium.sodType}" class="input-sm form-control validate[required]" placeholder="...">
                             <label>灯光：</label>
-                            <input type="text" id="light" name="light" value="" class="input-sm form-control validate[required]" placeholder="...">
+                            <input type="text" id="light" name="light" value="${stadium.light}" class="input-sm form-control validate[required]" placeholder="...">
                             <label>停车场：</label>
                                 <select id="park" name="park" class="select">
                                     <option value="0">无</option>
@@ -56,7 +56,7 @@
                                     <option value="2">收费</option>
                                 </select>
                             <label>赠送：</label>
-                            <input type="text" id="giving" name="giving" value="" class="input-sm form-control validate[required]" placeholder="...">
+                            <input type="text" id="giving" name="giving" value="${stadium.giving}" class="input-sm form-control validate[required]" placeholder="...">
                         </div>
                     </div>
                     <div class="col-md-12 m-b-15">

@@ -86,7 +86,7 @@
                     <th>付款方式</th>
                     <th>保险</th>
                     <th>已报人数</th>
-                    <th>预定人数</th>
+                    <th>预定时间</th>
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
@@ -100,21 +100,21 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    $user = {
+    $reserve = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                $user.fn.dataTableInit();
+                $reserve.fn.dataTableInit();
 
                 $("#c_search").click(function () {
-                    $user.v.dTable.ajax.reload();
+                    $reserve.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                $user.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $reserve.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
@@ -133,7 +133,7 @@
                         },
                         {"data": "startDate",
                             render: function (data) {
-                                return new Date(data).format("yyyy-MM-dd hh:mm:ss")
+                                return new Date(data).format("yyyy-MM-dd hh:mm")
                             }
                         },
                         {"data": "cityId"},
@@ -165,11 +165,12 @@
                                 }
                             }
                         },
-                        {"data": "systemInsurance.name"},
-                        {"data":"userId"},
+//                        {"data": "systemInsurance.name"},
+                        {"data":"insuranceId"},
+                        {"data":"user.userId"},
                         {"data": "createDate",
                             render: function (data) {
-                                return new Date(data).format("yyyy-MM-dd hh:mm:ss")
+                                return new Date(data).format("yyyy-MM-dd hh:mm")
                             }
                         },
                         {"data": "status",
@@ -191,7 +192,7 @@
                         {
                             "data": "userId",
                             "render": function (data) {
-                                var detail = "<button title='查看' class='btn btn-primary btn-circle detail' ONCLICK='$user.fn.detail("+ data +")'> " +
+                                var detail = "<button title='查看' class='btn btn-primary btn-circle detail' ONCLICK='$reserve.fn.detail("+ data +")'> " +
                                         "<i class='fa fa-eye'></i></button>";
                                 return detail;
                             }
@@ -208,7 +209,7 @@
                 });
             },
             rowCallback: function (row, data) {
-                var items = $user.v.list;
+                var items = $reserve.v.list;
                 $('td', row).last().find(".add").attr("href", 'admin/reserve/detail?id=' + data.id);
             },
             "detail" : function(userId) {
@@ -218,9 +219,9 @@
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        $user.v.dTable.ajax.reload(null, false);
+                        $reserve.v.dTable.ajax.reload(null, false);
                     } else {
-                        $user.v.dTable.ajax.reload();
+                        $reserve.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -230,7 +231,7 @@
         }
     }
     $(function () {
-        $user.fn.init();
+        $reserve.fn.init();
     })
 </script>
 <script>
