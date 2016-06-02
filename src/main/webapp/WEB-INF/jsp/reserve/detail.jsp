@@ -30,68 +30,52 @@
                     <div class="p-10" style="height:520px">
                         <div class="form-group">
                             <label>比赛时间:</label>
-                            ${reserve.startDate}
+                            <date:date format="yyyy-MM-dd HH:mm" value="${reserve.startDate}"></date:date>
                         </div>
                         <div class="form-group">
-                            <label>城 市:</label>
-                            ${reserve.startDate}
+                            <label>城市:</label>
+                            ${reserve.cityId}
                         </div>
                         <div class="form-group">
-                            <label>球 场:</label>
-                            ${reserve.nickName}
+                            <label>球场:</label>
+                            <a href="">${stadiumName}</a>
                         </div>
                         <div class="form-group">
-                            <label>年 龄:</label>
-                            ${user.age}
+                            <label>创建者:</label>
+                            ${reserve.user.nickName}
                         </div>
                         <div class="form-group">
-                            <label>身 高:</label>
-                            ${user.height}
+                            <label>赛制:</label>
+                            <c:if test="${reserve.matchType eq 0}">三人制</c:if>
+                            <c:if test="${reserve.matchType eq 1}">五人制</c:if>
+                            <c:if test="${reserve.matchType eq 2}">七人制</c:if>
+                            <c:if test="${reserve.matchType eq 3}">十一人制</c:if>
                         </div>
                         <div class="form-group">
-                            <label>体 重:</label>
-                            ${user.weight}
+                            <label>时常:</label>
+                            ${reserve.time}
                         </div>
                         <div class="form-group">
-                            <label>位 置:</label>
-                            ${user.position}
+                            <label>价格:</label>
+                            ${reserve.price}
                         </div>
                         <div class="form-group">
-                            <label>用户状态:</label>
-                            <div class="col-sm-5">
-                                <h4><c:if test="${user.status eq 0}">正常</c:if>
-                                    <c:if test="${user.status eq 1}">冻结</c:if>
-                                </h4>
-                            </div>
+                            <label>付款方式:</label>
+                            <c:if test="${reserve.payment eq 0}">AA</c:if>
+                            <c:if test="${reserve.payment eq 1}">全额</c:if>
                         </div>
                         <div class="form-group">
-                            <label>注册时间:</label>
-                            <date:date format="yyyy-MM-dd HH:mm:ss" value="${user.createDate}"></date:date>
+                            <label>保险:</label>
+                            ${reserve.systemInsurance.name}
                         </div>
                         <div class="form-group">
-                            <label>信誉积分:</label>
-                            ${user.credibility}
+                            <label>预定时间:</label>
+                            <date:date format="yyyy-MM-dd HH:mm" value="${reserve.createDate}"></date:date>
                         </div>
                         <div class="form-group">
-                            <label>会员等级:</label>
-                            <div class="col-sm-5">
-                                <h4><c:if test="${user.vipLevel eq 0}">非会员</c:if>
-                                    <c:if test="${user.vipLevel ne 0}">Lv + "${user.vipLevel}"</c:if>
-                                </h4>
-                            </div>
+                            <label>已报球友:</label>
                         </div>
-                        <div class="form-group">
-                            <label>会员积分:</label>
-                            ${user.integral}
-                        </div>
-                        <div class="form-group">
-                            <label>会员结束时间:</label>
-                            <date:date format="yyyy-MM-dd HH:mm:ss" value="${user.vipEndDate}"></date:date>
-                        </div>
-                        <div class="form-group">
-                            <label>地理位置:</label>
-                            ${user.integral}
-                        </div>
+
                     </div>
                 </div>
             </div>

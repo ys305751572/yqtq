@@ -67,11 +67,10 @@
         </li>
         <li class="dropdown">
             <a class="sa-side-page" href="">
-                <span class="menu-item">病理讲座管理</span>
+                <span class="menu-item">平台赛事管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/pg/index">病理讲座列表</a></li>
-                <li><a href="${contextPath}/admin/pg2/index">病理讲座列表V2</a></li>
+                <li><a href="${contextPath}/admin/hostRace/index">平台赛事列表</a></li>
             </ul>
         </li>
         <li class="dropdown">

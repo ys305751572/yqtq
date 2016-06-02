@@ -55,9 +55,9 @@ public class TeamRaceServiceImpl extends GenericManagerImpl<TeamRace, TeamRaceDa
                                          CriteriaBuilder cb) {
                 List<Predicate> list = new ArrayList<Predicate>();
 
-                if(t.getHomeTeamId() != null || t.getVisitingTeamId() !=null) {
-                    list.add(cb.like(root.get("teamId").as(String.class), "%" + t.getHomeTeamId() + "% OR %"+t.getVisitingTeamId()+"%"));
-                }
+//                if(t.getHomeTeamId() != null || t.getVisitingTeamId() !=null) {
+//                    list.add(cb.like(root.get("teamId").as(String.class), "%" + t.getHomeTeamId() + "% OR %"+t.getVisitingTeamId()+"%"));
+//                }
                 if(t.getCityId() != null){
                     list.add(cb.equal(root.get("cityId").as(Long.class), t.getCityId()));
                 }

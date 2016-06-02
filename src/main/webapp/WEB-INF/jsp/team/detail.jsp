@@ -53,7 +53,7 @@
 
                     <div class="col-md-6 m-b-15" >
                         <label>创建时间:</label>
-                        <input type="text" id="createDate" name="createDate" value="${team.createDate}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <date:date format="yyyy-MM-dd HH:mm" value="${team.createDate}"></date:date>
                     </div>
 
                     <div class="col-md-6 m-b-15" >

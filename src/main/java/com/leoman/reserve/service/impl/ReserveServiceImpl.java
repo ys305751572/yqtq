@@ -3,6 +3,8 @@ package com.leoman.reserve.service.impl;
 import com.leoman.reserve.dao.ReserveDao;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.service.ReserveService;
+import com.leoman.stadium.entity.Stadium;
+import com.leoman.systemInsurance.entity.SystemInsurance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,9 +47,9 @@ public class ReserveServiceImpl implements ReserveService {
                 if (reserve.getPayment() != null) {
                     list.add(criteriaBuilder.equal(root.get("payment").as(Integer.class), reserve.getPayment()));
                 }
-//                if (reserve.getSystemInsurance().getName() != null) {
-//                    list.add(criteriaBuilder.equal(root.get("systemInsurance").get("name").as(Long.class), reserve.getSystemInsurance().getName()));
-//                }
+                if (reserve.getSystemInsurance().getName() != null) {
+//                    list.add(criteriaBuilder.equal(root.get("systemInsurance").get("name").as(String.class), reserve.getSystemInsurance().getName()));
+                }
                 if (reserve.getStatus() != null) {
                     list.add(criteriaBuilder.equal(root.get("status").as(Integer.class), reserve.getStatus()));
                 }
@@ -55,6 +57,11 @@ public class ReserveServiceImpl implements ReserveService {
             }
         };
         return dao.findAll(spec,new PageRequest(pagenum - 1,pagesize, Sort.Direction.DESC,"id"));
+    }
+
+    @Override
+    public List<Stadium> findStadiumName(Long id) {
+        return dao.findStadiumName(id);
     }
 
     @Override

@@ -124,7 +124,7 @@
                     },
                     "columns": [
                         {
-                            "data": "userId",
+                            "data": "id",
                             "render": function (data) {
 //                                var checkbox = "<div class=\"icheckbox_minimal\" aria-checked=\"false\" aria-disabled=\"false\" style=\"position: relative;\"><input type=\"checkbox\" value="+ data +" class='pull-left list-check' style=\"position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);\"></div>";
                                 var checkbox = "<input type='checkbox' class='pull-left list-check' value=" + data + ">";
@@ -165,8 +165,7 @@
                                 }
                             }
                         },
-//                        {"data": "systemInsurance.name"},
-                        {"data":"insuranceId"},
+                        {"data":"systemInsurance.name"},
                         {"data":"user.userId"},
                         {"data": "createDate",
                             render: function (data) {
@@ -190,7 +189,7 @@
                             }
                         },
                         {
-                            "data": "userId",
+                            "data": "id",
                             "render": function (data) {
                                 var detail = "<button title='查看' class='btn btn-primary btn-circle detail' ONCLICK='$reserve.fn.detail("+ data +")'> " +
                                         "<i class='fa fa-eye'></i></button>";
@@ -212,8 +211,8 @@
                 var items = $reserve.v.list;
                 $('td', row).last().find(".add").attr("href", 'admin/reserve/detail?id=' + data.id);
             },
-            "detail" : function(userId) {
-                window.location.href = "${contextPath}/admin/reserve/detail?userId=" + userId;
+            "detail" : function(id) {
+                window.location.href = "${contextPath}/admin/reserve/detail?id=" + id;
             },
 
             responseComplete: function (result, action) {

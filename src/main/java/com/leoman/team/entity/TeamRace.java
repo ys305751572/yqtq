@@ -2,9 +2,7 @@ package com.leoman.team.entity;//package com.leoman.team.entity;
 
 import com.leoman.common.entity.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Administrator on 2016/5/26.
@@ -14,11 +12,17 @@ import javax.persistence.Table;
 public class TeamRace  extends BaseEntity{
 
     //主队id
+//    @ManyToOne
+//    @JoinColumn(name = "home_team_id")
+//    private Team homeTeam;
     @Column(name = "home_team_id")
     private Long homeTeamId;
 
     //客队id
-    @Column(name = "visiting_team_id")
+//    @ManyToOne
+//    @JoinColumn(name = "visiting_team_id")
+//    private Team visitingTeam;
+    @Column(name= "visiting_team_id")
     private Long visitingTeamId;
 
     //城市id
@@ -37,6 +41,20 @@ public class TeamRace  extends BaseEntity{
     @Column(name = "start_date")
     private Long startDate;
 
+//    @Transient
+//    private String vs;
+//
+//    public String getVs() {
+//        return homeTeam.getName()+"VS"+visitingTeam.getName();
+//    }
+//
+//    public void setVs(String vs) {
+//        this.vs = vs;
+//    }
+
+    public TeamRace() {
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -44,6 +62,18 @@ public class TeamRace  extends BaseEntity{
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    public Long getCityId() {
+        return cityId;
+    }
+
+//    public Team getHomeTeam() {
+//        return homeTeam;
+//    }
+//
+//    public void setHomeTeam(Team homeTeam) {
+//        this.homeTeam = homeTeam;
+//    }
 
     public Long getHomeTeamId() {
         return homeTeamId;
@@ -59,10 +89,6 @@ public class TeamRace  extends BaseEntity{
 
     public void setVisitingTeamId(Long visitingTeamId) {
         this.visitingTeamId = visitingTeamId;
-    }
-
-    public Long getCityId() {
-        return cityId;
     }
 
     public void setCityId(Long cityId) {

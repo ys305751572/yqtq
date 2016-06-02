@@ -95,15 +95,18 @@ public class StadiumController  extends GenericEntityController<Stadium, Stadium
 
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(Stadium stadium){
-        Long id = stadium.getId();
-        if(id!=null){
-            stadiumService.save(stadium);
-        }else {
-            stadiumService.save(stadium);
+    public Result save(Stadium stadium,String detail){
+        Stadium s = null;
+        if(null != stadium.getId()){
+            s = stadiumService.queryByPK(stadium.getId());
         }
-
-
+        if(null != s){
+            stadium.setStadiumUserId(s.getStadiumUserId());
+        }
+        if (detail != null) {
+            stadium.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
+        }
+        stadiumService.save(stadium);
         return Result.success();
     }
 }

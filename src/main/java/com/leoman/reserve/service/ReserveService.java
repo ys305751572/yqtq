@@ -2,7 +2,11 @@ package com.leoman.reserve.service;
 
 import com.leoman.common.service.ICommonService;
 import com.leoman.reserve.entity.Reserve;
+import com.leoman.stadium.entity.Stadium;
+import com.leoman.systemInsurance.entity.SystemInsurance;
 import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 
 /**
@@ -11,4 +15,7 @@ import org.springframework.data.domain.Page;
 public interface ReserveService extends ICommonService<Reserve> {
 
     public Page<Reserve> findPage(Reserve reserve, int pagenum, int pagesize);
+
+    public List<Stadium> findStadiumName(Long id);
+
 }

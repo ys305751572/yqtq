@@ -141,7 +141,7 @@
                                 var detail = "<button title='查看' class='btn btn-primary btn-circle detail' ONCLICK='_userInfo.fn.detail("+ data +")'> " +
                                         "<i class='fa fa-eye'></i></button>";
                                 var status = "<button title='' class='btn btn-primary btn-circle detail' ONCLICK='_userInfo.fn.status("+ data +")'> " +
-                                        "<i class='fa fa-eye'></i></button>";;
+                                        "<i></i></button>";
                                 return detail+ "&nbsp;" + status;
                             }
                         }

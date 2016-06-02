@@ -18,46 +18,30 @@
 <section id="main" class="p-relative" role="main">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
-        <!-- 查询条件 -->
-        <div class="block-area" id="search">
+        <div class="block-area">
             <div class="row">
-                <div class="col-md-2 form-group">
-                    <label>比赛</label>
-                    <input type="text" class="input-sm form-control" id="teamId" name="teamId" placeholder="...">
-                </div>
-                <div class="col-md-2 form-group">
-                    <label>城市</label>
-                    <select id="cityId" name="cityId" class="select">
-                        <option value="">全部</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
-                <div class="col-md-2 form-group">
-                    <label>球场</label>
-                    <select id="stadiumId" name="stadiumId" class="select">
-                        <option value="">全部 </option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
+                <ul class="list-inline list-mass-actions">
+                    <li>
+                        <a data-toggle="modal" href="${contextPath}/admin/hostRace/add" title="新增" class="tooltips">
+                            <i class="sa-list-add"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="block-area" id="alternative-buttons">
-            <button id="c_search" class="btn btn-alt m-r-5">查询</button>
-        </div>
-        <hr class="whiter m-t-20"/>
         <!-- form表格 -->
         <div class="block-area" id="tableHover">
             <table class="table table-bordered table-hover tile" id="dataTables" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    <th>比赛队伍</th>
+                    <th>比赛名称</th>
                     <th>比赛地区</th>
+                    <th>状态</th>
+                    <th>赛制</th>
+                    <th>参赛队数</th>
                     <th>比赛时间</th>
+                    <th>比赛地区</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -70,25 +54,26 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    $teamRace = {
+    $hostRace = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                $teamRace.fn.dataTableInit();
+                $hostRace.fn.dataTableInit();
+
                 $("#c_search").click(function () {
-                    $teamRace.v.dTable.ajax.reload();
+                    $hostRace.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                $teamRace.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $hostRace.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/teamRace/list",
+                        "url": "${contextPath}/admin/hostRace/list",
                         "type": "POST"
                     },
                     "columns": [
@@ -100,38 +85,67 @@
                                 return checkbox;
                             }
                         },
+                        {"data": "name"},
+                        {"data": "status"},//地区
                         {
-                            "data": "",
-                            "render": function (data,type,full) {
-                                return full.homeTeamId+"&nbsp; VS &nbsp;"+full.visitingTeamId;
+                            "data": "status",
+                            "render":function (data){
+                                if(data==0){
+                                    return "未开始";
+                                }else if(data==1){
+                                    return "进行中";
+                                }else if(data==2){
+                                    return "已结束";
+                                }else {
+                                    return "";
+                                }
                             }
                         },
-                        {"data": "cityId"},
+                        {
+                            "data": "matchType",
+                            "render":function(data){
+                                if(data==0){
+                                    return "三人赛";
+                                }else if(data==1){
+                                    return "五人赛";
+                                }else if(data==2){
+                                    return "七人赛";
+                                }else if(data==3){
+                                    return "十一人赛";
+                                }else {
+                                    return "";
+                                }
+                            }
+                        },
+                        {"data": "hrNum"},
                         {
                             "data": "startDate",
                             "render":function(data){
                                 return new Date(data).format("yyyy-MM-dd hh:mm");
                             }
                         },
+                        {"data": "status"},//地区
                         {
                             "data": "id",
                             "render": function (data) {
-                                var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$teamRace.fn.sfTeamRaceInfo(\'" + data + "\')\">" +
+                                var detail = "<button title='查看' class='btn btn-primary btn-circle detail' ONCLICK='$hostRace.fn.sfInfo("+ data +")'> " +
                                         "<i class='fa fa-eye'></i></button>";
-                                return detail;
+                                var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$hostRace.fn.edit(\'" + data + "\')\">" +
+                                        "<i class='fa fa-pencil-square-o'></i></button>";
+                                var del = "<button title='关闭' style='background: #ff3f48' class='btn btn-primary btn-circle ' onclick=\"$hostRace.fn.del(\'" + data + "\')\">" +
+                                        "<i>关闭</i></button>";
+                                return detail+ "&nbsp;" +edit+ "&nbsp;" +del;
                             }
                         }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.teamId = $("#teamId").val();
-                        aoData.cityId = $("#cityId").val();
-                        aoData.stadiumId = $("#stadiumId").val();
+
                     }
                 });
             },
-            sfTeamRaceInfo: function (id) {
+            sfInfo: function (id) {
                 $.ajax({
-                    "url": "${contextPath}/admin/teamRace/sfTeamRaceInfo",
+                    "url": "${contextPath}/admin/hostRace/sfInfo",
                     "data": {
                         "id": id
                     },
@@ -142,16 +156,35 @@
                             $common.fn.notify(result.msg);
                             return;
                         }
-                        window.location.href = "${contextPath}/admin/teamRace/detail?id=" + id;
+                        window.location.href = "${contextPath}/admin/hostRace/detail?id=" + id;
+                    }
+                });
+            },
+            "edit" : function(id) {
+                window.location.href = "${contextPath}/admin/hostRace/edit?id=" + id;
+            },
+            "del" : function(id) {
+                $.ajax({
+                    "url": "${contextPath}/admin/hostRace/delete",
+                    "data": {
+                        "id": id
+                    },
+                    "dataType": "json",
+                    "type": "POST",
+                    "success": function (result) {
+                        if (result.status) {
+                            $common.fn.notify(result.msg);
+                            $hostRace.v.dTable.ajax.reload();
+                        }
                     }
                 });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        $teamRace.v.dTable.ajax.reload(null, false);
+                        $hostRace.v.dTable.ajax.reload(null, false);
                     } else {
-                        $teamRace.v.dTable.ajax.reload();
+                        $hostRace.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -161,7 +194,7 @@
         }
     }
     $(function () {
-        $teamRace.fn.init();
+        $hostRace.fn.init();
     })
 </script>
 <script>

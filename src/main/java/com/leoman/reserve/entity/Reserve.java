@@ -33,8 +33,9 @@ public class Reserve extends BaseEntity {
     @Column(name = "payment")
     private Integer payment;
 
-    @Column(name = "insurance_id")
-    private Long insuranceId;
+    @ManyToOne
+    @JoinColumn(name = "insurance_id")
+    private SystemInsurance systemInsurance;
 
     @Column(name = "type")
     private Integer type;
@@ -42,11 +43,11 @@ public class Reserve extends BaseEntity {
     @Column(name = "start_date")
     private Long startDate;
 
+    @Column(name = "time")
+    private Integer time;
+
     @Column(name = "status")
     private Integer status;
-
-    @Transient
-    private SystemInsurance systemInsurance;
 
     public Integer getStatus() {
         return status;
@@ -56,6 +57,13 @@ public class Reserve extends BaseEntity {
         this.status = status;
     }
 
+    public Integer getTime() {
+        return time;
+    }
+
+    public void setTime(Integer time) {
+        this.time = time;
+    }
 
     public Long getStadiumId() {
         return stadiumId;
@@ -119,14 +127,6 @@ public class Reserve extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Long getInsuranceId() {
-        return insuranceId;
-    }
-
-    public void setInsuranceId(Long insuranceId) {
-        this.insuranceId = insuranceId;
     }
 
     public SystemInsurance getSystemInsurance() {
