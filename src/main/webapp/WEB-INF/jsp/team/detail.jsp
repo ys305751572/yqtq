@@ -53,7 +53,7 @@
 
                     <div class="col-md-6 m-b-15" >
                         <label>创建时间:</label>
-                        <date:date format="yyyy-MM-dd HH:mm" value="${team.createDate}"></date:date>
+                        <input type="text" id="createDate" name="createDate" value="" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
@@ -64,17 +64,6 @@
                     <div class="col-md-6 m-b-15" >
                         <label>队员:</label>
                         <input type="text" id="tmSetNum" name="tmSetNum" value="${team.tmSetNum}" class="input-sm form-control validate[required]" placeholder="..." disabled>
-                    </div>
-                    <div class="col-md-2 form-group">
-                        <%--<select name="tmSet" id="tmSet" class="select">--%>
-                            <%--<c:forEach items="${teamMember}" var="t" varStatus="toop">--%>
-                                <%--<c:forEach items="${userList}" var="u" varStatus="tt">--%>
-                                    <%--<option value="${t.userId}">--%>
-                                        <%--<c:if test="${t.userId eq u.userId}"> ${t.userId} || ${u.nickName} || ${u.userId}</c:if>--%>
-                                    <%--</option>--%>
-                                <%--</c:forEach>--%>
-                            <%--</c:forEach>--%>
-                        <%--</select>--%>
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
@@ -127,6 +116,10 @@
     }
     $(function () {
         $team.fn.init();
+        var createDate = ${team.createDate};
+        createDate = new Date().format("yyyy-MM-dd HH:mm");
+        $("#createDate").val(createDate);
+        <%--<date:date format="yyyy-MM-dd HH:mm" value="${team.createDate}"></date:date>--%>
     })
 </script>
 <script>

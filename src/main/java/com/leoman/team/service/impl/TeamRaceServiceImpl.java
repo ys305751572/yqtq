@@ -8,6 +8,7 @@ import com.leoman.team.entity.TeamRace;
 import com.leoman.team.entity.vo.TeamVo;
 import com.leoman.team.service.TeamRaceService;
 import com.leoman.team.service.TeamService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,12 +44,12 @@ public class TeamRaceServiceImpl extends GenericManagerImpl<TeamRace, TeamRaceDa
     }
 
     @Override
-    public Page<TeamRace> findAll(TeamRace teamRace, Integer currentPage, Integer pageSize) throws Exception {
-        Specification<TeamRace> spec = buildSpecification(teamRace);
+    public Page<TeamRace> findAll(TeamRace teamRace, String teamName, Integer currentPage, Integer pageSize) throws Exception {
+        Specification<TeamRace> spec = buildSpecification(teamRace,teamName);
         return dao.findAll(spec, new PageRequest(currentPage-1, pageSize, Sort.Direction.DESC, "id"));
     }
 
-    public Specification<TeamRace> buildSpecification(final TeamRace t) {
+    public Specification<TeamRace> buildSpecification(final TeamRace t,final String teamName) {
         return new Specification<TeamRace>() {
             @Override
             public Predicate toPredicate(Root<TeamRace> root, CriteriaQuery<?> cq,
@@ -58,14 +59,33 @@ public class TeamRaceServiceImpl extends GenericManagerImpl<TeamRace, TeamRaceDa
 //                if(t.getHomeTeamId() != null || t.getVisitingTeamId() !=null) {
 //                    list.add(cb.like(root.get("teamId").as(String.class), "%" + t.getHomeTeamId() + "% OR %"+t.getVisitingTeamId()+"%"));
 //                }
+                Predicate p = null;
+                if(StringUtils.isNotBlank(teamName)) {
+                    p = cb.like(root.get("homeTeam").get("name").as(String.class),"%" + teamName + "%");
+                    p = cb.or(p,cb.like(root.get("visitingTeam").get("name").as(String.class),"%" + teamName + "%"));
+                }
                 if(t.getCityId() != null){
-                    list.add(cb.equal(root.get("cityId").as(Long.class), t.getCityId()));
+//                    list.add(cb.equal(root.get("cityId").as(Long.class), t.getCityId()));
+                    if(p != null) {
+                        p = cb.and(p,cb.equal(root.get("cityId").as(Long.class), t.getCityId()));
+                    }
+                    else {
+                        p = cb.equal(root.get("cityId").as(Long.class), t.getCityId());
+                        cb.and(p);
+                    }
                 }
                 if(t.getStadiumId() !=null){
-                    list.add(cb.equal(root.get("stadium").as(Long.class), t.getStadiumId()));
+//                    list.add(cb.equal(root.get("stadium").as(Long.class), t.getStadiumId()));
+                    if(p != null) {
+                        p = cb.and(p,cb.equal(root.get("stadium").as(Long.class), t.getStadiumId()));
+                    }
+                    else {
+                        p = cb.and(cb.equal(root.get("stadium").as(Long.class), t.getStadiumId()));
+                    }
+
                 }
-                Predicate[] p = new Predicate[list.size()];
-                return cb.and(list.toArray(p));
+//                Predicate[] p = new Predicate[list.size()];
+                return p;
             }
         };
     }

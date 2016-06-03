@@ -19,5 +19,5 @@ public interface TeamService extends GenericManager<Team> {
 
     public  List<Team> findAll();
 
-
+    public Integer findTmSize(Long teamId);
 }

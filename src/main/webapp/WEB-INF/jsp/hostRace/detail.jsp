@@ -52,7 +52,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="${contextPath}/admin/1/1" title="报名队伍" class="tooltips">
+                                        <a href="${contextPath}/admin/hostRaceJoin/index?id=${hostRace.id}" title="报名队伍" class="tooltips">
                                             <i>报名队伍</i>
                                         </a>
                                     </li>

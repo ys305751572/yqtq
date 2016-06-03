@@ -27,8 +27,7 @@
                 </div>
                 <div class="col-md-2 form-group">
                     <label>昵称</label>
-                    <input type="text" class="input-sm form-control" id="nickName" name="nickName"
-                           placeholder="..." readonly="readonly">
+                    <input type="text" class="input-sm form-control" id="nickName" name="nickName" placeholder="..." >
                 </div>
                 <div class="col-md-2 form-group">
                     <label>用户状态</label>
@@ -137,11 +136,19 @@
                         {"data": "userId"},
                         {
                             "data": "userId",
-                            "render": function (data) {
+                            "render": function (data,type,full) {
                                 var detail = "<button title='查看' class='btn btn-primary btn-circle detail' ONCLICK='_userInfo.fn.detail("+ data +")'> " +
                                         "<i class='fa fa-eye'></i></button>";
-                                var status = "<button title='' class='btn btn-primary btn-circle detail' ONCLICK='_userInfo.fn.status("+ data +")'> " +
-                                        "<i></i></button>";
+                                var st = full.status;
+                                if(st==0){
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' ONCLICK='_userInfo.fn.status("+ data +")'> " +
+                                            "<i>禁用</i></button>";
+                                }else if(st==1){
+                                    var status = "<button title='启用' class='btn btn-primary btn-circle detail' ONCLICK='_userInfo.fn.status("+ data +")'> " +
+                                            "<i>启用</i></button>";
+                                }
+
+
                                 return detail+ "&nbsp;" + status;
                             }
                         }
@@ -170,10 +177,11 @@
                     "dataType": "json",
                     "type": "POST",
                     success: function (result) {
-                        if (result.status) {
-                            $common.fn.notify("成功");
-                            _userInfo.v.dTable.ajax.reload();
+                        if (!result.status) {
+                            $common.fn.notify(result.msg);
+                            return;
                         }
+                        _userInfo.v.dTable.ajax.reload();
                     }
                 });
             },

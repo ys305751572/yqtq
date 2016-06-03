@@ -11,5 +11,5 @@ public interface TeamRaceService extends GenericManager<TeamRace> {
 
     public TeamRace findById(Long id) throws Exception ;
 
-    public Page<TeamRace> findAll(TeamRace teamRace, Integer currentPage, Integer pageSize) throws Exception;
+    public Page<TeamRace> findAll(TeamRace teamRace,String teamName, Integer currentPage, Integer pageSize) throws Exception;
 }

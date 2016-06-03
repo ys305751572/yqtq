@@ -102,6 +102,13 @@ public class StadiumController  extends GenericEntityController<Stadium, Stadium
         }
         if(null != s){
             stadium.setStadiumUserId(s.getStadiumUserId());
+            stadium.setType(s.getType());
+            stadium.setAddress(s.getAddress());
+            stadium.setRtSet(s.getRtSet());////预定总数
+            stadium.setrSet(s.getrSet());//当前预定数
+            stadium.setSsSet(s.getSsSet());//场地数
+            stadium.setSsStatus(s.getSsStatus());//状态
+            stadium.setCreateDate(s.getCreateDate());
         }
         if (detail != null) {
             stadium.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));

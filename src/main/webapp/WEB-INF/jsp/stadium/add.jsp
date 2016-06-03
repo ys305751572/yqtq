@@ -38,8 +38,8 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>球场基本信息:</label>
-                        <input type="checkbox" id="chk" onclick="$user.fn.hid(this);" />
-                        <div class="div_hidden" id="div_hidden">
+                        <input type="checkbox" id="chk" />
+                        <div class="div_hidden" id="div_hidden" style="display: none">
                             <label>场地类型：</label>
                                 <select id="siteType" name="siteType" class="select">
                                     <option value="0">室内</option>
@@ -107,13 +107,15 @@
         },
         fn: {
             init: function () {
-                $user.fn.initImage();
+                $(".iCheck-helper").click(function() {
+                    $user.fn.hid();
+                });
             },
             hid:function(){
-                if($("#chk").attr("checked")==true){
-                    $("div_hidden").css('display','block');
+                if($(".icheckbox_minimal").attr("aria-checked")=="true"){
+                    $("#div_hidden").css('display','block');
                 }else {
-                    $("div_hidden").css('display','none');
+                    $("#div_hidden").css('display','none');
                 }
             },
             save : function () {

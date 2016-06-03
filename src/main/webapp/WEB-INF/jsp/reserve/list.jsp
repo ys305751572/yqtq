@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-md-2 form-group">
                     <label>保险</label>
-                    <select id="name" name="name" class="select">
+                    <select id="insuranceId" name="insuranceId" class="select">
                         <option value="">全部</option>
                         <option value="1">5万元经济型意外保险</option>
                         <option value="2">10万元基础型意外保险</option>
@@ -141,16 +141,16 @@
                         {"data": "user.nickName"},
                         {"data": "matchType",
                             render:function(data){
-                                if(data==0){
+                                if(data==3){
                                     return "三人制";
                                 }
-                                if(data==1){
+                                if(data==5){
                                     return "五人制";
                                 }
-                                if(data==2){
+                                if(data==7){
                                     return"七人制";
                                 }
-                                if(data==3){
+                                if(data==11){
                                     return"十一人制";
                                 }
                             }
@@ -202,7 +202,7 @@
                         aoData.stadiumId = $("#stadiumId").val();
                         aoData.matchType = $("#matchType").val();
                         aoData.payment = $("#payment").val();
-                        aoData.name = $("#name").val();
+                        aoData.id = $("#insuranceId").val();
                         aoData.status = $("#status").val();
                     }
                 });

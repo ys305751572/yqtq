@@ -63,11 +63,11 @@ public class ReserveController extends CommonController {
                      Integer start,
                      Integer length,
                      Reserve reserve,
-                     SystemInsurance name,
+                     SystemInsurance id,
                      Model model) {
         try {
             int pageNum = getPageNum(start, length);
-            reserve.setSystemInsurance(name);
+            reserve.setSystemInsurance(id);
             Page<Reserve> page = service.findPage(reserve,pageNum,length);
             Map<String, Object> result = DataTableFactory.fitting(draw, page);
             WebUtil.print(response, result);

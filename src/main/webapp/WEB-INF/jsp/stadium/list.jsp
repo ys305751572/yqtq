@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-md-2 form-group">
                     <label>球场类型</label>
-                    <select id="stadiumId" name="stadiumId" class="select">
+                    <select id="type" name="type" class="select">
                         <option value="">全部</option>
                         <option value="0">私有</option>
                         <option value="1">公有</option>

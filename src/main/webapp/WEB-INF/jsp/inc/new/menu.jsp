@@ -75,10 +75,10 @@
         </li>
         <li class="dropdown">
             <a class="sa-side-typography" href="">
-                <span class="menu-item">题库管理</span>
+                <span class="menu-item">看球管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/question/qc/index">题库列表</a></li>
+                <li><a href="${contextPath}/admin/girl/index">宝贝列表</a></li>
             </ul>
         </li>
         <li class="dropdown">

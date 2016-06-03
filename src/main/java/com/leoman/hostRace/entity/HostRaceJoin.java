@@ -1,10 +1,9 @@
 package com.leoman.hostRace.entity;
 
 import com.leoman.common.entity.BaseEntity;
+import com.leoman.team.entity.Team;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Administrator on 2016/6/2.
@@ -16,8 +15,20 @@ public class HostRaceJoin extends BaseEntity {
     @Column(name = "host_race_id")
     private Long hostRaceId;
 
-    @Column(name = "team_id")
-    private Long teamId;
+//    @Column(name = "team_id")
+//    private Long teamId;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 
     public Long getHostRaceId() {
         return hostRaceId;
@@ -27,11 +38,4 @@ public class HostRaceJoin extends BaseEntity {
         this.hostRaceId = hostRaceId;
     }
 
-    public Long getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(Long teamId) {
-        this.teamId = teamId;
-    }
 }

@@ -17,7 +17,7 @@ public class Team extends BaseEntity {
 
     //球队名称
     @Column(name = "name")
-    private Long name;
+    private String name;
     //城市ID
     @Column(name = "city_id")
     private Long cityId;
@@ -36,14 +36,14 @@ public class Team extends BaseEntity {
     @JoinColumn(name = "team_id")
     private Set<TeamMember> tmSet;
 
-    //主队
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "home_team_id")
-    private Set<TeamRace> trSet;
-    //客队
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "visiting_team_id")
-    private Set<TeamRace> trvSet;
+//    //主队
+//    @OneToMany(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "home_team_id")
+//    private Set<TeamRace> trSet;
+//    //客队
+//    @OneToMany(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "visiting_team_id")
+//    private Set<TeamRace> trvSet;
 
     //场次
     @Transient
@@ -62,20 +62,20 @@ public class Team extends BaseEntity {
     }
 
     public Integer getTmSize() {
-        return trvSet.size() + trSet.size();
+        return tmSize;
     }
 
     public void setTmSize(Integer tmSize) {
         this.tmSize = tmSize;
     }
-
-    public Set<TeamRace> getTrvSet() {
-        return trvSet;
-    }
-
-    public void setTrvSet(Set<TeamRace> trvSet) {
-        this.trvSet = trvSet;
-    }
+//
+//    public Set<TeamRace> getTrvSet() {
+//        return trvSet;
+//    }
+//
+//    public void setTrvSet(Set<TeamRace> trvSet) {
+//        this.trvSet = trvSet;
+//    }
 
     public Set<TeamMember> getTmSet() {
         return tmSet;
@@ -85,17 +85,17 @@ public class Team extends BaseEntity {
         this.tmSet = tmSet;
     }
 
-    public Set<TeamRace> getTrSet() {
-        return trSet;
-    }
+//    public Set<TeamRace> getTrSet() {
+//        return trSet;
+//    }
+//
+//    public void setTrSet(Set<TeamRace> trSet) {
+//        this.trSet = trSet;
+//    }
 
-    public void setTrSet(Set<TeamRace> trSet) {
-        this.trSet = trSet;
-    }
-
-    public Long getName() {
+    public String getName() {
         return name;
-    }public void setName(Long name) {
+    }public void setName(String name) {
         this.name = name;
     }public Long getCityId() {
         return cityId;

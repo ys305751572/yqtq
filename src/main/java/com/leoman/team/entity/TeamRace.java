@@ -12,18 +12,14 @@ import javax.persistence.*;
 public class TeamRace  extends BaseEntity{
 
     //主队id
-//    @ManyToOne
-//    @JoinColumn(name = "home_team_id")
-//    private Team homeTeam;
-    @Column(name = "home_team_id")
-    private Long homeTeamId;
+    @ManyToOne
+    @JoinColumn(name = "home_team_id")
+    private Team homeTeam;
 
     //客队id
-//    @ManyToOne
-//    @JoinColumn(name = "visiting_team_id")
-//    private Team visitingTeam;
-    @Column(name= "visiting_team_id")
-    private Long visitingTeamId;
+    @ManyToOne
+    @JoinColumn(name = "visiting_team_id")
+    private Team visitingTeam;
 
     //城市id
     @Column(name = "city_id")
@@ -41,17 +37,6 @@ public class TeamRace  extends BaseEntity{
     @Column(name = "start_date")
     private Long startDate;
 
-//    @Transient
-//    private String vs;
-//
-//    public String getVs() {
-//        return homeTeam.getName()+"VS"+visitingTeam.getName();
-//    }
-//
-//    public void setVs(String vs) {
-//        this.vs = vs;
-//    }
-
     public TeamRace() {
     }
 
@@ -67,28 +52,20 @@ public class TeamRace  extends BaseEntity{
         return cityId;
     }
 
-//    public Team getHomeTeam() {
-//        return homeTeam;
-//    }
-//
-//    public void setHomeTeam(Team homeTeam) {
-//        this.homeTeam = homeTeam;
-//    }
-
-    public Long getHomeTeamId() {
-        return homeTeamId;
+    public Team getHomeTeam() {
+        return homeTeam;
     }
 
-    public void setHomeTeamId(Long homeTeamId) {
-        this.homeTeamId = homeTeamId;
+    public void setHomeTeam(Team homeTeam) {
+        this.homeTeam = homeTeam;
     }
 
-    public Long getVisitingTeamId() {
-        return visitingTeamId;
+    public Team getVisitingTeam() {
+        return visitingTeam;
     }
 
-    public void setVisitingTeamId(Long visitingTeamId) {
-        this.visitingTeamId = visitingTeamId;
+    public void setVisitingTeam(Team visitingTeam) {
+        this.visitingTeam = visitingTeam;
     }
 
     public void setCityId(Long cityId) {

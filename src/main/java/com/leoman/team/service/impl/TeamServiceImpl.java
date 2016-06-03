@@ -91,12 +91,22 @@ public class TeamServiceImpl extends GenericManagerImpl<Team, TeamDao> implement
     @Override
     public Page<Team> findAll(Team team, Integer currentPage, Integer pageSize) throws Exception {
         Specification<Team> spec = buildSpecification(team);
-        return dao.findAll(spec, new PageRequest(currentPage-1, pageSize, Sort.Direction.DESC, "id"));
+        Page<Team> page = dao.findAll(spec, new PageRequest(currentPage-1, pageSize, Sort.Direction.DESC, "id"));
+        List<Team> list = page.getContent();
+        for (Team team1 : list) {
+            team1.setTmSize(this.findTmSize(team1.getId()));
+        }
+        return page;
     }
 
     @Override
     public List<Team> findAll() {
         return dao.findAll();
+    }
+
+    @Override
+    public Integer findTmSize(Long teamId) {
+        return dao.findTmSize(teamId);
     }
 
     @Override

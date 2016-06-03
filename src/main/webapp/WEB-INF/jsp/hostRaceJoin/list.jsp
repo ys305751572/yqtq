@@ -18,46 +18,21 @@
 <section id="main" class="p-relative" role="main">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
-        <!-- 查询条件 -->
-        <div class="block-area" id="search">
-            <div class="row">
-                <div class="col-md-2 form-group">
-                    <label>比赛</label>
-                    <input type="text" class="input-sm form-control" id="teamName" name="teamName" placeholder="...">
-                </div>
-                <div class="col-md-2 form-group">
-                    <label>城市</label>
-                    <select id="cityId" name="cityId" class="select">
-                        <option value="">全部</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
-                <div class="col-md-2 form-group">
-                    <label>球场</label>
-                    <select id="stadiumId" name="stadiumId" class="select">
-                        <option value="">全部 </option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
-            </div>
+        <div>
+            <input type="hidden" id="hostRaceId" name="hostRaceId" value="${id}">
         </div>
-        <div class="block-area" id="alternative-buttons">
-            <button id="c_search" class="btn btn-alt m-r-5">查询</button>
-        </div>
-        <hr class="whiter m-t-20"/>
         <!-- form表格 -->
         <div class="block-area" id="tableHover">
             <table class="table table-bordered table-hover tile" id="dataTables" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    <th>比赛队伍</th>
-                    <th>比赛地区</th>
-                    <th>比赛时间</th>
+                    <th>队名</th>
+                    <th>地区</th>
+                    <th>人数</th>
+                    <th>比赛场次</th>
+                    <th>报名时间</th>
+                    <th>队长</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -70,25 +45,26 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    $teamRace = {
+    $hostRaceJoin = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                $teamRace.fn.dataTableInit();
+                $hostRaceJoin.fn.dataTableInit();
+
                 $("#c_search").click(function () {
-                    $teamRace.v.dTable.ajax.reload();
+                    $hostRaceJoin.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                $teamRace.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $hostRaceJoin.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/teamRace/list",
+                        "url": "${contextPath}/admin/hostRaceJoin/list",
                         "type": "POST"
                     },
                     "columns": [
@@ -100,39 +76,29 @@
                                 return checkbox;
                             }
                         },
+                        {"data": "team.name"},
+                        {"data": "team.cityId"},
+                        {"data": "team.tmSetNum"},
+                        {"data": "team.tmSize"},
+                        {"data": "createDate"},
+                        {"data": "team.leaderUserId"},
                         {
-                            "data": "cityId",
-                            "render": function (data,type,full) {
-                                return full.homeTeam.name +"&nbsp; VS &nbsp;"+full.visitingTeam.name;
-                            }
-                        },
-                        {"data": "cityId"},
-                        {
-                            "data": "startDate",
-                            "render":function(data){
-                                return new Date(data).format("yyyy-MM-dd hh:mm");
-                            }
-                        },
-                        {
-                            "data": "id",
+                            "data": "team.id",
                             "render": function (data) {
-                                var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$teamRace.fn.sfTeamRaceInfo(\'" + data + "\')\">" +
+                                var detail = "<button title='查看' class='btn btn-primary btn-circle detail' ONCLICK='$hostRaceJoin.fn.sfInfo("+ data +")'> " +
                                         "<i class='fa fa-eye'></i></button>";
                                 return detail;
                             }
                         }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.teamId = $("#teamId").val();
-                        aoData.teamName = $("#teamName").val();
-                        aoData.cityId = $("#cityId").val();
-                        aoData.stadiumId = $("#stadiumId").val();
+                        aoData.hostRaceId = $("#hostRaceId").val();
                     }
                 });
             },
-            sfTeamRaceInfo: function (id) {
+            sfInfo: function (id) {
                 $.ajax({
-                    "url": "${contextPath}/admin/teamRace/sfTeamRaceInfo",
+                    "url": "${contextPath}/admin/team/sfTeamInfo",
                     "data": {
                         "id": id
                     },
@@ -143,16 +109,16 @@
                             $common.fn.notify(result.msg);
                             return;
                         }
-                        window.location.href = "${contextPath}/admin/teamRace/detail?id=" + id;
+                        window.location.href = "${contextPath}/admin/team/detail?id=" + id;
                     }
                 });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        $teamRace.v.dTable.ajax.reload(null, false);
+                        $hostRaceJoin.v.dTable.ajax.reload(null, false);
                     } else {
-                        $teamRace.v.dTable.ajax.reload();
+                        $hostRaceJoin.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -162,7 +128,7 @@
         }
     }
     $(function () {
-        $teamRace.fn.init();
+        $hostRaceJoin.fn.init();
     })
 </script>
 <script>

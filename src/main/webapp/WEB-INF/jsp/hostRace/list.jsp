@@ -101,18 +101,17 @@
                                 }
                             }
                         },
-                        {
-                            "data": "matchType",
-                            "render":function(data){
-                                if(data==0){
-                                    return "三人赛";
-                                }else if(data==1){
-                                    return "五人赛";
-                                }else if(data==2){
-                                    return "七人赛";
-                                }else if(data==3){
-                                    return "十一人赛";
-                                }else {
+                        {"data": "matchType",
+                            render:function(data){
+                                if(data==3){
+                                    return "三人制";
+                                }else if(data==5){
+                                    return "五人制";
+                                }else if(data==7){
+                                    return"七人制";
+                                }else if(data==11){
+                                    return"十一人制";
+                                }else{
                                     return "";
                                 }
                             }

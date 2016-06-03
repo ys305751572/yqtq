@@ -59,7 +59,7 @@ public class StadiumServiceImpl extends GenericManagerImpl<Stadium, StadiumDao> 
                 }
 
                 if(s.getType() != null){
-                    list.add(cb.equal(root.get("type").as(Long.class),s.getType()));
+                    list.add(cb.equal(root.get("type").as(Integer.class),s.getType()));
                 }
                 Predicate[] p = new Predicate[list.size()];
                 return cb.and(list.toArray(p));

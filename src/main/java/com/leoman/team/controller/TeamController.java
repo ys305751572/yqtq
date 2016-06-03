@@ -57,6 +57,8 @@ public class TeamController extends GenericEntityController<Team, Team, TeamServ
         try {
             int pagenum = getPageNum(start,length);
             teamPage = teamService.findAll(team, pagenum, length);
+
+
 //            list = teamService.findList(null,null,null,start,length);
         } catch (Exception e) {
             e.printStackTrace();
