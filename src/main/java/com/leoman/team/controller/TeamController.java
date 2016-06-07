@@ -1,5 +1,7 @@
 package com.leoman.team.controller;
 
+import com.leoman.city.entity.City;
+import com.leoman.city.service.CityService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.team.entity.Team;
@@ -37,8 +39,17 @@ public class TeamController extends GenericEntityController<Team, Team, TeamServ
     @Autowired
     private TeamService teamService;
 
+    @Autowired
+    private CityService cityService;
+
     @RequestMapping(value = "/index")
-    public String index(){
+    public String index(Model model,HttpServletRequest request){
+        try{
+            List<City> city = cityService.queryAll();
+            model.addAttribute("city",city);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
        return "/team/list";
     }
 
@@ -51,13 +62,13 @@ public class TeamController extends GenericEntityController<Team, Team, TeamServ
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,Team team){
+    public Object list(Integer draw, Integer start, Integer length,Team team,City cityId){
         Page<Team> teamPage = null;
 //        List<Team> list = null;
         try {
             int pagenum = getPageNum(start,length);
+            team.setCity(cityId);
             teamPage = teamService.findAll(team, pagenum, length);
-
 
 //            list = teamService.findList(null,null,null,start,length);
         } catch (Exception e) {

@@ -22,57 +22,25 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">场地编辑</h1>
+        <h1 class="page-title">新增资讯</h1>
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${hostRace.id}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>赛事名称：</label>
-                        <input type="text" id="name" name="name" value="${hostRace.name}" class="input-sm form-control validate[required]" placeholder="...">
-                    </div>
-                    <div class="col-md-12 m-b-15">
-                        <label>球场封面：</label>
-                        <div class="fileupload fileupload-new" data-provides="fileupload">
-                            <div class="fileupload-preview thumbnail form-control">
-                                <c:if test="${hostRace.avater ne null}">
-                                    <img src="${hostRace.avater}">
-                                </c:if>
-                            </div>
-                            <div>
-                                <span class="btn btn-file btn-alt btn-sm">
-                                    <span class="fileupload-new">选择图片</span>
-                                    <span class="fileupload-exists">更改</span>
-                                    <input id="imageFile" name="imageFile" type="file"/>
-                                </span>
-                                <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
-                            </div>
-                        </div>
-                    </div>
-                    <c:if test="${hostRace.id eq null}">
-                        <div class="col-md-6 m-b-15">
-                            <label>球场名称：</label>
-                            <input type="text" id="cityId" name="cityId" value="" class="input-sm form-control validate[required]" placeholder="...">
-                        </div>
-                        <div class="col-md-6 m-b-15">
-                            <label>比赛地址：</label>
-                            <input type="text" id="" name="" value="" class="input-sm form-control validate[required]" placeholder="...">
-                        </div>
-                    </c:if>
-                    <div class="col-md-6 m-b-15">
-                        <label>比赛时间：</label>
-                        <input type="text" id="startDate" name="startDate" value="${hostRace.startDate}" class="input-sm form-control form_datetime validate[required]" placeholder="...">
+                        <input type="text" id="name" name="name" value="${hostRace.name}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
-                        <label>详细描述</label>
-                        <div class="wysiwye-editor" id="detail" name="detail">${hostRace.description}</div>
+                        <label>赛事资讯</label>
+                        <div class="wysiwye-editor" id="detail" name="detail"></div>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-5">
-                        <button type="button" onclick="$user.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
+                        <button type="button" onclick="" class="btn btn-info btn-sm m-t-10">提交</button>
                         <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                     </div>
                 </div>

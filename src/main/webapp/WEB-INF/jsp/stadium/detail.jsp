@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-group">
                             <label>城市:</label>
-                            ${stadium.cityId}
+                            ${stadium.city.city}
                         </div>
                         <div class="form-group">
                             <label>厂主:</label>

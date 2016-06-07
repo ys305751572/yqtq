@@ -1,5 +1,7 @@
 package com.leoman.stadium.controller;
 
+import com.leoman.city.entity.City;
+import com.leoman.city.service.CityService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.stadium.entity.Stadium;
@@ -22,22 +24,32 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/admin/stadium")
-public class StadiumController  extends GenericEntityController<Stadium, Stadium, StadiumServiceImpl> {
+public class StadiumController extends GenericEntityController<Stadium, Stadium, StadiumServiceImpl> {
 
     @Autowired
     private StadiumService stadiumService;
 
+    @Autowired
+    private CityService cityService;
+
     @RequestMapping(value = "/index")
-    public String index(){
+    public String index(Model model){
+        try{
+            List<City> city = cityService.queryAll();
+            model.addAttribute("city",city);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
         return "stadium/list";
     }
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,Stadium stadium){
+    public Object list(Integer draw, Integer start, Integer length,Stadium stadium,City cityId){
         Page<Stadium> stadiumPage = null;
         try {
             int pagenum = getPageNum(start,length);
+            stadium.setCity(cityId);
             stadiumPage = stadiumService.findAll(stadium, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,7 +90,13 @@ public class StadiumController  extends GenericEntityController<Stadium, Stadium
     }
 
     @RequestMapping(value = "/add")
-    public String add(){
+    public String add(Model model){
+        try{
+            List<City> city = cityService.queryAll();
+            model.addAttribute("city",city);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return "/stadium/add";
     }
 
@@ -87,6 +105,8 @@ public class StadiumController  extends GenericEntityController<Stadium, Stadium
         try{
             Stadium stadium = stadiumService.findById(id);
             model.addAttribute("stadium", stadium);
+            List<City> city = cityService.queryAll();
+            model.addAttribute("city",city);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -95,12 +115,16 @@ public class StadiumController  extends GenericEntityController<Stadium, Stadium
 
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(Stadium stadium,String detail){
+    public Result save(Stadium stadium,String detail,City city){
         Stadium s = null;
         if(null != stadium.getId()){
             s = stadiumService.queryByPK(stadium.getId());
         }
+        else {
+            s = new Stadium();
+        }
         if(null != s){
+            stadium.setAreaId(s.getAreaId());
             stadium.setStadiumUserId(s.getStadiumUserId());
             stadium.setType(s.getType());
             stadium.setAddress(s.getAddress());
@@ -112,6 +136,10 @@ public class StadiumController  extends GenericEntityController<Stadium, Stadium
         }
         if (detail != null) {
             stadium.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
+        }
+        if(city != null){
+            City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
+            stadium.setCity(_city);
         }
         stadiumService.save(stadium);
         return Result.success();

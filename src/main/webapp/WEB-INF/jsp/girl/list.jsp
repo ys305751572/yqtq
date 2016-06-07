@@ -22,41 +22,34 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <label>球场名称</label>
-                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="...">
-                </div>
-                <div class="col-md-2 form-group">
-                    <label>城市</label>
                     <select id="cityId" name="cityId" class="select">
-                        <option value ="">全部</option>
+                        <option value="">城市</option>
                         <c:forEach items="${city}" var="c">
-                            <option value = "${c.cityId}">${c.city}</option>
+                            <option value="${c.cityId}">${c.city}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>球场类型</label>
-                    <select id="type" name="type" class="select">
+                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="宝贝姓名">
+                </div>
+                <div class="col-md-2 form-group">
+                    <select id="status" name="status" class="select">
                         <option value="">全部</option>
-                        <option value="0">私有</option>
-                        <option value="1">公有</option>
+                        <option value="0">可预约</option>
+                        <option value="1">不可预约</option>
+                    </select>
+                </div>
+                <div class="col-md-2 form-group">
+                    <select id="" name="" class="select">
+                        <option value="">全部</option>
+                        <option value="">最近比赛无预约</option>
+                        <option value="">最近比赛有预约</option>
                     </select>
                 </div>
             </div>
         </div>
         <div class="block-area" id="alternative-buttons">
             <button id="c_search" class="btn btn-alt m-r-5">查询</button>
-        </div>
-        <div class="block-area">
-            <div class="row">
-                <ul class="list-inline list-mass-actions">
-                    <li>
-                        <a data-toggle="modal" href="${contextPath}/admin/stadium/add" title="新增" class="tooltips">
-                            <i class="sa-list-add"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
         </div>
         <hr class="whiter m-t-20"/>
         <!-- form表格 -->
@@ -65,13 +58,14 @@
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    <th>城市</th>
-                    <th>球场名称</th>
-                    <th>球场类型</th>
-                    <th>被预定总数</th>
-                    <th>当前预定数</th>
-                    <th>场地数</th>
+                    <th>地区</th>
+                    <th>宝贝昵称</th>
+                    <th>宝贝年龄</th>
+                    <th>身高</th>
+                    <th>体重</th>
+                    <th>价格</th>
                     <th>状态</th>
+                    <th>预约次数</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -84,64 +78,63 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    $stadium = {
+    $girl = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                $stadium.fn.dataTableInit();
+                $girl.fn.dataTableInit();
+
                 $("#c_search").click(function () {
-                    $stadium.v.dTable.ajax.reload();
+                    $girl.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                $stadium.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $girl.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/stadium/list",
+                        "url": "${contextPath}/admin/girl/list",
                         "type": "POST"
                     },
                     "columns": [
                         {
                             "data": "id",
                             "render": function (data) {
+//                                var checkbox = "<div class=\"icheckbox_minimal\" aria-checked=\"false\" aria-disabled=\"false\" style=\"position: relative;\"><input type=\"checkbox\" value="+ data +" class='pull-left list-check' style=\"position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);\"></div>";
                                 var checkbox = "<input type='checkbox' class='pull-left list-check' value=" + data + ">";
                                 return checkbox;
                             }
                         },
-                        {"data": "city.city","sDefaultContent" : ""},
+                        {"data": "city.city"},
                         {"data": "name"},
+                        {"data": "age"},
+                        {"data": "height"},
+                        {"data": "weight"},
                         {
-                            "data": "type",
+                            "data": "price",
+                            "render":function(data){
+                                return data+"/h";
+                            }
+                        },
+                        {
+                            "data": "status",
                             "render":function(data){
                                 if(data==0){
-                                    return "私人球场";
-                                }else {
-                                    return "公共球场";
+                                    return "可预约"
+                                }else if(data==1){
+                                    return "不可预约"
                                 }
                             }
                         },
-                        {"data": "stadiumNum","sDefaultContent" : ""},
-                        {"data": "availableStadiumNum","sDefaultContent" : ""},
-                        {"data": "siteNum","sDefaultContent" : ""},
-                        {
-                            "data": "isStatus",
-                            "render": function (data) {
-                                if(data==0){
-                                    return "无可预订场次";
-                                }else {
-                                    return "可预订";
-                                }
-                            }
-                        },
+                        {"data": "age"},//预约次数
                         {
                             "data": "id",
                             "render": function (data) {
-                                var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$stadium.fn.sfStadiumInfo(\'" + data + "\')\">" +
+                                var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$girl.fn.sfInfo(\'" + data + "\')\">" +
                                         "<i class='fa fa-eye'></i></button>";
                                 return detail;
                             }
@@ -150,13 +143,13 @@
                     "fnServerParams": function (aoData) {
                         aoData.name = $("#name").val();
                         aoData.cityId = $("#cityId").val();
-                        aoData.type = $("#type").val();
+                        aoData.status = $("#status").val();
                     }
                 });
             },
-            sfStadiumInfo: function (id) {
+            sfInfo: function (id) {
                 $.ajax({
-                    "url": "${contextPath}/admin/stadium/sfStadiumInfo",
+                    "url": "${contextPath}/admin/girl/sfInfo",
                     "data": {
                         "id": id
                     },
@@ -167,16 +160,16 @@
                             $common.fn.notify(result.msg);
                             return;
                         }
-                        window.location.href = "${contextPath}/admin/stadium/detail?id=" + id;
+                        window.location.href = "${contextPath}/admin/girl/detail?id=" + id;
                     }
                 });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        $stadium.v.dTable.ajax.reload(null, false);
+                        $girl.v.dTable.ajax.reload(null, false);
                     } else {
-                        $stadium.v.dTable.ajax.reload();
+                        $girl.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -186,7 +179,7 @@
         }
     }
     $(function () {
-        $stadium.fn.init();
+        $girl.fn.init();
     })
 </script>
 <script>

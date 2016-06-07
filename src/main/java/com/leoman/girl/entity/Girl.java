@@ -1,10 +1,10 @@
 package com.leoman.girl.entity;
 
+import com.leoman.city.entity.City;
 import com.leoman.common.entity.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2016/6/3.
@@ -12,43 +12,60 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "t_girl")
 public class Girl extends BaseEntity{
-
-    @Column(name = "city_id")
-    private Long cityId;
-
+    //城市ID
+    @ManyToOne
+    @JoinColumn(name = "city_id",referencedColumnName = "city_id")
+    private City city;
+    //宝贝名称
     @Column(name = "name")
     private String name;
-
+    //价格 /小时
     @Column(name = "price")
     private Double price;
-
+    //兴趣
     @Column(name = "interest")
     private String interest;
-
+    //喜欢球队
     @Column(name = "favorite_team")
     private String favoriteTeam;
-
+    //职业
     @Column(name = "profession")
     private String profession;
-
+    //年龄
     @Column(name = "age")
     private Integer age;
-
+    //身高
     @Column(name = "height")
     private Double height;
-
+    //体重
     @Column(name = "weight")
     private Double weight;
-
+    //签名
     @Column(name = "label")
     private String label;
+    //能否预约
+    @Column(name = "status")
+    private Integer status;
+    //图片
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "girl_id")
+    private Set<GirlImage> images;
 
-    public Long getCityId() {
-        return cityId;
+
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public String getName() {

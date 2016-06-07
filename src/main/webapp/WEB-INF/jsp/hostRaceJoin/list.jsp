@@ -77,7 +77,7 @@
                             }
                         },
                         {"data": "team.name"},
-                        {"data": "team.cityId"},
+                        {"data": "team.city.city"},
                         {"data": "team.tmSetNum"},
                         {"data": "team.tmSize"},
                         {"data": "createDate"},

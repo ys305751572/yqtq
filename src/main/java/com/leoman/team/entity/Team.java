@@ -1,5 +1,6 @@
 package com.leoman.team.entity;
 
+import com.leoman.city.entity.City;
 import com.leoman.common.entity.BaseEntity;
 import org.hibernate.annotations.JoinFormula;
 
@@ -19,8 +20,13 @@ public class Team extends BaseEntity {
     @Column(name = "name")
     private String name;
     //城市ID
-    @Column(name = "city_id")
-    private Long cityId;
+//    @Column(name = "city_id")
+//    private Long cityId;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id",referencedColumnName = "city_id")
+    private City city;
+
     //口号
     @Column(name = "slogan")
     private String slogan;
@@ -35,15 +41,6 @@ public class Team extends BaseEntity {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id")
     private Set<TeamMember> tmSet;
-
-//    //主队
-//    @OneToMany(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "home_team_id")
-//    private Set<TeamRace> trSet;
-//    //客队
-//    @OneToMany(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "visiting_team_id")
-//    private Set<TeamRace> trvSet;
 
     //场次
     @Transient
@@ -68,14 +65,6 @@ public class Team extends BaseEntity {
     public void setTmSize(Integer tmSize) {
         this.tmSize = tmSize;
     }
-//
-//    public Set<TeamRace> getTrvSet() {
-//        return trvSet;
-//    }
-//
-//    public void setTrvSet(Set<TeamRace> trvSet) {
-//        this.trvSet = trvSet;
-//    }
 
     public Set<TeamMember> getTmSet() {
         return tmSet;
@@ -85,22 +74,10 @@ public class Team extends BaseEntity {
         this.tmSet = tmSet;
     }
 
-//    public Set<TeamRace> getTrSet() {
-//        return trSet;
-//    }
-//
-//    public void setTrSet(Set<TeamRace> trSet) {
-//        this.trSet = trSet;
-//    }
-
     public String getName() {
         return name;
     }public void setName(String name) {
         this.name = name;
-    }public Long getCityId() {
-        return cityId;
-    }public void setCityId(Long cityId) {
-        this.cityId = cityId;
     }public String getSlogan() {
         return slogan;
     }public void setSlogan(String slogan) {
@@ -115,5 +92,11 @@ public class Team extends BaseEntity {
         this.leaderUserId = leaderUserId;
     }
 
+    public City getCity() {
+        return city;
+    }
 
+    public void setCity(City city) {
+        this.city = city;
+    }
 }

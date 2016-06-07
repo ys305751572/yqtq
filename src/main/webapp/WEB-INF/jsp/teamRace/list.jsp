@@ -4,7 +4,7 @@
 <html lang="zh-cn">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no">C
     <meta charset="UTF-8">
     <meta name="description" content="Violate Responsive Admin Template">
     <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
@@ -29,18 +29,18 @@
                     <label>城市</label>
                     <select id="cityId" name="cityId" class="select">
                         <option value="">全部</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <c:forEach items="${city}" var="c">
+                            <option value="${c.cityId}">${c.city}</option>
+                        </c:forEach>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>球场</label>
                     <select id="stadiumId" name="stadiumId" class="select">
-                        <option value="">全部 </option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <option value="">全部</option>
+                        <c:forEach items="${stadium}" var="s">
+                            <option value="${s.id}">${s.name}</option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>
@@ -101,12 +101,12 @@
                             }
                         },
                         {
-                            "data": "cityId",
+                            "data": "",
                             "render": function (data,type,full) {
                                 return full.homeTeam.name +"&nbsp; VS &nbsp;"+full.visitingTeam.name;
                             }
                         },
-                        {"data": "cityId"},
+                        {"data": "city.city","sDefaultContent" : ""},
                         {
                             "data": "startDate",
                             "render":function(data){
@@ -123,10 +123,9 @@
                         }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.teamId = $("#teamId").val();
                         aoData.teamName = $("#teamName").val();
                         aoData.cityId = $("#cityId").val();
-                        aoData.stadiumId = $("#stadiumId").val();
+                        aoData.id = $("#stadiumId").val();
                     }
                 });
             },

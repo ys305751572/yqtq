@@ -34,7 +34,12 @@
 
                     <div class="col-md-6 m-b-15">
                         <label>城市：</label>
-                        <input type="text" id="cityId" name="cityId" value="${stadium.cityId}" class="input-sm form-control validate[required]" placeholder="...">
+                        <select id="cityId" name="cityId" class="select" >
+                            <option value="${stadium.city.cityId}">${stadium.city.city eq null ? "请选择" : stadium.city.city}</option>
+                            <c:forEach items="${city}" var="c">
+                                <option value="${c.cityId}">${c.city}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>球场基本信息:</label>

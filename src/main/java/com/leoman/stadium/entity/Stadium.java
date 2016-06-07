@@ -1,5 +1,6 @@
 package com.leoman.stadium.entity;
 
+import com.leoman.city.entity.City;
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.entity.ReserveTeam;
@@ -19,8 +20,14 @@ import java.util.Set;
 @Table(name = "t_stadium")
 public class Stadium extends BaseEntity {
     //城市ID
-    @Column(name = "city_id")
-    private Long cityId;
+//    @Column(name = "city_id")
+//    private Long cityId;
+    @ManyToOne
+    @JoinColumn(name = "city_id",referencedColumnName = "city_id")
+    private City city;
+    //省id
+    @Column(name = "area_id")
+    private Integer areaId;
     //球场主ID
     @Column(name = "stadium_user_id")
     private Long stadiumUserId;
@@ -84,6 +91,15 @@ public class Stadium extends BaseEntity {
     private Set<StadiumSub> ssStatus;
     @Transient
     private Integer isStatus;
+
+
+    public Integer getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(Integer areaId) {
+        this.areaId = areaId;
+    }
 
     public Integer getSiteType() {
         return siteType;
@@ -205,14 +221,6 @@ public class Stadium extends BaseEntity {
         this.stadiumNum = stadiumNum;
     }
 
-    public Long getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
-    }
-
     public Long getStadiumUserId() {
         return stadiumUserId;
     }
@@ -243,5 +251,13 @@ public class Stadium extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }

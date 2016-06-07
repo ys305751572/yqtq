@@ -1,6 +1,8 @@
 package com.leoman.team.entity;//package com.leoman.team.entity;
 
+import com.leoman.city.entity.City;
 import com.leoman.common.entity.BaseEntity;
+import com.leoman.stadium.entity.Stadium;
 
 import javax.persistence.*;
 
@@ -22,14 +24,21 @@ public class TeamRace  extends BaseEntity{
     private Team visitingTeam;
 
     //城市id
-    @Column(name = "city_id")
-    private Long cityId;
+//    @Column(name = "city_id")
+//    private Long cityId;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id",referencedColumnName = "city_id")
+    private City city;
 
     //球场id
-    @Column(name = "stadium_id")
-    private Long stadiumId;
+//    @Column(name = "stadium_id")
+//    private Long stadiumId;
+    @ManyToOne
+    @JoinColumn(name = "stadium_id")
+    private Stadium stadium;
 
-    //状态 0:成功 1:失败
+    //状态 0:等待 1:成功 2.失败
     @Column(name = "status")
     private Integer status;
 
@@ -48,8 +57,12 @@ public class TeamRace  extends BaseEntity{
         this.status = status;
     }
 
-    public Long getCityId() {
-        return cityId;
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public Team getHomeTeam() {
@@ -68,16 +81,12 @@ public class TeamRace  extends BaseEntity{
         this.visitingTeam = visitingTeam;
     }
 
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
+    public Stadium getStadium() {
+        return stadium;
     }
 
-    public Long getStadiumId() {
-        return stadiumId;
-    }
-
-    public void setStadiumId(Long stadiumId) {
-        this.stadiumId = stadiumId;
+    public void setStadium(Stadium stadium) {
+        this.stadium = stadium;
     }
 
     public Long getStartDate() {

@@ -29,22 +29,6 @@
                     <h2 class="tile-title">赛事详情</h2>
                     <div class="p-10" style="height:520px">
                         <div class="form-group">
-                            <%--${teamRace.homeTeamId}VS${teamRace.visitingTeamId}--%>
-                            <%--<c:forEach items="${team}" var="t">--%>
-                                <%--<c:if test="${t.id eq teamRace.homeTeamId}">--%>
-                                    <%--<a onclick="$team.fn.sfTeamInfo(${t.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">--%>
-                                        <%--<img src="${contextPath}/${t.avater}" alt="">--%>
-                                    <%--</a>--%>
-                                <%--</c:if>--%>
-                            <%--</c:forEach>--%>
-                            <%--VS--%>
-                            <%--<c:forEach items="${team}" var="t">--%>
-                                <%--<c:if test="${t.id eq teamRace.visitingTeamId}">--%>
-                                    <%--<a onclick="$team.fn.sfTeamInfo(${t.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">--%>
-                                        <%--<img src="${contextPath}/${t.avater}" alt="">--%>
-                                    <%--</a>--%>
-                                <%--</c:if>--%>
-                            <%--</c:forEach>--%>
                             <label>比赛队伍:</label>
                             ${teamRace.homeTeam.name}VS${teamRace.visitingTeam.name}
                             <a onclick="$team.fn.sfTeamInfo(${teamRace.homeTeam.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
@@ -57,17 +41,17 @@
                         </div>
                         <div class="form-group">
                             <label>预约城市:</label>
-                            ${teamRace.cityId}
+                            ${teamRace.city.city}
                         </div>
                         <div class="form-group">
                             <label>预约状态:</label>
-                            <c:if test="${teamRace.status eq 0}">预约成功</c:if>
-                            <c:if test="${teamRace.status eq 1}">预约失败</c:if>
+                            <c:if test="${teamRace.status eq 1}">预约成功</c:if>
+                            <c:if test="${teamRace.status eq 2}">预约失败</c:if>
                         </div>
-                        <c:if test="${teamRace.status eq 0}">
+                        <c:if test="${teamRace.status eq 1}">
                             <div class="form-group">
                                 <label>比赛地点:</label>
-                                ${teamRace.stadiumId}
+                                ${teamRace.homeTeam.name}
                             </div>
                         </c:if>
                         <div class="form-group">

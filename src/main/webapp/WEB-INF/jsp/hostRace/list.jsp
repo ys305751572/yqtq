@@ -41,7 +41,7 @@
                     <th>赛制</th>
                     <th>参赛队数</th>
                     <th>比赛时间</th>
-                    <th>比赛地区</th>
+                    <th>球场地址</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -86,7 +86,7 @@
                             }
                         },
                         {"data": "name"},
-                        {"data": "status"},//地区
+                        {"data": "stadium.city.city","sDefaultContent" : ""},//地区
                         {
                             "data": "status",
                             "render":function (data){
@@ -123,7 +123,7 @@
                                 return new Date(data).format("yyyy-MM-dd hh:mm");
                             }
                         },
-                        {"data": "status"},//地区
+                        {"data": "stadium.address","sDefaultContent" : ""},
                         {
                             "data": "id",
                             "render": function (data) {
@@ -131,7 +131,7 @@
                                         "<i class='fa fa-eye'></i></button>";
                                 var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$hostRace.fn.edit(\'" + data + "\')\">" +
                                         "<i class='fa fa-pencil-square-o'></i></button>";
-                                var del = "<button title='关闭' style='background: #ff3f48' class='btn btn-primary btn-circle ' onclick=\"$hostRace.fn.del(\'" + data + "\')\">" +
+                                var del = "<button title='关闭' style='background: #ff3f48' class='btn btn-primary btn-circle ' onclick=\"$hostRace.fn.close(\'" + data + "\')\">" +
                                         "<i>关闭</i></button>";
                                 return detail+ "&nbsp;" +edit+ "&nbsp;" +del;
                             }
@@ -162,19 +162,21 @@
             "edit" : function(id) {
                 window.location.href = "${contextPath}/admin/hostRace/edit?id=" + id;
             },
-            "del" : function(id) {
+            "close" : function(id) {
                 $.ajax({
-                    "url": "${contextPath}/admin/hostRace/delete",
+                    "url": "${contextPath}/admin/hostRace/close",
                     "data": {
                         "id": id
                     },
                     "dataType": "json",
                     "type": "POST",
                     "success": function (result) {
-                        if (result.status) {
+                        if (!result.status) {
                             $common.fn.notify(result.msg);
                             $hostRace.v.dTable.ajax.reload();
+                            return;
                         }
+                        $hostRace.v.dTable.ajax.reload();
                     }
                 });
             },

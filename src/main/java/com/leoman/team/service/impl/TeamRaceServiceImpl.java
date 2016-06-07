@@ -55,32 +55,29 @@ public class TeamRaceServiceImpl extends GenericManagerImpl<TeamRace, TeamRaceDa
             public Predicate toPredicate(Root<TeamRace> root, CriteriaQuery<?> cq,
                                          CriteriaBuilder cb) {
                 List<Predicate> list = new ArrayList<Predicate>();
-
-//                if(t.getHomeTeamId() != null || t.getVisitingTeamId() !=null) {
-//                    list.add(cb.like(root.get("teamId").as(String.class), "%" + t.getHomeTeamId() + "% OR %"+t.getVisitingTeamId()+"%"));
-//                }
                 Predicate p = null;
                 if(StringUtils.isNotBlank(teamName)) {
                     p = cb.like(root.get("homeTeam").get("name").as(String.class),"%" + teamName + "%");
                     p = cb.or(p,cb.like(root.get("visitingTeam").get("name").as(String.class),"%" + teamName + "%"));
                 }
-                if(t.getCityId() != null){
+
+                if(t.getCity().getCityId() != null){
 //                    list.add(cb.equal(root.get("cityId").as(Long.class), t.getCityId()));
                     if(p != null) {
-                        p = cb.and(p,cb.equal(root.get("cityId").as(Long.class), t.getCityId()));
+                        p = cb.and(p,cb.equal(root.get("city").get("cityId").as(Integer.class), t.getCity().getCityId()));
                     }
                     else {
-                        p = cb.equal(root.get("cityId").as(Long.class), t.getCityId());
+                        p = cb.equal(root.get("city").get("cityId").as(Integer.class), t.getCity().getCityId());
                         cb.and(p);
                     }
                 }
-                if(t.getStadiumId() !=null){
+                if(t.getStadium().getId() !=null){
 //                    list.add(cb.equal(root.get("stadium").as(Long.class), t.getStadiumId()));
                     if(p != null) {
-                        p = cb.and(p,cb.equal(root.get("stadium").as(Long.class), t.getStadiumId()));
+                        p = cb.and(p,cb.equal(root.get("stadium").get("id").as(Long.class), t.getStadium().getId()));
                     }
                     else {
-                        p = cb.and(cb.equal(root.get("stadium").as(Long.class), t.getStadiumId()));
+                        p = cb.and(cb.equal(root.get("stadium").get("id").as(Long.class), t.getStadium().getId()));
                     }
 
                 }

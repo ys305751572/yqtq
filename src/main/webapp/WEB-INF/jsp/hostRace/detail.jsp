@@ -34,6 +34,7 @@
                         </div>
                         <div class="form-group">
                             <label>赛事地点:</label>
+                            ${hostRace.stadium.address}
                         </div>
                         <div class="form-group">
                             <label>赛事封面:</label>
@@ -47,7 +48,7 @@
                             <div class="row">
                                 <ul class="list-inline list-mass-actions">
                                     <li>
-                                        <a data-toggle="modal" href="${contextPath}/admin/1/1" title="增加咨询" class="tooltips">
+                                        <a data-toggle="modal" href="${contextPath}/admin/hostRace/information?id=${hostRace.id}" title="增加咨询" class="tooltips">
                                             <i>增加咨询</i>
                                         </a>
                                     </li>

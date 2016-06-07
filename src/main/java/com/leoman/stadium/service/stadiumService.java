@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface StadiumService extends GenericManager<Stadium> {
 
+    public List<Stadium> findAll();
+
     public Stadium findById(Long id);
 
     public Page<Stadium> findAll(Stadium team, Integer currentPage, Integer pageSize) throws Exception;

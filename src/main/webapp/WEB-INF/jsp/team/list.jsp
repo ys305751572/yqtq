@@ -28,10 +28,10 @@
                 <div class="col-md-2 form-group">
                     <label>城市</label>
                     <select id="cityId" name="cityId" class="select">
-                        <option value=""> </option>
-                        <option value="0">1</option>
-                        <option value="1">2</option>
-                        <option value="2">3</option>
+                        <option value="">全部</option>
+                        <c:forEach items="${city}" var="c">
+                            <option value="${c.cityId}">${c.city}</option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>
@@ -95,7 +95,7 @@
                             }
                         },
                         {"data": "name"},
-                        {"data": "cityId"},
+                        {"data": "city.city"},
                         {"data": "tmSetNum"},
                         {"data": "tmSize"},
                         {"data": "createDate",

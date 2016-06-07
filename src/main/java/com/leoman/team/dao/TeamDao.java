@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface TeamDao extends IBaseJpaRepository<Team> {
 
+    public List<Team> findAll();
+
     public Team findById(Long id);
 
     @Query("SELECT COUNT(a) FROM TeamRace a WHERE a.homeTeam.id=?1 OR a.visitingTeam.id=?1")

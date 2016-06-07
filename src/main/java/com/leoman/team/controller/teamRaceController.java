@@ -1,11 +1,13 @@
 package com.leoman.team.controller;
 
+import com.leoman.city.entity.City;
+import com.leoman.city.service.CityService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
+import com.leoman.stadium.entity.Stadium;
+import com.leoman.stadium.service.StadiumService;
 import com.leoman.team.entity.Team;
-import com.leoman.team.entity.TeamMember;
 import com.leoman.team.entity.TeamRace;
-import com.leoman.team.service.TeamMemberService;
 import com.leoman.team.service.TeamRaceService;
 import com.leoman.team.service.TeamService;
 import com.leoman.team.service.impl.TeamRaceServiceImpl;
@@ -30,19 +32,33 @@ public class TeamRaceController  extends GenericEntityController<TeamRace, TeamR
     private TeamRaceService teamRaceService;
     @Autowired
     private TeamService teamService;
+    @Autowired
+    private CityService cityService;
+    @Autowired
+    private StadiumService stadiumService;
 
     @RequestMapping(value = "/index")
-    public String index(){
+    public String index(Model model){
+        try{
+            List<City> city = cityService.queryAll();
+            model.addAttribute("city",city);
+            List<Stadium> stadium = stadiumService.findAll();
+            model.addAttribute("stadium",stadium);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
         return "teamRace/list";
     }
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length, TeamRace teamRace,String teamName){
+    public Object list(Integer draw, Integer start, Integer length, TeamRace teamRace, String teamName, City cityId, Stadium id){
         Page<TeamRace> teamRacePage = null;
         try {
             TeamRace t = new TeamRace();
             int pagenum = getPageNum(start,length);
+            teamRace.setCity(cityId);
+            teamRace.setStadium(id);
             teamRacePage = teamRaceService.findAll(teamRace,teamName, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();

@@ -28,6 +28,11 @@ public class StadiumServiceImpl extends GenericManagerImpl<Stadium, StadiumDao> 
     private StadiumDao dao;
 
     @Override
+    public List<Stadium> findAll() {
+        return dao.findAll();
+    }
+
+    @Override
     public Stadium findById(Long id) {
         return dao.findById(id);
     }
@@ -54,8 +59,8 @@ public class StadiumServiceImpl extends GenericManagerImpl<Stadium, StadiumDao> 
                     list.add(cb.like(root.get("name").as(String.class), "%" + s.getName() +"%" ));
                 }
 
-                if(s.getCityId() != null) {
-                    list.add(cb.equal(root.get("cityId").as(Long.class), s.getCityId()));
+                if(s.getCity().getCityId() != null) {
+                    list.add(cb.equal(root.get("city").get("cityId").as(Integer.class), s.getCity().getCityId()));
                 }
 
                 if(s.getType() != null){

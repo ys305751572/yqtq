@@ -20,7 +20,7 @@ public class HostRace extends BaseEntity {
     private String avater;
 
     @ManyToOne
-    @JoinColumn(name = "stadium_id")//取name
+    @JoinColumn(name = "stadium_id")
     private Stadium stadium;
 
     @Column(name = "description")

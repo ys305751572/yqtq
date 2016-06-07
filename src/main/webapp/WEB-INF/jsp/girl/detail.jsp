@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="description" content="Violate Responsive Admin Template">
     <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
     <title>Super Admin Responsive Template</title>
     <!-- CSS -->
     <%@ include file="../inc/new/css.jsp" %>
@@ -25,61 +26,72 @@
         <h1 class="page-title">球队信息</h1>
         <form action="${contextPath}/admin/doctor/save" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
-                <input type="hidden" id="id" name="id" value="">
+                <input type="hidden" id="id" name="id" value="${girl.id}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
-                        <label>logo:</label>
-                        <input type="text" id="avater" name="avater" value="${team.avater}" class="input-sm form-control validate[required]" placeholder="..." disabled>
-                    </div>
-                    <div class="col-md-6 m-b-15">
-                        <label>队名:</label>
-                        <input type="text" id="name" name="name" value="${team.name}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>宝贝名称:</label>
+                        <input type="text" id="name" name="name" value="${girl.name}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15">
-                        <label>城市:</label>
-                        <input type="text" id="cityId" value="${team.city.city}" name="cityId" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>地区:</label>
+                        <input type="text" id="cityId" value="${girl.city.city}" name="cityId" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15">
-                        <label>队语:</label>
-                        <input type="text" id="slogan" name="slogan" value="${team.slogan}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>服务价格:</label>
+                        <input type="text" id="price" name="price" value="${girl.price}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
-                        <label>队长:</label>
-                        <input type="text" id="leaderUserId" name="leaderUserId" value="${team.leaderUserId}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>服务次数:</label>
+                        <input type="text" id="1" name="leaderUserId" value="" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
-                        <label>创建时间:</label>
-                        <input type="text" id="createDate" name="createDate" value="" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>状态:</label>
+                        <input type="text" id="2" name="createDate" value="" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
-                        <label>赛事:</label>
-                        <input type="text" id="tmSize" name="tmSize" value="${team.tmSize}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>兴趣爱好:</label>
+                        <input type="text" id="interest" name="interest" value="${girl.interest}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
-                        <label>队员:</label>
-                        <input type="text" id="tmSetNum" name="tmSetNum" value="${team.tmSetNum}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>喜欢球队:</label>
+                        <input type="text" id="favoriteTeam" name="favoriteTeam" value="${girl.favoriteTeam}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
-                    <hr class="whiter m-t-20"/>
-                    <div class="col-md-12 m-b-15">
-                            <label>头像</label>
-                            <p></p>
-                            <p></p>
-                            <c:forEach items="${teamMember}" var="item">
-                                <c:forEach items="${userList}" var="u">
-                                    <c:if test="${item.userId eq u.userId}">
-                                        <a onclick="$team.fn.detail(${item.userId})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                                            <img src="${contextPath}/${u.avater}" alt="">
-                                        </a>
-                                    </c:if>
-                                </c:forEach>
-                            </c:forEach>
+
+                    <div class="col-md-6 m-b-15" >
+                        <label>职业:</label>
+                        <input type="text" id="profession" name="profession" value="${girl.profession}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
+
+                    <div class="col-md-6 m-b-15" >
+                        <label>签名:</label>
+                        <input type="text" id="label" name="label" value="${girl.label}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    </div>
+
+                    <div class="col-md-6 m-b-15" >
+                        <label>评价:</label>
+                        <div id="demo" class="demo">
+                            <span class="ratyli"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 m-b-15" >
+                        <label>宝贝封面:</label>
+                        <%--<c:forEach>--%>
+                            <%----%>
+                        <%--</c:forEach>--%>
+                        <%--<img src="">--%>
+                    </div>
+
+                    <div class="col-md-6 m-b-15" >
+                        <label>宝贝相册:</label>
+                    </div>
+
                     <hr class="whiter m-t-20"/>
                 </div>
                 <div class="form-group">
@@ -94,6 +106,7 @@
 </section>
 <!-- JS -->
 <%@ include file="../inc/new/foot.jsp" %>
+<script type="text/javascript" src="/js/jquery.raty.js"></script>
 <script>
     $team = {
         v: {
@@ -116,10 +129,7 @@
     }
     $(function () {
         $team.fn.init();
-        var createDate = ${team.createDate};
-        createDate = new Date().format("yyyy-MM-dd HH:mm");
-        $("#createDate").val(createDate);
-        <%--<date:date format="yyyy-MM-dd HH:mm" value="${team.createDate}"></date:date>--%>
+        $("#demo .ratyli").ratyli();
     })
 </script>
 <script>

@@ -120,8 +120,8 @@ public class TeamServiceImpl extends GenericManagerImpl<Team, TeamDao> implement
                 if(t.getName() != null) {
                     list.add(cb.like(root.get("name").as(String.class), "%" + t.getName() + "%"));
                 }
-                if(t.getCityId() != null){
-                    list.add(cb.equal(root.get("cityId").as(Long.class), t.getCityId() ));
+                if(t.getCity().getCityId() != null){
+                    list.add(cb.equal(root.get("city").get("cityId").as(Integer.class), t.getCity().getCityId() ));
                 }
 
                 Predicate[] p = new Predicate[list.size()];
