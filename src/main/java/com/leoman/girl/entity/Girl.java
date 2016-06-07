@@ -51,7 +51,6 @@ public class Girl extends BaseEntity{
     @JoinColumn(name = "girl_id")
     private Set<GirlImage> images;
 
-
     public Integer getStatus() {
         return status;
     }

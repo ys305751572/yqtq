@@ -30,39 +30,16 @@
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="宝贝姓名">
+                    <input type="text" class="input-sm form-control" id="girlName" name="girlName" placeholder="宝贝名">
                 </div>
                 <div class="col-md-2 form-group">
-                    <select id="status" name="status" class="select">
-                        <option value="">全部</option>
-                        <option value="0">可预约</option>
-                        <option value="1">不可预约</option>
-                    </select>
-                </div>
-                <div class="col-md-2 form-group">
-                    <select id="" name="" class="select">
-                        <option value="">全部</option>
-                        <option value="">最近比赛无预约</option>
-                        <option value="">最近比赛有预约</option>
-                    </select>
+                    <input type="text" class="input-sm form-control" id="userName" name="userName" placeholder="用户名">
                 </div>
             </div>
         </div>
         <div class="block-area" id="alternative-buttons">
             <button id="c_search" class="btn btn-alt m-r-5">查询</button>
         </div>
-        <div class="block-area">
-            <div class="row">
-                <ul class="list-inline list-mass-actions">
-                    <li>
-                        <a data-toggle="modal" href="${contextPath}/admin/girl/add" title="新增" class="tooltips">
-                            <i class="sa-list-add"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <hr class="whiter m-t-20"/>
         <!-- form表格 -->
         <div class="block-area" id="tableHover">
             <table class="table table-bordered table-hover tile" id="dataTables" cellspacing="0" width="100%">
@@ -71,13 +48,14 @@
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
                     <th>地区</th>
                     <th>宝贝昵称</th>
-                    <th>宝贝年龄</th>
-                    <th>身高</th>
-                    <th>体重</th>
+                    <th>约看人</th>
+                    <th>下单时间</th>
+                    <th>预约时间</th>
+                    <th>预定时长</th>
+                    <th>预约球场</th>
+                    <th>比赛</th>
                     <th>价格</th>
-                    <th>状态</th>
-                    <th>预约次数</th>
-                    <th>操作</th>
+                    <th>打赏</th>
                 </tr>
                 </thead>
             </table>
@@ -108,7 +86,7 @@
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/girl/list",
+                        "url": "${contextPath}/admin/girlUser/list",
                         "type": "POST"
                     },
                     "columns": [
@@ -121,41 +99,19 @@
                             }
                         },
                         {"data": "city.city","sDefaultContent" : ""},
-                        {"data": "name","sDefaultContent" : ""},
-                        {"data": "age","sDefaultContent" : ""},
-                        {"data": "height","sDefaultContent" : ""},
-                        {"data": "weight","sDefaultContent" : ""},
+                        {"data": "girl.name","sDefaultContent" : ""},
+                        {"data": "user.nickName","sDefaultContent" : ""},
+                        {"data": "createDate","sDefaultContent" : ""},
+                        {"data": "startDate","sDefaultContent" : ""},
+                        {"data": "stadium.name","sDefaultContent" : ""},
                         {
-                            "data": "price",
-                            "render":function(data){
-                                return data+"/h";
+                            "data": "teamRace",
+                            "render":function(data,type,full){
+                                return full.teamRace.homeTeam.name+ "vs"+full.teamRace.visitingTeam.name;
                             },
-                            "sDefaultContent" : ""
-                        },
-                        {
-                            "data": "status",
-                            "render":function(data){
-                                if(data==0){
-                                    return "可预约"
-                                }else if(data==1){
-                                    return "不可预约"
-                                }
-                            },
-                            "sDefaultContent" : ""
-                        },
-                        {"data": "age","sDefaultContent" : ""},//预约次数
-                        {
-                            "data": "id",
-                            "render": function (data) {
-                                var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$girl.fn.sfInfo(\'" + data + "\')\">" +
-                                        "<i class='fa fa-eye'></i></button>";
-                                var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$girl.fn.edit(\'" + data + "\')\">" +
-                                        "<i class='fa fa-pencil-square-o'></i></button>";
-                                var status = "<button title='不可预约' class='btn btn-primary btn-circle detail' ONCLICK='$girl.fn.status("+ data +")'> " +
-                                        "<i>不可预约</i></button>";
-                                return detail + "&nbsp;" + status + "&nbsp;" +edit;
-                            }
-                        }
+                            "sDefaultContent" : ""},
+                        {"data": "price", "sDefaultContent" : ""},
+                        {"data": "tip","sDefaultContent" : ""}
                     ],
                     "fnServerParams": function (aoData) {
                         aoData.name = $("#name").val();

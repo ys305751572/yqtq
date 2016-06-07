@@ -126,7 +126,7 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
         try{
             if(status==0 || status==1){
                 hostRace.setStatus(2);
-                hostRaceService.update(hostRace);
+                hostRaceService.save(hostRace);
             }
         }catch (RuntimeException e){
             e.printStackTrace();

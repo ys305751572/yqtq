@@ -153,7 +153,8 @@
                                 if(data==11){
                                     return"十一人制";
                                 }
-                            }
+                            },
+                            "sDefaultContent" : ""
                         },
                         {"data": "payment",
                             render:function(data) {
@@ -163,7 +164,8 @@
                                 if (data == 1) {
                                     return "全额";
                                 }
-                            }
+                            },
+                            "sDefaultContent" : ""
                         },
                         {"data":"systemInsurance.name"},
                         {"data":"user.userId"},

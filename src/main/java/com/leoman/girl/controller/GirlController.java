@@ -7,6 +7,8 @@ import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.girl.dao.GirlDao;
 import com.leoman.girl.entity.Girl;
+import com.leoman.girl.entity.GirlImage;
+import com.leoman.girl.service.GirlImageService;
 import com.leoman.girl.service.GirlService;
 import com.leoman.girl.service.impl.GirlServiceImpl;
 import com.leoman.utils.Result;
@@ -30,6 +32,8 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
     private GirlService girlService;
     @Autowired
     private CityService cityService;
+    @Autowired
+    private GirlImageService girlImageService;
 
     @RequestMapping(value = "/index")
     public String index(Model model){
@@ -58,6 +62,8 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
         try{
             Girl girl = girlService.queryByPK(id);
             model.addAttribute("girl", girl);
+            List<GirlImage> image = girlImageService.queryByProperty("girlId",id);
+            model.addAttribute("image",image);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -79,6 +85,77 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
             e.printStackTrace();
         }
         return null;
+    }
+
+    //新增
+    @RequestMapping(value = "/add")
+    public String add(Model model){
+        try{
+            List<City> city = cityService.queryAll();
+            model.addAttribute("city",city);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "/girl/add";
+    }
+
+    @RequestMapping(value = "/edit")
+    public String edit(Long id, Model model){
+        try{
+            List<City> city = cityService.queryAll();
+            model.addAttribute("city",city);
+            Girl girl = girlService.queryByPK(id);
+            model.addAttribute("girl", girl);
+            List<GirlImage> image = girlImageService.queryByProperty("girlId",id);
+            model.addAttribute("image",image);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "/girl/add";
+    }
+
+    @RequestMapping(value = "/save")
+    @ResponseBody
+    public Result save(Girl girl,City city){
+        Girl g = null;
+        try{
+            if(null != girl.getId()){
+                g = girlService.queryByPK(girl.getId());
+            }
+            if(null != g){
+                girl.setAge(g.getAge());
+                girl.setHeight(g.getHeight());
+                girl.setWeight(g.getWeight());
+                girl.setStatus(g.getStatus());
+            }
+
+            if(city != null){
+                City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
+                girl.setCity(_city);
+            }
+            girlService.save(girl);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            return Result.failure();
+        }
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/status")
+    @ResponseBody
+    public Result close(Long id){
+        Girl girl = girlService.queryByPK(id);
+        Integer status = girl.getStatus();
+        try{
+            if(status == 0 || status == null) {
+                girl.setStatus(1);
+                girlService.save(girl);
+            }
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            return Result.failure();
+        }
+        return Result.success();
     }
 
 }

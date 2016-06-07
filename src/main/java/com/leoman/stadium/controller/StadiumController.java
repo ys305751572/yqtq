@@ -120,9 +120,7 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
         if(null != stadium.getId()){
             s = stadiumService.queryByPK(stadium.getId());
         }
-        else {
-            s = new Stadium();
-        }
+
         if(null != s){
             stadium.setAreaId(s.getAreaId());
             stadium.setStadiumUserId(s.getStadiumUserId());

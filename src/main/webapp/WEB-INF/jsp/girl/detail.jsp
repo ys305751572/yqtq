@@ -8,7 +8,6 @@
     <meta charset="UTF-8">
     <meta name="description" content="Violate Responsive Admin Template">
     <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
-    <link rel="stylesheet" type="text/css" href="css/demo.css" />
     <title>Super Admin Responsive Template</title>
     <!-- CSS -->
     <%@ include file="../inc/new/css.jsp" %>
@@ -23,8 +22,8 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">球队信息</h1>
-        <form action="${contextPath}/admin/doctor/save" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <h1 class="page-title">宝贝信息</h1>
+        <form action="${contextPath}/admin/girl/save" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${girl.id}">
                 <div class="row">
@@ -40,7 +39,7 @@
 
                     <div class="col-md-6 m-b-15">
                         <label>服务价格:</label>
-                        <input type="text" id="price" name="price" value="${girl.price}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="price" name="price" value="￥${girl.price}/h" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
@@ -82,16 +81,16 @@
 
                     <div class="col-md-6 m-b-15" >
                         <label>宝贝封面:</label>
-                        <%--<c:forEach>--%>
-                            <%----%>
-                        <%--</c:forEach>--%>
-                        <%--<img src="">--%>
+                        <c:forEach items="${image}" var="v" begin="0" end="2">
+                            <c:if test="${v.type eq 0 }"><img src="${contextPath}/${v.url}" alt=""></c:if>
+                        </c:forEach>
                     </div>
-
                     <div class="col-md-6 m-b-15" >
                         <label>宝贝相册:</label>
+                        <c:forEach items="${image}" var="v">
+                            <c:if test="${v.type eq 1}"><img src="${contextPath}/${v.url}" alt=""></c:if>
+                        </c:forEach>
                     </div>
-
                     <hr class="whiter m-t-20"/>
                 </div>
                 <div class="form-group">

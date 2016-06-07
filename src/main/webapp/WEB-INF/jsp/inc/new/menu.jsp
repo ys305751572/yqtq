@@ -78,6 +78,7 @@
                 <span class="menu-item">看球管理</span>
             </a>
             <ul class="list-unstyled menu-item">
+                <li><a href="${contextPath}/admin/girlUser/index">宝贝订单管理</a></li>
                 <li><a href="${contextPath}/admin/girl/index">宝贝列表</a></li>
             </ul>
         </li>
