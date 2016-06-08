@@ -22,7 +22,7 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">场地编辑</h1>
+        <h1 class="page-title">宝贝编辑</h1>
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${girl.id}">
@@ -31,6 +31,7 @@
                         <label>宝贝名称：</label>
                         <input type="text" id="name" name="name" value="${girl.name}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
+
                     <div class="col-md-6 m-b-15">
                         <label>地区:</label>
                         <select id="cityId" name="cityId" class="select" >
@@ -39,6 +40,18 @@
                                 <option value="${c.cityId}">${c.city}</option>
                             </c:forEach>
                         </select>
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>年龄：</label>
+                        <input type="text" id="age" name="age" value="${girl.age}" class="input-sm form-control validate[required]" placeholder="...">
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>身高：</label>
+                        <input type="text" id="height" name="height" value="${girl.height}" class="input-sm form-control validate[required]" placeholder="...">
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>体重：</label>
+                        <input type="text" id="weight" name="weight" value="${girl.weight}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>服务价格:</label>
@@ -110,16 +123,6 @@
         },
         fn: {
             init: function () {
-                $(".iCheck-helper").click(function() {
-                    $user.fn.hid();
-                });
-            },
-            hid:function(){
-                if($(".icheckbox_minimal").attr("aria-checked")=="true"){
-                    $("#div_hidden").css('display','block');
-                }else {
-                    $("#div_hidden").css('display','none');
-                }
             },
             save : function () {
                 $("#fromId").ajaxSubmit({

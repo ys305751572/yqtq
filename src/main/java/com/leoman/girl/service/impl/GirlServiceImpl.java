@@ -30,7 +30,17 @@ public class GirlServiceImpl extends GenericManagerImpl<Girl,GirlDao> implements
     @Override
     public Page<Girl> findAll(Girl girl, Integer currentPage, Integer pageSize) throws Exception {
         Specification<Girl> spec = buildSpecification(girl);
-        return dao.findAll(spec, new PageRequest(currentPage-1, pageSize, Sort.Direction.DESC, "id"));
+        Page<Girl> page = dao.findAll(spec, new PageRequest(currentPage-1, pageSize, Sort.Direction.DESC, "id"));
+        List<Girl> girls = page.getContent();
+        for(Girl g : girls){
+            g.setGuSize(this.findSize(g.getId()));
+        }
+        return page;
+    }
+
+    @Override
+    public Integer findSize(Long id) {
+        return dao.findSize(id);
     }
 
     public Specification<Girl> buildSpecification(final Girl g) {
@@ -44,7 +54,7 @@ public class GirlServiceImpl extends GenericManagerImpl<Girl,GirlDao> implements
                     list.add(cb.like(root.get("name").as(String.class), "%" + g.getName() + "%"));
                 }
                 if(g.getCity().getCityId() != null){
-                    list.add(cb.equal(root.get("city").get("cityId").as(Integer.class), g.getCity().getCityId() ));
+                    list.add(cb.equal(root.get("city").get("cityId").as(Long.class), g.getCity().getCityId() ));
                 }
                 if(g.getStatus() != null){
                     list.add(cb.equal(root.get("status").as(Integer.class), g.getStatus() ));

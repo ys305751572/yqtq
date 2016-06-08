@@ -60,7 +60,7 @@ public class StadiumServiceImpl extends GenericManagerImpl<Stadium, StadiumDao> 
                 }
 
                 if(s.getCity().getCityId() != null) {
-                    list.add(cb.equal(root.get("city").get("cityId").as(Integer.class), s.getCity().getCityId()));
+                    list.add(cb.equal(root.get("city").get("cityId").as(Long.class), s.getCity().getCityId()));
                 }
 
                 if(s.getType() != null){

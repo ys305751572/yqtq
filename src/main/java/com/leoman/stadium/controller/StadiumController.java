@@ -4,19 +4,25 @@ import com.leoman.city.entity.City;
 import com.leoman.city.service.CityService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
+import com.leoman.image.entity.FileBo;
 import com.leoman.stadium.entity.Stadium;
 import com.leoman.stadium.service.StadiumService;
 import com.leoman.stadium.service.impl.StadiumServiceImpl;
 import com.leoman.team.entity.TeamRace;
 import com.leoman.user.entity.User;
+import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -115,7 +121,7 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
 
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(Stadium stadium,String detail,City city){
+    public Result save(Stadium stadium, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,String detail, City city){
         Stadium s = null;
         if(null != stadium.getId()){
             s = stadiumService.queryByPK(stadium.getId());
@@ -131,6 +137,17 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
             stadium.setSsSet(s.getSsSet());//场地数
             stadium.setSsStatus(s.getSsStatus());//状态
             stadium.setCreateDate(s.getCreateDate());
+        }
+        if(imageFile!=null && imageFile.getSize()>0) {
+            FileBo fileBo = null;
+            try {
+                fileBo = FileUtil.save(imageFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (fileBo != null && StringUtils.isNotBlank(fileBo.getPath())) {
+                stadium.setAvater(fileBo.getPath());
+            }
         }
         if (detail != null) {
             stadium.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));

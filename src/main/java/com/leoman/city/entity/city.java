@@ -16,20 +16,28 @@ public class City implements Serializable {
     private Integer id;
     //城市id
     @Column(name = "city_id")
-    private Integer cityId;
+    private Long cityId;
     //城市名
     @Column(name = "City")
     private String city;
     //省id
     @Column(name = "province_id")
-    private Integer provinceId;
+    private Long provinceId;
 
-    public Integer getCityId() {
+    public Long getCityId() {
         return cityId;
     }
 
-    public void setCityId(Integer cityId) {
+    public void setCityId(Long cityId) {
         this.cityId = cityId;
+    }
+
+    public Long getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Long provinceId) {
+        this.provinceId = provinceId;
     }
 
     public String getCity() {
@@ -40,13 +48,6 @@ public class City implements Serializable {
         this.city = city;
     }
 
-    public Integer getProvinceId() {
-        return provinceId;
-    }
-
-    public void setProvinceId(Integer provinceId) {
-        this.provinceId = provinceId;
-    }
 
     public Integer getId() {
         return id;

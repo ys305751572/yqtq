@@ -22,53 +22,25 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">场地编辑</h1>
+        <h1 class="page-title">赛事编辑</h1>
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
-                <input type="hidden" id="id" name="id" value="${stadium.id}">
+                <input type="hidden" id="id" name="id" value="${bigRace.id}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
-                        <label>球场名称：</label>
-                        <input type="text" id="name" name="name" value="${stadium.name}" class="input-sm form-control validate[required]" placeholder="...">
+                        <label>看球名称：</label>
+                        <input type="text" id="name" name="name" value="${bigRace.name}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
-                        <label>城市：</label>
-                        <select id="cityId" name="cityId" class="select" >
-                            <option value="${stadium.city.cityId}">${stadium.city.city eq null ? "请选择" : stadium.city.city}</option>
-                            <c:forEach items="${city}" var="c">
-                                <option value="${c.cityId}">${c.city}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="col-md-6 m-b-15">
-                        <label>球场基本信息:</label>
-                        <input type="checkbox" id="chk" />
-                        <div class="div_hidden" id="div_hidden" style="display: none">
-                            <label>场地类型：</label>
-                                <select id="siteType" name="siteType" class="select">
-                                    <option value="0">室内</option>
-                                    <option value="1">室外</option>
-                                </select>
-                            <label>草皮类型：</label>
-                            <input type="text" id="sodType" name="sodType" value="${stadium.sodType}" class="input-sm form-control validate[required]" placeholder="...">
-                            <label>灯光：</label>
-                            <input type="text" id="light" name="light" value="${stadium.light}" class="input-sm form-control validate[required]" placeholder="...">
-                            <label>停车场：</label>
-                                <select id="park" name="park" class="select">
-                                    <option value="0">无</option>
-                                    <option value="1">免费</option>
-                                    <option value="2">收费</option>
-                                </select>
-                            <label>赠送：</label>
-                            <input type="text" id="giving" name="giving" value="${stadium.giving}" class="input-sm form-control validate[required]" placeholder="...">
-                        </div>
+                        <label>球队甲方：</label>
+                        <input type="text" id="team1name" name="team1name" value="${bigRace.team1name}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-12 m-b-15">
                         <label>球场封面：</label>
                         <div class="fileupload fileupload-new" data-provides="fileupload">
                             <div class="fileupload-preview thumbnail form-control">
-                                <c:if test="${stadium.avater ne null}">
-                                    <img src="${stadium.avater}">
+                                <c:if test="${bigRace.avater1 ne null}">
+                                    <img src="${bigRace.avater1}">
                                 </c:if>
                             </div>
                             <div>
@@ -81,10 +53,36 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>球队乙方：</label>
+                        <input type="text" id="team2name" name="team2name" value="${bigRace.team2name}" class="input-sm form-control validate[required]" placeholder="...">
+                    </div>
+                    <div class="col-md-12 m-b-15">
+                        <label>球场封面：</label>
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                            <div class="fileupload-preview thumbnail form-control">
+                                <c:if test="${bigRace.avater2 ne null}">
+                                    <img src="${bigRace.avater2}">
+                                </c:if>
+                            </div>
+                            <div>
+                                <span class="btn btn-file btn-alt btn-sm">
+                                    <span class="fileupload-new">选择图片</span>
+                                    <span class="fileupload-exists">更改</span>
+                                    <input id="imageFile2" name="imageFile" type="file"/>
+                                </span>
+                                <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>比赛时间：</label>
+                        <input type="text" id="startDate" name="startDate" value="${bigRace.startDate}" class="input-sm form-control validate[required]" placeholder="...">
+                    </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
                         <label>详细描述</label>
-                        <div class="wysiwye-editor" id="detail" name="detail">${stadium.description}</div>
+                        <div class="wysiwye-editor" id="detail" name="detail">${bigRace.description}</div>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
@@ -111,21 +109,12 @@
         },
         fn: {
             init: function () {
-                $(".iCheck-helper").click(function() {
-                    $user.fn.hid();
-                });
-            },
-            hid:function(){
-                if($(".icheckbox_minimal").attr("aria-checked")=="true"){
-                    $("#div_hidden").css('display','block');
-                }else {
-                    $("#div_hidden").css('display','none');
-                }
+                $user.fn.initImage();
             },
             save : function () {
                 var code =  $('.wysiwye-editor').code();
                 $("#fromId").ajaxSubmit({
-                    url : "${contextPath}/admin/stadium/save",
+                    url : "${contextPath}/admin/bigRace/save",
                     type : "POST",
                     data : {
                         "detail" : code
@@ -135,7 +124,7 @@
                             $common.fn.notify(result.msg);
                             return;
                         }
-                        window.location.href = "${contextPath}/admin/stadium/index";
+                        window.location.href = "${contextPath}/admin/bigRace/index";
                     }
                 });
             }

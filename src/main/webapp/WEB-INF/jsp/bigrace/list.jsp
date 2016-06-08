@@ -30,32 +30,37 @@
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="girlName" name="girlName" placeholder="宝贝名">
-                </div>
-                <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="userName" name="userName" placeholder="用户名">
+                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="比赛">
                 </div>
             </div>
         </div>
         <div class="block-area" id="alternative-buttons">
             <button id="c_search" class="btn btn-alt m-r-5">查询</button>
         </div>
+        <div class="block-area">
+            <div class="row">
+                <ul class="list-inline list-mass-actions">
+                    <li>
+                        <a data-toggle="modal" href="${contextPath}/admin/bigRace/add" title="新增" class="tooltips">
+                            <i class="sa-list-add"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr class="whiter m-t-20"/>
         <!-- form表格 -->
         <div class="block-area" id="tableHover">
             <table class="table table-bordered table-hover tile" id="dataTables" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
+                    <th>比赛队伍</th>
+                    <th>比赛名称</th>
                     <th>地区</th>
-                    <th>宝贝昵称</th>
-                    <th>约看人</th>
-                    <th>下单时间</th>
-                    <th>预约时间</th>
-                    <th>预定时长</th>
-                    <th>预约球场</th>
-                    <th>比赛</th>
-                    <th>价格</th>
-                    <th>打赏</th>
+                    <th>比赛场地</th>
+                    <th>比赛时间</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
             </table>
@@ -67,26 +72,26 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    $girl = {
+    $bigRace = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                $girl.fn.dataTableInit();
+                $bigRace.fn.dataTableInit();
 
                 $("#c_search").click(function () {
-                    $girl.v.dTable.ajax.reload();
+                    $bigRace.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                $girl.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $bigRace.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/girlUser/list",
+                        "url": "${contextPath}/admin/bigRace/list",
                         "type": "POST"
                     },
                     "columns": [
@@ -98,32 +103,44 @@
                                 return checkbox;
                             }
                         },
-                        {"data": "girl.city.city","sDefaultContent" : ""},
-                        {"data": "girl.name","sDefaultContent" : ""},
-                        {"data": "user.nickName","sDefaultContent" : ""},
-                        {"data": "createDate","sDefaultContent" : ""},
-                        {"data": "startDate","sDefaultContent" : ""},
-                        {"data": "duration","sDefaultContent" : ""},
-                        {"data": "stadium.name","sDefaultContent" : ""},
                         {
-                            "data": "teamRace",
+                            "data": "",
                             "render":function(data,type,full){
-                                return full.teamRace.homeTeam.name+ "vs"+full.teamRace.visitingTeam.name;
+                                return full.team1name + "&nbsp;" + "vs" + "&nbsp;" + full.team2name;
                             },
                             "sDefaultContent" : ""},
-                        {"data": "price", "sDefaultContent" : ""},
-                        {"data": "tip","sDefaultContent" : ""}
+                        {"data": "name","sDefaultContent" : ""},
+                        {"data": "stadium.city.city","sDefaultContent" : ""},
+                        {"data": "stadium.name","sDefaultContent" : ""},
+                        {
+                            "data": "startDate",
+                            "render":function(data){
+                                return new Date(data).format("yyyy-MM-dd hh:mm");
+                            },
+                            "sDefaultContent" : ""},
+                        {
+                            "data": "id",
+                            "render": function (data) {
+                                var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$bigRace.fn.sfInfo(\'" + data + "\')\">" +
+                                        "<i class='fa fa-eye'></i></button>";
+                                var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$bigRace.fn.edit(\'" + data + "\')\">" +
+                                        "<i class='fa fa-pencil-square-o'></i></button>";
+                                var status = "<button title='关闭' class='btn btn-primary btn-circle detail' ONCLICK='$bigRace.fn.status("+ data +")'> " +
+                                        "<i>关闭</i></button>";
+                                return detail + "&nbsp;" + status + "&nbsp;" +edit;
+                            }
+                        }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.name = $("#girlName").val();
+                        aoData.name = $("#name").val();
                         aoData.cityId = $("#cityId").val();
-                        aoData.nickName = $("#userName").val();
+                        aoData.status = $("#status").val();
                     }
                 });
             },
             sfInfo: function (id) {
                 $.ajax({
-                    "url": "${contextPath}/admin/girl/sfInfo",
+                    "url": "${contextPath}/admin/bigRace/sfInfo",
                     "data": {
                         "id": id
                     },
@@ -134,16 +151,16 @@
                             $common.fn.notify(result.msg);
                             return;
                         }
-                        window.location.href = "${contextPath}/admin/girl/detail?id=" + id;
+                        window.location.href = "${contextPath}/admin/bigRace/detail?id=" + id;
                     }
                 });
             },
             edit: function (id){
-                window.location.href = "${contextPath}/admin/girl/edit?id=" + id;
+                window.location.href = "${contextPath}/admin/bigRace/edit?id=" + id;
             },
             status : function(id) {
                 $.ajax({
-                    "url": "${contextPath}/admin/girl/status",
+                    "url": "${contextPath}/admin/bigRace/status",
                     "data": {
                         "id": id
                     },
@@ -154,16 +171,16 @@
                             $common.fn.notify(result.msg);
                             return;
                         }
-                        $girl.v.dTable.ajax.reload();
+                        $bigRace.v.dTable.ajax.reload();
                     }
                 });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        $girl.v.dTable.ajax.reload(null, false);
+                        $bigRace.v.dTable.ajax.reload(null, false);
                     } else {
-                        $girl.v.dTable.ajax.reload();
+                        $bigRace.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -173,7 +190,7 @@
         }
     }
     $(function () {
-        $girl.fn.init();
+        $bigRace.fn.init();
     })
 </script>
 <script>

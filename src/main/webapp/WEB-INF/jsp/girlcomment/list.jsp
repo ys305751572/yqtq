@@ -18,44 +18,20 @@
 <section id="main" class="p-relative" role="main">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
-        <!-- 查询条件 -->
-        <div class="block-area" id="search">
-            <div class="row">
-                <div class="col-md-2 form-group">
-                    <select id="cityId" name="cityId" class="select">
-                        <option value="">城市</option>
-                        <c:forEach items="${city}" var="c">
-                            <option value="${c.cityId}">${c.city}</option>
-                        </c:forEach>
-                    </select>
-                </div>
-                <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="girlName" name="girlName" placeholder="宝贝名">
-                </div>
-                <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="userName" name="userName" placeholder="用户名">
-                </div>
-            </div>
-        </div>
-        <div class="block-area" id="alternative-buttons">
-            <button id="c_search" class="btn btn-alt m-r-5">查询</button>
-        </div>
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
+        </ol>
+        <input type="hidden" id="id" value="${id}">
         <!-- form表格 -->
         <div class="block-area" id="tableHover">
             <table class="table table-bordered table-hover tile" id="dataTables" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    <th>地区</th>
                     <th>宝贝昵称</th>
-                    <th>约看人</th>
-                    <th>下单时间</th>
-                    <th>预约时间</th>
-                    <th>预定时长</th>
-                    <th>预约球场</th>
-                    <th>比赛</th>
-                    <th>价格</th>
-                    <th>打赏</th>
+                    <th>评论用户</th>
+                    <th>星级</th>
+                    <th>内容</th>
                 </tr>
                 </thead>
             </table>
@@ -86,7 +62,7 @@
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/girlUser/list",
+                        "url": "${contextPath}/admin/girlComment/list",
                         "type": "POST"
                     },
                     "columns": [
@@ -98,63 +74,13 @@
                                 return checkbox;
                             }
                         },
-                        {"data": "girl.city.city","sDefaultContent" : ""},
                         {"data": "girl.name","sDefaultContent" : ""},
                         {"data": "user.nickName","sDefaultContent" : ""},
-                        {"data": "createDate","sDefaultContent" : ""},
-                        {"data": "startDate","sDefaultContent" : ""},
-                        {"data": "duration","sDefaultContent" : ""},
-                        {"data": "stadium.name","sDefaultContent" : ""},
-                        {
-                            "data": "teamRace",
-                            "render":function(data,type,full){
-                                return full.teamRace.homeTeam.name+ "vs"+full.teamRace.visitingTeam.name;
-                            },
-                            "sDefaultContent" : ""},
-                        {"data": "price", "sDefaultContent" : ""},
-                        {"data": "tip","sDefaultContent" : ""}
+                        {"data": "star","sDefaultContent" : ""},
+                        {"data": "content","sDefaultContent" : ""}
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.name = $("#girlName").val();
-                        aoData.cityId = $("#cityId").val();
-                        aoData.nickName = $("#userName").val();
-                    }
-                });
-            },
-            sfInfo: function (id) {
-                $.ajax({
-                    "url": "${contextPath}/admin/girl/sfInfo",
-                    "data": {
-                        "id": id
-                    },
-                    "dataType": "json",
-                    "type": "POST",
-                    "success": function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
-                        }
-                        window.location.href = "${contextPath}/admin/girl/detail?id=" + id;
-                    }
-                });
-            },
-            edit: function (id){
-                window.location.href = "${contextPath}/admin/girl/edit?id=" + id;
-            },
-            status : function(id) {
-                $.ajax({
-                    "url": "${contextPath}/admin/girl/status",
-                    "data": {
-                        "id": id
-                    },
-                    "dataType": "json",
-                    "type": "POST",
-                    success: function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
-                        }
-                        $girl.v.dTable.ajax.reload();
+                        aoData.id = $("#id").val();
                     }
                 });
             },

@@ -64,10 +64,10 @@ public class TeamRaceServiceImpl extends GenericManagerImpl<TeamRace, TeamRaceDa
                 if(t.getCity().getCityId() != null){
 //                    list.add(cb.equal(root.get("cityId").as(Long.class), t.getCityId()));
                     if(p != null) {
-                        p = cb.and(p,cb.equal(root.get("city").get("cityId").as(Integer.class), t.getCity().getCityId()));
+                        p = cb.and(p,cb.equal(root.get("city").get("cityId").as(Long.class), t.getCity().getCityId()));
                     }
                     else {
-                        p = cb.equal(root.get("city").get("cityId").as(Integer.class), t.getCity().getCityId());
+                        p = cb.equal(root.get("city").get("cityId").as(Long.class), t.getCity().getCityId());
                         cb.and(p);
                     }
                 }

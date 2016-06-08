@@ -76,6 +76,9 @@
                         <label>评价:</label>
                         <div id="demo" class="demo">
                             <span class="ratyli"></span>
+                            <a data-toggle="modal" href="${contextPath}/admin/girlComment/index?id=${girl.id}" title="详情" class="tooltips">
+                                <i>详情</i>
+                            </a>
                         </div>
                     </div>
 

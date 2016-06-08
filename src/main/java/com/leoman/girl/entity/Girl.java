@@ -51,6 +51,18 @@ public class Girl extends BaseEntity{
     @JoinColumn(name = "girl_id")
     private Set<GirlImage> images;
 
+    //场次
+    @Transient
+    private Integer guSize;
+
+    public Integer getGuSize() {
+        return guSize;
+    }
+
+    public void setGuSize(Integer guSize) {
+        this.guSize = guSize;
+    }
+
     public Integer getStatus() {
         return status;
     }

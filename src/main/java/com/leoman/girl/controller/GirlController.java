@@ -123,12 +123,11 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
                 g = girlService.queryByPK(girl.getId());
             }
             if(null != g){
-                girl.setAge(g.getAge());
-                girl.setHeight(g.getHeight());
-                girl.setWeight(g.getWeight());
                 girl.setStatus(g.getStatus());
+                girl.setCreateDate(g.getCreateDate());
+            }else {
+                girl.setStatus(0);
             }
-
             if(city != null){
                 City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
                 girl.setCity(_city);
@@ -147,7 +146,7 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
         Girl girl = girlService.queryByPK(id);
         Integer status = girl.getStatus();
         try{
-            if(status == 0 || status == null) {
+            if(status == 0) {
                 girl.setStatus(1);
                 girlService.save(girl);
             }

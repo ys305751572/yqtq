@@ -11,4 +11,6 @@ public interface GirlService extends GenericManager<Girl> {
 
     public Page<Girl> findAll(Girl girl, Integer currentPage, Integer pageSize) throws Exception;
 
+    public Integer findSize(Long id);
+
 }

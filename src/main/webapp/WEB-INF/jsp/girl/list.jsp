@@ -143,7 +143,7 @@
                             },
                             "sDefaultContent" : ""
                         },
-                        {"data": "age","sDefaultContent" : ""},//预约次数
+                        {"data": "guSize","sDefaultContent" : ""},//预约次数
                         {
                             "data": "id",
                             "render": function (data) {

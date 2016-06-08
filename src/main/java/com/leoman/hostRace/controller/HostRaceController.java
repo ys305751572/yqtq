@@ -7,15 +7,22 @@ import com.leoman.common.factory.DataTableFactory;
 import com.leoman.hostRace.entity.HostRace;
 import com.leoman.hostRace.service.HostRaceService;
 import com.leoman.hostRace.service.impl.HostRaceServiceImpl;
+import com.leoman.image.entity.FileBo;
 import com.leoman.stadium.entity.Stadium;
 import com.leoman.stadium.service.StadiumService;
+import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * Created by Administrator on 2016/6/2.
@@ -94,7 +101,7 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
     //保存
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(HostRace hostRace,String detail,Stadium stadium) {
+    public Result save(HostRace hostRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile, String detail, Stadium stadium) {
         HostRace h = null;
         if (null != hostRace.getId()) {
             h = hostRaceService.queryByPK(hostRace.getId());
@@ -105,6 +112,17 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
             hostRace.setMatchType(h.getMatchType());
             hostRace.setHrSet(h.getHrSet());
             hostRace.setCreateDate(h.getCreateDate());
+        }
+        if(imageFile!=null && imageFile.getSize()>0) {
+            FileBo fileBo = null;
+            try {
+                fileBo = FileUtil.save(imageFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (fileBo != null && StringUtils.isNotBlank(fileBo.getPath())) {
+                hostRace.setAvater(fileBo.getPath());
+            }
         }
         if (detail != null) {
             hostRace.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));

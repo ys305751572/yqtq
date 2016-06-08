@@ -4,9 +4,11 @@ import com.leoman.city.entity.City;
 import com.leoman.city.service.CityService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
+import com.leoman.girl.entity.Girl;
 import com.leoman.girl.entity.GirlUser;
 import com.leoman.girl.service.GirlUserService;
 import com.leoman.girl.service.impl.GirlUserServiceImpl;
+import com.leoman.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -37,10 +39,13 @@ public class GirlUserController extends GenericEntityController<GirlUser, GirlUs
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length, GirlUser girlUser, City cityId){
+    public Object list(Integer draw, Integer start, Integer length, GirlUser girlUser, Girl girl,User nickName,City cityId){
         Page<GirlUser> Page = null;
         try {
             int pagenum = getPageNum(start,length);
+            girl.setCity(cityId);
+            girlUser.setGirl(girl);
+            girlUser.setUser(nickName);
             Page = girlUserService.findAll(girlUser, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();
