@@ -1,5 +1,6 @@
 package com.leoman.post.entity;
 
+import com.leoman.common.entity.BaseEntity;
 import com.leoman.user.entity.User;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "t_post")
-public class Post {
+public class Post extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")

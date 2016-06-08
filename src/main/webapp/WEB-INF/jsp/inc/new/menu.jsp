@@ -99,7 +99,8 @@
                 <span class="menu-item">互动管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/sign/index">签约列表</a></li>
+                <li><a href="${contextPath}/admin/post/index">帖子列表</a></li>
+                <li><a href="${contextPath}/admin/activity/index">活动列表</a></li>
             </ul>
         </li>
         <li class="dropdown">

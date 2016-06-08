@@ -12,15 +12,19 @@ import com.leoman.post.service.PostService;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.systemInsurance.entity.SystemInsurance;
 import com.leoman.utils.WebUtil;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,27 +62,54 @@ public class PostController extends CommonController {
      * @param draw
      * @param start
      * @param length
-     * @param post
+     * @param nickName
+     * @param content
+     * @param status
      * @param model
      */
     @RequestMapping(value = "/list")
     public void list(HttpServletRequest request,
                      HttpServletResponse response,
+                     String nickName,
+                     String content,
+                     Integer status,
                      Integer draw,
                      Integer start,
                      Integer length,
-                     Post post,
                      Model model) {
         try {
             int pageNum = getPageNum(start, length);
 
-            Page<Post> page = postService.findPage(post,pageNum,length);
+            Page<Post> page = postService.findPage(nickName, content, status, pageNum, length);
+            List<Post> list = page.getContent();
+            for (Post post1 : list) {
+                List<PostComment> postCommentList = postCommentService.findByPostId(post1.getId());
+                post1.setCommentNum(postCommentList.size());
+            }
             Map<String, Object> result = DataTableFactory.fitting(draw, page);
             WebUtil.print(response, result);
         } catch (Exception e) {
             GeneralExceptionHandler.log(e);
             WebUtil.print(response, emptyData);
         }
+    }
+
+    /**
+     * 封禁
+     *
+     * @param response
+     * @param postId
+     * @return
+     */
+    @RequestMapping(value = "/banned")
+    @ResponseBody
+    public Integer banned(HttpServletResponse response, Long postId, Integer status) {
+
+        Post post = postService.getById(postId);
+        post.setStatus(status);
+        postService.update(post);
+
+        return 1;
     }
 
     /**
@@ -90,15 +121,30 @@ public class PostController extends CommonController {
      */
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public String detail(Long postId, Model model) {
+        try {
 
-        Post post = postService.getById(postId);
-        List<PostImage> postImageList = postImageService.findByPostId(postId);
-        List<PostComment> postCommentList = postCommentService.findByPostId(postId);
+            List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+            Map<String, Object> map = null;
 
-        model.addAttribute("post",post);
-        model.addAttribute("postImageList",postImageList);
-        model.addAttribute("postCommentList",postCommentList);
+            Post post = postService.getById(postId);
+            List<PostImage> postImageList = postImageService.findByPostId(postId);
 
-        return "reserve/detail";
+            List<PostComment> postCommentList = postCommentService.findByPostId(postId);
+            for (PostImage image : postImageList) {
+                map = new HashMap<String, Object>();
+                map.put("id", image.getId());
+                map.put("path", image.getAvater());
+
+                list.add(map);
+            }
+
+            model.addAttribute("post", post);
+            model.addAttribute("postCommentList", postCommentList);
+            model.addAttribute("postImageList", JSONArray.fromObject(list));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "post/detail";
     }
 }

@@ -3,6 +3,7 @@ package com.leoman.post.service.impl;
 import com.leoman.post.dao.PostDao;
 import com.leoman.post.entity.Post;
 import com.leoman.post.service.PostService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,7 +45,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post getById(Long id) {
-        return null;
+        return postDao.findOne(id);
     }
 
     @Override
@@ -68,6 +69,42 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Page<Post> findPage(final String nickName, final String content, final Integer status, int pagenum, int pagesize) {
+        PageRequest pageRequest = new PageRequest(pagenum - 1, pagesize, Sort.Direction.DESC, "id");
+
+        Page<Post> page = postDao.findAll(new Specification<Post>() {
+            @Override
+            public Predicate toPredicate(Root<Post> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Predicate result = null;
+                List<Predicate> predicateList = new ArrayList<Predicate>();
+                if (nickName != null) {
+                    Predicate pre = cb.like(root.get("user").get("nickName").as(String.class), "%" + nickName + "%");
+                    predicateList.add(pre);
+                }
+                if (content != null) {
+                    Predicate pre = cb.like(root.get("content").as(String.class), "%" + content + "%");
+                    predicateList.add(pre);
+                }
+                if (status != null) {
+                    Predicate pre = cb.equal(root.get("status").as(Integer.class), status);
+                    predicateList.add(pre);
+                }
+                if (predicateList.size() > 0) {
+                    result = cb.and(predicateList.toArray(new Predicate[]{}));
+                }
+
+                if (result != null) {
+                    query.where(result);
+                }
+                return query.getGroupRestriction();
+            }
+
+        }, pageRequest);
+
+        return page;
+    }
+
+    /*@Override
     public Page<Post> findPage(final Post post, int pagenum, int pagesize) {
         Specification<Post> spec = new Specification<Post>() {
             @Override
@@ -76,7 +113,7 @@ public class PostServiceImpl implements PostService {
                 Predicate result = null;
 
                 if (post.getUser().getNickName() != null) {
-                    Predicate pre = criteriaBuilder.like(root.get("user").get("nickname").as(String.class), "%" + post.getUser().getNickName() + "%");
+                    Predicate pre = criteriaBuilder.like(root.get("user").get("nickName").as(String.class), "%" + post.getUser().getNickName() + "%");
                     list.add(pre);
                 }
 
@@ -91,5 +128,5 @@ public class PostServiceImpl implements PostService {
             }
         };
         return postDao.findAll(spec,new PageRequest(pagenum - 1,pagesize, Sort.Direction.DESC,"id"));
-    }
+    }*/
 }

@@ -331,7 +331,7 @@
 		<profile>
 			<id>deploy-test</id>
 			<properties>
-				<pro.jdbc.url>jdbc:mysql://4.16.3.75:3306/kdxg?characterEncoding=UTF-8</pro.jdbc.url>
+				<pro.jdbc.url>jdbc:mysql://4.16.3.184:3306/yqtq?characterEncoding=UTF-8</pro.jdbc.url>
 				<pro.jdbc.username>root</pro.jdbc.username>
 				<pro.jdbc.password>root</pro.jdbc.password>
 				<pro.upload.url>http://localhost:8888/files/upload/</pro.upload.url>
@@ -356,7 +356,7 @@
 
 
 	<build>
-		<finalName>bhcServer</finalName>
+		<finalName>yqtq</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -380,7 +380,7 @@
 					<artifactId>maven-war-plugin</artifactId>
 					<version>2.3</version>
 					<configuration>
-						<warName>bhcServer</warName>
+						<warName>yqtq</warName>
 					</configuration>
 				</plugin>
 			</plugins>
