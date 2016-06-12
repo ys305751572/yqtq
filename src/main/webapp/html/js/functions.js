@@ -454,7 +454,7 @@ $(document).ready(function(){
 		    jQuery.browser.version = RegExp.$1;
 		}
 	    })();
-	    
+
 	    //Lightbox
 	    $().piroBox_ext({
 		piro_speed : 700,

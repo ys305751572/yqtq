@@ -1,13 +1,22 @@
 package com.leoman.reserve.controller;
 
+import com.leoman.city.entity.City;
+import com.leoman.city.service.CityService;
 import com.leoman.common.controller.common.CommonController;
+import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.exception.GeneralExceptionHandler;
 import com.leoman.common.factory.DataTableFactory;
+import com.leoman.reserve.dao.ReserveDao;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.service.ReserveService;
 import com.leoman.stadium.entity.Stadium;
+import com.leoman.stadium.service.StadiumService;
 import com.leoman.systemInsurance.entity.SystemInsurance;
 import com.leoman.systemInsurance.service.SystemInsuranceService;
+import com.leoman.user.entity.User;
+import com.leoman.user.entity.UserReserveJoin;
+import com.leoman.user.service.UserReserveJoinService;
+import com.leoman.user.service.UserService;
 import com.leoman.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,13 +36,18 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "admin/reserve")
-public class ReserveController extends CommonController {
+public class ReserveController extends GenericEntityController<Reserve,Reserve,ReserveDao> {
 
     @Autowired
-    private ReserveService service;
-
+    private ReserveService reserveService;
     @Autowired
-    private SystemInsuranceService systemInsuranceService;
+    private UserReserveJoinService userReserveJoinService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CityService cityService;
+    @Autowired
+    private StadiumService stadiumService;
 
     /**
      * 列表页面
@@ -40,7 +55,11 @@ public class ReserveController extends CommonController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public String index() {
+    public String index(Model model) {
+        List<City> city = cityService.queryAll();
+        model.addAttribute("city",city);
+        List<Stadium> stadia = stadiumService.queryAll();
+        model.addAttribute("stadia",stadia);
         return "reserve/list";
     }
 
@@ -54,7 +73,6 @@ public class ReserveController extends CommonController {
      * @param start
      * @param length
      * @param reserve
-     * @param model
      */
     @RequestMapping(value = "/list")
     public void list(HttpServletRequest request,
@@ -64,11 +82,13 @@ public class ReserveController extends CommonController {
                      Integer length,
                      Reserve reserve,
                      SystemInsurance id,
-                     Model model) {
+                     City cityId,Stadium stadium) {
         try {
             int pageNum = getPageNum(start, length);
             reserve.setSystemInsurance(id);
-            Page<Reserve> page = service.findPage(reserve,pageNum,length);
+            stadium.setCity(cityId);
+            reserve.setStadium(stadium);
+            Page<Reserve> page = reserveService.findPage(reserve,pageNum,length);
             Map<String, Object> result = DataTableFactory.fitting(draw, page);
             WebUtil.print(response, result);
         } catch (Exception e) {
@@ -84,19 +104,18 @@ public class ReserveController extends CommonController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    @RequestMapping(value = "/detail")
     public String detail(Long id, Model model) {
-
-        Reserve reserve = service.getById(id);
-//        if(admin.getContent() != null) {
-//            admin.setContent(admin.getContent().replace("&lt","<").replace("&gt",">"));
-//        }
+        Reserve reserve = reserveService.queryByPK(id);
         model.addAttribute("reserve", reserve);
-        List<Stadium> stadium = service.findStadiumName(id);
-        if(stadium!=null && stadium.size()>0){
-            String stadiumName = stadium.get(0).getName();
-            model.addAttribute("stadiumName", stadiumName);
+        Long reserveId = reserve.getId();
+        List<UserReserveJoin> userReserveJoins = userReserveJoinService.queryByProperty("reserveId",reserveId);
+        List<User> list = new ArrayList<User>();
+        for(UserReserveJoin u : userReserveJoins){
+            User user = userService.findByUserId(u.getUserId());
+            list.add(user);
         }
+        model.addAttribute("list", list);
         return "reserve/detail";
     }
 

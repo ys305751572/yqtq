@@ -116,6 +116,9 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
             if(null != b){
                 bigRace.setCreateDate(b.getCreateDate());
                 bigRace.setStadium(b.getStadium());
+                bigRace.setStatus(b.getStatus());
+            }else{
+                bigRace.setStatus(0);
             }
 
             if(imageFile!=null && imageFile.getSize()>0) {
@@ -140,10 +143,37 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
                     bigRace.setAvater2(fileBo.getPath());
                 }
             }
+            if(bigRace.getAvater1()==null){
+                bigRace.setAvater1(b.getAvater1());
+            }
+            if(bigRace.getAvater2()==null){
+                bigRace.setAvater2(b.getAvater2());
+            }
             if (detail != null) {
                 bigRace.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
             }
             bigRaceService.save(bigRace);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            return Result.failure();
+        }
+        return Result.success();
+    }
+
+
+    @RequestMapping(value = "/status")
+    @ResponseBody
+    public Result status(Long id){
+        BigRace bigRace = bigRaceService.queryByPK(id);
+        Integer status = bigRace.getStatus();
+        try{
+            if(status == 0) {
+                bigRace.setStatus(1);
+                bigRaceService.save(bigRace);
+            }else {
+                bigRace.setStatus(0);
+                bigRaceService.save(bigRace);
+            }
         }catch (RuntimeException e){
             e.printStackTrace();
             return Result.failure();

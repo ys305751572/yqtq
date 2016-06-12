@@ -113,13 +113,19 @@
                             "sDefaultContent" : ""},
                         {
                             "data": "id",
-                            "render": function (data) {
+                            "render": function (data,type,full) {
                                 var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$watchingRace.fn.sfInfo(\'" + data + "\')\">" +
                                         "<i class='fa fa-eye'></i></button>";
                                 var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$watchingRace.fn.edit(\'" + data + "\')\">" +
                                         "<i class='fa fa-pencil-square-o'></i></button>";
-                                var status = "<button title='关闭' class='btn btn-primary btn-circle detail' ONCLICK='$watchingRace.fn.status("+ data +")'> " +
-                                        "<i>关闭</i></button>";
+                                var st = full.status;
+                                if(st==0){
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$watchingRace.fn.status("+ data +")'> " +
+                                            "<i>禁用</i></button>";
+                                }else if(st==1){
+                                    var status = "<button title='启用' class='btn btn-primary btn-circle detail' onclick='$watchingRace.fn.status("+ data +")'> " +
+                                            "<i>启用</i></button>";
+                                }
                                 return detail + "&nbsp;" + status + "&nbsp;" +edit;
                             }
                         }

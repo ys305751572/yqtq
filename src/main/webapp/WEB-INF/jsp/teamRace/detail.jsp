@@ -23,7 +23,6 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">赛事列表</h1>
-        <div class="block-area">
             <div class="col-md-2">
                 <div class="tile">
                     <h2 class="tile-title">赛事详情</h2>
@@ -45,26 +44,27 @@
                         </div>
                         <div class="form-group">
                             <label>预约状态:</label>
+                            <c:if test="${teamRace.status eq 0}">等待中</c:if>
                             <c:if test="${teamRace.status eq 1}">预约成功</c:if>
                             <c:if test="${teamRace.status eq 2}">预约失败</c:if>
                         </div>
                         <c:if test="${teamRace.status eq 1}">
                             <div class="form-group">
                                 <label>比赛地点:</label>
-                                ${teamRace.homeTeam.name}
+                                ${teamRace.stadium.name}
                             </div>
                         </c:if>
                         <div class="form-group">
                             <label>比赛时间:</label>
-                            <date:date format="yyyy-MM-dd HH:mm:ss" value="${teamRace.startDate}"></date:date>
+                            <date:date format="yyyy年MM月dd日 HH:mm" value="${teamRace.startDate}"></date:date>
                         </div>
                         <div class="form-group">
                             <label>约定时间:</label>
+                            <date:date format="yyyy年MM月dd日 HH:mm" value="${teamRace.createDate}"></date:date>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
     <br/><br/>
 </section>

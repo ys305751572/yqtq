@@ -79,7 +79,7 @@ public class TeamController extends GenericEntityController<Team, Team, TeamServ
     }
 
     /**
-     * 编辑页面
+     * 页面
      * @param id
      * @param model
      * @return
@@ -88,12 +88,12 @@ public class TeamController extends GenericEntityController<Team, Team, TeamServ
     public String detail(Long id, Model model){
         try{
             Team team = teamService.findById(id);
+            team.setTmSize(teamService.findTmSize(id));
             model.addAttribute("team", team);
             List<TeamMember> teamMember = teamMemberService.findByTeamId(id);
             model.addAttribute("teamMember",teamMember);
             List<User> userList = userService.findAll();
             model.addAttribute("userList",userList);
-
             List<User> user = teamMemberService.findByAvater(id);
             model.addAttribute("user",user);
 

@@ -23,20 +23,30 @@
             <div class="row">
                 <div class="col-md-2 form-group">
                     <label>城市</label>
-                    <input type="text" class="input-sm form-control" id="cityId" name="cityId" placeholder="...">
+                    <select id="cityId" name="cityId" class="select">
+                        <option value="">全部</option>
+                        <c:forEach items="${city}" var="v">
+                            <option value="${v.cityId}">${v.city}</option>
+                        </c:forEach>
+                    </select>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>球场</label>
-                    <input type="text" class="input-sm form-control" id="stadiumId" name="stadiumId" placeholder="...">
+                    <select id="stadiumId" name="stadiumId" class="select">
+                        <option value="">全部</option>
+                        <c:forEach items="${stadia}" var="v">
+                            <option value="${v.id}">${v.name}</option>
+                        </c:forEach>
+                    </select>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>赛制</label>
                     <select id="matchType" name="matchType" class="select">
                         <option value="">全部</option>
-                        <option value="0">三人制</option>
-                        <option value="1">五人制</option>
-                        <option value="2">七人制</option>
-                        <option value="3">十一人制</option>
+                        <option value="3">三人制</option>
+                        <option value="5">五人制</option>
+                        <option value="7">七人制</option>
+                        <option value="11">十一人制</option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
@@ -133,11 +143,11 @@
                         },
                         {"data": "startDate",
                             render: function (data) {
-                                return new Date(data).format("yyyy-MM-dd hh:mm")
+                                return new Date(data).format("yyyy年MM月dd日 hh:mm")
                             }
                         },
-                        {"data": "cityId"},
-                        {"data": "stadiumId"},
+                        {"data": "stadium.city.city"},
+                        {"data": "stadium.name"},
                         {"data": "user.nickName"},
                         {"data": "matchType",
                             render:function(data){
@@ -168,10 +178,10 @@
                             "sDefaultContent" : ""
                         },
                         {"data":"systemInsurance.name"},
-                        {"data":"user.userId"},
+                        {"data":"num"},
                         {"data": "createDate",
                             render: function (data) {
-                                return new Date(data).format("yyyy-MM-dd hh:mm")
+                                return new Date(data).format("yyyy年MM月dd日 hh:mm")
                             }
                         },
                         {"data": "status",

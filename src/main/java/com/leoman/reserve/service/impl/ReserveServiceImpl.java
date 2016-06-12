@@ -1,5 +1,6 @@
 package com.leoman.reserve.service.impl;
 
+import com.leoman.common.service.impl.GenericManagerImpl;
 import com.leoman.reserve.dao.ReserveDao;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.service.ReserveService;
@@ -23,7 +24,7 @@ import java.util.List;
  * Created by Administrator on 2016/5/24.
  */
 @Service
-public class ReserveServiceImpl implements ReserveService {
+public class ReserveServiceImpl extends GenericManagerImpl<Reserve,ReserveDao> implements ReserveService {
 
     @Autowired
     private ReserveDao dao;
@@ -35,11 +36,11 @@ public class ReserveServiceImpl implements ReserveService {
             public Predicate toPredicate(Root<Reserve> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> list = new ArrayList<Predicate>();
                 Predicate result = null;
-                if (reserve.getCityId() != null) {
-                    list.add(criteriaBuilder.equal(root.get("cityId").as(Long.class), reserve.getCityId()));
+                if (reserve.getStadium().getCity().getCityId() != null) {
+                    list.add(criteriaBuilder.equal(root.get("stadium").get("city").get("cityId").as(Long.class), reserve.getStadium().getCity().getCityId()));
                 }
-                if (reserve.getStadiumId() != null) {
-                    list.add(criteriaBuilder.equal(root.get("stadiumId").as(Long.class), reserve.getStadiumId()));
+                if (reserve.getStadium().getId() != null) {
+                    list.add(criteriaBuilder.equal(root.get("stadium").get("id").as(Long.class), reserve.getStadium().getId()));
                 }
                 if (reserve.getMatchType() != null) {
                     list.add(criteriaBuilder.equal(root.get("matchType").as(Integer.class), reserve.getMatchType()));
@@ -56,55 +57,17 @@ public class ReserveServiceImpl implements ReserveService {
                 return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
             }
         };
-        return dao.findAll(spec,new PageRequest(pagenum - 1,pagesize, Sort.Direction.DESC,"id"));
-    }
-
-    @Override
-    public List<Stadium> findStadiumName(Long id) {
-        return dao.findStadiumName(id);
-    }
-
-    @Override
-    public List<Reserve> findAll() {
-        return null;
-    }
-
-    @Override
-    public Page<Reserve> find(int pageNum, int pageSize) {
-        return null;
-    }
-
-    @Override
-    public Page<Reserve> find(int pageNum) {
-        return null;
-    }
-
-    @Override
-    public Reserve getById(Long id) {
-        return dao.findOne(id);
-    }
-
-    @Override
-    public Reserve deleteById(Long id) {
-        Reserve reserve = dao.findOne(id);
-        dao.delete(reserve);
-        return null;
-    }
-
-    @Override
-    public Reserve create(Reserve reserve) {
-        return dao.save(reserve);
-    }
-
-    @Override
-    public Reserve update(Reserve reserve) {
-        return dao.save(reserve);
-    }
-
-    @Override
-    public void deleteAll(Long[] ids) {
-        for (Long id : ids) {
-            deleteById(id);
+        Page<Reserve> page = dao.findAll(spec,new PageRequest(pagenum - 1,pagesize, Sort.Direction.DESC,"id"));
+        List<Reserve> reserves = page.getContent();
+        for(Reserve r : reserves){
+            r.setNum(this.findNum(r.getId()));
         }
+        return page;
     }
+
+    @Override
+    public Integer findNum(Long reserveId) {
+        return dao.findNum(reserveId);
+    }
+
 }

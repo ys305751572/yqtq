@@ -30,6 +30,7 @@
                     <div class="p-10" style="height:520px">
                         <div class="form-group">
                             <label>图片:</label>
+                            <img src="${contextPath}/${stadium.avater}" alt="">
                         </div>
                         <div class="form-group">
                             <label>球场名称:</label>
@@ -42,10 +43,12 @@
                             <label>城市:</label>
                             ${stadium.city.city}
                         </div>
-                        <div class="form-group">
-                            <label>厂主:</label>
-                            ${nickName}
-                        </div>
+                        <c:if test="${stadium.type eq 0}">
+                            <div class="form-group">
+                                <label>球场主:</label>
+                                <a onclick="$team.fn.sfInfo(${stadium.id})">${stadiumUser.nickName}</a>//到球场主详情还没写
+                            </div>
+                        </c:if>
                         <div class="form-group">
                             <label>球场基本信息:</label>
                             <p>场地类型：<c:if test="${stadium.siteType eq 0}">室内</c:if><c:if test="${stadium.siteType eq 1}">室外</c:if></p>
@@ -54,9 +57,11 @@
                             <p>停车场：<c:if test="${stadium.park eq 0}">无</c:if><c:if test="${stadium.park eq 1}">免费</c:if><c:if test="${stadium.park eq 2}">收费</c:if></p>
                             <p> 赠送：${stadium.giving}</p>
                         </div>
-                        <div class="form-group">
-                            <label>球场场次:</label>
-                        </div>
+                        <c:if test="${stadium.type eq 0}">
+                            <div class="form-group">
+                                <label>球场场次:</label>
+                            </div>
+                        </c:if>
                         <div class="form-group">
                             <label>球场简介:</label>
                             ${stadium.description}
@@ -80,6 +85,23 @@
         fn: {
             init: function () {
                 $team.fn.initImage();
+            },
+            sfInfo: function (id) {
+                $.ajax({
+                    "url": "${contextPath}/admin/1/sfInfo",
+                    "data": {
+                        "id": id
+                    },
+                    "dataType": "json",
+                    "type": "POST",
+                    "success": function (result) {
+                        if (!result.status) {
+                            $common.fn.notify(result.msg);
+                            return;
+                        }
+                        window.location.href = "${contextPath}/admin/1/detail?id=" + id;
+                    }
+                });
             }
         }
     }

@@ -44,15 +44,13 @@
                         <label>球场封面：</label>
                         <div class="fileupload fileupload-new" data-provides="fileupload">
                             <div class="fileupload-preview thumbnail form-control">
-                                <c:if test="${watchingRace.avater ne null}">
-                                    <img src="${watchingRace.avater}">
-                                </c:if>
+                                <img src="${watchingRace.avater}">
                             </div>
                             <div>
                                 <span class="btn btn-file btn-alt btn-sm">
                                     <span class="fileupload-new">选择图片</span>
                                     <span class="fileupload-exists">更改</span>
-                                    <input id="imageFile" name="imageFile" type="file"/>
+                                    <input id="imageFile" name="imageFile" type="file" value="${watchingRace.avater}"/>
                                 </span>
                                 <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
                             </div>

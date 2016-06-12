@@ -2,6 +2,7 @@ package com.leoman.team.entity;
 
 import com.leoman.city.entity.City;
 import com.leoman.common.entity.BaseEntity;
+import com.leoman.user.entity.User;
 import org.hibernate.annotations.JoinFormula;
 
 import javax.persistence.*;
@@ -34,8 +35,11 @@ public class Team extends BaseEntity {
     @Column(name = "avater")
     private String avater;
     //队长ID
-    @Column(name = "leader_user_id")
-    private Long leaderUserId;
+//    @Column(name = "leader_user_id")
+//    private Long leaderUserId;
+    @ManyToOne
+    @JoinColumn(name = "leader_user_id",referencedColumnName = "user_id")
+    private User user;
 
     //对应球队球员
     @OneToMany(fetch = FetchType.EAGER)
@@ -86,10 +90,14 @@ public class Team extends BaseEntity {
         return avater;
     }public void setAvater(String avater) {
         this.avater = avater;
-    }public Long getLeaderUserId() {
-        return leaderUserId;
-    }public void setLeaderUserId(Long leaderUserId) {
-        this.leaderUserId = leaderUserId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public City getCity() {

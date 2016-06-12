@@ -43,11 +43,11 @@
                     <div class="col-md-6 m-b-15">
                         <label>球场基本信息:</label>
                         <input type="checkbox" id="chk" />
-                        <div class="div_hidden" id="div_hidden" style="display: none">
+                        <div class="div_hidden" id="div_hidden"  style="display: none">
                             <label>场地类型：</label>
                                 <select id="siteType" name="siteType" class="select">
-                                    <option value="0">室内</option>
-                                    <option value="1">室外</option>
+                                    <option value='0' <c:if test="${stadium.siteType eq 0}">selected</c:if>>室内</option>
+                                    <option value='1'  <c:if test="${stadium.siteType eq 1}">selected</c:if>>室外</option>
                                 </select>
                             <label>草皮类型：</label>
                             <input type="text" id="sodType" name="sodType" value="${stadium.sodType}" class="input-sm form-control validate[required]" placeholder="...">
@@ -55,9 +55,9 @@
                             <input type="text" id="light" name="light" value="${stadium.light}" class="input-sm form-control validate[required]" placeholder="...">
                             <label>停车场：</label>
                                 <select id="park" name="park" class="select">
-                                    <option value="0">无</option>
-                                    <option value="1">免费</option>
-                                    <option value="2">收费</option>
+                                    <option value="0" <c:if test="${stadium.park eq 0}">selected</c:if>>无</option>
+                                    <option value="1" <c:if test="${stadium.park eq 1}">selected</c:if>>免费</option>
+                                    <option value="2" <c:if test="${stadium.park eq 2}">selected</c:if>>收费</option>
                                 </select>
                             <label>赠送：</label>
                             <input type="text" id="giving" name="giving" value="${stadium.giving}" class="input-sm form-control validate[required]" placeholder="...">
@@ -114,6 +114,19 @@
                 $(".iCheck-helper").click(function() {
                     $user.fn.hid();
                 });
+                <%--var siteType = ${stadium.siteType};--%>
+                <%--if($("#id").val()!=null){--%>
+                    <%--if(siteType==0){--%>
+                        <%--$("#siteType").prepend("<option value='0'>室内</option>");--%>
+                        <%--$("#siteType").append("<option value='0'>室外</option>");--%>
+                    <%--}else if(siteType==1){--%>
+                        <%--$("#siteType").prepend("<option value='1'>室外</option>");--%>
+                        <%--$("#siteType").append("<option value='0'>室内</option>");--%>
+                    <%--}--%>
+                <%--}else{--%>
+                    <%--$("#siteType").prepend("<option value='0'>室内</option>");--%>
+                    <%--$("#siteType").append("<option value='1'>室外</option>");--%>
+                <%--}--%>
             },
             hid:function(){
                 if($(".icheckbox_minimal").attr("aria-checked")=="true"){

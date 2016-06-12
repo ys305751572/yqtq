@@ -56,7 +56,8 @@
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
                     <th>比赛队伍</th>
-                    <th>比赛地区</th>
+                    <th>比赛城市</th>
+                    <th>比赛球场</th>
                     <th>比赛时间</th>
                     <th>操作</th>
                 </tr>
@@ -107,10 +108,11 @@
                             }
                         },
                         {"data": "city.city","sDefaultContent" : ""},
+                        {"data": "stadium.name","sDefaultContent" : ""},
                         {
                             "data": "startDate",
                             "render":function(data){
-                                return new Date(data).format("yyyy-MM-dd hh:mm");
+                                return new Date(data).format("yyyy年MM月dd日 hh:mm:ss");
                             }
                         },
                         {

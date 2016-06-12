@@ -6,7 +6,9 @@ import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.image.entity.FileBo;
 import com.leoman.stadium.entity.Stadium;
+import com.leoman.stadium.entity.StadiumUser;
 import com.leoman.stadium.service.StadiumService;
+import com.leoman.stadium.service.StadiumUserService;
 import com.leoman.stadium.service.impl.StadiumServiceImpl;
 import com.leoman.team.entity.TeamRace;
 import com.leoman.user.entity.User;
@@ -34,9 +36,10 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
 
     @Autowired
     private StadiumService stadiumService;
-
     @Autowired
     private CityService cityService;
+    @Autowired
+    private StadiumUserService stadiumUserService;
 
     @RequestMapping(value = "/index")
     public String index(Model model){
@@ -68,9 +71,10 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
         try{
             Stadium stadium = stadiumService.findById(id);
             model.addAttribute("stadium", stadium);
-            List<User> user = stadiumService.findByNickName(id);
-            if(user!=null && user.size()>0){
-                model.addAttribute("nickName", user.get(0).getNickName());
+            List<StadiumUser> list = stadiumUserService.queryByProperty("id",stadium.getStadiumUserId());
+            if(list.size()>0 && list!=null){
+                StadiumUser stadiumUser = list.get(0);
+                model.addAttribute("stadiumUser", stadiumUser);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -130,8 +134,7 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
         if(null != s){
             stadium.setAreaId(s.getAreaId());
             stadium.setStadiumUserId(s.getStadiumUserId());
-            stadium.setType(s.getType());
-            stadium.setAddress(s.getAddress());
+            stadium.setAddress(s.getAddress());//详细地址,定位功能还没写
             stadium.setRtSet(s.getRtSet());////预定总数
             stadium.setrSet(s.getrSet());//当前预定数
             stadium.setSsSet(s.getSsSet());//场地数
@@ -156,6 +159,7 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
             City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
             stadium.setCity(_city);
         }
+        stadium.setType(1);//保存都是公共球场
         stadiumService.save(stadium);
         return Result.success();
     }

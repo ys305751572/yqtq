@@ -1,6 +1,8 @@
 package com.leoman.reserve.entity;
 
+import com.leoman.city.entity.City;
 import com.leoman.common.entity.BaseEntity;
+import com.leoman.stadium.entity.Stadium;
 import com.leoman.systemInsurance.entity.SystemInsurance;
 import com.leoman.user.entity.User;
 
@@ -18,8 +20,9 @@ public class Reserve extends BaseEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
-    @Column(name = "stadium_id")
-    private Long stadiumId;
+    @ManyToOne
+    @JoinColumn(name = "stadium_id")
+    private Stadium stadium;
 
     @Column(name = "city_id")
     private Long cityId;
@@ -49,6 +52,17 @@ public class Reserve extends BaseEntity {
     @Column(name = "status")
     private Integer status;
 
+    @Transient
+    private Integer num;
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -65,12 +79,12 @@ public class Reserve extends BaseEntity {
         this.time = time;
     }
 
-    public Long getStadiumId() {
-        return stadiumId;
+    public Stadium getStadium() {
+        return stadium;
     }
 
-    public void setStadiumId(Long stadiumId) {
-        this.stadiumId = stadiumId;
+    public void setStadium(Stadium stadium) {
+        this.stadium = stadium;
     }
 
     public Long getCityId() {

@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>logo:</label>
-                        <input type="text" id="avater" name="avater" value="${team.avater}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <img id="avater" name="avater" src="${contextPath}/${team.avater}" alt="">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>队名:</label>
@@ -48,7 +48,7 @@
 
                     <div class="col-md-6 m-b-15" >
                         <label>队长:</label>
-                        <input type="text" id="leaderUserId" name="leaderUserId" value="${team.leaderUserId}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="leaderUserId" name="leaderUserId" value="${team.user.nickName}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
@@ -73,7 +73,7 @@
                             <c:forEach items="${teamMember}" var="item">
                                 <c:forEach items="${userList}" var="u">
                                     <c:if test="${item.userId eq u.userId}">
-                                        <a onclick="$team.fn.detail(${item.userId})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
+                                        <a onclick="$team.fn.detail(${item.userId})" data-rel="gallery" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
                                             <img src="${contextPath}/${u.avater}" alt="">
                                         </a>
                                     </c:if>
@@ -117,7 +117,7 @@
     $(function () {
         $team.fn.init();
         var createDate = ${team.createDate};
-        createDate = new Date().format("yyyy-MM-dd HH:mm");
+        createDate = new Date().format("yyyy-MM-dd hh:mm");
         $("#createDate").val(createDate);
         <%--<date:date format="yyyy-MM-dd HH:mm" value="${team.createDate}"></date:date>--%>
     })

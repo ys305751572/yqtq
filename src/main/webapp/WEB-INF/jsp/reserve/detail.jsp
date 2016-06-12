@@ -33,11 +33,11 @@
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>城市:</label>
-                    <input type="text" id="cityId" value="${reserve.cityId}" name="cityId" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    <input type="text" id="cityId" value="${reserve.stadium.city.city}" name="cityId" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>球场:</label>
-                    <a href="">${stadiumName}</a>//跳转
+                    <a onclick="$reserve.fn.sfInfo(${reserve.stadium.id})">${reserve.stadium.name}</a>//到约场地详情还没写
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>创建者:</label>
@@ -69,6 +69,11 @@
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>已报球友:</label>
+                    <c:forEach items="${list}" var="v">
+                        <a onclick="$reserve.fn.detail(${v.userId})" data-rel="gallery" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
+                            <img src="${contextPath}/${v.avater}" alt="">
+                        </a>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -78,35 +83,68 @@
 <!-- JS -->
 <%@ include file="../inc/new/foot.jsp" %>
 <script>
+    $reserve = {
+        v: {
+            list: [],
+            chart : null,
+            dTable: null
+        },
+        fn: {
+            init: function () {
+               var matchType = ${reserve.matchType};
+               if(matchType==3){
+                   $("#matchType").val("三人制");
+               }else if(matchType==5){
+                   $("#matchType").val("五人制");
+               }else if(matchType==7){
+                   $("#matchType").val("七人制");
+               }else if(matchType==11){
+                   $("#matchType").val("十一人制");
+               }
+
+               var payment = ${reserve.payment};
+               if(payment==0){
+                   $("#payment").val("AA");
+               }else if(payment==1){
+                   $("#payment").val("全额");
+               }
+
+               var createDate = ${reserve.createDate};
+               createDate = new Date().format("yyyy-MM-dd hh:mm");
+               $("#createDate").val(createDate);
+
+               var startDate = ${reserve.startDate};
+               startDate = new Date().format("yyyy-MM-dd hh:mm");
+               $("#startDate").val(startDate);
+           },
+            "detail" : function(userId) {
+                window.location.href = "${contextPath}/admin/user/detail?userId=" + userId;
+            },
+            sfInfo: function (id) {
+                $.ajax({
+                    "url": "${contextPath}/admin/1/sfInfo",
+                    "data": {
+                        "id": id
+                    },
+                    "dataType": "json",
+                    "type": "POST",
+                    "success": function (result) {
+                        if (!result.status) {
+                            $common.fn.notify(result.msg);
+                            return;
+                        }
+                        window.location.href = "${contextPath}/admin/1/detail?id=" + id;
+                    }
+                });
+            }
+
+        }
+    },
     $(function(){
-
-        var matchType = ${reserve.matchType};
-        if(matchType==3){
-            $("#matchType").val("三人制");
-        }else if(matchType==5){
-            $("#matchType").val("五人制");
-        }else if(matchType==7){
-            $("#matchType").val("七人制");
-        }else if(matchType==11){
-            $("#matchType").val("十一人制");
-        }
-
-        var payment = ${reserve.payment};
-        if(payment==0){
-            $("#payment").val("AA");
-        }else if(payment==1){
-            $("#payment").val("全额");
-        }
-
-        var createDate = ${reserve.createDate};
-        createDate = new Date().format("yyyy-MM-dd HH:mm");
-        $("#createDate").val(createDate);
-
-        var startDate = ${reserve.startDate};
-        createDate = new Date().format("yyyy-MM-dd HH:mm");
-        $("#startDate").val(startDate);
-
+        $reserve.fn.init();
     });
+</script>
+<script>
     $('.form_datetime').datetimepicker({
         language: 'zh-CN',
         weekStart: 1,

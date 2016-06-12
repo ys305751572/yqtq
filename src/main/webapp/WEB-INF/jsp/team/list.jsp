@@ -22,7 +22,7 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <label>姓名</label>
+                    <label>队名</label>
                     <input type="text" class="input-sm form-control" id="name" name="name" placeholder="...">
                 </div>
                 <div class="col-md-2 form-group">
@@ -100,7 +100,7 @@
                         {"data": "tmSize"},
                         {"data": "createDate",
                             render: function (data) {
-                                return new Date(data).format("yyyy-MM-dd hh:mm:ss")
+                                return new Date(data).format("yyyy年MM月dd日 hh:mm:ss")
                             }
                         },
                         {

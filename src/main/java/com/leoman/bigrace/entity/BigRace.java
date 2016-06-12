@@ -29,6 +29,9 @@ public class BigRace extends BaseEntity{
     //球队2队徽
     @Column(name = "avater2")
     private String avater2;
+    //状态: 0:正常 1:关闭
+    @Column(name = "status")
+    private Integer status;
     //比赛时间
     @Column(name = "start_date")
     private Long startDate;
@@ -83,6 +86,14 @@ public class BigRace extends BaseEntity{
 
     public void setAvater2(String avater2) {
         this.avater2 = avater2;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Long getStartDate() {
