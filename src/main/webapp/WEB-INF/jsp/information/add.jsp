@@ -22,22 +22,22 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">活动编辑</h1>
+        <h1 class="page-title">资讯编辑</h1>
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data"
               class="box tile animated active form-validation-1">
             <div class="block-area">
-                <input type="hidden" id="id" name="id" value="${activity.id}">
+                <input type="hidden" id="id" name="id" value="${information.id}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
-                        <label>活动标题：</label>
-                        <input type="text" id="title" name="title" value="${activity.title}"
+                        <label>资讯标题：</label>
+                        <input type="text" id="title" name="title" value="${information.title}"
                                class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-12 m-b-15">
-                        <label>活动封面：</label>
+                        <label>资讯封面：</label>
                         <div class="fileupload fileupload-new" data-provides="fileupload">
                             <div class="fileupload-preview thumbnail form-control">
-                                <img src="${activity.aveter}">
+                                <img src="${information.avater}">
                             </div>
                             <div>
                                 <span class="btn btn-file btn-alt btn-sm">
@@ -50,20 +50,39 @@
                         </div>
                     </div>
                     <div class="col-md-6 m-b-15">
-                        <label>活动简介：</label>
+                        <label>资讯简介：</label>
                         <textarea cols="40" rows="6" id="introduction" name="introduction" class="form-control"
-                                  placeholder="...">${activity.introduction}</textarea>
+                                  placeholder="...">${information.introduction}</textarea>
                     </div>
                     <hr class="whiter m-t-20"/>
-                    <div class="col-md-12 m-b-15">
-                        <label>活动详情</label>
-                        <div class="wysiwye-editor">${activity.description}</div>
+                    <div class="col-md-6 m-b-15">
+                        <label>资讯类型：</label>
+                        <div class="radio">
+                            <label onclick="information.fn.show()">
+                                <input type="radio" name="type" value="0" onclick="information.fn.show()">纯文本
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label onclick="information.fn.show()">
+                                <input type="radio" name="type" value="1" onclick="information.fn.show()">网页
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 m-b-15" style="display: none" id="type1">
+                        <hr class="whiter m-t-20"/>
+                        <label>资讯详情</label>
+                        <div class="wysiwye-editor">${information.description}</div>
+                    </div>
+                    <div class="col-md-12 m-b-15" style="display: none;" id="type2">
+                        <hr class="whiter m-t-20"/>
+                        <label>资讯详情</label>
+                        <input type="text" value="${information.description}" class="input-sm form-control validate[required]" placeholder="请输入资讯url">
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-5">
-                        <button type="button" onclick="activity.fn.save();" class="btn btn-info btn-sm m-t-10">提交
+                        <button type="button" onclick="information.fn.save();" class="btn btn-info btn-sm m-t-10">提交
                         </button>
                         <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                     </div>
@@ -77,7 +96,7 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    activity = {
+    information = {
         v: {
             list: [],
             chart: null,
@@ -85,20 +104,36 @@
         },
         fn: {
             init: function () {
-                activity.fn.initImage();
+                information.fn.initImage();
+
+                information.fn.show();
+            },
+            show: function () {
+                var type = $('input:radio:checked').val();
+                if (type == '1') {
+                    $("#type2").val("");
+                    $("#type1").css('display', '');
+                    $("#type2").css('display', 'none');
+                } else {
+                    $("#type1").val("");
+                    $("#type1").css('display', 'none');
+                    $("#type2").css('display', '');
+                }
             },
             save: function () {
                 var code = $('.wysiwye-editor').code();
+                var type = $("#type2").val();
                 $("#fromId").ajaxSubmit({
-                    url: "${contextPath}/admin/activity/save",
+                    url: "${contextPath}/admin/information/save",
                     type: "POST",
                     data: {
-                        "detail": code
+                        "detail": code,
+                        "description": type,
                     },
                     success: function (result) {
                         if (result == 1) {
                             $common.fn.notify("操作成功", "success");
-                            window.location.href = "${contextPath}/admin/activity/index";
+                            window.location.href = "${contextPath}/admin/information/index";
                         } else {
                             $common.fn.notify("操作失败", "error");
                         }

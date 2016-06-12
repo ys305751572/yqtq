@@ -1,12 +1,12 @@
-package com.leoman.activity.controller;
+package com.leoman.information.controller;
 
-import com.leoman.activity.entity.Activity;
-import com.leoman.activity.service.ActivityService;
-import com.leoman.activity.service.impl.ActivityServiceImpl;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.exception.GeneralExceptionHandler;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.image.entity.FileBo;
+import com.leoman.information.entity.Information;
+import com.leoman.information.service.InformationService;
+import com.leoman.information.service.impl.InformationServiceImpl;
 import com.leoman.utils.FileUtil;
 import com.leoman.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
@@ -27,11 +27,11 @@ import java.util.Map;
  * Created by Administrator on 2016/6/8 0008.
  */
 @Controller
-@RequestMapping(value = "admin/activity")
-public class ActivityController extends GenericEntityController<Activity, Activity, ActivityServiceImpl> {
+@RequestMapping(value = "admin/information")
+public class InformationController extends GenericEntityController<Information, Information, InformationServiceImpl> {
 
     @Autowired
-    private ActivityService activityService;
+    private InformationService informationService;
 
     /**
      * 列表页面
@@ -40,7 +40,7 @@ public class ActivityController extends GenericEntityController<Activity, Activi
      */
     @RequestMapping(value = "/index")
     public String index() {
-        return "activity/list";
+        return "information/list";
     }
 
     /**
@@ -65,7 +65,7 @@ public class ActivityController extends GenericEntityController<Activity, Activi
         try {
             int pageNum = getPageNum(start, length);
 
-            Page<Activity> page = activityService.findPage(introduction, pageNum, length);
+            Page<Information> page = informationService.findPage(introduction, pageNum, length);
 
             Map<String, Object> result = DataTableFactory.fitting(draw, page);
             WebUtil.print(response, result);
@@ -78,17 +78,17 @@ public class ActivityController extends GenericEntityController<Activity, Activi
     /**
      * 详情
      *
-     * @param activityId
+     * @param informationId
      * @param model
      */
     @RequestMapping(value = "/detail")
-    public String detail(Long activityId, Model model) {
+    public String detail(Long informationId, Model model) {
 
-        Activity activity = activityService.findById(activityId);
+        Information information = informationService.findById(informationId);
 
-        model.addAttribute("activity", activity);
+        model.addAttribute("information", information);
 
-        return "activity/detail";
+        return "information/detail";
     }
 
     /**
@@ -96,24 +96,24 @@ public class ActivityController extends GenericEntityController<Activity, Activi
      */
     @RequestMapping(value = "/add")
     public String add() {
-        return "activity/add";
+        return "information/add";
     }
 
     /**
      * 编辑
      *
-     * @param activityId
+     * @param informationId
      * @param model
      */
     @RequestMapping(value = "/edit")
-    public String edit(Long activityId, Model model) {
+    public String edit(Long informationId, Model model) {
         try {
-            Activity activity = activityService.findById(activityId);
-            model.addAttribute("activity", activity);
+            Information information = informationService.findById(informationId);
+            model.addAttribute("information", information);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "activity/add";
+        return "information/add";
     }
 
     /**
@@ -125,31 +125,37 @@ public class ActivityController extends GenericEntityController<Activity, Activi
      */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Integer save(Long id, String title, String introduction, String detail, MultipartRequest multipartRequest) {
+    public Integer save(Long id, String title, Integer type, String introduction, String description, String detail, MultipartRequest multipartRequest) {
         try {
-            Activity activity = null;
+            Information information = null;
 
             if (null == id) {
-                activity = new Activity();
-                activity.setCreateDate(System.currentTimeMillis());
+                information = new Information();
+                information.setCreateDate(System.currentTimeMillis());
             } else {
-                activityService.findById(id);
+                information = informationService.findById(id);
             }
 
             MultipartFile multipartFile = multipartRequest.getFile("imageFile");
             if (null != multipartFile) {
                 FileBo fileBo = FileUtil.save(multipartFile);
-                activity.setAveter(fileBo.getPath());
+                information.setAvater(fileBo.getPath());
             }
 
-            activity.setTitle(title);
-            activity.setIntroduction(introduction);
+            information.setTitle(title);
+            information.setIntroduction(introduction);
 
-            if (StringUtils.isNotEmpty(detail)) {
-                activity.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
+            if (type == 1) {
+                information.setDescription(description);
+                information.setType(1);
+            }else if (type == 0) {
+                if (StringUtils.isNotEmpty(detail)) {
+                    information.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
+                    information.setType(0);
+                }
             }
 
-            activityService.save(activity);
+            informationService.save(information);
             return 1;
         } catch (Exception e) {
             e.printStackTrace();

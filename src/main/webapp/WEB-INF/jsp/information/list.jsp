@@ -32,7 +32,7 @@
             <button id="c_search" class="btn btn-alt m-r-5">查询</button>
         </div>
         <div class="block-area">
-            <a data-toggle="modal" href="${contextPath}/admin/activity/add" title="发布活动" class="btn btn-alt m-r-5">
+            <a data-toggle="modal" href="${contextPath}/admin/information/add" title="发布活动" class="btn btn-alt m-r-5">
             </a>
         </div>
         <hr class="whiter m-t-20"/>
@@ -42,7 +42,7 @@
                 <thead>
                 <tr>
                     <th style="width: 20px;"><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    <th>活动简介</th>
+                    <th>资讯简介</th>
                     <th>发帖时间</th>
                     <th>操作</th>
                 </tr>
@@ -56,26 +56,26 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    activity = {
+    information = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                activity.fn.dataTableInit();
+                information.fn.dataTableInit();
 
                 $("#c_search").click(function () {
-                    activity.v.dTable.ajax.reload();
+                    information.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                activity.v.dTable = $leoman.dataTable($('#dataTables'), {
+                information.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/activity/list",
+                        "url": "${contextPath}/admin/information/list",
                         "type": "POST"
                     },
                     "columns": [
@@ -106,9 +106,9 @@
                         {
                             "data": null,
                             "render": function (data) {
-                                var detail = "<button title='查看' class='btn btn-primary btn-circle detail' onclick='activity.fn.detail(" + data.id + ")'> " +
+                                var detail = "<button title='查看' class='btn btn-primary btn-circle detail' onclick='information.fn.detail(" + data.id + ")'> " +
                                         "<i class='fa fa-eye'></i></button>&nbsp;&nbsp;";
-                                detail += "<button title='编辑' class='btn btn-primary btn-circle edit' onclick='activity.fn.edit(" + data.id + ")'> " +
+                                detail += "<button title='编辑' class='btn btn-primary btn-circle edit' onclick='information.fn.edit(" + data.id + ")'> " +
                                         "<i class='fa fa-edit'></i></button>";
                                 return detail;
                             }
@@ -120,15 +120,15 @@
                 });
             },
             "detail": function (id) {
-                window.location.href = "${contextPath}/admin/activity/detail?activityId=" + id;
+                window.location.href = "${contextPath}/admin/information/detail?informationId=" + id;
             },
             "edit": function (id) {
-                window.location.href = "${contextPath}/admin/activity/edit?activityId=" + id;
+                window.location.href = "${contextPath}/admin/information/edit?informationId=" + id;
             },
         }
     }
     $(function () {
-        activity.fn.init();
+        information.fn.init();
     })
 </script>
 <script>

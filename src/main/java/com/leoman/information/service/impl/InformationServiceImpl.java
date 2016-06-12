@@ -1,11 +1,9 @@
-package com.leoman.activity.service.impl;
+package com.leoman.information.service.impl;
 
-import com.leoman.activity.dao.ActivityDao;
-import com.leoman.activity.entity.Activity;
-import com.leoman.activity.service.ActivityService;
 import com.leoman.common.service.impl.GenericManagerImpl;
-import com.leoman.hostRace.entity.HostRace;
-import com.leoman.post.entity.Post;
+import com.leoman.information.dao.InformationDao;
+import com.leoman.information.entity.Information;
+import com.leoman.information.service.InformationService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -26,23 +23,23 @@ import java.util.List;
  * Created by Administrator on 2016/6/8 0008 下午 4:35.
  */
 @Service
-public class ActivityServiceImpl extends GenericManagerImpl<Activity, ActivityDao> implements ActivityService {
+public class InformationServiceImpl extends GenericManagerImpl<Information, InformationDao> implements InformationService {
 
     @Autowired
-    private ActivityDao activityDao;
+    private InformationDao informationDao;
 
     @Override
-    public Activity findById(Long id) {
-        return activityDao.findById(id);
+    public Information findById(Long id) {
+        return informationDao.findById(id);
     }
 
     @Override
-    public Page<Activity> findPage(final String introduction, int pageNum, int pageSize) {
+    public Page<Information> findPage(final String introduction, int pageNum, int pageSize) {
         PageRequest pageRequest = new PageRequest(pageNum - 1, pageSize, Sort.Direction.DESC, "id");
 
-        Page<Activity> page = activityDao.findAll(new Specification<Activity>() {
+        Page<Information> page = informationDao.findAll(new Specification<Information>() {
             @Override
-            public Predicate toPredicate(Root<Activity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+            public Predicate toPredicate(Root<Information> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Predicate result = null;
                 List<Predicate> predicateList = new ArrayList<Predicate>();
                 if (StringUtils.isNotEmpty(introduction)) {

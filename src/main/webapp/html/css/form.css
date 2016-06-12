@@ -73,7 +73,7 @@ select:not([multiple]){
    text-indent: 1px;
    text-overflow: '';
    line-height: normal !important;
-   background-image: url(../img/select-bg.png);
+   /*background-image: url(../img/select-bg.png);*/
    background-repeat: no-repeat;
    background-position: right center;
    /*color: */
