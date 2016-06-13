@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/6/8.
@@ -121,8 +123,10 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
             if(null != w){
                 watchingRace.setCreateDate(w.getCreateDate());
                 watchingRace.setInvitation(w.getInvitation());
+                watchingRace.setStatus(w.getStatus());
             }else {
-                watchingRace.setInvitation(0);
+                watchingRace.setInvitation(0);  //新增邀约0
+                watchingRace.setStatus(0);  //新增状态正常
             }
             if(imageFile!=null && imageFile.getSize()>0) {
                 FileBo fileBo = null;
@@ -135,6 +139,9 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
                     watchingRace.setAvater(fileBo.getPath());
                 }
             }
+            if(watchingRace.getAvater()==null){
+                watchingRace.setAvater(w.getAvater());
+            }
             if (detail != null) {
                 watchingRace.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
             }
@@ -143,6 +150,26 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
                 watchingRace.setCity(_city);
             }
             watchingRaceService.save(watchingRace);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            return Result.failure();
+        }
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/status")
+    @ResponseBody
+    public Result status(Long id){
+        WatchingRace watchingRace = watchingRaceService.queryByPK(id);
+        Integer status = watchingRace.getStatus();
+        try{
+            if(status == 0) {
+                watchingRace.setStatus(1);
+                watchingRaceService.save(watchingRace);
+            }else {
+                watchingRace.setStatus(0);
+                watchingRaceService.save(watchingRace);
+            }
         }catch (RuntimeException e){
             e.printStackTrace();
             return Result.failure();

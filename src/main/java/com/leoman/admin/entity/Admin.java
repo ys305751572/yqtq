@@ -1,11 +1,13 @@
 package com.leoman.admin.entity;
 
 import com.leoman.common.entity.BaseEntity;
+import com.leoman.security.entity.Role;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2016/3/8.
@@ -23,6 +25,36 @@ public class Admin extends BaseEntity{
 
     @Column(name = "last_login_date")
     private Long lastLoginDate;
+
+    @Column(name = "status")
+    private Integer status;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "admin_id")
+    private Set<Role> roles;
+
+    @Transient
+    private String name;
+
+    public String getName() {
+        String name = "";
+        for(Role r : roles){
+           name = r.getName();
+        }
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     public String getUsername() {
         return username;
@@ -46,6 +78,14 @@ public class Admin extends BaseEntity{
 
     public void setLastLoginDate(Long lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Override

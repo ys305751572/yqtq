@@ -1,9 +1,12 @@
 package com.leoman.systemInsurance.entity;
 
 import com.leoman.common.entity.BaseEntity;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Created by Administrator on 2016/5/25.
@@ -29,6 +32,18 @@ public class SystemInsurance extends BaseEntity {
     //状态 0:有效 1:失效
     @Column(name = "status")
     private Integer status;
+
+    @Column(name = "content")
+    private String content;
+
+    @Transient
+    private Integer payNum;
+
+    @Transient
+    private Integer accidentNum;
+
+    @Transient
+    private double sumPrice;
 
     public String getName() {
         return name;
@@ -76,5 +91,37 @@ public class SystemInsurance extends BaseEntity {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Integer getPayNum() {
+        return payNum;
+    }
+
+    public void setPayNum(Integer payNum) {
+        this.payNum = payNum;
+    }
+
+    public Integer getAccidentNum() {
+        return accidentNum;
+    }
+
+    public void setAccidentNum(Integer accidentNum) {
+        this.accidentNum = accidentNum;
+    }
+
+    public double getSumPrice() {
+        return sumPrice;
+    }
+
+    public void setSumPrice(double sumPrice) {
+        this.sumPrice = sumPrice;
     }
 }

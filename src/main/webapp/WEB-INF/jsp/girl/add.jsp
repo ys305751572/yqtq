@@ -79,12 +79,27 @@
                     </div>
                     <div class="col-md-12 m-b-15">
                         <label>宝贝封面：</label>
-                    </div>
-                    <%--<div class="col-md-12 m-b-15">--%>
-                        <%--<label>宝贝相册：</label>--%>
                         <%--<div class="fileupload fileupload-new" data-provides="fileupload">--%>
                             <%--<div class="fileupload-preview thumbnail form-control">--%>
-                                <%--<c:if test="${image.url ne null}">--%>
+                                <%--<c:if test="${image.type eq 0}">--%>
+                                    <%--<img src="${image.url}">--%>
+                                <%--</c:if>--%>
+                            <%--</div>--%>
+                            <%--<div>--%>
+                                <%--<span class="btn btn-file btn-alt btn-sm">--%>
+                                    <%--<span class="fileupload-new">选择图片</span>--%>
+                                    <%--<span class="fileupload-exists">更改</span>--%>
+                                    <%--<input id="imageFile" name="imageFile" type="file"/>--%>
+                                <%--</span>--%>
+                                <%--<a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    </div>
+                    <div class="col-md-12 m-b-15">
+                        <label>宝贝相册：</label>
+                        <%--<div class="fileupload fileupload-new" data-provides="fileupload">--%>
+                            <%--<div class="fileupload-preview thumbnail form-control">--%>
+                                <%--<c:if test="${image.type eq 1}">--%>
                                     <%--<img src="${image.url}">--%>
                                 <%--</c:if>--%>
                             <%--</div>--%>
@@ -97,7 +112,7 @@
                                 <%--<a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>--%>
                             <%--</div>--%>
                         <%--</div>--%>
-                    <%--</div>--%>
+                    </div>
                     <hr class="whiter m-t-20"/>
                 </div>
                 <div class="form-group">
