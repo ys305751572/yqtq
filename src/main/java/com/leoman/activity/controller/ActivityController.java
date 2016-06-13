@@ -133,7 +133,7 @@ public class ActivityController extends GenericEntityController<Activity, Activi
                 activity = new Activity();
                 activity.setCreateDate(System.currentTimeMillis());
             } else {
-                activityService.findById(id);
+                activity = activityService.findById(id);
             }
 
             MultipartFile multipartFile = multipartRequest.getFile("imageFile");

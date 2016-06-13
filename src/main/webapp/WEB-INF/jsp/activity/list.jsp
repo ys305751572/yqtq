@@ -32,8 +32,7 @@
             <button id="c_search" class="btn btn-alt m-r-5">查询</button>
         </div>
         <div class="block-area">
-            <a data-toggle="modal" href="${contextPath}/admin/activity/add" title="发布活动" class="btn btn-alt m-r-5">
-            </a>
+            <button id="publish" class="btn btn-alt m-r-5" onclick="activity.fn.add()">发布活动</button>
         </div>
         <hr class="whiter m-t-20"/>
         <!-- form表格 -->
@@ -121,6 +120,9 @@
             },
             "detail": function (id) {
                 window.location.href = "${contextPath}/admin/activity/detail?activityId=" + id;
+            },
+            "add": function () {
+                window.location.href = "${contextPath}/admin/activity/add";
             },
             "edit": function (id) {
                 window.location.href = "${contextPath}/admin/activity/edit?activityId=" + id;

@@ -271,7 +271,7 @@ public class GenericManagerImpl<E, D extends IBaseJpaRepository<E>> implements G
 
 
 	public E update(E object) {
-		return null;
+		return getEntityDAO().save(object);
 	}
 
 	public List<E> query(final Predicate... predicate) {

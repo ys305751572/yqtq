@@ -49,7 +49,7 @@
                 <div  id="detail2" class="col-md-12 m-b-15" style="display: none;margin-top: 10px;">
                     <hr class="whiter m-t-20"/>
                     <label>资讯内容：</label>
-                    <div name="detail2" disabled>${information.description}</div>
+                    <input type="text" value="${information.description}" name="detail2" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <%--<div class="col-md-6 m-b-15">
                     <label>操作:</label>
@@ -75,7 +75,7 @@
             init: function () {
 
                 var type = ${information.type};
-                if ( type == 1) {
+                if ( type == 0) {
                     $("#detail1").css('display', '');
                     $("#detail2").css('display', 'none');
                 } else {
