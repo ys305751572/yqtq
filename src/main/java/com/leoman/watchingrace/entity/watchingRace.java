@@ -22,6 +22,9 @@ public class WatchingRace extends BaseEntity{
     @Column(name = "avater")
     private String avater;
 
+    @Column(name = "status")
+    private Integer status;
+
     @Column(name = "invitation")
     private Integer invitation;
 
@@ -42,6 +45,14 @@ public class WatchingRace extends BaseEntity{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public City getCity() {

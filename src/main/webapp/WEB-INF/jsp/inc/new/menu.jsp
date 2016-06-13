@@ -37,8 +37,8 @@
             </a>
             <ul class="list-unstyled menu-item">
                 <li><a href="${contextPath}/admin/user/index">用户列表</a></li>
-                <li><a href="${contextPath}/admin/1/index">会员列表</a></li>
-                <li><a href="${contextPath}/admin/1/index">管理人员</a></li>
+                <li><a href="${contextPath}/admin/userVip/index">会员列表</a></li>
+                <li><a href="${contextPath}/admin/admin/index">管理人员</a></li>
                 <li><a href="${contextPath}/admin/1/index">球场主列表</a></li>
             </ul>
         </li>
@@ -108,7 +108,7 @@
                 <span class="menu-item">说明页面管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/1/index">vip等级说明</a></li>
+                <li><a href="${contextPath}/admin/vipLeveMessage/index">vip等级说明</a></li>
                 <li><a href="${contextPath}/admin/1/index">vip优惠说明</a></li>
                 <li><a href="${contextPath}/admin/1/index">信誉度说明</a></li>
                 <li><a href="${contextPath}/admin/1/index">约球须知说明</a></li>

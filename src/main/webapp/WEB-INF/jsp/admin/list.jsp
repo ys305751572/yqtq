@@ -22,40 +22,46 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <select id="cityId" name="cityId" class="select">
-                        <option value="">城市</option>
-                        <c:forEach items="${city}" var="c">
-                            <option value="${c.cityId}">${c.city}</option>
-                        </c:forEach>
+                    <input type="text" class="input-sm form-control" id="userName" name="userName" placeholder="账号">
+                </div>
+                <div class="col-md-2 form-group">
+                    <select id="roleName" name="roleName" class="select">
+                        <option value="">请选择权限</option>
                     </select>
-                </div>
-                <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="girlName" name="girlName" placeholder="宝贝名">
-                </div>
-                <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="userName" name="userName" placeholder="用户名">
                 </div>
             </div>
         </div>
         <div class="block-area" id="alternative-buttons">
             <button id="c_search" class="btn btn-alt m-r-5">查询</button>
         </div>
+        <div class="block-area">
+            <div class="row">
+                <ul class="list-inline list-mass-actions">
+                    <li>
+                        <a data-toggle="modal" href="${contextPath}/admin/admin/add" title="新增" class="tooltips">
+                            <i class="sa-list-add"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="modal" href="${contextPath}/admin/1/index" title="权限列表" class="tooltips">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr class="whiter m-t-20"/>
         <!-- form表格 -->
         <div class="block-area" id="tableHover">
             <table class="table table-bordered table-hover tile" id="dataTables" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    <th>地区</th>
-                    <th>宝贝昵称</th>
-                    <th>约看人</th>
-                    <th>下单时间</th>
-                    <th>预约时间</th>
-                    <th>预定时长</th>
-                    <th>预约球场</th>
-                    <th>比赛</th>
-                    <th>价格</th>
-                    <th>打赏</th>
+                    <th>账号</th>
+                    <th>添加时间</th>
+                    <th>最新登录时间</th>
+                    <th>权限</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
             </table>
@@ -67,84 +73,81 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    $girl = {
+    $admin = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                $girl.fn.dataTableInit();
+                $admin.fn.dataTableInit();
 
                 $("#c_search").click(function () {
-                    $girl.v.dTable.ajax.reload();
+                    $admin.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                $girl.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $admin.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/girlUser/list",
+                        "url": "${contextPath}/admin/admin/list",
                         "type": "POST"
                     },
                     "columns": [
                         {
                             "data": "id",
                             "render": function (data) {
-//                                var checkbox = "<div class=\"icheckbox_minimal\" aria-checked=\"false\" aria-disabled=\"false\" style=\"position: relative;\"><input type=\"checkbox\" value="+ data +" class='pull-left list-check' style=\"position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);\"></div>";
                                 var checkbox = "<input type='checkbox' class='pull-left list-check' value=" + data + ">";
                                 return checkbox;
                             }
                         },
-                        {"data": "girl.city.city","sDefaultContent" : ""},
-                        {"data": "girl.name","sDefaultContent" : ""},
-                        {"data": "user.nickName","sDefaultContent" : ""},
-                        {"data": "createDate","sDefaultContent" : ""},
-                        {"data": "startDate","sDefaultContent" : ""},
-                        {"data": "duration","sDefaultContent" : ""},
-                        {"data": "stadium.name","sDefaultContent" : ""},
+                        {"data": "username","sDefaultContent" : ""},
                         {
-                            "data": "teamRace",
-                            "render":function(data,type,full){
-                                return full.teamRace.homeTeam.name+ "vs"+full.teamRace.visitingTeam.name;
+                            "data": "createDate",
+                            "render":function(data){
+                                return new Date(data).format("yyyy-MM-dd hh:mm");
                             },
                             "sDefaultContent" : ""
                         },
-                        {"data": "price", "sDefaultContent" : ""},
-                        {"data": "tip","sDefaultContent" : ""}
+                        {
+                            "data": "lastLoginDate",
+                            "render":function(data){
+                                return new Date(data).format("yyyy-MM-dd hh:mm");
+                            },
+                            "sDefaultContent" : ""
+                        },
+                        {"data": "name","sDefaultContent" : ""},
+                        {
+                            "data": "id",
+                            "render": function (data,type,full) {
+                                var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$admin.fn.add(\'" + data + "\')\">" +
+                                        "<i class='fa fa-pencil-square-o'></i></button>";
+                                var st = full.status;
+                                if(st==0){
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$admin.fn.status("+ data +")'> " +
+                                            "<i>禁用</i></button>";
+                                }else if(st==1){
+                                    var status = "<button title='启用' class='btn btn-primary btn-circle detail' onclick='$admin.fn.status("+ data +")'> " +
+                                            "<i>启用</i></button>";
+                                }
+                                return edit+ "&nbsp;" + status;
+                            }
+                        }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.name = $("#girlName").val();
-                        aoData.cityId = $("#cityId").val();
-                        aoData.nickName = $("#userName").val();
+                        aoData.username = $("#userName").val();
+                        aoData.name = $("#roleName").val();
                     }
                 });
             },
-            sfInfo: function (id) {
-                $.ajax({
-                    "url": "${contextPath}/admin/girl/sfInfo",
-                    "data": {
-                        "id": id
-                    },
-                    "dataType": "json",
-                    "type": "POST",
-                    "success": function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
-                        }
-                        window.location.href = "${contextPath}/admin/girl/detail?id=" + id;
-                    }
-                });
-            },
-            edit: function (id){
-                window.location.href = "${contextPath}/admin/girl/edit?id=" + id;
+            add: function (id){
+                window.location.href = "${contextPath}/admin/admin/add?id=" + id;
             },
             status : function(id) {
                 $.ajax({
-                    "url": "${contextPath}/admin/girl/status",
+                    "url": "${contextPath}/admin/admin/status",
                     "data": {
                         "id": id
                     },
@@ -155,16 +158,16 @@
                             $common.fn.notify(result.msg);
                             return;
                         }
-                        $girl.v.dTable.ajax.reload();
+                        $admin.v.dTable.ajax.reload();
                     }
                 });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        $girl.v.dTable.ajax.reload(null, false);
+                        $admin.v.dTable.ajax.reload(null, false);
                     } else {
-                        $girl.v.dTable.ajax.reload();
+                        $admin.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -174,7 +177,7 @@
         }
     }
     $(function () {
-        $girl.fn.init();
+        $admin.fn.init();
     })
 </script>
 <script>

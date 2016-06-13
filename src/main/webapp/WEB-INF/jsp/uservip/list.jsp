@@ -22,18 +22,20 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <select id="cityId" name="cityId" class="select">
-                        <option value="">城市</option>
-                        <c:forEach items="${city}" var="c">
-                            <option value="${c.cityId}">${c.city}</option>
-                        </c:forEach>
+                    <label>手机号</label>
+                    <input type="text" class="input-sm form-control" id="mobile" name="mobile" placeholder="...">
+                </div>
+                <div class="col-md-2 form-group">
+                    <label>昵称</label>
+                    <input type="text" class="input-sm form-control" id="nickName" name="nickName" placeholder="..." >
+                </div>
+                <div class="col-md-2 form-group">
+                    <label>会员状态</label>
+                    <select id="vipLevel" name="vipLevel" class="select">
+                        <option value="">全部</option>
+                        <option value="0">非会员</option>
+                        <option value="1">会员</option>
                     </select>
-                </div>
-                <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="girlName" name="girlName" placeholder="宝贝名">
-                </div>
-                <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="userName" name="userName" placeholder="用户名">
                 </div>
             </div>
         </div>
@@ -46,16 +48,12 @@
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    <th>地区</th>
-                    <th>宝贝昵称</th>
-                    <th>约看人</th>
-                    <th>下单时间</th>
-                    <th>预约时间</th>
-                    <th>预定时长</th>
-                    <th>预约球场</th>
-                    <th>比赛</th>
-                    <th>价格</th>
-                    <th>打赏</th>
+                    <th>手机号</th>
+                    <th>会员开始时间</th>
+                    <th>会员经验</th>
+                    <th>会员等级</th>
+                    <th>会员结束时间</th>
+                    <th>昵称</th>
                 </tr>
                 </thead>
             </table>
@@ -67,26 +65,26 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    $girl = {
+    $userVip = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                $girl.fn.dataTableInit();
+                $userVip.fn.dataTableInit();
 
                 $("#c_search").click(function () {
-                    $girl.v.dTable.ajax.reload();
+                    $userVip.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                $girl.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $userVip.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/girlUser/list",
+                        "url": "${contextPath}/admin/userVip/list",
                         "type": "POST"
                     },
                     "columns": [
@@ -98,73 +96,44 @@
                                 return checkbox;
                             }
                         },
-                        {"data": "girl.city.city","sDefaultContent" : ""},
-                        {"data": "girl.name","sDefaultContent" : ""},
-                        {"data": "user.nickName","sDefaultContent" : ""},
-                        {"data": "createDate","sDefaultContent" : ""},
-                        {"data": "startDate","sDefaultContent" : ""},
-                        {"data": "duration","sDefaultContent" : ""},
-                        {"data": "stadium.name","sDefaultContent" : ""},
+                        {"data": "user.mobile","sDefaultContent" : ""},
                         {
-                            "data": "teamRace",
-                            "render":function(data,type,full){
-                                return full.teamRace.homeTeam.name+ "vs"+full.teamRace.visitingTeam.name;
+                            "data": "createDate",
+                            "render":function(data){
+                                return new Date(data).format("yyyy-MM-dd hh:mm");
                             },
                             "sDefaultContent" : ""
                         },
-                        {"data": "price", "sDefaultContent" : ""},
-                        {"data": "tip","sDefaultContent" : ""}
+                        {"data": "user.experience","sDefaultContent" : ""},
+                        {
+                            "data": "user.vipLevel",
+                            render:function(data){
+                                return "Lv" + data;
+                            }
+                        },
+                        {
+                            "data": "vipEndDate",
+                            "render":function(data){
+                                return new Date(data).format("yyyy-MM-dd hh:mm");
+                            },
+                            "sDefaultContent" : ""
+                        },
+                        {"data": "user.nickName","sDefaultContent" : ""},
+
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.name = $("#girlName").val();
-                        aoData.cityId = $("#cityId").val();
-                        aoData.nickName = $("#userName").val();
-                    }
-                });
-            },
-            sfInfo: function (id) {
-                $.ajax({
-                    "url": "${contextPath}/admin/girl/sfInfo",
-                    "data": {
-                        "id": id
-                    },
-                    "dataType": "json",
-                    "type": "POST",
-                    "success": function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
-                        }
-                        window.location.href = "${contextPath}/admin/girl/detail?id=" + id;
-                    }
-                });
-            },
-            edit: function (id){
-                window.location.href = "${contextPath}/admin/girl/edit?id=" + id;
-            },
-            status : function(id) {
-                $.ajax({
-                    "url": "${contextPath}/admin/girl/status",
-                    "data": {
-                        "id": id
-                    },
-                    "dataType": "json",
-                    "type": "POST",
-                    success: function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
-                        }
-                        $girl.v.dTable.ajax.reload();
+                        aoData.mobile = $("#mobile").val();
+                        aoData.nickName = $("#nickName").val();
+                        aoData.vipLevel = $("#vipLevel").val();
                     }
                 });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        $girl.v.dTable.ajax.reload(null, false);
+                        $userVip.v.dTable.ajax.reload(null, false);
                     } else {
-                        $girl.v.dTable.ajax.reload();
+                        $userVip.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -174,7 +143,7 @@
         }
     }
     $(function () {
-        $girl.fn.init();
+        $userVip.fn.init();
     })
 </script>
 <script>

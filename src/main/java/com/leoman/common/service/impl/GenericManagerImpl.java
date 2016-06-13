@@ -114,10 +114,10 @@ public class GenericManagerImpl<E, D extends IBaseJpaRepository<E>> implements G
 	 *		  }
 	 *		  cb.not
 	 *		    if(um.getName()!=null && um.getName().trim().length()>0){  
-	 *		        list.add(cb.like(root.get("name").as(String.class), "%"+um.getName()+"%"));  
+	 *		        list.add(cb.like(root.get("name").as(String.class), "%"+um.getName()+"%"));
 	 *		    }  
 	 *		    if(um.getUuid()>0){  
-	 *		        list.add(cb.equal(root.get("uuid").as(Integer.class), um.getUuid()));  
+	 *		        list.add(cb.equal(root.get("uuid").as(Integer.class), um.getUuid()));
 	 *		    }  
 	 *		    Predicate[] p = new Predicate[list.size()];  
 	 *		    return cb.and(list.toArray(p));  

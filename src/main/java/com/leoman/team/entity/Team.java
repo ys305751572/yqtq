@@ -20,10 +20,8 @@ public class Team extends BaseEntity {
     //球队名称
     @Column(name = "name")
     private String name;
-    //城市ID
-//    @Column(name = "city_id")
-//    private Long cityId;
 
+    //城市ID
     @ManyToOne
     @JoinColumn(name = "city_id",referencedColumnName = "city_id")
     private City city;
@@ -31,12 +29,12 @@ public class Team extends BaseEntity {
     //口号
     @Column(name = "slogan")
     private String slogan;
+
     //队标(LOGO)url
     @Column(name = "avater")
     private String avater;
+
     //队长ID
-//    @Column(name = "leader_user_id")
-//    private Long leaderUserId;
     @ManyToOne
     @JoinColumn(name = "leader_user_id",referencedColumnName = "user_id")
     private User user;
