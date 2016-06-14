@@ -74,7 +74,7 @@
                     <th>宝贝年龄</th>
                     <th>身高</th>
                     <th>体重</th>
-                    <th>价格</th>
+                    <th>价格/场</th>
                     <th>状态</th>
                     <th>预约次数</th>
                     <th>操作</th>
@@ -125,13 +125,7 @@
                         {"data": "age","sDefaultContent" : ""},
                         {"data": "height","sDefaultContent" : ""},
                         {"data": "weight","sDefaultContent" : ""},
-                        {
-                            "data": "price",
-                            "render":function(data){
-                                return data+"/h";
-                            },
-                            "sDefaultContent" : ""
-                        },
+                        {"data": "price", "sDefaultContent" : ""},
                         {
                             "data": "status",
                             "render":function(data){

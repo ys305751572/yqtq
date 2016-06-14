@@ -111,6 +111,7 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
             hostRace.setStatus(h.getStatus());
             hostRace.setMatchType(h.getMatchType());
             hostRace.setHrSet(h.getHrSet());
+//            hostRace.setStartDate(h.getStartDate());
             hostRace.setCreateDate(h.getCreateDate());
         }
         if(imageFile!=null && imageFile.getSize()>0) {
@@ -127,12 +128,11 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
         if (detail != null) {
             hostRace.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
         }
-        if(stadium != null){
-            Stadium _stadium = stadiumService.queryByPK(stadium.getId());
-            hostRace.setStadium(_stadium);
+        if(stadium == null){
+            hostRace.setStadium(h.getStadium());
         }
         hostRaceService.save(hostRace);
-        return Result.success();
+            return Result.success();
     }
 
     //关闭

@@ -26,6 +26,7 @@
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${girl.id}">
+                <input type="hidden" id="num" name="num" value="1">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>宝贝名称：</label>
@@ -78,43 +79,54 @@
                         <input type="text" id="label" name="label" value="${girl.label}" class="input-sm form-control validate[required]">
                     </div>
                     <div class="col-md-12 m-b-15">
-                        <label>宝贝封面：</label>
-                        <%--<div class="fileupload fileupload-new" data-provides="fileupload">--%>
-                            <%--<div class="fileupload-preview thumbnail form-control">--%>
-                                <%--<c:if test="${image.type eq 0}">--%>
-                                    <%--<img src="${image.url}">--%>
-                                <%--</c:if>--%>
-                            <%--</div>--%>
-                            <%--<div>--%>
-                                <%--<span class="btn btn-file btn-alt btn-sm">--%>
-                                    <%--<span class="fileupload-new">选择图片</span>--%>
-                                    <%--<span class="fileupload-exists">更改</span>--%>
-                                    <%--<input id="imageFile" name="imageFile" type="file"/>--%>
-                                <%--</span>--%>
-                                <%--<a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
+                    <div><label>宝贝封面：</label></div>
+                    <div id = "cover"></div>
+                        <c:if test="${girl.id ne null}">
+                            <c:forEach var="v" items="${image}">
+                                <c:if test="${v.type eq 0}">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload" style='float: left;margin-right: 10px;'>
+                                        <div class="fileupload-preview thumbnail form-control">
+                                            <img src="${v.url}">
+                                        </div>
+                                        <div>
+                                            <span class="btn btn-file btn-alt btn-sm">
+                                                <span class="fileupload-new">选择图片</span>
+                                                <span class="fileupload-exists">更改</span>
+                                                <input id='coverImageFile${v.id}' name="coverImageFile${v.id}" type="file"/>
+                                            </span>
+                                            <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                        </c:if>
                     </div>
+                    <div id="asd"><a href="javascript:void(0);" onclick="$user.fn.addCoverImage($('#num').val());">新增</a></div>
                     <div class="col-md-12 m-b-15">
-                        <label>宝贝相册：</label>
-                        <%--<div class="fileupload fileupload-new" data-provides="fileupload">--%>
-                            <%--<div class="fileupload-preview thumbnail form-control">--%>
-                                <%--<c:if test="${image.type eq 1}">--%>
-                                    <%--<img src="${image.url}">--%>
-                                <%--</c:if>--%>
-                            <%--</div>--%>
-                            <%--<div>--%>
-                                <%--<span class="btn btn-file btn-alt btn-sm">--%>
-                                    <%--<span class="fileupload-new">选择图片</span>--%>
-                                    <%--<span class="fileupload-exists">更改</span>--%>
-                                    <%--<input id="imageFile1" name="imageFile" type="file"/>--%>
-                                <%--</span>--%>
-                                <%--<a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
+                        <div><label>宝贝相册：</label></div>
+                        <div id = "album"></div>
+                        <c:if test="${girl.id ne null}">
+                            <c:forEach var="v" items="${image}">
+                                <c:if test="${v.type eq 1}">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload" style='float: left;margin-right: 10px;'>
+                                        <div class="fileupload-preview thumbnail form-control">
+                                            <img src="${v.url}">
+                                        </div>
+                                        <div>
+                                            <span class="btn btn-file btn-alt btn-sm">
+                                                <span class="fileupload-new">选择图片</span>
+                                                <span class="fileupload-exists">更改</span>
+                                                <input id="albumImageFile${v.id}" name="albumImageFile${v.id}" type="file"/>
+                                            </span>
+                                            <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                        </c:if>
                     </div>
-                    <hr class="whiter m-t-20"/>
-                </div>
+                    <div><a href="javascript:void(0);" onclick="$user.fn.addAlbumImage($('#num').val());">新增</a></div>
+                <hr class="whiter m-t-20"/>
                 <div class="form-group">
                     <div class="col-md-offset-5">
                         <button type="button" onclick="$user.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
@@ -122,13 +134,13 @@
                     </div>
                 </div>
             </div>
+        </div>
         </form>
     </section>
     <br/><br/>
 </section>
 <!-- JS -->
 <%@ include file="../inc/new/foot.jsp" %>
-
 <script>
     $user = {
         v: {
@@ -138,6 +150,7 @@
         },
         fn: {
             init: function () {
+
             },
             save : function () {
                 $("#fromId").ajaxSubmit({
@@ -151,6 +164,53 @@
                         window.location.href = "${contextPath}/admin/girl/index";
                     }
                 });
+            },
+            addCoverImage : function(data) {
+                var a = parseInt($("#num").val());
+                var html =  "";
+                html += " <div class='fileupload fileupload-new' data-provides='fileupload'  style='float: left;margin-right: 10px;' '>			   ";
+                html += "     <div class='fileupload-preview thumbnail form-control'></div>                                                        ";
+                html += "     <div>                                                                                                                ";
+                html += "         <span class='btn btn-file btn-alt btn-sm'>                                                                       ";
+                html += "             <span class='fileupload-new'>选择图片</span>                                                                 ";
+                html += "             <span class='fileupload-exists'>更改</span>                                                                  ";
+                html += "             <input id='coverImageFile"+ a +"' name='coverImageFile"+ a +"' type='file'/>                                 ";
+                html += "         </span>                                                                                                          ";
+                html += "         <a href='#' class='btn fileupload-exists btn-sm' data-dismiss='fileupload'>移除图片</a>                           ";
+                html += "         <a href='javascript:void(0);' onclick='$user.fn.delImage($(this));'>删除</a>                                      ";
+                html += "     </div>                                                                                                                ";
+                html += " </div>                                                                                                                    ";
+                $("#cover").append(html);
+                a+=1;
+                $("#num").val(a);
+                if($("#cover>.fileupload-new").size()>2){
+                    $("#asd").hide();
+                }
+            },
+            addAlbumImage : function(data) {
+                var a = parseInt($("#num").val());
+                var html =  "";
+                html += " <div class='fileupload fileupload-new' data-provides='fileupload'  style='float: left;margin-right: 10px;' '>			   ";
+                html += "     <div class='fileupload-preview thumbnail form-control'></div>                                                        ";
+                html += "     <div>                                                                                                                ";
+                html += "         <span class='btn btn-file btn-alt btn-sm'>                                                                       ";
+                html += "             <span class='fileupload-new'>选择图片</span>                                                                 ";
+                html += "             <span class='fileupload-exists'>更改</span>                                                                  ";
+                html += "             <input id='albumImageFile"+ a +"' name='albumImageFile"+ a +"' type='file'/>                                 ";
+                html += "         </span>                                                                                                          ";
+                html += "         <a href='#' class='btn fileupload-exists btn-sm' data-dismiss='fileupload'>移除图片</a>                           ";
+                html += "         <a href='javascript:void(0);' onclick='$user.fn.delImage($(this));'>删除</a>                                      ";
+                html += "     </div>                                                                                                                ";
+                html += " </div>                                                                                                                    ";
+                $("#album").append(html);
+                a+=1;
+                $("#num").val(a);
+            },
+            delImage : function(data){
+                data.parents(".fileupload-new").remove();
+                if($("#cover>.fileupload-new").size()<=2){
+                    $("#asd").show();
+                }
             }
         }
     }

@@ -11,14 +11,22 @@ import com.leoman.girl.entity.GirlImage;
 import com.leoman.girl.service.GirlImageService;
 import com.leoman.girl.service.GirlService;
 import com.leoman.girl.service.impl.GirlServiceImpl;
+import com.leoman.image.entity.FileBo;
+import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -116,12 +124,68 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
 
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(Girl girl,City city){
+    public Result save(Girl girl,City city,MultipartHttpServletRequest multipartRequest){
         Girl g = null;
+        Iterator<String> list = multipartRequest.getFileNames();
+        MultipartFile albumImageFile =null;
+        MultipartFile coverImageFile =null;
+        int a = 0;
         try{
             if(null != girl.getId()){
                 g = girlService.queryByPK(girl.getId());
             }
+            List<GirlImage> gList = girlImageService.queryByProperty("girlId",girl.getId());
+            while (list.hasNext()) {
+                String fileName = list.next();
+                if(fileName.indexOf("coverImageFile")>=0) {
+                    // 封面
+                    a =1;
+                    coverImageFile = multipartRequest.getFile(fileName);
+                    FileBo fileBo = null;
+                    try {
+                        fileBo = FileUtil.save(coverImageFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (fileBo != null && StringUtils.isNotBlank(fileBo.getPath())) {
+                        GirlImage girlImage = new GirlImage();
+                        for(GirlImage gi : gList){
+                            if(gi.getId()!=null){
+                                gi.setGirlId(girl.getId());
+                                gi.setType(0);
+                                gi.setUrl(fileBo.getPath());
+                                girlImageService.save(gi);
+                            }else{
+                                girlImage.setGirlId(girl.getId());
+                                girlImage.setType(0);
+                                girlImage.setUrl(fileBo.getPath());
+                                girlImageService.save(girlImage);
+                            }
+                        }
+
+
+                    }
+                }
+                if(fileName.indexOf("albumImageFile") >= 0) {
+                    // 相册
+                    a =2;
+                    albumImageFile = multipartRequest.getFile(fileName);
+                    FileBo fileBo = null;
+                    try {
+                        fileBo = FileUtil.save(albumImageFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (fileBo != null && StringUtils.isNotBlank(fileBo.getPath())) {
+                        GirlImage girlImage = new GirlImage();
+                        girlImage.setGirlId(girl.getId());
+                        girlImage.setType(1);
+                        girlImage.setUrl(fileBo.getPath());
+                        girlImageService.save(girlImage);
+                    }
+                }
+            }
+
             if(null != g){
                 girl.setStatus(g.getStatus());
                 girl.setCreateDate(g.getCreateDate());
@@ -132,6 +196,7 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
                 City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
                 girl.setCity(_city);
             }
+
             girlService.save(girl);
         }catch (RuntimeException e){
             e.printStackTrace();

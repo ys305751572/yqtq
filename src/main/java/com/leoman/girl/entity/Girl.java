@@ -47,9 +47,9 @@ public class Girl extends BaseEntity{
     @Column(name = "status")
     private Integer status;
     //图片
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "girl_id")
-    private Set<GirlImage> images;
+//    @OneToMany(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "girl_id")
+//    private Set<GirlImage> images;
 
     //场次
     @Transient

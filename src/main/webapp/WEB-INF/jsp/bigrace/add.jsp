@@ -77,7 +77,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>比赛时间：</label>
-                        <input type="text" id="startDate" name="startDate" value="${bigRace.startDate}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="startDate" name="startDate" value="" class="input-sm form_datetime form-control validate[required]" placeholder="...">
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
@@ -109,10 +109,14 @@
         },
         fn: {
             init: function () {
-                $user.fn.initImage();
+                var sDate = ${bigRace.startDate};
+                var startDate = new Date(sDate).format("yyyy-MM-dd hh:mm");
+                $("#startDate").val(startDate);
             },
             save : function () {
                 var code =  $('.wysiwye-editor').code();
+                var startDate = this.transdate($("#startDate").val());
+                $("#startDate").val(startDate);
                 $("#fromId").ajaxSubmit({
                     url : "${contextPath}/admin/bigRace/save",
                     type : "POST",
@@ -127,6 +131,16 @@
                         window.location.href = "${contextPath}/admin/bigRace/index";
                     }
                 });
+            },
+            transdate :function(endTime){
+                var date=new Date();
+                date.setFullYear(endTime.substring(0,4));
+                date.setMonth(endTime.substring(5,7)-1);
+                date.setDate(endTime.substring(8,10));
+                date.setHours(endTime.substring(11,13));
+                date.setMinutes(endTime.substring(14,16));
+                date.setSeconds(endTime.substring(17,19));
+                return Date.parse(date);
             }
         }
     }
@@ -142,10 +156,8 @@
         autoclose: 1,
         todayHighlight: 1,
         startView: 2,
-        minView: "2",
         forceParse: 0,
-        showMeridian: 1,
-        format: 'yyyy-mm-dd'
+        format: 'yyyy-mm-dd hh:mm'
     });
 </script>
 </body>
