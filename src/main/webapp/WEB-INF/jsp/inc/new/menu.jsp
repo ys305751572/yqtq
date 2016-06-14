@@ -37,8 +37,8 @@
             </a>
             <ul class="list-unstyled menu-item">
                 <li><a href="${contextPath}/admin/user/index">用户列表</a></li>
-                <li><a href="${contextPath}/admin/1/index">会员列表</a></li>
-                <li><a href="${contextPath}/admin/1/index">管理人员</a></li>
+                <li><a href="${contextPath}/admin/userVip/index">会员列表</a></li>
+                <li><a href="${contextPath}/admin/admin/index">管理人员</a></li>
                 <li><a href="${contextPath}/admin/1/index">球场主列表</a></li>
             </ul>
         </li>
@@ -108,12 +108,12 @@
                 <span class="menu-item">说明页面管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/1/index">vip等级说明</a></li>
-                <li><a href="${contextPath}/admin/1/index">vip优惠说明</a></li>
-                <li><a href="${contextPath}/admin/1/index">信誉度说明</a></li>
-                <li><a href="${contextPath}/admin/1/index">约球须知说明</a></li>
-                <li><a href="${contextPath}/admin/1/index">付款说明</a></li>
-                <li><a href="${contextPath}/admin/1/index">保险说明</a></li>
+                <li><a href="${contextPath}/admin/vipLevelMessage/detail">vip等级说明</a></li>
+                <li><a href="${contextPath}/admin/vipMessage/detail">vip优惠说明</a></li>
+                <li><a href="${contextPath}/admin/credibilityMessage/detail">信誉度说明</a></li>
+                <li><a href="${contextPath}/admin/orderballMessage/detail">约球须知说明</a></li>
+                <li><a href="${contextPath}/admin/serviceMessage/detail">注册服务条款</a></li>
+                <li><a href="${contextPath}/admin/girlServiceMessage/detail">看球宝贝服务说明</a></li>
             </ul>
         </li>
         <li class="dropdown">
