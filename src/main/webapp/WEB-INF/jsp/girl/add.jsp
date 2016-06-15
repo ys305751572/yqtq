@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-md-12 m-b-15">
                     <div><label>宝贝封面：</label></div>
-                    <div id = "cover"></div>
+                    <div id = "cover">
                         <c:if test="${girl.id ne null}">
                             <c:forEach var="v" items="${image}">
                                 <c:if test="${v.type eq 0}">
@@ -89,22 +89,29 @@
                                             <img src="${v.url}">
                                         </div>
                                         <div>
+                                            <c:if test="${v.url eq null}">
                                             <span class="btn btn-file btn-alt btn-sm">
                                                 <span class="fileupload-new">选择图片</span>
                                                 <span class="fileupload-exists">更改</span>
-                                                <input id='coverImageFile${v.id}' name="coverImageFile${v.id}" type="file"/>
+                                                <input id='coverImageFile' name="coverImageFile" type="file"value="${v.id}" />
+                                                <input id="cover1" name="cover1" value="${v.id}" type="hidden">
                                             </span>
                                             <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
+                                            </c:if>
+                                            <c:if test="${v.url ne null}">
+                                            <a href='javascript:void(0);' onclick='$user.fn.delImage(${v.id});'>删除</a>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </c:if>
                             </c:forEach>
                         </c:if>
                     </div>
-                    <div id="asd"><a href="javascript:void(0);" onclick="$user.fn.addCoverImage($('#num').val());">新增</a></div>
-                    <div class="col-md-12 m-b-15">
+                    </div>
+                    <div id="addd"><a href="javascript:void(0);" onclick="$user.fn.addCoverImage($('#num').val());">新增</a></div>
+                    <div class="col-md-12 m-b-15" >
                         <div><label>宝贝相册：</label></div>
-                        <div id = "album"></div>
+                        <div id = "album">
                         <c:if test="${girl.id ne null}">
                             <c:forEach var="v" items="${image}">
                                 <c:if test="${v.type eq 1}">
@@ -113,17 +120,24 @@
                                             <img src="${v.url}">
                                         </div>
                                         <div>
+                                            <c:if test="${v.url eq null}">
                                             <span class="btn btn-file btn-alt btn-sm">
                                                 <span class="fileupload-new">选择图片</span>
                                                 <span class="fileupload-exists">更改</span>
-                                                <input id="albumImageFile${v.id}" name="albumImageFile${v.id}" type="file"/>
+                                                <input id="albumImageFile${v.id}" name="albumImageFile" type="file"/>
+                                                <input id="album1" name="album1" value="${v.id}" type="hidden">
                                             </span>
                                             <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
+                                            </c:if>
+                                            <c:if test="${v.url ne null}">
+                                            <a href='javascript:void(0);' onclick='$user.fn.delImage(${v.id});'>删除</a>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </c:if>
                             </c:forEach>
                         </c:if>
+                        </div>
                     </div>
                     <div><a href="javascript:void(0);" onclick="$user.fn.addAlbumImage($('#num').val());">新增</a></div>
                 <hr class="whiter m-t-20"/>
@@ -177,14 +191,14 @@
                 html += "             <input id='coverImageFile"+ a +"' name='coverImageFile"+ a +"' type='file'/>                                 ";
                 html += "         </span>                                                                                                          ";
                 html += "         <a href='#' class='btn fileupload-exists btn-sm' data-dismiss='fileupload'>移除图片</a>                           ";
-                html += "         <a href='javascript:void(0);' onclick='$user.fn.delImage($(this));'>删除</a>                                      ";
+                html += "         <a href='javascript:void(0);' onclick='$user.fn.delDiv($(this));'>删除</a>                                      ";
                 html += "     </div>                                                                                                                ";
                 html += " </div>                                                                                                                    ";
                 $("#cover").append(html);
                 a+=1;
                 $("#num").val(a);
                 if($("#cover>.fileupload-new").size()>2){
-                    $("#asd").hide();
+                    $("#addd").hide();
                 }
             },
             addAlbumImage : function(data) {
@@ -199,24 +213,51 @@
                 html += "             <input id='albumImageFile"+ a +"' name='albumImageFile"+ a +"' type='file'/>                                 ";
                 html += "         </span>                                                                                                          ";
                 html += "         <a href='#' class='btn fileupload-exists btn-sm' data-dismiss='fileupload'>移除图片</a>                           ";
-                html += "         <a href='javascript:void(0);' onclick='$user.fn.delImage($(this));'>删除</a>                                      ";
+                html += "         <a href='javascript:void(0);' onclick='$user.fn.delDiv($(this));'>删除</a>                                      ";
                 html += "     </div>                                                                                                                ";
                 html += " </div>                                                                                                                    ";
                 $("#album").append(html);
                 a+=1;
                 $("#num").val(a);
             },
-            delImage : function(data){
-                data.parents(".fileupload-new").remove();
-                if($("#cover>.fileupload-new").size()<=2){
-                    $("#asd").show();
+            delDiv : function(data){
+                data.parents(".fileupload").remove();
+                if($("#coasdver>.fileupload-new").size()<=2){
+                    $("#addd").show();
                 }
+            },
+            delImage: function(data){
+                var id = data;
+                $.ajax({
+                    url : "${contextPath}/admin/girl/deleteImage",
+                    data : {
+                        "id" : id
+                    },
+                    type : "post",
+                    dataType : "json",
+                    success : function(result) {
+                        if(!result.status) {
+                            $common.fn.notify(result.msg);
+                            return;
+                        }
+
+                    }
+                });
             }
         }
     }
     $(function () {
         $user.fn.init();
+        if($("#cover>.fileupload-new").size()>2){
+            $("#addd").hide();
+        }else{
+            $("#addd").show();
+        }
+
     })
+
+
+
 </script>
 <script>
     $('.form_datetime').datetimepicker({
@@ -231,6 +272,7 @@
         showMeridian: 1,
         format: 'yyyy-mm-dd'
     });
+
 </script>
 </body>
 </html>
