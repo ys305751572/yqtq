@@ -16,7 +16,7 @@ public interface StadiumService extends GenericManager<Stadium> {
 
     public Stadium findById(Long id);
 
-    public Page<Stadium> findAll(Stadium team, Integer currentPage, Integer pageSize) throws Exception;
+    public Page<Stadium> findAll(Stadium stadium, Integer currentPage, Integer pageSize) throws Exception;
 
     public List<User> findByNickName(Long id);
 

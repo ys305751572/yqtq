@@ -44,7 +44,7 @@
                     </li>
                     <li>
                         <a data-toggle="modal" href="${contextPath}/admin/1/index" title="权限列表" class="tooltips">
-                            <i class="fa fa-eye"></i>
+                            <i class="sa-list-forwad"></i>
                         </a>
                     </li>
                 </ul>

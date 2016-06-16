@@ -23,7 +23,6 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">看球详情</h1>
-        <form action="${contextPath}/admin/watchingRace/save" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${bigRace.id}">
                 <div class="row">

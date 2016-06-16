@@ -34,7 +34,7 @@
                     <label>球场</label>
                     <select id="stadiumId" name="stadiumId" class="select">
                         <option value="">全部</option>
-                        <c:forEach items="${stadia}" var="v">
+                        <c:forEach items="${stadium}" var="v">
                             <option value="${v.id}">${v.name}</option>
                         </c:forEach>
                     </select>
@@ -243,6 +243,7 @@
     }
     $(function () {
         $reserve.fn.init();
+        console.log($("#stadiumId").val());
     })
 </script>
 <script>

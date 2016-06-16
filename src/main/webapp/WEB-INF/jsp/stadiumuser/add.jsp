@@ -22,23 +22,25 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">管理人员</h1>
+        <h1 class="page-title">新增球场主</h1>
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
-                <input type="hidden" id="id" name="id" value="${admin.id}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>账号：</label>
-                        <input type="text" id="username" name="username" value="${admin.username}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="username" name="username" value="" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>密码：</label>
-                        <input type="text" id="password" name="password" value="${admin.password}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="password" name="password" value="" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
-                        <label>权限:</label>
-                        <select id="" name="" class="select">
-                            <option value=""></option>
+                        <label>城市:</label>
+                        <select id="cityId" name="cityId" class="select">
+                            <option value="">请选择</option>
+                            <c:forEach items="${city}" var="c">
+                                <option value="${c.cityId}">${c.city}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <hr class="whiter m-t-20"/>
@@ -71,7 +73,7 @@
             save : function () {
                 var code =  $('.wysiwye-editor').code();
                 $("#fromId").ajaxSubmit({
-                    url : "${contextPath}/admin/admin/save",
+                    url : "${contextPath}/admin/stadiumUser/save",
                     type : "POST",
                     data : {
                         "detail" : code
@@ -81,7 +83,7 @@
                             $common.fn.notify(result.msg);
                             return;
                         }
-                        window.location.href = "${contextPath}/admin/admin/index";
+                        window.location.href = "${contextPath}/admin/stadiumUser/index";
                     }
                 });
             }

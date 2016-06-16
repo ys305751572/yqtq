@@ -23,7 +23,6 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">宝贝信息</h1>
-        <form action="${contextPath}/admin/girl/save" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${girl.id}">
                 <div class="row">
@@ -38,8 +37,8 @@
                     </div>
 
                     <div class="col-md-6 m-b-15">
-                        <label>服务价格:</label>
-                        <input type="text" id="price" name="price" value="￥${girl.price}/h" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>服务价格/场:</label>
+                        <input type="text" id="price" name="price" value="${girl.price}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
@@ -81,7 +80,7 @@
                             </a>
                         </div>
                     </div>
-
+                    <hr class="whiter m-t-20"/>
                     <div class="col-md-6 m-b-15" >
                         <label>宝贝封面:</label>
                         <c:forEach items="${image}" var="v" begin="0" end="2">

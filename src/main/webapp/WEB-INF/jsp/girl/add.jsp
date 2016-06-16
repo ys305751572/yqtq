@@ -197,7 +197,7 @@
                 $("#cover").append(html);
                 a+=1;
                 $("#num").val(a);
-                if($("#cover>.fileupload-new").size()>2){
+                if($("#cover>.fileupload").size()>2){
                     $("#addd").hide();
                 }
             },
@@ -222,7 +222,7 @@
             },
             delDiv : function(data){
                 data.parents(".fileupload").remove();
-                if($("#coasdver>.fileupload-new").size()<=2){
+                if($("#coasdver>.fileupload").size()<=2){
                     $("#addd").show();
                 }
             },
@@ -240,6 +240,7 @@
                             $common.fn.notify(result.msg);
                             return;
                         }
+                        window.location.reload()
 
                     }
                 });

@@ -28,8 +28,7 @@
             <div class="p-10" style="height:520px">
                 <div class="col-md-6 m-b-15">
                     <label>比赛时间:</label>
-                    <%--<date:date format="yyyy-MM-dd HH:mm" value="${reserve.startDate}"></date:date>--%>
-                    <input type="text" id="startDate" value="" name="startDate" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    <input type="text" id="startDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${reserve.startDate}'></date:date>" name="startDate" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>城市:</label>
@@ -49,11 +48,11 @@
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>时常:</label>
-                    <input type="text" id="time" value="${reserve.time}小时" name="time" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    <input type="text" id="time" value="${reserve.time}" name="time" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>价格:</label>
-                    <input type="text" id="price" value="${reserve.price}￥" name="price" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    <input type="text" id="price" value="${reserve.price}" name="price" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>付款方式:</label>
@@ -65,16 +64,23 @@
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>预定时间:</label>
-                    <input type="text" id="createDate" value="" name="createDate" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    <input type="text" id="createDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${reserve.createDate}'></date:date>" name="createDate" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
-                <div class="col-md-6 m-b-15">
+                <div class="col-md-6 m-b-15" >
                     <label>已报球友:</label>
+                    <input type="text" id="num" name="num" value="${num}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                </div>
+                <hr class="whiter m-t-20"/>
+                <div class="col-md-6 m-b-15">
+                    <label>头像:</label>
                     <c:forEach items="${list}" var="v">
                         <a onclick="$reserve.fn.detail(${v.userId})" data-rel="gallery" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
                             <img src="${contextPath}/${v.avater}" alt="">
                         </a>
                     </c:forEach>
                 </div>
+                <hr class="whiter m-t-20"/>
+
             </div>
         </div>
     </section>
@@ -109,13 +115,6 @@
                    $("#payment").val("全额");
                }
 
-               var createDate = ${reserve.createDate};
-               createDate = new Date().format("yyyy-MM-dd hh:mm");
-               $("#createDate").val(createDate);
-
-               var startDate = ${reserve.startDate};
-               startDate = new Date().format("yyyy-MM-dd hh:mm");
-               $("#startDate").val(startDate);
            },
             "detail" : function(userId) {
                 window.location.href = "${contextPath}/admin/user/detail?userId=" + userId;

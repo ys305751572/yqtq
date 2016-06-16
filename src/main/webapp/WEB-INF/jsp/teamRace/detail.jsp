@@ -23,48 +23,52 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">赛事列表</h1>
-            <div class="col-md-2">
-                <div class="tile">
-                    <h2 class="tile-title">赛事详情</h2>
-                    <div class="p-10" style="height:520px">
-                        <div class="form-group">
-                            <label>比赛队伍:</label>
-                            ${teamRace.homeTeam.name}VS${teamRace.visitingTeam.name}
-                            <a onclick="$team.fn.sfTeamInfo(${teamRace.homeTeam.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                                <img src="${contextPath}/${teamRace.homeTeam.avater}" alt="">
-                            </a>
-                            VS
-                            <a onclick="$team.fn.sfTeamInfo(${teamRace.visitingTeam.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                                <img src="${contextPath}/${teamRace.visitingTeam.avater}" alt="">
-                            </a>
-                        </div>
-                        <div class="form-group">
-                            <label>预约城市:</label>
-                            ${teamRace.city.city}
-                        </div>
-                        <div class="form-group">
-                            <label>预约状态:</label>
-                            <c:if test="${teamRace.status eq 0}">等待中</c:if>
-                            <c:if test="${teamRace.status eq 1}">预约成功</c:if>
-                            <c:if test="${teamRace.status eq 2}">预约失败</c:if>
-                        </div>
-                        <c:if test="${teamRace.status eq 1}">
-                            <div class="form-group">
-                                <label>比赛地点:</label>
-                                ${teamRace.stadium.name}
-                            </div>
-                        </c:if>
-                        <div class="form-group">
-                            <label>比赛时间:</label>
-                            <date:date format="yyyy年MM月dd日 HH:mm" value="${teamRace.startDate}"></date:date>
-                        </div>
-                        <div class="form-group">
-                            <label>约定时间:</label>
-                            <date:date format="yyyy年MM月dd日 HH:mm" value="${teamRace.createDate}"></date:date>
-                        </div>
+        <div class="block-area">
+            <div class="row">
+                <div class="col-md-6 m-b-15">
+                    <label>比赛队伍:</label>
+                    <a onclick="$team.fn.sfTeamInfo(${teamRace.homeTeam.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
+                        <img src="${contextPath}/${teamRace.homeTeam.avater}" alt="">
+                        ${teamRace.homeTeam.name}
+                    </a>
+                    VS
+                    <a onclick="$team.fn.sfTeamInfo(${teamRace.visitingTeam.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
+                        <img src="${contextPath}/${teamRace.visitingTeam.avater}" alt="">
+                        ${teamRace.visitingTeam.name}
+                    </a>
+                </div>
+                <div class="col-md-6 m-b-15">
+                    <label>预约城市:</label>
+                    <input type="text" id="city" name="city" value="${teamRace.city.city}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                </div>
+                <div class="col-md-6 m-b-15">
+                    <label>预约状态:</label>
+                    <c:if test="${teamRace.status eq 0}"><input type="text" id="status" name="status" value="等待中" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                    <c:if test="${teamRace.status eq 1}"><input type="text" id="status" name="status" value="预约成功" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                    <c:if test="${teamRace.status eq 2}"><input type="text" id="status" name="status" value="预约失败" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                </div>
+                <c:if test="${teamRace.status eq 1}">
+                    <div class="col-md-6 m-b-15">
+                        <label>比赛地点:</label>
+                        <input type="text" id="sName" name="sName" value="${teamRace.stadium.name}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
+                </c:if>
+                <div class="col-md-6 m-b-15">
+                    <label>比赛时间:</label>
+                    <input type="text" id="startDate" name="startDate" value="<date:date format='yyyy年MM月dd日 HH:mm' value='${teamRace.startDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                </div>
+                <div class="col-md-6 m-b-15">
+                    <label>约定时间:</label>
+                    <input type="text" id="createDate" name="createDate" value="<date:date format='yyyy年MM月dd日 HH:mm' value='${teamRace.createDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                </div>
+                <hr class="whiter m-t-20"/>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-5">
+                    <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                 </div>
             </div>
+        </div>
     </section>
     <br/><br/>
 </section>
