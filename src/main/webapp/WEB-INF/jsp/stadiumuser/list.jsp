@@ -160,7 +160,7 @@
                 });
             },
             edit: function (id){
-                window.location.href = "${contextPath}/admin/stadiumUser/edit?id=" + id;
+                window.location.href = "${contextPath}/admin/stadiumUser/add?id=" + id;
             },
             status : function(id) {
                 $.ajax({

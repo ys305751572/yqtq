@@ -125,6 +125,7 @@
                     ],
                     "fnServerParams": function (aoData) {
                         aoData.username = $("#username").val();
+                        aoData.status = $("#status").val();
                     }
                 });
             },

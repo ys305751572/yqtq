@@ -30,20 +30,20 @@
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="stadiumId" name="stadiumId" placeholder="场地名">
+                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="场地名">
                 </div>
                 <div class="col-md-2 form-group">
                     <input type="text" class="input-sm form-control" id="bookTime" name="bookTime" placeholder="预定时长">
                 </div>
                 <div class="col-md-2 form-group">
-                    <select id="" name="" class="select">
+                    <select id="type" name="type" class="select">
                         <option value="">类型</option>
                         <option value="0">散客</option>
                         <option value="1">其他</option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="userId" name="userId" placeholder="订购者">
+                    <input type="text" class="input-sm form-control" id="nickName" name="nickName" placeholder="订购者">
                 </div>
             </div>
         </div>
@@ -108,11 +108,11 @@
                                 return checkbox;
                             }
                         },
-                        {"data": "city.city"},
-                        {"data": "stadium.name"},
-                        {"data": "stadiumSub.code"},
-                        {"data": "user.nickName"},
-                        {"data": "bookTime"},
+                        {"data": "city.city","sDefaultContent" : ""},
+                        {"data": "stadium.name","sDefaultContent" : ""},
+                        {"data": "stadiumSub.code","sDefaultContent" : ""},
+                        {"data": "user.nickName","sDefaultContent" : ""},
+                        {"data": "bookTime","sDefaultContent" : ""},
                         {"data": "startDate",
                             render: function (data) {
                                 return new Date(data).format("yyyy年MM月dd日 hh:mm")
@@ -121,7 +121,8 @@
                         {"data": "createDate",
                             render: function (data) {
                                 return new Date(data).format("yyyy年MM月dd日 hh:mm")
-                            }
+                            },
+                        "sDefaultContent" : ""
                         },
                         {"data": "type",
                             render: function (data) {
@@ -131,7 +132,8 @@
                                 if(data==1){
                                     return "其他";
                                 }
-                            }
+                            },
+                            "sDefaultContent" : ""
                         },
                         {"data": "status",
                             render: function (data) {
@@ -144,7 +146,8 @@
                                 if(data==2){
                                     return "已退款";
                                 }
-                            }
+                            },
+                            "sDefaultContent" : ""
                         },
                         {
                             "data": "id",
@@ -156,23 +159,26 @@
                         }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.name = $("#name").val();
                         aoData.cityId = $("#cityId").val();
+                        aoData.name = $("#name").val();
+                        aoData.bookTime = $("#bookTime").val();
+                        aoData.type = $("#type").val();
+                        aoData.nickName = $("#nickName").val();
                     }
                 });
             },
             sfInfo: function (id) {
                 $.ajax({
-                    "url": "${contextPath}/admin/stadiumBooking/sfTeamInfo",
+                    "url": "${contextPath}/admin/stadiumBooking/sfInfo",
                     "data": {
                         "id": id
                     },
                     "dataType": "json",
-                    "type": "POST",
-                    "success": function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
+                            "type": "POST",
+                                    "success": function (result) {
+                                if (!result.status) {
+                                    $common.fn.notify(result.msg);
+                                    return;
                         }
                         window.location.href = "${contextPath}/admin/stadiumBooking/detail?id=" + id;
                     }

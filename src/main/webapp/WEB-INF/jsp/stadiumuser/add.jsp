@@ -28,16 +28,16 @@
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>账号：</label>
-                        <input type="text" id="username" name="username" value="" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="username" name="username" value="${stadiumUser.username}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>密码：</label>
-                        <input type="text" id="password" name="password" value="" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="password" name="password" value="${stadiumUser.password}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>城市:</label>
                         <select id="cityId" name="cityId" class="select">
-                            <option value="">请选择</option>
+                            <option value="${stadiumUser.city.cityId}">${stadiumUser.city.city eq null ? "请选择" : stadiumUser.city.city}</option>
                             <c:forEach items="${city}" var="c">
                                 <option value="${c.cityId}">${c.city}</option>
                             </c:forEach>

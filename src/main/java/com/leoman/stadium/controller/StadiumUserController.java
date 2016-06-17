@@ -98,14 +98,18 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
      * @param model
      * @return
      */
-    @RequestMapping(value = "/add")
-    public String add(Model model){
-        try{
-            List<City> city = cityService.queryAll();
-            model.addAttribute("city",city);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        @RequestMapping(value = "/add")
+        public String add(Long id,Model model){
+            try{
+                List<City> city = cityService.queryAll();
+                model.addAttribute("city",city);
+                if(id!=null){
+                    StadiumUser stadiumUser = stadiumUserService.queryByPK(id);
+                    model.addAttribute("stadiumUser", stadiumUser);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         return "/stadiumuser/add";
     }
 

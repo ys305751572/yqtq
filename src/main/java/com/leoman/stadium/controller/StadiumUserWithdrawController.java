@@ -2,6 +2,7 @@ package com.leoman.stadium.controller;
 
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
+import com.leoman.stadium.entity.StadiumUser;
 import com.leoman.stadium.entity.StadiumUserWithdraw;
 import com.leoman.stadium.service.StadiumUserWithdrawService;
 import com.leoman.stadium.service.impl.StadiumUserWithdrawServiceImpl;
@@ -30,10 +31,11 @@ public class StadiumUserWithdrawController extends GenericEntityController<Stadi
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length, StadiumUserWithdraw stadiumUserWithdraw){
+    public Object list(Integer draw, Integer start, Integer length, StadiumUserWithdraw stadiumUserWithdraw,StadiumUser username){
         Page<StadiumUserWithdraw> Page = null;
         try {
             int pagenum = getPageNum(start,length);
+            stadiumUserWithdraw.setStadiumUser(username);
             Page = stadiumUserWithdrawService.findAll(stadiumUserWithdraw, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();

@@ -15,5 +15,6 @@ public interface StadiumUserDao extends IBaseJpaRepository<StadiumUser> {
     @Query("SELECT SUM(a.price) FROM StadiumSub a WHERE a.stadiumId IN (SELECT b.id FROM Stadium b WHERE b.stadiumUserId = ?1)")
     public Double toDaySumPrice(Long id);
 
+//    @Query("SELECT a.price,b.bookTime FROM StadiumSub a JOIN (SELECT stadiumSubId,bookTime,createDate FROM StadiumBooking WHERE stadiumId IN (SELECT id FROM Stadium WHERE stadiumUserId = ?1)) b ON a.id = b.stadiumSubId WHERE b.createDate=?2")
 
 }

@@ -69,7 +69,7 @@ public class Stadium extends BaseEntity {
     @Transient
     private Integer stadiumNum;
 
-    //当前预定数
+    //当前预定没使用的数
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "stadium_id")
     @Where(clause = "status = '1'")
@@ -84,7 +84,7 @@ public class Stadium extends BaseEntity {
     @Transient
     private Integer siteNum;
 
-    //状态
+    //状态 场地未使用的
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "stadium_id")
     @Where(clause = "status = '1'")

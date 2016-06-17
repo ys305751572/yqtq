@@ -28,56 +28,46 @@
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>logo:</label>
-                        <img id="avater" name="avater" src="${contextPath}/${team.avater}" alt="">
+                        <img id="avater" name="avater" src="${contextPath}/${stadiumBooking.stadium.avater}" alt="">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>球场名称:</label>
-                        <a href="${contextPath}/admin/stadium/add"><input type="text" id="name" name="name" value="${team.name}" class="input-sm form-control validate[required]" placeholder="..." disabled></a>
+                        <a href="${contextPath}/admin/stadium/detail?id=${stadiumBooking.stadium.id}"><input type="text" id="name" name="name" value="${stadiumBooking.stadium.name}" class="input-sm form-control validate[required]" placeholder="..." disabled></a>
                     </div>
-
                     <div class="col-md-6 m-b-15">
                         <label>城市:</label>
-                        <input type="text" id="cityId" value="${team.city.city}" name="cityId" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="cityId" value="${stadiumBooking.city.city}" name="cityId" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15">
-                        <label>队语:</label>
-                        <input type="text" id="slogan" name="slogan" value="${team.slogan}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>预约时长:</label>
+                        <input type="text" id="slogan" name="slogan" value="${stadiumBooking.bookTime}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
-                        <label>队长:</label>
-                        <input type="text" id="leaderUserId" name="leaderUserId" value="${team.user.nickName}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>预订人:</label>
+                        <input type="text" id="leaderUserId" name="leaderUserId" value="${stadiumBooking.user.nickName}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
-                        <label>创建时间:</label>
-                        <input type="text" id="createDate" name="createDate" value="" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>预订类型:</label>
+                        <c:if test="${stadiumBooking.type eq 0}"><input type="text" id="type" name="type" value="散客" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                        <c:if test="${stadiumBooking.type eq 1}"><input type="text" id="type" name="type" value="其他" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
-                        <label>赛事:</label>
-                        <input type="text" id="tmSize" name="tmSize" value="${team.tmSize}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>预定状态:</label>
+                        <c:if test="${stadiumBooking.status eq 0}"><input type="text" id="status" name="status" value="未使用" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                        <c:if test="${stadiumBooking.status eq 1}"><input type="text" id="status" name="status" value="已使用" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                        <c:if test="${stadiumBooking.status eq 2}"><input type="text" id="status" name="status" value="已退款" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
                     </div>
-
                     <div class="col-md-6 m-b-15" >
-                        <label>队员:</label>
-                        <input type="text" id="tmSetNum" name="tmSetNum" value="${team.tmSetNum}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>使用开始时间:</label>
+                        <input type="text" id="startDate" name="startDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${stadiumBooking.startDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
-                    <hr class="whiter m-t-20"/>
-                    <div class="col-md-12 m-b-15">
-                            <label>头像</label>
-                            <p></p>
-                            <p></p>
-                            <c:forEach items="${teamMember}" var="item">
-                                <c:forEach items="${userList}" var="u">
-                                    <c:if test="${item.userId eq u.userId}">
-                                        <a onclick="$team.fn.detail(${item.userId})" data-rel="gallery" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                                            <img src="${contextPath}/${u.avater}" alt="">
-                                        </a>
-                                    </c:if>
-                                </c:forEach>
-                            </c:forEach>
+                    <div class="col-md-6 m-b-15" >
+                        <label>预约时间:</label>
+                        <input type="text" id="createDate" name="createDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${stadiumBooking.createDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
@@ -118,7 +108,7 @@
         var createDate = ${team.createDate};
         createDate = new Date().format("yyyy-MM-dd hh:mm");
         $("#createDate").val(createDate);
-        <%--<date:date format="yyyy-MM-dd HH:mm" value="${team.createDate}"></date:date>--%>
+        <%----%>
     })
 </script>
 <script>

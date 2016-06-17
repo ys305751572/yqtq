@@ -70,4 +70,9 @@ public class ReserveServiceImpl extends GenericManagerImpl<Reserve,ReserveDao> i
         return dao.findNum(reserveId);
     }
 
+    @Override
+    public Long findStadiumBookingId(Long stadiumId, Long userId, Long createDate) {
+        return dao.findStadiumBookingId(stadiumId,userId,createDate);
+    }
+
 }

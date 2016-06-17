@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>球场:</label>
-                    <a onclick="$reserve.fn.sfInfo(${reserve.stadium.id})">${reserve.stadium.name}</a>//到约场地详情还没写
+                    <a href="${contextPath}/admin/stadiumBooking/detail?stadiumId=${reserve.stadium.id}&&userId=${reserve.user.id}&&createDate=${reserve.createDate}"><input type="text" id="name" value="${reserve.stadium.name}" name="name" class="input-sm form-control validate[required]" placeholder="..." disabled></a>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>创建者:</label>
@@ -118,23 +118,6 @@
            },
             "detail" : function(userId) {
                 window.location.href = "${contextPath}/admin/user/detail?userId=" + userId;
-            },
-            sfInfo: function (id) {
-                $.ajax({
-                    "url": "${contextPath}/admin/1/sfInfo",
-                    "data": {
-                        "id": id
-                    },
-                    "dataType": "json",
-                    "type": "POST",
-                    "success": function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
-                        }
-                        window.location.href = "${contextPath}/admin/1/detail?id=" + id;
-                    }
-                });
             }
 
         }

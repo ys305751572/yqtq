@@ -46,7 +46,7 @@
                         <c:if test="${stadium.type eq 0}">
                             <div class="form-group">
                                 <label>球场主:</label>
-                                <a onclick="$team.fn.sfInfo(${stadium.id})">${stadiumUser.nickName}</a>//到球场主详情还没写
+                                <a href="${contextPath}/admin/stadiumUser/detail?id=${stadium.stadiumUserId}">${stadiumUser.nickName}</a>
                             </div>
                         </c:if>
                         <div class="form-group">

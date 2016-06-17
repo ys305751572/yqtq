@@ -19,4 +19,6 @@ public interface ReserveService extends GenericManager<Reserve> {
 
     public Integer findNum(Long reserveId);
 
+    public Long findStadiumBookingId(Long stadiumId,Long userId,Long createDate);
+
 }
