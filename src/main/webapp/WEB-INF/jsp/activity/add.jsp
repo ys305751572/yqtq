@@ -87,23 +87,59 @@
             init: function () {
                 activity.fn.initImage();
             },
-            save: function () {
+            checkData: function () {
+                var flag = true;
+                var title = $('#title').val();
+                var imageFile = $('#imageFile').val();
+                var introduction = $('#introduction').val();
                 var code = $('.wysiwye-editor').code();
-                $("#fromId").ajaxSubmit({
-                    url: "${contextPath}/admin/activity/save",
-                    type: "POST",
-                    data: {
-                        "detail": code
-                    },
-                    success: function (result) {
-                        if (result == 1) {
-                            $common.fn.notify("操作成功", "success");
-                            window.location.href = "${contextPath}/admin/activity/index";
-                        } else {
-                            $common.fn.notify("操作失败", "error");
+
+
+                if (null == title || title == '') {
+                    $common.fn.notify("请输入活动标题", "error");
+                    flag = false;
+                    return;
+                }
+
+                if (null == imageFile || imageFile == '') {
+                    $common.fn.notify("请上传活动封面", "error");
+                    flag = false;
+                    return;
+                }
+
+                if (null == introduction || introduction == '') {
+                    $common.fn.notify("请输入活动简介", "error");
+                    flag = false;
+                    return;
+                }
+                if (null == code || code == '') {
+                    $common.fn.notify("请输入活动详情", "error");
+                    flag = false;
+                    return;
+                }
+
+                return flag;
+            },
+            save: function () {
+                if (activity.fn.checkData()) {
+                    var code = $('.wysiwye-editor').code();
+                    $("#fromId").ajaxSubmit({
+                        url: "${contextPath}/admin/activity/save",
+                        type: "POST",
+                        data: {
+                            "detail": code
+                        },
+                        success: function (result) {
+                            if (result == 1) {
+                                $common.fn.notify("操作成功", "success");
+                                window.location.href = "${contextPath}/admin/activity/index";
+                            } else {
+                                $common.fn.notify("操作失败", "error");
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             }
         }
     }

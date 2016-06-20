@@ -101,6 +101,7 @@
             <ul class="list-unstyled menu-item">
                 <li><a href="${contextPath}/admin/post/index">帖子列表</a></li>
                 <li><a href="${contextPath}/admin/activity/index">活动列表</a></li>
+                <li><a href="${contextPath}/admin/information/index">资讯列表</a></li>
             </ul>
         </li>
         <li class="dropdown">
@@ -127,6 +128,7 @@
                 <li><a href="${contextPath}/admin/1/index">推送设置</a></li>
                 <li><a href="${contextPath}/admin/1/index">系统消息列表</a></li>
                 <li><a href="${contextPath}/admin/1/index">反馈管理</a></li>
+                <li><a href="${contextPath}/admin/systemInsurance/index">保险列表</a></li>
             </ul>
         </li>
     </ul>
