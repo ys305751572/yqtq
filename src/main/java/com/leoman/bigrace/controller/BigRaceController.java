@@ -107,7 +107,7 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
 
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(BigRace bigRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile2,String detail){
+    public Result save(BigRace bigRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile2,String detail,Long startDate){
         BigRace b = null;
         try{
             if(null != bigRace.getId()){
@@ -152,6 +152,9 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
             if (detail != null) {
                 bigRace.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
             }
+//            if(startDate!=null){
+//                bigRace.setStartDate(startDate);
+//            }
             bigRaceService.save(bigRace);
         }catch (RuntimeException e){
             e.printStackTrace();

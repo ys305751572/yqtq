@@ -22,40 +22,35 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <select id="cityId" name="cityId" class="select">
-                        <option value="">城市</option>
-                        <c:forEach items="${city}" var="c">
-                            <option value="${c.cityId}">${c.city}</option>
-                        </c:forEach>
+                    <input type="text" class="input-sm form-control" id="username" name="username" placeholder="账号">
+                </div>
+                <div class="col-md-2 form-group">
+                    <select id="status" name="status" class="select">
+                        <option value="">状态</option>
+                        <option value="0">未转账</option>
+                        <option value="1">转账中</option>
+                        <option value="2">已转账</option>
+                        <option value="3">驳回</option>
                     </select>
-                </div>
-                <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="girlName" name="girlName" placeholder="宝贝名">
-                </div>
-                <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="userName" name="userName" placeholder="约看人">
                 </div>
             </div>
         </div>
         <div class="block-area" id="alternative-buttons">
             <button id="c_search" class="btn btn-alt m-r-5">查询</button>
         </div>
+        <hr class="whiter m-t-20"/>
         <!-- form表格 -->
         <div class="block-area" id="tableHover">
             <table class="table table-bordered table-hover tile" id="dataTables" cellspacing="0" width="100%">
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    <th>地区</th>
-                    <th>宝贝昵称</th>
-                    <th>约看人</th>
-                    <th>下单时间</th>
-                    <th>预约时间</th>
-                    <th>预定时长</th>
-                    <th>预约球场</th>
-                    <th>比赛</th>
-                    <th>价格</th>
-                    <th>打赏</th>
+                    <th>账号</th>
+                    <th>城市</th>
+                    <th>总金额</th>
+                    <th>今日金额</th>
+                    <th>状态</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
             </table>
@@ -65,86 +60,81 @@
 </section>
 <!-- JS -->
 <%@ include file="../inc/new/foot.jsp" %>
-
 <script>
-    $girl = {
+    $stadiumUserWithdraw = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                $girl.fn.dataTableInit();
-
+                $stadiumUserWithdraw.fn.dataTableInit();
                 $("#c_search").click(function () {
-                    $girl.v.dTable.ajax.reload();
+                    $stadiumUserWithdraw.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                $girl.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $stadiumUserWithdraw.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/girlUser/list",
+                        "url": "${contextPath}/admin/stadiumUserWithdraw/list",
                         "type": "POST"
                     },
                     "columns": [
                         {
                             "data": "id",
                             "render": function (data) {
-//                                var checkbox = "<div class=\"icheckbox_minimal\" aria-checked=\"false\" aria-disabled=\"false\" style=\"position: relative;\"><input type=\"checkbox\" value="+ data +" class='pull-left list-check' style=\"position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);\"></div>";
                                 var checkbox = "<input type='checkbox' class='pull-left list-check' value=" + data + ">";
                                 return checkbox;
                             }
                         },
-                        {"data": "girl.city.city","sDefaultContent" : ""},
-                        {"data": "girl.name","sDefaultContent" : ""},
-                        {"data": "user.nickName","sDefaultContent" : ""},
-                        {"data": "createDate","sDefaultContent" : ""},
-                        {"data": "startDate","sDefaultContent" : ""},
-                        {"data": "duration","sDefaultContent" : ""},
-                        {"data": "stadium.name","sDefaultContent" : ""},
-                        {
-                            "data": "teamRace",
-                            "render":function(data,type,full){
-                                return full.teamRace.homeTeam.name+ "vs"+full.teamRace.visitingTeam.name;
-                            },
-                            "sDefaultContent" : ""
+                        {"data": "stadiumUser.username","sDefaultContent" : ""},
+                        {"data": "stadiumUser.city.city","sDefaultContent" : ""},
+                        {"data": "stadiumUser.reserveMoney","sDefaultContent" : ""},
+                        {"data": "withdrawMoney","sDefaultContent" : ""},
+                        {"data": "status",
+                            render:function(data){
+                                if(data==0){
+                                    return "未转账";
+                                }else if(data==1){
+                                    return "转账中";
+                                }else if(data==2){
+                                    return "已转账";
+                                }else if(data==3){
+                                    return "驳回";
+                                }
+                            }
                         },
-                        {"data": "price", "sDefaultContent" : ""},
-                        {"data": "tip","sDefaultContent" : ""}
+                        {
+                            "data": "id",
+                            "render": function (data,type,full) {
+                                var detail = "<button title='处理' class='btn btn-primary btn-circle add' onclick=\"$stadiumUserWithdraw.fn.handle(\'" + data + "\')\">" +
+                                        "<i class='fa fa-eye'></i></button>";
+                                var sta = full.status;
+                                if(sta==1){
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$stadiumUserWithdraw.fn.status("+ data +")'> " +
+                                            "<i>驳回</i></button>";
+                                    return detail + "&nbsp;" + status;
+                                }
+                                return detail
+
+                            }
+                        }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.name = $("#girlName").val();
-                        aoData.cityId = $("#cityId").val();
-                        aoData.nickName = $("#userName").val();
+                        aoData.username = $("#username").val();
+                        aoData.status = $("#status").val();
                     }
                 });
             },
-            sfInfo: function (id) {
-                $.ajax({
-                    "url": "${contextPath}/admin/girl/sfInfo",
-                    "data": {
-                        "id": id
-                    },
-                    "dataType": "json",
-                    "type": "POST",
-                    "success": function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
-                        }
-                        window.location.href = "${contextPath}/admin/girl/detail?id=" + id;
-                    }
-                });
-            },
-            edit: function (id){
-                window.location.href = "${contextPath}/admin/girl/edit?id=" + id;
+            handle: function (id){
+                window.location.href = "${contextPath}/admin/1/handle?id=" + id;
             },
             status : function(id) {
                 $.ajax({
-                    "url": "${contextPath}/admin/girl/status",
+                    "url": "${contextPath}/admin/stadiumUserWithdraw/status",
                     "data": {
                         "id": id
                     },
@@ -155,16 +145,16 @@
                             $common.fn.notify(result.msg);
                             return;
                         }
-                        $girl.v.dTable.ajax.reload();
+                        $stadiumUserWithdraw.v.dTable.ajax.reload();
                     }
                 });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        $girl.v.dTable.ajax.reload(null, false);
+                        $stadiumUserWithdraw.v.dTable.ajax.reload(null, false);
                     } else {
-                        $girl.v.dTable.ajax.reload();
+                        $stadiumUserWithdraw.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -174,7 +164,7 @@
         }
     }
     $(function () {
-        $girl.fn.init();
+        $stadiumUserWithdraw.fn.init();
     })
 </script>
 <script>

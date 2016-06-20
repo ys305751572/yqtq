@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-md-2 form-group">
                     <label>手机号</label>
-                    <input type="text" class="input-sm form-control" id="mobile" name="mobile" placeholder="...">
+                    <input type="text" class="input-sm form-control" id="mobile" name="mobile" placeholder="..." onblur="_userInfo.fn.check()"/>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>昵称</label>
@@ -84,10 +84,10 @@
         fn: {
             init: function () {
                 _userInfo.fn.dataTableInit();
-
                 $("#c_search").click(function () {
                     _userInfo.v.dTable.ajax.reload();
                 });
+
             },
             dataTableInit: function () {
                 _userInfo.v.dTable = $leoman.dataTable($('#dataTables'), {
@@ -185,7 +185,6 @@
                     }
                 });
             },
-
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
@@ -202,6 +201,7 @@
     }
     $(function () {
         _userInfo.fn.init();
+
     })
 </script>
 <script>

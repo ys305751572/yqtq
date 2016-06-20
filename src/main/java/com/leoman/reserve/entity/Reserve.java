@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Reserve extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne

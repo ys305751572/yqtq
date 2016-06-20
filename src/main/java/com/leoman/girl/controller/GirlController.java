@@ -14,6 +14,7 @@ import com.leoman.girl.service.impl.GirlServiceImpl;
 import com.leoman.image.entity.FileBo;
 import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
+import net.sf.json.JSONArray;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,9 +26,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Administrator on 2016/6/7.
@@ -124,68 +125,12 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
 
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(Girl girl,City city,MultipartHttpServletRequest multipartRequest){
+    public Result save(Girl girl, City city, MultipartHttpServletRequest multipartRequest){
         Girl g = null;
-        Iterator<String> list = multipartRequest.getFileNames();
-        MultipartFile albumImageFile =null;
-        MultipartFile coverImageFile =null;
-        int a = 0;
         try{
             if(null != girl.getId()){
                 g = girlService.queryByPK(girl.getId());
             }
-            List<GirlImage> gList = girlImageService.queryByProperty("girlId",girl.getId());
-            while (list.hasNext()) {
-                String fileName = list.next();
-                if(fileName.indexOf("coverImageFile")>=0) {
-                    // 封面
-                    a =1;
-                    coverImageFile = multipartRequest.getFile(fileName);
-                    FileBo fileBo = null;
-                    try {
-                        fileBo = FileUtil.save(coverImageFile);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (fileBo != null && StringUtils.isNotBlank(fileBo.getPath())) {
-                        GirlImage girlImage = new GirlImage();
-                        for(GirlImage gi : gList){
-                            if(gi.getId()!=null){
-                                gi.setGirlId(girl.getId());
-                                gi.setType(0);
-                                gi.setUrl(fileBo.getPath());
-                                girlImageService.save(gi);
-                            }else{
-                                girlImage.setGirlId(girl.getId());
-                                girlImage.setType(0);
-                                girlImage.setUrl(fileBo.getPath());
-                                girlImageService.save(girlImage);
-                            }
-                        }
-
-
-                    }
-                }
-                if(fileName.indexOf("albumImageFile") >= 0) {
-                    // 相册
-                    a =2;
-                    albumImageFile = multipartRequest.getFile(fileName);
-                    FileBo fileBo = null;
-                    try {
-                        fileBo = FileUtil.save(albumImageFile);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (fileBo != null && StringUtils.isNotBlank(fileBo.getPath())) {
-                        GirlImage girlImage = new GirlImage();
-                        girlImage.setGirlId(girl.getId());
-                        girlImage.setType(1);
-                        girlImage.setUrl(fileBo.getPath());
-                        girlImageService.save(girlImage);
-                    }
-                }
-            }
-
             if(null != g){
                 girl.setStatus(g.getStatus());
                 girl.setCreateDate(g.getCreateDate());
@@ -196,12 +141,62 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
                 City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
                 girl.setCity(_city);
             }
-
             girlService.save(girl);
+            this.saveImage(girl,multipartRequest);
         }catch (RuntimeException e){
             e.printStackTrace();
             return Result.failure();
         }
+        return Result.success();
+    }
+
+    public void saveImage(Girl girl,MultipartHttpServletRequest multipartRequest){
+        Iterator<String> list = multipartRequest.getFileNames();
+        MultipartFile albumImageFile =null;
+        MultipartFile coverImageFile =null;
+        while (list.hasNext()) {
+            String fileName = list.next();
+            if (fileName.indexOf("coverImageFile") >= 0) {
+                // 封面
+                coverImageFile = multipartRequest.getFile(fileName);
+                FileBo fileBo = null;
+                try {
+                    fileBo = FileUtil.save(coverImageFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (fileBo != null && StringUtils.isNotBlank(fileBo.getPath())) {
+                    GirlImage girlImage = new GirlImage();
+                    girlImage.setGirlId(girl.getId());
+                    girlImage.setType(0);
+                    girlImage.setUrl(fileBo.getPath());
+                    girlImageService.save(girlImage);
+                }
+            }
+            if (fileName.indexOf("albumImageFile") >= 0) {
+                // 相册
+                albumImageFile = multipartRequest.getFile(fileName);
+                FileBo fileBo = null;
+                try {
+                    fileBo = FileUtil.save(albumImageFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (fileBo != null && StringUtils.isNotBlank(fileBo.getPath())) {
+                    GirlImage girlImage = new GirlImage();
+                    girlImage.setGirlId(girl.getId());
+                    girlImage.setType(1);
+                    girlImage.setUrl(fileBo.getPath());
+                    girlImageService.save(girlImage);
+                }
+            }
+        }
+    }
+
+    @RequestMapping(value = "/deleteImage")
+    @ResponseBody
+    public Object deleteBatch(Long id) {
+        girlImageService.deleteByPK(id);
         return Result.success();
     }
 

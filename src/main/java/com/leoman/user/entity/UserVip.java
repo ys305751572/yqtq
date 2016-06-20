@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class UserVip extends BaseEntity{
 
     @ManyToOne
-    @JoinColumn(name = "user_id",referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id")
     private User user;
     //充值时长
     @Column(name = "duration")

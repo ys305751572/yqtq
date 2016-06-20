@@ -77,8 +77,9 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>比赛时间：</label>
-                        <input type="text" id="startDate" name="startDate" value="" class="input-sm form_datetime form-control validate[required]" placeholder="...">
+                        <input type="text" id="startDate" name="startDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${bigRace.startDate}'></date:date>" class="input-sm form_datetime form-control validate[required]" placeholder="...">
                     </div>
+
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
                         <label>详细描述</label>
@@ -109,28 +110,52 @@
         },
         fn: {
             init: function () {
-                var sDate = ${bigRace.startDate};
-                var startDate = new Date(sDate).format("yyyy-MM-dd hh:mm");
-                $("#startDate").val(startDate);
+                <%--var sDate = ${bigRace.startDate};--%>
+                <%--var startDate = new Date(sDate).format("yyyy-MM-dd hh:mm");--%>
+                <%--$("#startDate").val(startDate);--%>
             },
             save : function () {
                 var code =  $('.wysiwye-editor').code();
                 var startDate = this.transdate($("#startDate").val());
                 $("#startDate").val(startDate);
-                $("#fromId").ajaxSubmit({
-                    url : "${contextPath}/admin/bigRace/save",
-                    type : "POST",
-                    data : {
-                        "detail" : code
-                    },
-                    success : function(result) {
-                        if(!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
+                var isCheck = true;
+                if($("#name").val()==""){
+                    alert("看球名称不能为空!");
+                    isCheck=false;
+                }
+                if($("#cityId").val()==""){
+                    alert("城市不能为空!");
+                    isCheck=false;
+                }
+                if($("#team1name").val()==""){
+                    alert("甲方队名不能为空!");
+                    isCheck=false;
+                }
+                if($("#team2name").val()==""){
+                    alert("乙方方队名不能为空!");
+                    isCheck=false;
+                }
+                if($("#startDate").val()==""){
+                    alert("开始时间不能为空!");
+                    isCheck=false;
+                }
+                if(isCheck){
+                    $("#fromId").ajaxSubmit({
+                        url : "${contextPath}/admin/bigRace/save",
+                        type : "POST",
+                        data : {
+                            "detail" : code,
+//                            "startDate" : startDate
+                        },
+                        success : function(result) {
+                            if(!result.status) {
+                                $common.fn.notify(result.msg);
+                                return;
+                            }
+                            window.location.href = "${contextPath}/admin/bigRace/index";
                         }
-                        window.location.href = "${contextPath}/admin/bigRace/index";
-                    }
-                });
+                    });
+                }
             },
             transdate :function(endTime){
                 var date=new Date();

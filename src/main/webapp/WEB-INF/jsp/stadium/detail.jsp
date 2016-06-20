@@ -46,7 +46,7 @@
                         <c:if test="${stadium.type eq 0}">
                             <div class="form-group">
                                 <label>球场主:</label>
-                                <a onclick="$team.fn.sfInfo(${stadium.id})">${stadiumUser.nickName}</a>//到球场主详情还没写
+                                <a href="${contextPath}/admin/stadiumUser/detail?id=${stadium.stadiumUserId}">${stadiumUser.nickName}</a>
                             </div>
                         </c:if>
                         <div class="form-group">
@@ -55,7 +55,7 @@
                             <p>草皮类型：${stadium.sodType}</p>
                             <p>灯光：${stadium.light}</p>
                             <p>停车场：<c:if test="${stadium.park eq 0}">无</c:if><c:if test="${stadium.park eq 1}">免费</c:if><c:if test="${stadium.park eq 2}">收费</c:if></p>
-                            <p> 赠送：${stadium.giving}</p>
+                            <p>赠送：${stadium.giving}</p>
                         </div>
                         <c:if test="${stadium.type eq 0}">
                             <div class="form-group">

@@ -28,11 +28,11 @@
                 <input type="hidden" id="id" name="id" value="${admin.id}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
-                        <label>看球名称：</label>
+                        <label>账号：</label>
                         <input type="text" id="username" name="username" value="${admin.username}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
-                        <label>球队甲方：</label>
+                        <label>密码：</label>
                         <input type="text" id="password" name="password" value="${admin.password}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
@@ -84,6 +84,16 @@
                         window.location.href = "${contextPath}/admin/admin/index";
                     }
                 });
+            },
+            check : function(){
+                var reg = /^([0-9])*$/;
+                console.log(reg);
+                if(!reg.test($("#username").val())){
+                    alert("格式不正确!");
+                    $("#mobile").val("");
+                    return false;
+                }
+                return true;
             }
         }
     }

@@ -1,10 +1,9 @@
 package com.leoman.stadium.entity;
 
+import com.leoman.city.entity.City;
 import com.leoman.common.entity.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Administrator on 2016/6/12.
@@ -18,7 +17,7 @@ public class StadiumUser extends BaseEntity{
     private String nickName;
     //账号
     @Column(name = "username")
-    private String userName;
+    private String username;
     //密码
     @Column(name = "password")
     private String password;
@@ -28,18 +27,41 @@ public class StadiumUser extends BaseEntity{
     //预定总金额
     @Column(name = "reserve_money")
     private Double reserveMoney;
-    //体现总金额
+    //提现总金额
     @Column(name = "withdraw_money")
     private Double withdrawMoney;
     //余额
     @Column(name = "balance")
     private Double balance;
     //城市ID
-    @Column(name = "city_id")
-    private Long cityId;
+    @ManyToOne
+    @JoinColumn(name = "city_id",referencedColumnName = "city_id")
+    private City city;
     //状态 0:正常 1:冻结
     @Column(name = "status")
     private Integer status;
+    //场地数量
+    @Transient
+    private Integer stadiumNum;
+    //每天总收入
+    @Transient
+    private Double toDaySumPrice;
+
+    public Double getToDaySumPrice() {
+        return toDaySumPrice;
+    }
+
+    public void setToDaySumPrice(Double toDaySumPrice) {
+        this.toDaySumPrice = toDaySumPrice;
+    }
+
+    public Integer getStadiumNum() {
+        return stadiumNum;
+    }
+
+    public void setStadiumNum(Integer stadiumNum) {
+        this.stadiumNum = stadiumNum;
+    }
 
     public String getNickName() {
         return nickName;
@@ -49,12 +71,12 @@ public class StadiumUser extends BaseEntity{
         this.nickName = nickName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -97,12 +119,12 @@ public class StadiumUser extends BaseEntity{
         this.balance = balance;
     }
 
-    public Long getCityId() {
-        return cityId;
+    public City getCity() {
+        return city;
     }
 
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public Integer getStatus() {

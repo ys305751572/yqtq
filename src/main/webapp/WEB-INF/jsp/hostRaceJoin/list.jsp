@@ -79,9 +79,9 @@
                         {"data": "team.name"},
                         {"data": "team.city.city"},
                         {"data": "team.tmSetNum"},
-                        {"data": "team.tmSize"},
-                        {"data": "createDate"},
-                        {"data": "team.leaderUserId"},
+                        {"data": "team.tmSize"},    //大型比赛场次
+                        {"data": "createDate"},     //比赛报名时间
+                        {"data": "team.user.nickName"},
                         {
                             "data": "team.id",
                             "render": function (data) {

@@ -39,7 +39,7 @@
                 <li><a href="${contextPath}/admin/user/index">用户列表</a></li>
                 <li><a href="${contextPath}/admin/userVip/index">会员列表</a></li>
                 <li><a href="${contextPath}/admin/admin/index">管理人员</a></li>
-                <li><a href="${contextPath}/admin/1/index">球场主列表</a></li>
+                <li><a href="${contextPath}/admin/stadiumUser/index">球场主列表</a></li>
             </ul>
         </li>
         <li class="dropdown">
@@ -64,7 +64,7 @@
                 <span class="menu-item">约场地管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/1/index">约场地列表</a></li>
+                <li><a href="${contextPath}/admin/stadiumBooking/index">约场地列表</a></li>
             </ul>
         </li>
         <li class="dropdown">

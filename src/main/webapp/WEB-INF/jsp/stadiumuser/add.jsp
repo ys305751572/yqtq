@@ -22,34 +22,32 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">看球详情</h1>
+        <h1 class="page-title">新增球场主</h1>
+        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
-                <input type="hidden" id="id" name="id" value="${bigRace.id}">
                 <div class="row">
-                    <h3>${bigRace.name}</h3>
                     <div class="col-md-6 m-b-15">
-                        <label>比赛队伍:</label>
-                        <img src="${contextPath}/${bigRace.avater1}" alt="">VS<img src="${contextPath}/${bigRace.avater2}" alt="">
+                        <label>账号：</label>
+                        <input type="text" id="username" name="username" value="${stadiumUser.username}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
-                        <label>地区:</label>
-                        <input type="text" id="cityId" value="${bigRace.stadium.city.city}" name="cityId" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>密码：</label>
+                        <input type="text" id="password" name="password" value="${stadiumUser.password}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
-
                     <div class="col-md-6 m-b-15">
-                        <label>比赛地点:</label>
-                        <input type="text" id="name" name="name" value="${bigRace.stadium.name}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>城市:</label>
+                        <select id="cityId" name="cityId" class="select">
+                            <option value="${stadiumUser.city.cityId}">${stadiumUser.city.city eq null ? "请选择" : stadiumUser.city.city}</option>
+                            <c:forEach items="${city}" var="c">
+                                <option value="${c.cityId}">${c.city}</option>
+                            </c:forEach>
+                        </select>
                     </div>
-
-                    <div class="col-md-6 m-b-15" >
-                        <label>比赛时间:</label>
-                        <input type="text" id="startDate" name="startDate" value="<date:date format='yyyy年MM月dd日 HH:mm' value='${bigRace.startDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
-                    </div>
-
                     <hr class="whiter m-t-20"/>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-5">
+                        <button type="button" onclick="$user.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
                         <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                     </div>
                 </div>
@@ -60,8 +58,9 @@
 </section>
 <!-- JS -->
 <%@ include file="../inc/new/foot.jsp" %>
+
 <script>
-    $team = {
+    $user = {
         v: {
             list: [],
             chart : null,
@@ -69,11 +68,29 @@
         },
         fn: {
             init: function () {
+                $user.fn.initImage();
+            },
+            save : function () {
+                var code =  $('.wysiwye-editor').code();
+                $("#fromId").ajaxSubmit({
+                    url : "${contextPath}/admin/stadiumUser/save",
+                    type : "POST",
+                    data : {
+                        "detail" : code
+                    },
+                    success : function(result) {
+                        if(!result.status) {
+                            $common.fn.notify(result.msg);
+                            return;
+                        }
+                        window.location.href = "${contextPath}/admin/stadiumUser/index";
+                    }
+                });
             }
         }
     }
     $(function () {
-        $team.fn.init();
+        $user.fn.init();
     })
 </script>
 <script>

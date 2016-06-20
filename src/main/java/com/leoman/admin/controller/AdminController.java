@@ -47,30 +47,30 @@ public class AdminController extends GenericEntityController<Admin,Admin,AdminSe
             if(id !=null){
                 Admin admin = adminService.queryByPK(id);
                 model.addAttribute("admin",admin);
-            }
+             }
         }catch (RuntimeException e){
             e.printStackTrace();
         }
         return "/admin/add";
-    }
+     }
 
     @RequestMapping(value = "/status")
     @ResponseBody
     public Result status(Long id){
-        Admin admin = adminService.queryByPK(id);
-        Integer status = admin.getStatus();
-        try{
-            if(status == 0) {
-                admin.setStatus(1);
-                adminService.save(admin);
-            }else {
-                admin.setStatus(0);
-                adminService.save(admin);
+            Admin admin = adminService.queryByPK(id);
+            Integer status = admin.getStatus();
+            try{
+                if(status == 0) {
+                    admin.setStatus(1);
+                    adminService.save(admin);
+                }else {
+                    admin.setStatus(0);
+                    adminService.save(admin);
+                }
+            }catch (RuntimeException e){
+                e.printStackTrace();
+                return Result.failure();
             }
-        }catch (RuntimeException e){
-            e.printStackTrace();
-            return Result.failure();
+            return Result.success();
         }
-        return Result.success();
-    }
 }

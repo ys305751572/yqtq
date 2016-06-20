@@ -36,7 +36,7 @@ public class Team extends BaseEntity {
 
     //队长ID
     @ManyToOne
-    @JoinColumn(name = "leader_user_id",referencedColumnName = "user_id")
+    @JoinColumn(name = "leader_user_id")
     private User user;
 
     //对应球队球员

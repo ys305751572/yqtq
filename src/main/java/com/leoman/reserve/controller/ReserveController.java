@@ -58,8 +58,8 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
     public String index(Model model) {
         List<City> city = cityService.queryAll();
         model.addAttribute("city",city);
-        List<Stadium> stadia = stadiumService.queryAll();
-        model.addAttribute("stadia",stadia);
+        List<Stadium> stadium = stadiumService.queryAll();
+        model.addAttribute("stadium",stadium);
         return "reserve/list";
     }
 
@@ -85,6 +85,9 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
                      City cityId,Stadium stadium) {
         try {
             int pageNum = getPageNum(start, length);
+            if(request.getParameter("stadiumId")!=null && request.getParameter("stadiumId")!=""){
+                stadium.setId(Long.parseLong(request.getParameter("stadiumId").toString()));
+            }
             reserve.setSystemInsurance(id);
             stadium.setCity(cityId);
             reserve.setStadium(stadium);
@@ -110,6 +113,7 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
         model.addAttribute("reserve", reserve);
         Long reserveId = reserve.getId();
         List<UserReserveJoin> userReserveJoins = userReserveJoinService.queryByProperty("reserveId",reserveId);
+        model.addAttribute("num",userReserveJoins.size());
         List<User> list = new ArrayList<User>();
         for(UserReserveJoin u : userReserveJoins){
             User user = userService.findByUserId(u.getUserId());

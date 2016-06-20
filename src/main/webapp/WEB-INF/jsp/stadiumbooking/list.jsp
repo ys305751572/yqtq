@@ -22,26 +22,28 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <label>比赛</label>
-                    <input type="text" class="input-sm form-control" id="teamName" name="teamName" placeholder="...">
-                </div>
-                <div class="col-md-2 form-group">
-                    <label>城市</label>
                     <select id="cityId" name="cityId" class="select">
-                        <option value="">全部</option>
+                        <option value="">城市</option>
                         <c:forEach items="${city}" var="c">
                             <option value="${c.cityId}">${c.city}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>球场</label>
-                    <select id="stadiumId" name="stadiumId" class="select">
-                        <option value="">全部</option>
-                        <c:forEach items="${stadium}" var="s">
-                            <option value="${s.id}">${s.name}</option>
-                        </c:forEach>
+                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="场地名">
+                </div>
+                <div class="col-md-2 form-group">
+                    <input type="text" class="input-sm form-control" id="bookTime" name="bookTime" placeholder="预定时长">
+                </div>
+                <div class="col-md-2 form-group">
+                    <select id="type" name="type" class="select">
+                        <option value="">类型</option>
+                        <option value="0">散客</option>
+                        <option value="1">其他</option>
                     </select>
+                </div>
+                <div class="col-md-2 form-group">
+                    <input type="text" class="input-sm form-control" id="nickName" name="nickName" placeholder="订购者">
                 </div>
             </div>
         </div>
@@ -55,10 +57,15 @@
                 <thead>
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
-                    <th>比赛队伍</th>
-                    <th>比赛城市</th>
-                    <th>比赛球场</th>
-                    <th>比赛时间</th>
+                    <th>地区</th>
+                    <th>球场名称</th>
+                    <th>场地编号</th>
+                    <th>订购者</th>
+                    <th>预定时长</th>
+                    <th>开始使用时间</th>
+                    <th>预定时间</th>
+                    <th>预定类型</th>
+                    <th>状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -71,89 +78,118 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    $teamRace = {
+    $stadiumBooking = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                $teamRace.fn.dataTableInit();
+                $stadiumBooking.fn.dataTableInit();
+
                 $("#c_search").click(function () {
-                    $teamRace.v.dTable.ajax.reload();
+                    $stadiumBooking.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                $teamRace.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $stadiumBooking.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/teamRace/list",
+                        "url": "${contextPath}/admin/stadiumBooking/list",
                         "type": "POST"
                     },
                     "columns": [
                         {
                             "data": "id",
                             "render": function (data) {
-//                                var checkbox = "<div class=\"icheckbox_minimal\" aria-checked=\"false\" aria-disabled=\"false\" style=\"position: relative;\"><input type=\"checkbox\" value="+ data +" class='pull-left list-check' style=\"position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);\"></div>";
                                 var checkbox = "<input type='checkbox' class='pull-left list-check' value=" + data + ">";
                                 return checkbox;
                             }
                         },
-                        {
-                            "data": "",
-                            "render": function (data,type,full) {
-                                return full.homeTeam.name +"&nbsp; VS &nbsp;"+full.visitingTeam.name;
-                            }
-                        },
                         {"data": "city.city","sDefaultContent" : ""},
                         {"data": "stadium.name","sDefaultContent" : ""},
-                        {
-                            "data": "startDate",
-                            "render":function(data){
-                                return new Date(data).format("yyyy年MM月dd日 hh:mm:ss");
+                        {"data": "stadiumSub.code","sDefaultContent" : ""},
+                        {"data": "user.nickName","sDefaultContent" : ""},
+                        {"data": "bookTime","sDefaultContent" : ""},
+                        {"data": "startDate",
+                            render: function (data) {
+                                return new Date(data).format("yyyy年MM月dd日 hh:mm")
                             }
+                        },
+                        {"data": "createDate",
+                            render: function (data) {
+                                return new Date(data).format("yyyy年MM月dd日 hh:mm")
+                            },
+                        "sDefaultContent" : ""
+                        },
+                        {"data": "type",
+                            render: function (data) {
+                                if(data==0){
+                                    return "散客";
+                                }
+                                if(data==1){
+                                    return "其他";
+                                }
+                            },
+                            "sDefaultContent" : ""
+                        },
+                        {"data": "status",
+                            render: function (data) {
+                                if(data==0){
+                                    return "未使用";
+                                }
+                                if(data==1){
+                                    return "已使用";
+                                }
+                                if(data==2){
+                                    return "已退款";
+                                }
+                            },
+                            "sDefaultContent" : ""
                         },
                         {
                             "data": "id",
                             "render": function (data) {
-                                var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$teamRace.fn.sfTeamRaceInfo(\'" + data + "\')\">" +
+                                var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$stadiumBooking.fn.sfInfo(\'" + data + "\')\">" +
                                         "<i class='fa fa-eye'></i></button>";
                                 return detail;
                             }
                         }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.teamName = $("#teamName").val();
                         aoData.cityId = $("#cityId").val();
-                        aoData.id = $("#stadiumId").val();
+                        aoData.name = $("#name").val();
+                        aoData.bookTime = $("#bookTime").val();
+                        aoData.type = $("#type").val();
+                        aoData.nickName = $("#nickName").val();
                     }
                 });
             },
-            sfTeamRaceInfo: function (id) {
+            sfInfo: function (id) {
                 $.ajax({
-                    "url": "${contextPath}/admin/teamRace/sfTeamRaceInfo",
+                    "url": "${contextPath}/admin/stadiumBooking/sfInfo",
                     "data": {
                         "id": id
                     },
                     "dataType": "json",
-                    "type": "POST",
-                    "success": function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
+                            "type": "POST",
+                                    "success": function (result) {
+                                if (!result.status) {
+                                    $common.fn.notify(result.msg);
+                                    return;
                         }
-                        window.location.href = "${contextPath}/admin/teamRace/detail?id=" + id;
+                        window.location.href = "${contextPath}/admin/stadiumBooking/detail?id=" + id;
                     }
                 });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        $teamRace.v.dTable.ajax.reload(null, false);
+                        $stadiumBooking.v.dTable.ajax.reload(null, false);
                     } else {
-                        $teamRace.v.dTable.ajax.reload();
+                        $stadiumBooking.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -163,7 +199,7 @@
         }
     }
     $(function () {
-        $teamRace.fn.init();
+        $stadiumBooking.fn.init();
     })
 </script>
 <script>
