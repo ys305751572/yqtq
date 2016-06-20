@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/6/2.
@@ -83,16 +84,15 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
         return null;
     }
 
-    @RequestMapping(value = "/add")
-    public String add(){
-        return "/hostRace/add";
-    }
-
     @RequestMapping(value = "/edit")
     public String edit(Long id, Model model){
         try{
-            HostRace hostRace = hostRaceService.findById(id);
-            model.addAttribute("hostRace", hostRace);
+            if(id !=null){
+                HostRace hostRace = hostRaceService.findById(id);
+                model.addAttribute("hostRace", hostRace);
+            }
+            List<Stadium> stadium = stadiumService.queryAll();
+            model.addAttribute("stadium", stadium);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -111,8 +111,9 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
             hostRace.setStatus(h.getStatus());
             hostRace.setMatchType(h.getMatchType());
             hostRace.setHrSet(h.getHrSet());
-//            hostRace.setStartDate(h.getStartDate());
             hostRace.setCreateDate(h.getCreateDate());
+        }else {
+            hostRace.setStatus(0);
         }
         if(imageFile!=null && imageFile.getSize()>0) {
             FileBo fileBo = null;

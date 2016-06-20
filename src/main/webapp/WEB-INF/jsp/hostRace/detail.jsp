@@ -24,8 +24,12 @@
         </ol>
         <h1 class="page-title">赛事列表</h1>
         <div class="block-area">
-            <h2 class="tile-title">赛事详情</h2>
-            <div class="p-10" style="height:520px">
+            <div class="row">
+                <div class="col-md-6 m-b-15">
+                    <label>赛事封面:</label>
+                    <img src="${contextPath}/${hostRace.avater}" alt="">
+                </div>
+                <hr class="whiter m-t-20"/>
                 <div class="col-md-6 m-b-15">
                     <label>赛事名称:</label>
                     <input type="text" id="name" value="${hostRace.name}" name="name" class="input-sm form-control validate[required]" placeholder="..." disabled>
@@ -34,29 +38,18 @@
                     <label>赛事地点:</label>
                     <input type="text" id="address" value="${hostRace.stadium.address}" name="address" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
-                <div class="col-md-6 m-b-15">
-                    <label>赛事封面:</label>
-                    <img src="${contextPath}/${hostRace.avater}" alt="">
-                </div>
+                <hr class="whiter m-t-20"/>
                 <div class="col-md-6 m-b-15">
                     <label>赛事详情:</label>
                     <input type="text" id="description" value="${hostRace.description}" name="description" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
-                <div class="block-area" style="margin-left: auto;margin-right: auto;">
-                    <div class="row">
-                        <ul class="list-inline list-mass-actions">
-                            <li>
-                                <a data-toggle="modal" href="${contextPath}/admin/hostRace/information?id=${hostRace.id}" title="增加咨询" class="tooltips">
-                                    <i>增加咨询</i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="${contextPath}/admin/hostRaceJoin/index?id=${hostRace.id}" title="报名队伍" class="tooltips">
-                                    <i>报名队伍</i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                <hr class="whiter m-t-20"/>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-5">
+                    <button type="button" class="btn btn-info btn-sm m-t-10" onclick="$team.fn.information(${hostRace.id})">增加资讯</button>
+                    <button type="button" class="btn btn-info btn-sm m-t-10" onclick="$team.fn.sign(${hostRace.id})">报名队伍</button>
+                    <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                 </div>
             </div>
         </div>
@@ -75,8 +68,15 @@
         fn: {
             init: function () {
                 $team.fn.initImage();
+            },
+            information : function (id) {
+                window.location.href = "${contextPath}/admin/hostRace/information?id="+id;
+            },
+            sign : function (id) {
+                window.location.href = "${contextPath}/admin/hostRaceJoin/index?id="+id;
             }
         }
+
     }
     $(function () {
         $team.fn.init();

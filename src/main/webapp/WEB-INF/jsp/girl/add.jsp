@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>宝贝名称：</label>
-                        <input type="text" id="name" name="name" value="${girl.name}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="name" name="name" value="${girl.name}" class="input-sm form-control validate[required]" placeholder="..." maxlength="12" >
                     </div>
 
                     <div class="col-md-6 m-b-15">
@@ -44,39 +44,39 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>年龄：</label>
-                        <input type="text" id="age" name="age" value="${girl.age}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="age" name="age" value="${girl.age}" class="input-sm form-control validate[required]" placeholder="..." maxlength="2" onkeyup="value=value.replace(/[^0-9]/g,'')">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>身高：</label>
-                        <input type="text" id="height" name="height" value="${girl.height}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="height" name="height" value="${girl.height}" class="input-sm form-control validate[required]" placeholder="..." maxlength="3" onkeyup="value=value.replace(/[^0-9]/g,'')">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>体重：</label>
-                        <input type="text" id="weight" name="weight" value="${girl.weight}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="weight" name="weight" value="${girl.weight}" class="input-sm form-control validate[required]" placeholder="..." maxlength="3" onkeyup="value=value.replace(/[^0-9]/g,'')">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>服务价格:</label>
-                        <input type="text" id="price" name="price" value="${girl.price}" class="input-sm form-control validate[required]">
+                        <input type="text" id="price" name="price" value="${girl.price}" class="input-sm form-control validate[required]" placeholder="..." maxlength="6" onkeyup="value=value.replace(/[^0-9]/g,'')">
                     </div>
 
                     <div class="col-md-6 m-b-15" >
                         <label>兴趣爱好:</label>
-                        <input type="text" id="interest" name="interest" value="${girl.interest}" class="input-sm form-control validate[required]">
+                        <input type="text" id="interest" name="interest" value="${girl.interest}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
 
                     <div class="col-md-6 m-b-15" >
                         <label>喜欢球队:</label>
-                        <input type="text" id="favoriteTeam" name="favoriteTeam" value="${girl.favoriteTeam}" class="input-sm form-control validate[required]">
+                        <input type="text" id="favoriteTeam" name="favoriteTeam" value="${girl.favoriteTeam}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
 
                     <div class="col-md-6 m-b-15" >
                         <label>职业:</label>
-                        <input type="text" id="profession" name="profession" value="${girl.profession}" class="input-sm form-control validate[required]">
+                        <input type="text" id="profession" name="profession" value="${girl.profession}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
 
                     <div class="col-md-6 m-b-15" >
                         <label>签名:</label>
-                        <input type="text" id="label" name="label" value="${girl.label}" class="input-sm form-control validate[required]">
+                        <input type="text" id="label" name="label" value="${girl.label}" class="input-sm form-control validate[required]" maxlength="50" placeholder="...">
                     </div>
                     <div class="col-md-12 m-b-15">
                     <div><label>宝贝封面：</label></div>
@@ -167,17 +167,56 @@
 
             },
             save : function () {
-                $("#fromId").ajaxSubmit({
-                    url : "${contextPath}/admin/girl/save",
-                    type : "POST",
-                    success : function(result) {
-                        if(!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
+                var isCheck = true;
+                if($("#name").val()==""){
+                    alert("名称不能为空!");
+                    isCheck=false;
+                }
+                if($("#cityId").val()==""){
+                    alert("城市不能为空!");
+                    isCheck=false;
+                }
+                if($("#age").val()==""){
+                    alert("年龄不能为空!");
+                    isCheck=false;
+                }
+                if($("#height").val()==""){
+                    alert("身高不能为空!");
+                    isCheck=false;
+                }
+                if($("#weight").val()==""){
+                    alert("体重不能为空!");
+                    isCheck=false;
+                }
+                if($("#price").val()==""){
+                    alert("服务价格不能为空!");
+                    isCheck=false;
+                }
+                if($("#interest").val()==""){
+                    alert("兴趣爱好不能为空!");
+                    isCheck=false;
+                }
+                if($("#favoriteTeam").val()==""){
+                    alert("喜欢球队不能为空!");
+                    isCheck=false;
+                }
+                if($("#profession").val()==""){
+                    alert("职业不能为空!");
+                    isCheck=false;
+                }
+                if(isCheck){
+                    $("#fromId").ajaxSubmit({
+                        url : "${contextPath}/admin/girl/save",
+                        type : "POST",
+                        success : function(result) {
+                            if(!result.status) {
+                                $common.fn.notify(result.msg);
+                                return;
+                            }
+                            window.location.href = "${contextPath}/admin/girl/index";
                         }
-                        window.location.href = "${contextPath}/admin/girl/index";
-                    }
-                });
+                    });
+                }
             },
             addCoverImage : function(data) {
                 var a = parseInt($("#num").val());

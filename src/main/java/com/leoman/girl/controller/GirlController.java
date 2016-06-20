@@ -202,12 +202,15 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
 
     @RequestMapping(value = "/status")
     @ResponseBody
-    public Result close(Long id){
+    public Result status(Long id){
         Girl girl = girlService.queryByPK(id);
         Integer status = girl.getStatus();
         try{
             if(status == 0) {
                 girl.setStatus(1);
+                girlService.save(girl);
+            }else {
+                girl.setStatus(0);
                 girlService.save(girl);
             }
         }catch (RuntimeException e){

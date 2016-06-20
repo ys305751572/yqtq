@@ -22,7 +22,7 @@
             <div class="row">
                 <ul class="list-inline list-mass-actions">
                     <li>
-                        <a data-toggle="modal" href="${contextPath}/admin/hostRace/add" title="新增" class="tooltips">
+                        <a data-toggle="modal" href="${contextPath}/admin/hostRace/edit" title="新增" class="tooltips">
                             <i class="sa-list-add"></i>
                         </a>
                     </li>
@@ -126,14 +126,18 @@
                         {"data": "stadium.address","sDefaultContent" : ""},
                         {
                             "data": "id",
-                            "render": function (data) {
+                            "render": function (data,type,full) {
                                 var detail = "<button title='查看' class='btn btn-primary btn-circle detail' ONCLICK='$hostRace.fn.sfInfo("+ data +")'> " +
                                         "<i class='fa fa-eye'></i></button>";
                                 var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$hostRace.fn.edit(\'" + data + "\')\">" +
                                         "<i class='fa fa-pencil-square-o'></i></button>";
-                                var del = "<button title='关闭' style='background: #ff3f48' class='btn btn-primary btn-circle ' onclick=\"$hostRace.fn.close(\'" + data + "\')\">" +
-                                        "<i>关闭</i></button>";
-                                return detail+ "&nbsp;" +edit+ "&nbsp;" +del;
+                                var st = full.status;
+                                if(st!=2){
+                                    var del = "<button title='关闭' class='btn btn-primary btn-circle ' onclick='$hostRace.fn.close(" + data + ")'>" +
+                                            "<i>关闭</i></button>";
+                                    return detail+ "&nbsp;" +edit+ "&nbsp;" +del;
+                                }
+                                return detail+ "&nbsp;" +edit;
                             }
                         }
                     ],
@@ -141,6 +145,11 @@
 
                     }
                 });
+            },
+            close:function (data){
+                if(confirm('您确定要结束该比赛吗？')){
+                    $hostRace.fn.status(data);
+                };
             },
             sfInfo: function (id) {
                 $.ajax({
@@ -162,7 +171,7 @@
             "edit" : function(id) {
                 window.location.href = "${contextPath}/admin/hostRace/edit?id=" + id;
             },
-            "close" : function(id) {
+            "status" : function(id) {
                 $.ajax({
                     "url": "${contextPath}/admin/hostRace/close",
                     "data": {

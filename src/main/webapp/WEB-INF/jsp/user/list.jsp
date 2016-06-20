@@ -137,14 +137,14 @@
                         {
                             "data": "userId",
                             "render": function (data,type,full) {
-                                var detail = "<button title='查看' class='btn btn-primary btn-circle detail' ONCLICK='_userInfo.fn.detail("+ data +")'> " +
+                                var detail = "<button title='查看' class='btn btn-primary btn-circle detail' onclick='_userInfo.fn.detail("+ data +")'> " +
                                         "<i class='fa fa-eye'></i></button>";
                                 var st = full.status;
                                 if(st==0){
-                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' ONCLICK='_userInfo.fn.status("+ data +")'> " +
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='_userInfo.fn.close("+data+")'> " +
                                             "<i>禁用</i></button>";
                                 }else if(st==1){
-                                    var status = "<button title='启用' class='btn btn-primary btn-circle detail' ONCLICK='_userInfo.fn.status("+ data +")'> " +
+                                    var status = "<button title='启用' class='btn btn-primary btn-circle detail' onclick='_userInfo.fn.open("+ data +")'> " +
                                             "<i>启用</i></button>";
                                 }
 
@@ -160,6 +160,16 @@
                         aoData.vipLevel = $("#vipLevel").val();
                     }
                 });
+            },
+            close:function (data){
+                if(confirm('您确定要禁用该用户吗？')){
+                    _userInfo.fn.status(data);
+                }
+            },
+            open:function (data){
+                if(confirm('您确定要启用该用户吗？')){
+                    _userInfo.fn.status(data);
+                }
             },
             rowCallback: function (row, data) {
                 var items = _userInfo.v.list;

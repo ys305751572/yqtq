@@ -140,13 +140,19 @@
                         {"data": "guSize","sDefaultContent" : ""},//预约次数
                         {
                             "data": "id",
-                            "render": function (data) {
+                            "render": function (data,type,full) {
                                 var detail = "<button title='查看' class='btn btn-primary btn-circle add' onclick=\"$girl.fn.sfInfo(\'" + data + "\')\">" +
                                         "<i class='fa fa-eye'></i></button>";
                                 var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$girl.fn.edit(\'" + data + "\')\">" +
                                         "<i class='fa fa-pencil-square-o'></i></button>";
-                                var status = "<button title='不可预约' class='btn btn-primary btn-circle detail' ONCLICK='$girl.fn.status("+ data +")'> " +
-                                        "<i>不可预约</i></button>";
+                                var st = full.status;
+                                if(st==0){
+                                    var status = "<button title='不可预约' class='btn btn-primary btn-circle detail' onclick='$girl.fn.close("+ data +")'> " +
+                                            "<i>不可预约</i></button>";
+                                }else if(st==1){
+                                    var status = "<button title='可预约' class='btn btn-primary btn-circle detail' onclick='$girl.fn.open("+ data +")'> " +
+                                            "<i>可预约</i></button>";
+                                }
                                 return detail + "&nbsp;" + status + "&nbsp;" +edit;
                             }
                         }
@@ -157,6 +163,16 @@
                         aoData.status = $("#status").val();
                     }
                 });
+            },
+            close:function (data){
+                if(confirm('您确定设置宝贝为不可预约吗？')){
+                    $girl.fn.status(data);
+                }
+            },
+            open:function (data){
+                if(confirm('您确定设置宝贝为可预约吗？')){
+                    $girl.fn.status(data);
+                }
             },
             sfInfo: function (id) {
                 $.ajax({

@@ -24,8 +24,7 @@
         </ol>
         <h1 class="page-title">散客详情</h1>
         <div class="block-area">
-            <h2 class="tile-title">基本信息</h2>
-            <div class="p-10" style="height:520px">
+            <div class="row">
                 <div class="col-md-6 m-b-15">
                     <label>比赛时间:</label>
                     <input type="text" id="startDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${reserve.startDate}'></date:date>" name="startDate" class="input-sm form-control validate[required]" placeholder="..." disabled>
@@ -81,6 +80,11 @@
                 </div>
                 <hr class="whiter m-t-20"/>
 
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-5">
+                    <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
+                </div>
             </div>
         </div>
     </section>

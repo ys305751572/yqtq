@@ -24,49 +24,69 @@
         </ol>
         <h1 class="page-title">场地列表</h1>
         <div class="block-area">
-            <div class="col-md-2">
-                <div class="tile">
-                    <h2 class="tile-title">场地详情</h2>
-                    <div class="p-10" style="height:520px">
-                        <div class="form-group">
-                            <label>图片:</label>
-                            <img src="${contextPath}/${stadium.avater}" alt="">
-                        </div>
-                        <div class="form-group">
-                            <label>球场名称:</label>
-                            ${stadium.name}
-                            <a data-toggle="modal" href="${contextPath}/admin/stadium/edit?id=${stadium.id}" title="编辑" class="tooltips">
-                                <i>编辑</i>
-                            </a>
-                        </div>
-                        <div class="form-group">
-                            <label>城市:</label>
-                            ${stadium.city.city}
-                        </div>
-                        <c:if test="${stadium.type eq 0}">
-                            <div class="form-group">
-                                <label>球场主:</label>
-                                <a href="${contextPath}/admin/stadiumUser/detail?id=${stadium.stadiumUserId}">${stadiumUser.nickName}</a>
-                            </div>
-                        </c:if>
-                        <div class="form-group">
-                            <label>球场基本信息:</label>
-                            <p>场地类型：<c:if test="${stadium.siteType eq 0}">室内</c:if><c:if test="${stadium.siteType eq 1}">室外</c:if></p>
-                            <p>草皮类型：${stadium.sodType}</p>
-                            <p>灯光：${stadium.light}</p>
-                            <p>停车场：<c:if test="${stadium.park eq 0}">无</c:if><c:if test="${stadium.park eq 1}">免费</c:if><c:if test="${stadium.park eq 2}">收费</c:if></p>
-                            <p>赠送：${stadium.giving}</p>
-                        </div>
-                        <c:if test="${stadium.type eq 0}">
-                            <div class="form-group">
-                                <label>球场场次:</label>
-                            </div>
-                        </c:if>
-                        <div class="form-group">
-                            <label>球场简介:</label>
-                            ${stadium.description}
-                        </div>
+            <div class="row">
+                <div class="col-md-6 m-b-15">
+                    <label>图片:</label>
+                    <img src="${contextPath}/${stadium.avater}" alt="">
+                </div>
+                <hr class="whiter m-t-20"/>
+                <div class="col-md-6 m-b-15">
+                    <label>球场名称:</label>
+                    <input type="text" id="name" name="name" value="${stadium.name}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    <a data-toggle="modal" href="${contextPath}/admin/stadium/edit?id=${stadium.id}" title="编辑" class="tooltips">
+                        <i>编辑</i>
+                    </a>
+                </div>
+                <div class="col-md-6 m-b-15">
+                    <label>城市:</label>
+                    <input type="text" id="city" name="city" value="${stadium.city.city}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                </div>
+                <c:if test="${stadium.type eq 0}">
+                    <div class="col-md-6 m-b-15">
+                        <label>球场主:</label>
+                        <a href="${contextPath}/admin/stadiumUser/detail?id=${stadium.stadiumUserId}"><input type="text" id="nickName" name="nickName" value="${stadiumUser.nickName}" class="input-sm form-control validate[required]" placeholder="..." disabled></a>
                     </div>
+                </c:if>
+                <hr class="whiter m-t-20"/>
+                <div>
+                    <div class="col-md-6 m-b-15">
+                        <label>场地类型:</label>
+                        <c:if test="${stadium.siteType eq 0}"><input type="text" id="siteType" name="siteType" value="室内" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                        <c:if test="${stadium.siteType eq 1}"><input type="text" id="siteType" name="siteType" value="室外" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>草皮类型:</label>
+                        <input type="text" id="sodType" name="sodType" value="${stadium.sodType}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>灯光:</label>
+                        <input type="text" id="light" name="light" value="${stadium.light}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>停车场:</label>
+                        <c:if test="${stadium.park eq 0}"><input type="text" id="park" name="park" value="无" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                        <c:if test="${stadium.park eq 1}"><input type="text" id="park" name="park" value="收费" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>赠送:</label>
+                        <input type="text" id="giving" name="giving" value="${stadium.giving}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    </div>
+                </div>
+                <c:if test="${stadium.type eq 0}">
+                    <div class="col-md-6 m-b-15">
+                        <label>球场场次:</label>
+                    </div>
+                </c:if>
+                <hr class="whiter m-t-20"/>
+                <div class="col-md-6 m-b-15">
+                    <label>球场简介:</label>
+                    <input type="text" id="description" name="description" value="${stadium.description}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                </div>
+                <hr class="whiter m-t-20"/>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-5">
+                    <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                 </div>
             </div>
         </div>

@@ -37,6 +37,7 @@
                         ${teamRace.visitingTeam.name}
                     </a>
                 </div>
+                <hr class="whiter m-t-20"/>
                 <div class="col-md-6 m-b-15">
                     <label>预约城市:</label>
                     <input type="text" id="city" name="city" value="${teamRace.city.city}" class="input-sm form-control validate[required]" placeholder="..." disabled>

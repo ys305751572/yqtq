@@ -23,7 +23,7 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">场地编辑</h1>
+        <h1 class="page-title">平台赛事</h1>
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${hostRace.id}">
@@ -53,7 +53,12 @@
                     <c:if test="${hostRace.id eq null}">
                         <div class="col-md-6 m-b-15">
                             <label>球场名称：</label>
-                            <input type="text" id="stadium" name="stadium" value="" class="input-sm form-control validate[required]" placeholder="...">
+                            <select id="stadium" name="stadium" class="select">
+                                <option value="">...</option>
+                                <c:forEach items="${stadium}" var="v">
+                                    <option value="${v.id}">${v.name}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                         <div class="col-md-6 m-b-15">
                             <label>比赛地址：</label>
@@ -62,7 +67,7 @@
                     </c:if>
                     <div class="col-md-6 m-b-15">
                         <label>比赛时间：</label>
-                        <input type="text" id="startDate" name="startDate" value="<date:date format='yyyy年MM月dd日 HH:mm' value='${hostRace.startDate}'></date:date>" class="input-sm form_datetime form-control validate[required]" placeholder="...">
+                        <input type="text" id="startDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${hostRace.startDate}'></date:date>" name="startDate" class="input-sm form_datetime form-control validate[required]" placeholder="..." >
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
@@ -94,9 +99,7 @@
         },
         fn: {
             init: function () {
-                <%--var sDate = ${hostRace.startDate};--%>
-                <%--var startDate = new Date(sDate).format("yyyy-MM-dd hh:mm");--%>
-                <%--$("#startDate").val(startDate);--%>
+
             },
             save : function () {
                 var isCheck = true;
@@ -112,15 +115,19 @@
                     alert("比赛地址不能为空!");
                     isCheck=false;
                 }
+                if($("#startDate").val()==""){
+                    alert("比赛时间不能为空!");
+                    isCheck=false;
+                }
                 if(isCheck){
                     var code =  $('.wysiwye-editor').code();
-                    var startDate = this.transdate($("#startDate").val());
-                    $("#startDate").val(startDate);
+                    var date = this.transdate($("#startDate").val());
+                    $("#startDate").val(date);
                     $("#fromId").ajaxSubmit({
                         url : "${contextPath}/admin/hostRace/save",
                         type : "POST",
                         data : {
-                            "detail" : code,
+                            "detail" : code
                         },
                         success : function(result) {
                             if(!result.status) {

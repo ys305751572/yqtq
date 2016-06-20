@@ -143,12 +143,12 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
                     bigRace.setAvater2(fileBo.getPath());
                 }
             }
-            if(bigRace.getAvater1()==null){
-                bigRace.setAvater1(b.getAvater1());
-            }
-            if(bigRace.getAvater2()==null){
-                bigRace.setAvater2(b.getAvater2());
-            }
+//            if(bigRace.getAvater1()==null){
+//                bigRace.setAvater1(b.getAvater1());
+//            }
+//            if(bigRace.getAvater2()==null){
+//                bigRace.setAvater2(b.getAvater2());
+//            }
             if (detail != null) {
                 bigRace.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
             }

@@ -77,7 +77,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>比赛时间：</label>
-                        <input type="text" id="startDate" name="startDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${bigRace.startDate}'></date:date>" class="input-sm form_datetime form-control validate[required]" placeholder="...">
+                        <input type="text" id="startDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${bigRace.startDate}'></date:date>" name="startDate" class="input-sm form_datetime form-control validate[required]" placeholder="..." >
                     </div>
 
                     <hr class="whiter m-t-20"/>
@@ -110,9 +110,6 @@
         },
         fn: {
             init: function () {
-                <%--var sDate = ${bigRace.startDate};--%>
-                <%--var startDate = new Date(sDate).format("yyyy-MM-dd hh:mm");--%>
-                <%--$("#startDate").val(startDate);--%>
             },
             save : function () {
                 var code =  $('.wysiwye-editor').code();
@@ -144,7 +141,7 @@
                         url : "${contextPath}/admin/bigRace/save",
                         type : "POST",
                         data : {
-                            "detail" : code,
+                            "detail" : code
 //                            "startDate" : startDate
                         },
                         success : function(result) {
@@ -168,7 +165,7 @@
                 return Date.parse(date);
             }
         }
-    }
+    };
     $(function () {
         $user.fn.init();
     })

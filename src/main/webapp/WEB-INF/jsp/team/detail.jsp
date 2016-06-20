@@ -53,7 +53,7 @@
 
                     <div class="col-md-6 m-b-15" >
                         <label>创建时间:</label>
-                        <input type="text" id="createDate" name="createDate" value="" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="createDate" name="createDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${team.createDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
@@ -116,10 +116,6 @@
     }
     $(function () {
         $team.fn.init();
-        var createDate = ${team.createDate};
-        createDate = new Date().format("yyyy-MM-dd hh:mm");
-        $("#createDate").val(createDate);
-        <%--<date:date format="yyyy-MM-dd HH:mm" value="${team.createDate}"></date:date>--%>
     })
 </script>
 <script>

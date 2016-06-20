@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>球场名称：</label>
-                        <input type="text" id="name" name="name" value="${stadium.name}" class="input-sm form-control validate[required]" placeholder="..." onblur="$user.fn.check()">
+                        <input type="text" id="name" name="name" value="${stadium.name}" class="input-sm form-control validate[required]" placeholder="..." >
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>城市：</label>
@@ -133,6 +133,7 @@
                     alert("城市不能为空!");
                     isCheck=false;
                 }
+
                 if(isCheck){
                     $("#fromId").ajaxSubmit({
                         url : "${contextPath}/admin/stadium/save",
@@ -150,20 +151,14 @@
                     });
                 }
             },
-            check : function(){
-                var reg = /^([u4e00-u9fa5]{0,})$/;
-//                if(reg.test($("#name").val())){
+//            check : function(){
+//                if(escape($("#name").val()).indexOf("%u")<0 || $("#name").val()==""){
+//                    alert( "球场名称格式不正确,请输入中文!" );
 //                    $("#name").val("");
-//                    alert("球场名称请输入中文!");
 //                    return false;
 //                }
-                if(escape($("#name").val()).indexOf("%u")<0 || $("#name").val()==""){
-                    alert( "球场名称格式不正确,请输入中文!" );
-                    $("#name").val("");
-                    return false;
-                }
-                return true;
-            }
+//                return true;
+//            }
         }
     }
     $(function () {

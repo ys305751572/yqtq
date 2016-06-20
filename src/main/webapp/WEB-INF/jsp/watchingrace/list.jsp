@@ -120,10 +120,10 @@
                                         "<i class='fa fa-pencil-square-o'></i></button>";
                                 var st = full.status;
                                 if(st==0){
-                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$watchingRace.fn.status("+ data +")'> " +
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$watchingRace.fn.close("+ data +")'> " +
                                             "<i>禁用</i></button>";
                                 }else if(st==1){
-                                    var status = "<button title='启用' class='btn btn-primary btn-circle detail' onclick='$watchingRace.fn.status("+ data +")'> " +
+                                    var status = "<button title='启用' class='btn btn-primary btn-circle detail' onclick='$watchingRace.fn.open("+ data +")'> " +
                                             "<i>启用</i></button>";
                                 }
                                 return detail + "&nbsp;" + status + "&nbsp;" +edit;
@@ -136,6 +136,16 @@
                         aoData.status = $("#status").val();
                     }
                 });
+            },
+            close:function (data){
+                if(confirm('您确定要禁用该酒吧吗？')){
+                    $watchingRace.fn.status(data);
+                }
+            },
+            open:function (data){
+                if(confirm('您确定要启用该酒吧吗？')){
+                    $watchingRace.fn.status(data);
+                }
             },
             sfInfo: function (id) {
                 $.ajax({
