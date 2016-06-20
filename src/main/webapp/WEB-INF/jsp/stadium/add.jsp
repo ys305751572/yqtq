@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>球场名称：</label>
-                        <input type="text" id="name" name="name" value="${stadium.name}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="name" name="name" value="${stadium.name}" class="input-sm form-control validate[required]" placeholder="..." onblur="$user.fn.check()">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>城市：</label>
@@ -114,19 +114,6 @@
                 $(".iCheck-helper").click(function() {
                     $user.fn.hid();
                 });
-                <%--var siteType = ${stadium.siteType};--%>
-                <%--if($("#id").val()!=null){--%>
-                    <%--if(siteType==0){--%>
-                        <%--$("#siteType").prepend("<option value='0'>室内</option>");--%>
-                        <%--$("#siteType").append("<option value='0'>室外</option>");--%>
-                    <%--}else if(siteType==1){--%>
-                        <%--$("#siteType").prepend("<option value='1'>室外</option>");--%>
-                        <%--$("#siteType").append("<option value='0'>室内</option>");--%>
-                    <%--}--%>
-                <%--}else{--%>
-                    <%--$("#siteType").prepend("<option value='0'>室内</option>");--%>
-                    <%--$("#siteType").append("<option value='1'>室外</option>");--%>
-                <%--}--%>
             },
             hid:function(){
                 if($(".icheckbox_minimal").attr("aria-checked")=="true"){
@@ -137,20 +124,45 @@
             },
             save : function () {
                 var code =  $('.wysiwye-editor').code();
-                $("#fromId").ajaxSubmit({
-                    url : "${contextPath}/admin/stadium/save",
-                    type : "POST",
-                    data : {
-                        "detail" : code
-                    },
-                    success : function(result) {
-                        if(!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
+                var isCheck = true;
+                if($("#name").val()==""){
+                    alert("球场名称不能为空!");
+                    isCheck=false;
+                }
+                if($("#cityId").val()==""){
+                    alert("城市不能为空!");
+                    isCheck=false;
+                }
+                if(isCheck){
+                    $("#fromId").ajaxSubmit({
+                        url : "${contextPath}/admin/stadium/save",
+                        type : "POST",
+                        data : {
+                            "detail" : code
+                        },
+                        success : function(result) {
+                            if(!result.status) {
+                                $common.fn.notify(result.msg);
+                                return;
+                            }
+                            window.location.href = "${contextPath}/admin/stadium/index";
                         }
-                        window.location.href = "${contextPath}/admin/stadium/index";
-                    }
-                });
+                    });
+                }
+            },
+            check : function(){
+                var reg = /^([u4e00-u9fa5]{0,})$/;
+//                if(reg.test($("#name").val())){
+//                    $("#name").val("");
+//                    alert("球场名称请输入中文!");
+//                    return false;
+//                }
+                if(escape($("#name").val()).indexOf("%u")<0 || $("#name").val()==""){
+                    alert( "球场名称格式不正确,请输入中文!" );
+                    $("#name").val("");
+                    return false;
+                }
+                return true;
             }
         }
     }

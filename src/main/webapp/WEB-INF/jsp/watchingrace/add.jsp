@@ -89,21 +89,32 @@
                 $user.fn.initImage();
             },
             save : function () {
-                var code =  $('.wysiwye-editor').code();
-                $("#fromId").ajaxSubmit({
-                    url : "${contextPath}/admin/watchingRace/save",
-                    type : "POST",
-                    data : {
-                        "detail" : code
-                    },
-                    success : function(result) {
-                        if(!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
+                var isCheck = true;
+                if($("#name").val()==""){
+                    alert("看球名称不能为空!");
+                    isCheck=false;
+                }
+                if($("#cityId").val()==""){
+                    alert("城市不能为空!");
+                    isCheck=false;
+                }
+                if(isCheck){
+                    var code =  $('.wysiwye-editor').code();
+                    $("#fromId").ajaxSubmit({
+                        url : "${contextPath}/admin/watchingRace/save",
+                        type : "POST",
+                        data : {
+                            "detail" : code
+                        },
+                        success : function(result) {
+                            if(!result.status) {
+                                $common.fn.notify(result.msg);
+                                return;
+                            }
+                            window.location.href = "${contextPath}/admin/watchingRace/index";
                         }
-                        window.location.href = "${contextPath}/admin/watchingRace/index";
-                    }
-                });
+                    });
+                }
             }
         }
     }

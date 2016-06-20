@@ -84,6 +84,16 @@
                         window.location.href = "${contextPath}/admin/admin/index";
                     }
                 });
+            },
+            check : function(){
+                var reg = /^([0-9])*$/;
+                console.log(reg);
+                if(!reg.test($("#username").val())){
+                    alert("格式不正确!");
+                    $("#mobile").val("");
+                    return false;
+                }
+                return true;
             }
         }
     }

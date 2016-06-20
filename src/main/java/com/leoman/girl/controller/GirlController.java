@@ -125,18 +125,12 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
 
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(Girl girl, City city, MultipartHttpServletRequest multipartRequest,HttpServletRequest request){
+    public Result save(Girl girl, City city, MultipartHttpServletRequest multipartRequest){
         Girl g = null;
-//        List li = new ArrayList();
-//        String[] coverImages = request.getParameterValues("cover1");
-//        for(int i=0;i<coverImages.length;i++){
-//            li.add(coverImages[i]);
-//        }
         try{
             if(null != girl.getId()){
                 g = girlService.queryByPK(girl.getId());
             }
-            this.saveImage(girl,multipartRequest);
             if(null != g){
                 girl.setStatus(g.getStatus());
                 girl.setCreateDate(g.getCreateDate());
@@ -148,6 +142,7 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
                 girl.setCity(_city);
             }
             girlService.save(girl);
+            this.saveImage(girl,multipartRequest);
         }catch (RuntimeException e){
             e.printStackTrace();
             return Result.failure();

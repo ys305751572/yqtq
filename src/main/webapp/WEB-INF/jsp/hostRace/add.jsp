@@ -53,16 +53,16 @@
                     <c:if test="${hostRace.id eq null}">
                         <div class="col-md-6 m-b-15">
                             <label>球场名称：</label>
-                            <input type="text" id="cityId" name="cityId" value="" class="input-sm form-control validate[required]" placeholder="...">
+                            <input type="text" id="stadium" name="stadium" value="" class="input-sm form-control validate[required]" placeholder="...">
                         </div>
                         <div class="col-md-6 m-b-15">
                             <label>比赛地址：</label>
-                            <input type="text" id="" name="" value="" class="input-sm form-control validate[required]" placeholder="...">
+                            <input type="text" id="address" name="address" value="" class="input-sm form-control validate[required]" placeholder="...">
                         </div>
                     </c:if>
                     <div class="col-md-6 m-b-15">
                         <label>比赛时间：</label>
-                        <input type="text" id="startDate" name="startDate" value="" class="input-sm form_datetime form-control validate[required]" placeholder="...">
+                        <input type="text" id="startDate" name="startDate" value="<date:date format='yyyy年MM月dd日 HH:mm' value='${hostRace.startDate}'></date:date>" class="input-sm form_datetime form-control validate[required]" placeholder="...">
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
@@ -94,28 +94,44 @@
         },
         fn: {
             init: function () {
-                var sDate = ${hostRace.startDate};
-                var startDate = new Date(sDate).format("yyyy-MM-dd hh:mm");
-                $("#startDate").val(startDate);
+                <%--var sDate = ${hostRace.startDate};--%>
+                <%--var startDate = new Date(sDate).format("yyyy-MM-dd hh:mm");--%>
+                <%--$("#startDate").val(startDate);--%>
             },
             save : function () {
-                var code =  $('.wysiwye-editor').code();
-                var startDate = this.transdate($("#startDate").val());
-                $("#startDate").val(startDate);
-                $("#fromId").ajaxSubmit({
-                    url : "${contextPath}/admin/hostRace/save",
-                    type : "POST",
-                    data : {
-                        "detail" : code,
-                    },
-                    success : function(result) {
-                        if(!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
+                var isCheck = true;
+                if($("#name").val()==""){
+                    alert("赛事名称不能为空!");
+                    isCheck=false;
+                }
+                if($("#stadium").val()==""){
+                    alert("球场名称不能为空!");
+                    isCheck=false;
+                }
+                if($("#address").val()==""){
+                    alert("比赛地址不能为空!");
+                    isCheck=false;
+                }
+                if(isCheck){
+                    var code =  $('.wysiwye-editor').code();
+                    var startDate = this.transdate($("#startDate").val());
+                    $("#startDate").val(startDate);
+                    $("#fromId").ajaxSubmit({
+                        url : "${contextPath}/admin/hostRace/save",
+                        type : "POST",
+                        data : {
+                            "detail" : code,
+                        },
+                        success : function(result) {
+                            if(!result.status) {
+                                $common.fn.notify(result.msg);
+                                return;
+                            }
+                            window.location.href = "${contextPath}/admin/hostRace/index";
                         }
-                        window.location.href = "${contextPath}/admin/hostRace/index";
-                    }
-                });
+                    });
+                }
+
             },
             transdate :function(endTime){
                 var date=new Date();

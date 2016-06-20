@@ -43,7 +43,7 @@
 
                     <div class="col-md-6 m-b-15" >
                         <label>比赛时间:</label>
-                        <input type="text" id="startDate" name="startDate" value="${bigRace.startDate}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="startDate" name="startDate" value="<date:date format='yyyy年MM月dd日 HH:mm' value='${bigRace.startDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <hr class="whiter m-t-20"/>

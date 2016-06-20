@@ -4,7 +4,7 @@
 <html lang="zh-cn">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-    <meta name="format-detection" content="telephone=no">C
+    <meta name="format-detection" content="telephone=no">
     <meta charset="UTF-8">
     <meta name="description" content="Violate Responsive Admin Template">
     <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
