@@ -22,13 +22,11 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <label>队名</label>
-                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="...">
+                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="队名">
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>城市</label>
                     <select id="cityId" name="cityId" class="select">
-                        <option value="">全部</option>
+                        <option value="">城市</option>
                         <c:forEach items="${city}" var="c">
                             <option value="${c.cityId}">${c.city}</option>
                         </c:forEach>

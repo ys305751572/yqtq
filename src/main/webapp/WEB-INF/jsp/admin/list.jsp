@@ -126,11 +126,11 @@
                                         "<i class='fa fa-pencil-square-o'></i></button>";
                                 var st = full.status;
                                 if(st==0){
-                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$admin.fn.status("+ data +")'> " +
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$admin.fn.close("+ data +")'> " +
                                             "<i>禁用</i></button>";
                                 }else if(st==1){
-                                    var status = "<button title='启用' class='btn btn-primary btn-circle detail' onclick='$admin.fn.status("+ data +")'> " +
-                                            "<i>启用</i></button>";
+                                    var status = "<button title='解禁' class='btn btn-primary btn-circle detail' onclick='$admin.fn.open("+ data +")'> " +
+                                            "<i>解禁</i></button>";
                                 }
                                 return edit+ "&nbsp;" + status;
                             }
@@ -141,6 +141,16 @@
                         aoData.name = $("#roleName").val();
                     }
                 });
+            },
+            close:function (data){
+                if(confirm('您确定要禁用该用户吗？')){
+                    $admin.fn.status(data);
+                }
+            },
+            open:function (data){
+                if(confirm('您确定要解禁该用户吗？')){
+                    $admin.fn.status(data);
+                }
             },
             add: function (id){
                 window.location.href = "${contextPath}/admin/admin/add?id=" + id;

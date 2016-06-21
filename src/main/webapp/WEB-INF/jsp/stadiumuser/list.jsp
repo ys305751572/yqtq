@@ -112,7 +112,7 @@
                         {"data": "status",
                             render:function(data){
                                 if(data==0){
-                                    return "正常";
+                                    return "—";
                                 }else{
                                     return "封禁";
                                 }
@@ -127,13 +127,13 @@
                                         "<i class='fa fa-pencil-square-o'></i></button>";
                                 var st = full.status;
                                 if(st==0){
-                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$stadiumUser.fn.status("+ data +")'> " +
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$stadiumUser.fn.close("+ data +")'> " +
                                             "<i>禁用</i></button>";
                                 }else if(st==1){
-                                    var status = "<button title='启用' class='btn btn-primary btn-circle detail' onclick='$stadiumUser.fn.status("+ data +")'> " +
-                                            "<i>启用</i></button>";
+                                    var status = "<button title='解禁' class='btn btn-primary btn-circle detail' onclick='$stadiumUser.fn.open("+ data +")'> " +
+                                            "<i>解禁</i></button>";
                                 }
-                                return detail + "&nbsp;" + status + "&nbsp;" +edit;
+                                return detail + "&nbsp;" + edit + "&nbsp;" +status;
                             }
                         }
                     ],
@@ -141,6 +141,16 @@
                         aoData.username = $("#username").val();
                     }
                 });
+            },
+            close:function (data){
+                if(confirm('您确定要禁用该用户吗？')){
+                    $stadiumUser.fn.status(data);
+                }
+            },
+            open:function (data){
+                if(confirm('您确定要解禁该用户吗？')){
+                    $stadiumUser.fn.status(data);
+                }
             },
             sfInfo: function (id) {
                 $.ajax({

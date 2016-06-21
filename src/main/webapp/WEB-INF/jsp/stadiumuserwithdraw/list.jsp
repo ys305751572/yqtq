@@ -27,10 +27,9 @@
                 <div class="col-md-2 form-group">
                     <select id="status" name="status" class="select">
                         <option value="">状态</option>
-                        <option value="0">未转账</option>
-                        <option value="1">转账中</option>
-                        <option value="2">已转账</option>
-                        <option value="3">驳回</option>
+                        <option value="0">未处理</option>
+                        <option value="1">已处理</option>
+                        <option value="2">驳回</option>
                     </select>
                 </div>
             </div>
@@ -97,29 +96,34 @@
                         {"data": "status",
                             render:function(data){
                                 if(data==0){
-                                    return "未转账";
+                                    return "未处理";
                                 }else if(data==1){
-                                    return "转账中";
+                                    return "已处理";
                                 }else if(data==2){
-                                    return "已转账";
-                                }else if(data==3){
                                     return "驳回";
                                 }
-                            }
+                            },
+                            "sDefaultContent" : ""
                         },
                         {
                             "data": "id",
                             "render": function (data,type,full) {
-                                var detail = "<button title='处理' class='btn btn-primary btn-circle add' onclick=\"$stadiumUserWithdraw.fn.handle(\'" + data + "\')\">" +
-                                        "<i class='fa fa-eye'></i></button>";
                                 var sta = full.status;
-                                if(sta==1){
-                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$stadiumUserWithdraw.fn.status("+ data +")'> " +
+                                if(sta!=0){
+                                    var detail = "<button title='处理' class='btn btn-primary btn-circle add' disabled " +
+                                        "<i>处理</i></button>";
+
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' disabled " +
+                                            "<i>驳回</i></button>";
+                                    return detail + "&nbsp;" + status;
+                                }else{
+                                    var detail = "<button title='处理' class='btn btn-primary btn-circle add' onclick='$stadiumUserWithdraw.fn.handle(" + data + ")'>" +
+                                            "<i>处理</i></button>";
+
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$stadiumUserWithdraw.fn.close("+ data +")'> " +
                                             "<i>驳回</i></button>";
                                     return detail + "&nbsp;" + status;
                                 }
-                                return detail
-
                             }
                         }
                     ],
@@ -129,14 +133,23 @@
                     }
                 });
             },
-            handle: function (id){
-                window.location.href = "${contextPath}/admin/1/handle?id=" + id;
+            handle:function (data){
+                if(confirm('您确定要处理这笔金额吗？')){
+                    var isNo = 1;
+                    $stadiumUserWithdraw.fn.status(data,isNo);
+                }
             },
-            status : function(id) {
+            close:function (data){
+                if(confirm('您确定要驳回这笔金额吗？')){
+                    $stadiumUserWithdraw.fn.status(data);
+                }
+            },
+            status : function(id,isNo) {
                 $.ajax({
                     "url": "${contextPath}/admin/stadiumUserWithdraw/status",
                     "data": {
-                        "id": id
+                        "id": id,
+                        "isNo" : isNo
                     },
                     "dataType": "json",
                     "type": "POST",

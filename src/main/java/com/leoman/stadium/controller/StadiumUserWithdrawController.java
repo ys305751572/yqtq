@@ -46,13 +46,20 @@ public class StadiumUserWithdrawController extends GenericEntityController<Stadi
 
     @RequestMapping(value = "/status")
     @ResponseBody
-    public Result status(Long id){
+    public Result status(Long id,Integer isNo){
         StadiumUserWithdraw stadiumUserWithdraw = stadiumUserWithdrawService.queryByPK(id);
         Integer status = stadiumUserWithdraw.getStatus();
         try{
-            if(status == 1) {
-                stadiumUserWithdraw.setStatus(3);
-                stadiumUserWithdrawService.save(stadiumUserWithdraw);
+            if(isNo!=null && isNo==1){
+                if(status == 0) {
+                    stadiumUserWithdraw.setStatus(1);
+                    stadiumUserWithdrawService.save(stadiumUserWithdraw);
+                }
+            }else {
+                if(status == 0) {
+                    stadiumUserWithdraw.setStatus(2);
+                    stadiumUserWithdrawService.save(stadiumUserWithdraw);
+                }
             }
         }catch (RuntimeException e){
             e.printStackTrace();

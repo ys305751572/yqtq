@@ -12,9 +12,12 @@ public interface StadiumUserDao extends IBaseJpaRepository<StadiumUser> {
     @Query("SELECT COUNT(a) FROM Stadium a WHERE a.stadiumUserId = ?1")
     public Integer stadiumNum(Long id);
 
+//    @Query("SELECT a.price,b.bookTime FROM StadiumSub a JOIN (SELECT c.stadiumSubId,c.bookTime,c.createDate FROM StadiumBooking c WHERE c.stadiumId IN (SELECT d.id FROM Stadium d WHERE d.stadiumUserId = ?1)) b ON a.id = b.stadiumSubId WHERE b.createDate=?2")
     @Query("SELECT SUM(a.price) FROM StadiumSub a WHERE a.stadiumId IN (SELECT b.id FROM Stadium b WHERE b.stadiumUserId = ?1)")
     public Double toDaySumPrice(Long id);
 
-//    @Query("SELECT a.price,b.bookTime FROM StadiumSub a JOIN (SELECT stadiumSubId,bookTime,createDate FROM StadiumBooking WHERE stadiumId IN (SELECT id FROM Stadium WHERE stadiumUserId = ?1)) b ON a.id = b.stadiumSubId WHERE b.createDate=?2")
+    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.stadium.id IN (SELECT b.id FROM Stadium b WHERE b.stadiumUserId = ?1) AND a.type=0")
+    public Integer individualNum(Long id);
+
 
 }

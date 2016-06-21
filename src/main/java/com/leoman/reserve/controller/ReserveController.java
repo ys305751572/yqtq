@@ -1,7 +1,9 @@
 package com.leoman.reserve.controller;
 
 import com.leoman.city.entity.City;
+import com.leoman.city.entity.Province;
 import com.leoman.city.service.CityService;
+import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.CommonController;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.exception.GeneralExceptionHandler;
@@ -17,6 +19,7 @@ import com.leoman.user.entity.User;
 import com.leoman.user.entity.UserReserveJoin;
 import com.leoman.user.service.UserReserveJoinService;
 import com.leoman.user.service.UserService;
+import com.leoman.utils.Result;
 import com.leoman.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +27,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +51,8 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
     @Autowired
     private CityService cityService;
     @Autowired
+    private ProvinceService provinceService;
+    @Autowired
     private StadiumService stadiumService;
 
     /**
@@ -56,8 +62,10 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
      */
     @RequestMapping(value = "/index")
     public String index(Model model) {
-        List<City> city = cityService.queryAll();
-        model.addAttribute("city",city);
+//        List<City> city = cityService.queryAll();
+//        model.addAttribute("city",city);
+        List<Province> province = provinceService.queryAll();
+        model.addAttribute("province",province);
         List<Stadium> stadium = stadiumService.queryAll();
         model.addAttribute("stadium",stadium);
         return "reserve/list";
@@ -121,6 +129,13 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
         }
         model.addAttribute("list", list);
         return "reserve/detail";
+    }
+
+    @RequestMapping(value = "/select")
+    @ResponseBody
+    public List<City> select(Long provinceId,Model model){
+        List<City> cities =  cityService.queryByProperty("provinceId",provinceId);
+        return cities;
     }
 
 }

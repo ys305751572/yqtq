@@ -4,7 +4,11 @@ import com.leoman.city.entity.City;
 import com.leoman.city.service.CityService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
+import com.leoman.stadium.entity.Stadium;
+import com.leoman.stadium.entity.StadiumSub;
 import com.leoman.stadium.entity.StadiumUser;
+import com.leoman.stadium.service.StadiumService;
+import com.leoman.stadium.service.StadiumSubService;
 import com.leoman.stadium.service.StadiumUserService;
 import com.leoman.stadium.service.impl.StadiumUserServiceImpl;
 import com.leoman.utils.Md5Util;
@@ -17,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,6 +36,10 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
     private StadiumUserService stadiumUserService;
     @Autowired
     private CityService cityService;
+    @Autowired
+    private StadiumService stadiumService;
+    @Autowired
+    private StadiumSubService stadiumSubService;
 
     @RequestMapping(value = "/index")
     public String index(){
@@ -69,7 +78,10 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
     public String detail(Long id, Model model){
         try{
             StadiumUser stadiumUser = stadiumUserService.queryByPK(id);
+            stadiumUser.setIndividualNum(stadiumUserService.individualNum(id));
             model.addAttribute("stadiumUser", stadiumUser);
+            List<Stadium> stadium = stadiumService.queryByProperty("stadiumUserId",id);
+            model.addAttribute("stadium", stadium);
         }catch (Exception e){
             e.printStackTrace();
         }

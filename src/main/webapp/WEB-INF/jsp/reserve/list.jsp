@@ -22,27 +22,32 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <label>城市</label>
-                    <select id="cityId" name="cityId" class="select">
-                        <option value="">全部</option>
-                        <c:forEach items="${city}" var="v">
-                            <option value="${v.cityId}">${v.city}</option>
+                    <select id="province" name="province" class="select" >
+                        <option value="">省</option>
+                        <c:forEach items="${province}" var="v" >
+                            <option value="${v.provinceId}" >${v.province}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>球场</label>
+                    <select id="cityId" name="cityId" class="select">
+                        <%--<option value="">城市</option>--%>
+                        <%--<c:forEach items="${cities}" var="v">--%>
+                            <%--<option value="${v.cityId}">${v.city}</option>--%>
+                        <%--</c:forEach>--%>
+                    </select>
+                </div>
+                <div class="col-md-2 form-group">
                     <select id="stadiumId" name="stadiumId" class="select">
-                        <option value="">全部</option>
+                        <option value="">球场</option>
                         <c:forEach items="${stadium}" var="v">
                             <option value="${v.id}">${v.name}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>赛制</label>
                     <select id="matchType" name="matchType" class="select">
-                        <option value="">全部</option>
+                        <option value="">赛制</option>
                         <option value="3">三人制</option>
                         <option value="5">五人制</option>
                         <option value="7">七人制</option>
@@ -50,26 +55,23 @@
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>付款方式</label>
                     <select id="payment" name="payment" class="select">
-                        <option value="">全部</option>
+                        <option value="">付款方式</option>
                         <option value="0">AA制</option>
                         <option value="1">全额</option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>保险</label>
                     <select id="insuranceId" name="insuranceId" class="select">
-                        <option value="">全部</option>
+                        <option value="">保险</option>
                         <option value="1">5万元经济型意外保险</option>
                         <option value="2">10万元基础型意外保险</option>
                         <option value="3">100万元高端型意外保险</option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>组队状态</label>
                     <select id="status" name="status" class="select">
-                        <option value="">全部</option>
+                        <option value="">组队状态</option>
                         <option value="0">正在组队</option>
                         <option value="1">组队成功</option>
                         <option value="2">组队失败</option>
@@ -223,10 +225,30 @@
                 var items = $reserve.v.list;
                 $('td', row).last().find(".add").attr("href", 'admin/reserve/detail?id=' + data.id);
             },
+            selest : function(data){
+                console.log(data);
+                $.ajax({
+                    url:"${contextPath}/admin/reserve/select",
+                    data:{
+                        "provinceId":data
+                    },
+                    success:function(data){
+                        console.log(data);
+                        for(var i= 0;i<data.length;i++){
+                            var cityId = data[i].cityId;
+                            var city = data[i].city;
+                            var op = "<option value='"+cityId+"'>"+city+"</option>";
+                            console.log(op);
+                            $("#cityId").append(op);
+                        }
+                        console.log( $("#cityId"));
+                        console.log( $("#province"));
+                    }
+                });
+            },
             "detail" : function(id) {
                 window.location.href = "${contextPath}/admin/reserve/detail?id=" + id;
             },
-
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
@@ -241,12 +263,20 @@
             }
         }
     }
+
+
+
     $(function () {
         $reserve.fn.init();
-        console.log($("#stadiumId").val());
+        $("#province").change(function(){
+            var opt=$("#province").val();
+            console.log(opt);
+            $reserve.fn.selest(opt);
+        })
     })
 </script>
 <script>
+
     $('.form_datetime').datetimepicker({
         language: 'zh-CN',
         weekStart: 1,

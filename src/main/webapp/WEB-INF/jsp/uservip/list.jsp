@@ -22,19 +22,18 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <label>手机号</label>
-                    <input type="text" class="input-sm form-control" id="mobile" name="mobile" placeholder="...">
+                    <input type="text" class="input-sm form-control" id="mobile" name="mobile" placeholder="手机号">
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>昵称</label>
-                    <input type="text" class="input-sm form-control" id="nickName" name="nickName" placeholder="..." >
+                    <input type="text" class="input-sm form-control" id="nickName" name="nickName" placeholder="昵称" >
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>会员状态</label>
                     <select id="vipLevel" name="vipLevel" class="select">
-                        <option value="">全部</option>
-                        <option value="0">非会员</option>
-                        <option value="1">会员</option>
+                        <option value="">会员等级</option>
+                        <option value="1">Lv1</option>
+                        <option value="2">Lv2</option>
+                        <option value="3">Lv3</option>
+                        <option value="4">Lv4</option>
                     </select>
                 </div>
             </div>

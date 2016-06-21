@@ -22,22 +22,19 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <label>球场名称</label>
-                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="...">
+                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="球场名称">
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>城市</label>
                     <select id="cityId" name="cityId" class="select">
-                        <option value ="">全部</option>
+                        <option value ="">城市</option>
                         <c:forEach items="${city}" var="c">
                             <option value = "${c.cityId}">${c.city}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>球场类型</label>
                     <select id="type" name="type" class="select">
-                        <option value="">全部</option>
+                        <option value="">球场类型</option>
                         <option value="0">私有</option>
                         <option value="1">公有</option>
                     </select>

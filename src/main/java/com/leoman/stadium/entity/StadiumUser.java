@@ -46,6 +46,17 @@ public class StadiumUser extends BaseEntity{
     //每天总收入
     @Transient
     private Double toDaySumPrice;
+    //散客人数
+    @Transient
+    private Integer individualNum;
+
+    public Integer getIndividualNum() {
+        return individualNum;
+    }
+
+    public void setIndividualNum(Integer individualNum) {
+        this.individualNum = individualNum;
+    }
 
     public Double getToDaySumPrice() {
         return toDaySumPrice;

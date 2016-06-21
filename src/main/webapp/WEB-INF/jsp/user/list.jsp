@@ -22,25 +22,21 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
-                    <label>手机号</label>
-                    <input type="text" class="input-sm form-control" id="mobile" name="mobile" placeholder="..." onblur="_userInfo.fn.check()"/>
+                    <input type="text" class="input-sm form-control" id="mobile" name="mobile" placeholder="手机号" onblur="_userInfo.fn.check()"/>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>昵称</label>
-                    <input type="text" class="input-sm form-control" id="nickName" name="nickName" placeholder="..." >
+                    <input type="text" class="input-sm form-control" id="nickName" name="nickName" placeholder="昵称" >
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>用户状态</label>
                     <select id="status" name="status" class="select">
-                        <option value="">全部</option>
+                        <option value="">用户状态</option>
                         <option value="0">正常</option>
                         <option value="1">冻结</option>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <label>会员状态</label>
                     <select id="vipLevel" name="vipLevel" class="select">
-                        <option value="">全部</option>
+                        <option value="">会员状态</option>
                         <option value="0">非会员</option>
                         <option value="1">会员</option>
                     </select>
@@ -126,9 +122,9 @@
                         {"data": "status",
                             render:function(data){
                                 if(data==0){
-                                    return "正常";
+                                    return "—";
                                 }else{
-                                    return "冻结";
+                                    return "禁用";
                                 }
                             }
                         },
@@ -144,8 +140,8 @@
                                     var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='_userInfo.fn.close("+data+")'> " +
                                             "<i>禁用</i></button>";
                                 }else if(st==1){
-                                    var status = "<button title='启用' class='btn btn-primary btn-circle detail' onclick='_userInfo.fn.open("+ data +")'> " +
-                                            "<i>启用</i></button>";
+                                    var status = "<button title='解禁' class='btn btn-primary btn-circle detail' onclick='_userInfo.fn.open("+ data +")'> " +
+                                            "<i>解禁</i></button>";
                                 }
 
 
@@ -167,7 +163,7 @@
                 }
             },
             open:function (data){
-                if(confirm('您确定要启用该用户吗？')){
+                if(confirm('您确定要解禁该用户吗？')){
                     _userInfo.fn.status(data);
                 }
             },

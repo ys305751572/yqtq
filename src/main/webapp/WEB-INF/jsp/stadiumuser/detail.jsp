@@ -22,7 +22,7 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">看球详情</h1>
+        <h1 class="page-title">球场主详情</h1>
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${stadiumUser.id}">
                 <div class="row">
@@ -38,6 +38,9 @@
 
                     <div class="col-md-6 m-b-15">
                         <label>球场:</label>
+                        <c:forEach items="${stadium}" var="v">
+                            <div>${v.name}-${v.siteNum}个场地</div>
+                        </c:forEach>
                     </div>
                     <div class="col-md-6 m-b-15" >
                         <label>电话:</label>
@@ -61,7 +64,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>散客:</label>
-                        <input type="text" id="2" name=" " value=" " class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="individualNum" name="individualNum" value="${stadiumUser.individualNum}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>状态:</label>

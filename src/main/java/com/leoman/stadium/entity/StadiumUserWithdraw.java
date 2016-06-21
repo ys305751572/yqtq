@@ -19,7 +19,7 @@ public class StadiumUserWithdraw extends BaseEntity{
     @Column(name = "withdraw_money")
     private Double withdrawMoney;
 
-    //状态 0:未转账 1:转账中 2:已转账 3:驳回
+    //状态 0:未处理 1:已处理 2:驳回
     @Column(name = "status")
     private Integer status;
 

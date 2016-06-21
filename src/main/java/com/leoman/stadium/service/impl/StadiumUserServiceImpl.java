@@ -36,6 +36,7 @@ public class StadiumUserServiceImpl extends GenericManagerImpl<StadiumUser,Stadi
         for(StadiumUser s : list){
             s.setStadiumNum(this.stadiumNum(s.getId()));
             s.setToDaySumPrice(this.toDaySumPrice(s.getId()));
+            s.setIndividualNum(this.individualNum(s.getId()));
         }
         return page;
     }
@@ -48,6 +49,11 @@ public class StadiumUserServiceImpl extends GenericManagerImpl<StadiumUser,Stadi
     @Override
     public Double toDaySumPrice(Long id) {
         return dao.toDaySumPrice(id);
+    }
+
+    @Override
+    public Integer individualNum(Long id) {
+        return dao.individualNum(id);
     }
 
     public Specification<StadiumUser> buildSpecification(final StadiumUser s) {
