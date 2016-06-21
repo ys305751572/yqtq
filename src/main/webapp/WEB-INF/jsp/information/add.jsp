@@ -114,7 +114,6 @@
                 information.fn.show(type);
             },
             show: function (type) {
-                console.log(type);
                 if (type == 0) {
                     $("#type2").val("");
                     $("#type1").css('display', '');
@@ -127,25 +126,61 @@
 
                 $('#infoType').val('');
             },
-            save: function () {
+            checkData: function () {
+                var flag = true;
+                var title = $('#title').val();
+                var imageFile = $('#imageFile').val();
+                var introduction = $('#introduction').val();
                 var code = $('.wysiwye-editor').code();
-                var type = $(".description").val();
-                $("#fromId").ajaxSubmit({
-                    url: "${contextPath}/admin/information/save",
-                    type: "POST",
-                    data: {
-                        "detail": code,
-                        "description": type,
-                    },
-                    success: function (result) {
-                        if (result == 1) {
-                            $common.fn.notify("操作成功", "success");
-                            window.location.href = "${contextPath}/admin/information/index";
-                        } else {
-                            $common.fn.notify("操作失败", "error");
+
+                if (null == title || title == '') {
+                    $common.fn.notify("请输入资讯标题", "error");
+                    flag = false;
+                    return;
+                }
+
+                if (null == imageFile || imageFile == '') {
+                    $common.fn.notify("请上传资讯封面", "error");
+                    flag = false;
+                    return;
+                }
+
+                if (null == introduction || introduction == '') {
+                    $common.fn.notify("请输入资讯简介", "error");
+                    flag = false;
+                    return;
+                }
+
+                if (null == code || code == '') {
+                    $common.fn.notify("请输入资讯详情", "error");
+                    flag = false;
+                    return;
+                }
+
+                return flag;
+            },
+            save: function () {
+                if (information.fn.checkData()) {
+                    var code = $('.wysiwye-editor').code();
+                    var type = $(".description").val();
+                    $("#fromId").ajaxSubmit({
+                        url: "${contextPath}/admin/information/save",
+                        type: "POST",
+                        data: {
+                            "detail": code,
+                            "description": type,
+                        },
+                        success: function (result) {
+                            if (result == 1) {
+                                $common.fn.notify("操作成功", "success");
+                                window.location.href = "${contextPath}/admin/information/index";
+                            } else {
+                                $common.fn.notify("操作失败", "error");
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             }
         }
     }

@@ -61,6 +61,25 @@
                 </thead>
             </table>
         </div>
+
+        <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="pwdModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="showText" >确定禁用该账号？</h4>
+                    </div>
+                    <div class="modal-body">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" id="confirm" class="btn btn-primary">确定
+                        </button>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </div>
     </section>
     <br/><br/>
 </section>
@@ -148,21 +167,33 @@
                 window.location.href = "${contextPath}/admin/post/detail?postId=" + id;
             },
             "changeStatus": function (id,status) {
-                var tempStatus = 0;
+
                 if (status == 0) {
-                    tempStatus = 1;
+                    $('#showText').html('确定禁用该账号？');
+                } else {
+                    $('#showText').html('确定解封该账号？');
                 }
 
-                $leoman.ajax("${contextPath}/admin/post/banned", {
-                    "postId": id,
-                    "status": tempStatus
-                }, function (result) {
-                    if (result == 1) {
-                        $common.fn.notify("操作成功", "success");
-                        $post.v.dTable.ajax.reload(null, false);
-                    } else {
-                        $common.fn.notify("操作失败", "error");
+                $("#delete").modal("show");
+                $('#confirm').click(function () {
+
+                    var tempStatus = 0;
+                    if (status == 0) {
+                        tempStatus = 1;
                     }
+
+                    $leoman.ajax("${contextPath}/admin/post/banned", {
+                        "postId": id,
+                        "status": tempStatus
+                    }, function (result) {
+                        if (result == 1) {
+                            $common.fn.notify("操作成功", "success");
+                            $("#delete").modal("hide");
+                            $post.v.dTable.ajax.reload(null, false);
+                        } else {
+                            $common.fn.notify("操作失败", "error");
+                        }
+                    });
                 });
             },
             responseComplete: function (result, action) {

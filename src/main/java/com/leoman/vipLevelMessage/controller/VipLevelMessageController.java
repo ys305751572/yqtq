@@ -35,9 +35,9 @@ public class VipLevelMessageController extends GenericEntityController<VipLevelM
     @RequestMapping(value = "/detail")
     public String detail(Model model) {
 
-        //VipLevelMessage vipLevelMessage = vipLevelMessageService.queryByPK(1L);
+        VipLevelMessage vipLevelMessage = vipLevelMessageService.queryByPK(1L);
 
-        VipLevelMessage vipLevelMessage = vipLevelMessageService.findById(1L);
+//        VipLevelMessage vipLevelMessage = vipLevelMessageService.findById(1L);
         model.addAttribute("vipLevelMessage", vipLevelMessage);
 
         return "vipLevelMessage/detail";
