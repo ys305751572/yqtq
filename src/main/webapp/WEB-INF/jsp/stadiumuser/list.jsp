@@ -59,7 +59,7 @@
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
                     <th>账号</th>
                     <th>城市</th>
-                    <th>球场数目</th>
+                    <th>场地数目</th>
                     <th>总金额</th>
                     <th>今日金额</th>
                     <th>状态</th>

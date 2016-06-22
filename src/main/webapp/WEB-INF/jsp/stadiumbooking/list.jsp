@@ -116,7 +116,8 @@
                         {"data": "startDate",
                             render: function (data) {
                                 return new Date(data).format("yyyy年MM月dd日 hh:mm")
-                            }
+                            },
+                            "sDefaultContent" : ""
                         },
                         {"data": "createDate",
                             render: function (data) {

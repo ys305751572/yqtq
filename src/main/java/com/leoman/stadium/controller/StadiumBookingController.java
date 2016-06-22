@@ -70,8 +70,8 @@ public class StadiumBookingController extends GenericEntityController<StadiumBoo
      * @return
      */
     @RequestMapping(value = "/detail")
-    public String detail(Long id, Model model,Long stadiumId,Long userId,Long createDate){
-        Long id1 =reserveService.findStadiumBookingId(stadiumId,userId,createDate);
+    public String detail(Long id, Model model,Long stadiumId,Long userId,Long startDate){
+        Long id1 =reserveService.findStadiumBookingId(stadiumId,userId,startDate);
         try{
             if(id1 !=null){
                 StadiumBooking stadiumBooking = stadiumBookingService.queryByPK(id1);
@@ -80,7 +80,7 @@ public class StadiumBookingController extends GenericEntityController<StadiumBoo
                 StadiumBooking stadiumBooking = stadiumBookingService.queryByPK(id);
                 model.addAttribute("stadiumBooking", stadiumBooking);
             }else {
-                return null;
+                return "/stadiumbooking/detail";
             }
         }catch (Exception e){
             e.printStackTrace();

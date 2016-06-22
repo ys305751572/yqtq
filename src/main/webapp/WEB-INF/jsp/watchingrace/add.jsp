@@ -98,6 +98,14 @@
                     alert("城市不能为空!");
                     isCheck=false;
                 }
+                if($('.fileupload-preview img').width()==null || $('.fileupload-preview img').width()==0){
+                    alert("球场封面不能为空!");
+                    isCheck=false;
+                }
+                if($('.note-editable').text()==""){
+                    alert("球场简介不能为空!");
+                    isCheck=false;
+                }
                 if(isCheck){
                     var code =  $('.wysiwye-editor').code();
                     $("#fromId").ajaxSubmit({

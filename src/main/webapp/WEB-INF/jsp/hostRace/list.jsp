@@ -135,9 +135,12 @@
                                 if(st!=2){
                                     var del = "<button title='关闭' class='btn btn-primary btn-circle ' onclick='$hostRace.fn.close(" + data + ")'>" +
                                             "<i>关闭</i></button>";
-                                    return detail+ "&nbsp;" +edit+ "&nbsp;" +del;
+
+                                }else{
+                                    var del = "<button title='关闭' class='btn btn-primary btn-circle ' disabled " +
+                                            "<i>关闭</i></button>";
                                 }
-                                return detail+ "&nbsp;" +edit;
+                                return detail+ "&nbsp;" +edit+ "&nbsp;" +del;
                             }
                         }
                     ],

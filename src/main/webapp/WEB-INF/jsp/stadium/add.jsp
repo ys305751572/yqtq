@@ -46,8 +46,8 @@
                         <div class="div_hidden" id="div_hidden"  style="display: none">
                             <label>场地类型：</label>
                                 <select id="siteType" name="siteType" class="select">
-                                    <option value='0' <c:if test="${stadium.siteType eq 0}">selected</c:if>>室内</option>
                                     <option value='1'  <c:if test="${stadium.siteType eq 1}">selected</c:if>>室外</option>
+                                    <option value='0' <c:if test="${stadium.siteType eq 0}">selected</c:if>>室内</option>
                                 </select>
                             <label>草皮类型：</label>
                             <input type="text" id="sodType" name="sodType" value="${stadium.sodType}" class="input-sm form-control validate[required]" placeholder="...">
@@ -83,7 +83,7 @@
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
-                        <label>详细描述</label>
+                        <label>球场简介: </label>
                         <div class="wysiwye-editor" id="detail" name="detail">${stadium.description}</div>
                     </div>
                     <hr class="whiter m-t-20"/>
@@ -124,6 +124,11 @@
             },
             save : function () {
                 var code =  $('.wysiwye-editor').code();
+                var sid= "${stadium.id}";
+                var avater= "${stadium.avater}";
+                var description = "${stadium.description}";
+                console.log(sid);
+                console.log(avater);
                 var isCheck = true;
                 if($("#name").val()==""){
                     alert("球场名称不能为空!");
@@ -133,7 +138,18 @@
                     alert("城市不能为空!");
                     isCheck=false;
                 }
-
+                if($("#siteType").val()=="" || $("#sodType").val()=="" || $("#light").val()=="" || $("#park").val()=="" || $("#giving").val()==""){
+                    alert("球场基本信息不完整!");
+                    isCheck=false;
+                }
+                if($('.fileupload-preview img').width()==null || $('.fileupload-preview img').width()==0){
+                    alert("球场封面不能为空!");
+                    isCheck=false;
+                }
+                if($('.note-editable').text()==""){
+                    alert("球场简介不能为空!");
+                    isCheck=false;
+                }
                 if(isCheck){
                     $("#fromId").ajaxSubmit({
                         url : "${contextPath}/admin/stadium/save",

@@ -25,6 +25,7 @@
         <h1 class="page-title">新增球场主</h1>
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
+                <input type="hidden" id="id" name="id" value="${stadiumUser.id}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>账号：</label>
@@ -32,7 +33,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>密码：</label>
-                        <input type="text" id="password" name="password" value="${stadiumUser.password}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="password" id="password" name="password" value="${stadiumUser.password}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>城市:</label>
@@ -71,21 +72,37 @@
                 $user.fn.initImage();
             },
             save : function () {
-                var code =  $('.wysiwye-editor').code();
-                $("#fromId").ajaxSubmit({
-                    url : "${contextPath}/admin/stadiumUser/save",
-                    type : "POST",
-                    data : {
-                        "detail" : code
-                    },
-                    success : function(result) {
-                        if(!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
+
+                var isCheck = true;
+                if($("#username").val()==""){
+                    alert("用户名不能为空!");
+                    isCheck=false;
+                }
+                if($("#password").val()==""){
+                    alert("密码不能为空!");
+                    isCheck=false;
+                }
+                if($("#cityId").val()==""){
+                    alert("城市不能为空!");
+                    isCheck=false;
+                }
+                if(isCheck){
+                    var code =  $('.wysiwye-editor').code();
+                    $("#fromId").ajaxSubmit({
+                        url : "${contextPath}/admin/stadiumUser/save",
+                        type : "POST",
+                        data : {
+                            "detail" : code
+                        },
+                        success : function(result) {
+                            if(!result.status) {
+                                $common.fn.notify(result.msg);
+                                return;
+                            }
+                            window.location.href = "${contextPath}/admin/stadiumUser/index";
                         }
-                        window.location.href = "${contextPath}/admin/stadiumUser/index";
-                    }
-                });
+                    });
+                }
             }
         }
     }

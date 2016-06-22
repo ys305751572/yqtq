@@ -140,6 +140,7 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
             stadium.setSsSet(s.getSsSet());//场地数
             stadium.setSsStatus(s.getSsStatus());//状态
             stadium.setCreateDate(s.getCreateDate());
+            stadium.setAvater(s.getAvater());
         }
         if(imageFile!=null && imageFile.getSize()>0) {
             FileBo fileBo = null;

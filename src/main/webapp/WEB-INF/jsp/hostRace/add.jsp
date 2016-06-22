@@ -33,7 +33,7 @@
                         <input type="text" id="name" name="name" value="${hostRace.name}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-12 m-b-15">
-                        <label>球场封面：</label>
+                        <label>赛事封面：</label>
                         <div class="fileupload fileupload-new" data-provides="fileupload">
                             <div class="fileupload-preview thumbnail form-control">
                                 <c:if test="${hostRace.avater ne null}">
@@ -71,7 +71,7 @@
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
-                        <label>详细描述</label>
+                        <label>赛事简介: </label>
                         <div class="wysiwye-editor" id="detail" name="detail">${hostRace.description}</div>
                     </div>
                     <hr class="whiter m-t-20"/>
@@ -102,9 +102,16 @@
 
             },
             save : function () {
+                var code =  $('.wysiwye-editor').code();
+                var date = this.transdate($("#startDate").val());
+                $("#startDate").val(date);
                 var isCheck = true;
                 if($("#name").val()==""){
                     alert("赛事名称不能为空!");
+                    isCheck=false;
+                }
+                if($('.fileupload-preview img').width()==null || $('.fileupload-preview img').width()==0){
+                    alert("赛事封面不能为空!");
                     isCheck=false;
                 }
                 if($("#stadium").val()==""){
@@ -119,10 +126,12 @@
                     alert("比赛时间不能为空!");
                     isCheck=false;
                 }
+
+                if($('.note-editable').text()==""){
+                    alert("赛事简介不能为空!");
+                    isCheck=false;
+                }
                 if(isCheck){
-                    var code =  $('.wysiwye-editor').code();
-                    var date = this.transdate($("#startDate").val());
-                    $("#startDate").val(date);
                     $("#fromId").ajaxSubmit({
                         url : "${contextPath}/admin/hostRace/save",
                         type : "POST",

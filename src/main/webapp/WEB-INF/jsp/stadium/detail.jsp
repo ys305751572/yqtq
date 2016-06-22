@@ -51,8 +51,7 @@
                 <div>
                     <div class="col-md-6 m-b-15">
                         <label>场地类型:</label>
-                        <c:if test="${stadium.siteType eq 0}"><input type="text" id="siteType" name="siteType" value="室内" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
-                        <c:if test="${stadium.siteType eq 1}"><input type="text" id="siteType" name="siteType" value="室外" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                        <input type="text" id="siteType" name="siteType" value="<c:if test='${stadium.siteType eq 0}'>室内</c:if><c:if test='${stadium.siteType eq 1}'>室外</c:if>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>草皮类型:</label>
@@ -64,8 +63,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>停车场:</label>
-                        <c:if test="${stadium.park eq 0}"><input type="text" id="park" name="park" value="无" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
-                        <c:if test="${stadium.park eq 1}"><input type="text" id="park" name="park" value="收费" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                        <input type="text" id="park" name="park" value="<c:if test='${stadium.park eq 0}'>无</c:if><c:if test='${stadium.park eq 1}'>免费</c:if><c:if test='${stadium.park eq 2}'>收费</c:if>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>赠送:</label>

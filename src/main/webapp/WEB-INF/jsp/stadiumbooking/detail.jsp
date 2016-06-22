@@ -51,15 +51,12 @@
 
                     <div class="col-md-6 m-b-15" >
                         <label>预订类型:</label>
-                        <c:if test="${stadiumBooking.type eq 0}"><input type="text" id="type" name="type" value="散客" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
-                        <c:if test="${stadiumBooking.type eq 1}"><input type="text" id="type" name="type" value="其他" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                        <input type="text" id="type" name="type" value="<c:if test='${stadiumBooking.type eq 0}'>散客</c:if><c:if test='${stadiumBooking.type eq 1}'>其他</c:if>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
                         <label>预定状态:</label>
-                        <c:if test="${stadiumBooking.status eq 0}"><input type="text" id="status" name="status" value="未使用" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
-                        <c:if test="${stadiumBooking.status eq 1}"><input type="text" id="status" name="status" value="已使用" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
-                        <c:if test="${stadiumBooking.status eq 2}"><input type="text" id="status" name="status" value="已退款" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                        <input type="text" id="status" name="status" value="<c:if test='${stadiumBooking.status eq 0}'>未使用</c:if><c:if test='${stadiumBooking.status eq 1}'>已使用</c:if><c:if test='${stadiumBooking.status eq 2}'>已退款</c:if>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                     <div class="col-md-6 m-b-15" >
                         <label>使用开始时间:</label>
@@ -105,10 +102,6 @@
     }
     $(function () {
         $team.fn.init();
-        var createDate = ${team.createDate};
-        createDate = new Date().format("yyyy-MM-dd hh:mm");
-        $("#createDate").val(createDate);
-        <%----%>
     })
 </script>
 <script>

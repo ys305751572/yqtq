@@ -34,6 +34,9 @@ public class StadiumBooking extends BaseEntity{
     //开始时间
     @Column(name ="start_date")
     private Long startDate;
+    //应付金额
+    @Column(name = "price")
+    private Double price;
     //预定类型 0:散客 1:其他
     @Column(name = "type")
     private Integer type;
@@ -103,5 +106,13 @@ public class StadiumBooking extends BaseEntity{
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

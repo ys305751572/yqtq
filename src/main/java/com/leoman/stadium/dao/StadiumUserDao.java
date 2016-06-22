@@ -9,15 +9,19 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface StadiumUserDao extends IBaseJpaRepository<StadiumUser> {
 
-    @Query("SELECT COUNT(a) FROM Stadium a WHERE a.stadiumUserId = ?1")
+    //球场场地数
+    @Query("SELECT COUNT(a) FROM StadiumSub a WHERE a.stadiumId IN (SELECT b.id FROM Stadium b WHERE b.stadiumUserId = ?1)")
     public Integer stadiumNum(Long id);
 
-//    @Query("SELECT a.price,b.bookTime FROM StadiumSub a JOIN (SELECT c.stadiumSubId,c.bookTime,c.createDate FROM StadiumBooking c WHERE c.stadiumId IN (SELECT d.id FROM Stadium d WHERE d.stadiumUserId = ?1)) b ON a.id = b.stadiumSubId WHERE b.createDate=?2")
-    @Query("SELECT SUM(a.price) FROM StadiumSub a WHERE a.stadiumId IN (SELECT b.id FROM Stadium b WHERE b.stadiumUserId = ?1)")
-    public Double toDaySumPrice(Long id);
+    //当天的金额
+    @Query("SELECT SUM(a.price) FROM StadiumBooking a WHERE a.stadium.id IN (SELECT b.id FROM Stadium b WHERE b.stadiumUserId = ?1) AND a.createDate >= ?2")
+    public Double toDaySumPrice(Long id,Long date);
 
+    //散客数量
     @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.stadium.id IN (SELECT b.id FROM Stadium b WHERE b.stadiumUserId = ?1) AND a.type=0")
     public Integer individualNum(Long id);
 
-
+    //球场积累金额
+    @Query("SELECT SUM(a.price) FROM StadiumBooking a WHERE a.stadium.id = ?1")
+    public Integer accumulatedAmount(Long id);
 }

@@ -1,5 +1,6 @@
 package com.leoman.user.entity;
 
+import com.leoman.city.entity.City;
 import com.leoman.common.entity.BaseEntity;
 
 import javax.persistence.*;
@@ -56,8 +57,9 @@ public class User extends BaseEntity {
     @Column(name = "vip_end_date")
     private Long vipEndDate;
 
-    @Column(name = "city_id")
-    private Long cityId;
+    @ManyToOne
+    @JoinColumn(name = "city_id",referencedColumnName = "city_id")
+    private City city;
 
     @Column(name = "status")
     private Integer status;
@@ -182,12 +184,12 @@ public class User extends BaseEntity {
         this.vipEndDate = vipEndDate;
     }
 
-    public Long getCityId() {
-        return cityId;
+    public City getCity() {
+        return city;
     }
 
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public Integer getStatus() {

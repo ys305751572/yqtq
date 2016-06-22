@@ -4,6 +4,7 @@ import com.leoman.common.service.impl.GenericManagerImpl;
 import com.leoman.stadium.dao.StadiumUserDao;
 import com.leoman.stadium.entity.StadiumUser;
 import com.leoman.stadium.service.StadiumUserService;
+import com.leoman.utils.TestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +36,7 @@ public class StadiumUserServiceImpl extends GenericManagerImpl<StadiumUser,Stadi
         List<StadiumUser> list = page.getContent();
         for(StadiumUser s : list){
             s.setStadiumNum(this.stadiumNum(s.getId()));
-            s.setToDaySumPrice(this.toDaySumPrice(s.getId()));
+            s.setToDaySumPrice(this.toDaySumPrice(s.getId(), TestUtil.getTimesmorning()));
             s.setIndividualNum(this.individualNum(s.getId()));
         }
         return page;
@@ -47,13 +48,18 @@ public class StadiumUserServiceImpl extends GenericManagerImpl<StadiumUser,Stadi
     }
 
     @Override
-    public Double toDaySumPrice(Long id) {
-        return dao.toDaySumPrice(id);
+    public Double toDaySumPrice(Long id,Long data) {
+        return dao.toDaySumPrice(id,data);
     }
 
     @Override
     public Integer individualNum(Long id) {
         return dao.individualNum(id);
+    }
+
+    @Override
+    public Integer accumulatedAmount(Long id) {
+        return dao.accumulatedAmount(id);
     }
 
     public Specification<StadiumUser> buildSpecification(final StadiumUser s) {

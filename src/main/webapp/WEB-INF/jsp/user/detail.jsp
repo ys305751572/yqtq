@@ -55,15 +55,11 @@
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>位 置:</label>
-                    <c:if test="${user.position eq 0}"><input type="text" id="position" name="position" value="前锋" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
-                    <c:if test="${user.position eq 1}"><input type="text" id="position" name="position" value="中锋" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
-                    <c:if test="${user.position eq 2}"><input type="text" id="position" name="position" value="后卫" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
-                    <c:if test="${user.position eq 3}"><input type="text" id="position" name="position" value="门卫" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                    <input type="text" id="position" name="position" value="<c:if test='${user.position eq 0}'>前锋</c:if><c:if test='${user.position eq 1}'>中锋</c:if><c:if test='${user.position eq 2}'>后卫</c:if><c:if test='${user.position eq 3}'>门卫</c:if>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>用户状态:</label>
-                    <c:if test="${user.status eq 0}"><input type="text" id="status" name="status" value="正常" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
-                    <c:if test="${user.status eq 1}"><input type="text" id="status" name="status" value="冻结" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                    <input type="text" id="status" name="status" value="<c:if test='${user.status eq 0}'>正常</c:if><c:if test='${user.status eq 1}'>禁用</c:if>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>注册时间:</label>
@@ -75,8 +71,7 @@
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>会员等级:</label>
-                    <c:if test="${user.vipLevel eq 0}"><input type="text" id="vipLevel" name="vipLevel" value="非会员" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
-                    <c:if test="${user.vipLevel ne 0}"><input type="text" id="vipLevel" name="vipLevel" value="Lv${user.vipLevel}" class="input-sm form-control validate[required]" placeholder="..." disabled></c:if>
+                    <input type="text" id="vipLevel" name="vipLevel" value="<c:if test='${user.vipLevel eq 0}'>非会员</c:if><c:if test='${user.vipLevel ne 0}'>Lv${user.vipLevel}</c:if>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>会员积分:</label>
@@ -88,7 +83,7 @@
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>地理位置:</label>
-                    <input type="text" id="cityId" name="cityId" value="${user.cityId}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    <input type="text" id="cityId" name="cityId" value="${user.city.city}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <hr class="whiter m-t-20"/>
             </div>

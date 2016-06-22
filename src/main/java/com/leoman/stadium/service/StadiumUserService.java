@@ -13,7 +13,9 @@ public interface StadiumUserService extends GenericManager<StadiumUser>{
 
     public Integer stadiumNum(Long id);
 
-    public Double toDaySumPrice(Long id);
+    public Double toDaySumPrice(Long id,Long data);
 
     public Integer individualNum(Long id);
+
+    public Integer accumulatedAmount(Long id);
 }

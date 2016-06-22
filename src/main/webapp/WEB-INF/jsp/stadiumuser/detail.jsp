@@ -39,7 +39,7 @@
                     <div class="col-md-6 m-b-15">
                         <label>球场:</label>
                         <c:forEach items="${stadium}" var="v">
-                            <div>${v.name}-${v.siteNum}个场地</div>
+                            <a href="${contextPath}/admin/stadium/detail?id=${v.id}"" >${v.name}-${v.siteNum}个场地-总积累金额${v.accumulatedAmount eq null ? 0.0 : v.accumulatedAmount}</a>
                         </c:forEach>
                     </div>
                     <div class="col-md-6 m-b-15" >
@@ -60,7 +60,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>今日预定金额:</label>
-                        <input type="text" id="1" name=" " value=" " class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="toDaySumPrice" name="toDaySumPrice" value="${stadiumUser.toDaySumPrice}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>散客:</label>

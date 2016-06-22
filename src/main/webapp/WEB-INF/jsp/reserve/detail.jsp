@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>球场:</label>
-                    <a href="${contextPath}/admin/stadiumBooking/detail?stadiumId=${reserve.stadium.id}&&userId=${reserve.user.id}&&createDate=${reserve.createDate}"><input type="text" id="name" value="${reserve.stadium.name}" name="name" class="input-sm form-control validate[required]" placeholder="..." disabled></a>
+                    <a href="${contextPath}/admin/stadiumBooking/detail?stadiumId=${reserve.stadium.id}&&userId=${reserve.user.id}&&startDate=${reserve.startDate}"><input type="text" id="name" value="${reserve.stadium.name}" name="name" class="input-sm form-control validate[required]" placeholder="..." disabled></a>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>创建者:</label>
@@ -73,13 +73,12 @@
                 <div class="col-md-6 m-b-15">
                     <label>头像:</label>
                     <c:forEach items="${list}" var="v">
-                        <a onclick="$reserve.fn.detail(${v.userId})" data-rel="gallery" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
+                        <a onclick="$reserve.fn.detail(${v.userId})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
                             <img src="${contextPath}/${v.avater}" alt="">
                         </a>
                     </c:forEach>
                 </div>
                 <hr class="whiter m-t-20"/>
-
             </div>
             <div class="form-group">
                 <div class="col-md-offset-5">

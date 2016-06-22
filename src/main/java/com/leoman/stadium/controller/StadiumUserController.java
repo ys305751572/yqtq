@@ -13,6 +13,7 @@ import com.leoman.stadium.service.StadiumUserService;
 import com.leoman.stadium.service.impl.StadiumUserServiceImpl;
 import com.leoman.utils.Md5Util;
 import com.leoman.utils.Result;
+import com.leoman.utils.TestUtil;
 import com.leoman.watchingrace.entity.WatchingRace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -79,8 +80,15 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
         try{
             StadiumUser stadiumUser = stadiumUserService.queryByPK(id);
             stadiumUser.setIndividualNum(stadiumUserService.individualNum(id));
+            stadiumUser.setToDaySumPrice(stadiumUserService.toDaySumPrice(id, TestUtil.getTimesmorning()));
             model.addAttribute("stadiumUser", stadiumUser);
             List<Stadium> stadium = stadiumService.queryByProperty("stadiumUserId",id);
+//            for(Stadium s : stadium){
+//                s.setAccumulatedAmount(stadiumUserService.accumulatedAmount(id));
+//            }
+            for(int i=0;i<stadium.size();i++){
+                stadium.get(i).setAccumulatedAmount(stadiumUserService.accumulatedAmount(stadium.get(i).getId()));
+            }
             model.addAttribute("stadium", stadium);
         }catch (Exception e){
             e.printStackTrace();
@@ -135,13 +143,25 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
     @ResponseBody
     public Result save(StadiumUser stadiumUser,City city){
         Md5Util md5Util = new Md5Util();
+        StadiumUser s = null;
         try{
+            if(null != stadiumUser.getId()){
+                s = stadiumUserService.queryByPK(stadiumUser.getId());
+            }
+            if(s!=null){
+                stadiumUser.setStatus(s.getStatus());
+                stadiumUser.setReserveMoney(s.getReserveMoney());
+                stadiumUser.setWithdrawMoney(s.getWithdrawMoney());
+                stadiumUser.setBalance(s.getBalance());
+                stadiumUser.setCreateDate(s.getCreateDate());
+            }else{
+                stadiumUser.setStatus(0);
+                stadiumUser.setReserveMoney(0.0);
+                stadiumUser.setWithdrawMoney(0.0);
+                stadiumUser.setBalance(0.0);
+            }
             String pwd = md5Util.md5(stadiumUser.getPassword());
             stadiumUser.setPassword(pwd);
-            stadiumUser.setStatus(0);
-            stadiumUser.setReserveMoney(0.0);
-            stadiumUser.setWithdrawMoney(0.0);
-            stadiumUser.setBalance(0.0);
             if(city != null){
                 City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
                 stadiumUser.setCity(_city);

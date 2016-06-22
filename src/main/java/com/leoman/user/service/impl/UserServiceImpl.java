@@ -55,8 +55,11 @@ public class UserServiceImpl implements UserService {
                 if (user.getStatus() != null) {
                     list.add(criteriaBuilder.equal(root.get("status").as(Integer.class), user.getStatus()));
                 }
-                if (user.getVipLevel() != null) {
+                if (user.getVipLevel() != null && user.getVipLevel()==0) {
                     list.add(criteriaBuilder.equal(root.get("vipLevel").as(Integer.class), user.getVipLevel()));
+                }
+                if (user.getVipLevel() != null && user.getVipLevel()==1) {
+                    list.add(criteriaBuilder.notEqual(root.get("vipLevel").as(Integer.class), 0));
                 }
                 return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
             }

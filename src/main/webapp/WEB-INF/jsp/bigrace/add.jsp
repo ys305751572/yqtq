@@ -136,6 +136,18 @@
                     alert("开始时间不能为空!");
                     isCheck=false;
                 }
+                if($("#siteType").val()=="" || $("#sodType").val()=="" || $("#light").val()=="" || $("#park").val()=="" || $("#giving").val()==""){
+                    alert("球场基本信息不完整!");
+                    isCheck=false;
+                }
+                if($('.fileupload-preview img').width()==null || $('.fileupload-preview img').width()==0){
+                    alert("球场封面不能为空!");
+                    isCheck=false;
+                }
+                if($('.note-editable').text()==""){
+                    alert("球场简介不能为空!");
+                    isCheck=false;
+                }
                 if(isCheck){
                     $("#fromId").ajaxSubmit({
                         url : "${contextPath}/admin/bigRace/save",

@@ -33,12 +33,12 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>密码：</label>
-                        <input type="text" id="password" name="password" value="${admin.password}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="password" id="password" name="password" value="${admin.password}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>权限:</label>
                         <select id="" name="" class="select">
-                            <option value=""></option>
+                            <option value="">权限</option>
                         </select>
                     </div>
                     <hr class="whiter m-t-20"/>
@@ -70,31 +70,33 @@
             },
             save : function () {
                 var code =  $('.wysiwye-editor').code();
-                $("#fromId").ajaxSubmit({
-                    url : "${contextPath}/admin/admin/save",
-                    type : "POST",
-                    data : {
-                        "detail" : code
-                    },
-                    success : function(result) {
-                        if(!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
-                        }
-                        window.location.href = "${contextPath}/admin/admin/index";
-                    }
-                });
-            },
-            check : function(){
-                var reg = /^([0-9])*$/;
-                console.log(reg);
-                if(!reg.test($("#username").val())){
-                    alert("格式不正确!");
-                    $("#mobile").val("");
-                    return false;
+                var isCheck = true;
+                if($("#username").val()==""){
+                    alert("用户名不能为空!");
+                    isCheck=false;
                 }
-                return true;
-            }
+                if($("#password").val()==""){
+                    alert("密码不能为空!");
+                    isCheck=false;
+                }
+                if(isCheck){
+                    $("#fromId").ajaxSubmit({
+                        url : "${contextPath}/admin/admin/save",
+                        type : "POST",
+                        data : {
+                            "detail" : code
+                        },
+                        success : function(result) {
+                            if(!result.status) {
+                                $common.fn.notify(result.msg);
+                                return;
+                            }
+                            window.location.href = "${contextPath}/admin/admin/index";
+                        }
+                    });
+                }
+
+            },
         }
     }
     $(function () {

@@ -73,7 +73,7 @@
                             <c:forEach items="${teamMember}" var="item">
                                 <c:forEach items="${userList}" var="u">
                                     <c:if test="${item.userId eq u.userId}">
-                                        <a onclick="$team.fn.detail(${item.userId})" data-rel="gallery" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
+                                        <a onclick="$team.fn.detail(${item.userId})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
                                             <img src="${contextPath}/${u.avater}" alt="">
                                         </a>
                                     </c:if>

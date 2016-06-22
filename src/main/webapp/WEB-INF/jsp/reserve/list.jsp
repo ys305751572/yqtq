@@ -32,7 +32,7 @@
                 <div class="col-md-2 form-group">
                     <select id="cityId" name="cityId" class="select">
                         <%--<option value="">城市</option>--%>
-                        <%--<c:forEach items="${cities}" var="v">--%>
+                        <%--<c:forEach items="${city}" var="v">--%>
                             <%--<option value="${v.cityId}">${v.city}</option>--%>
                         <%--</c:forEach>--%>
                     </select>

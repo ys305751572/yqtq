@@ -92,6 +92,17 @@ public class Stadium extends BaseEntity {
     @Transient
     private Integer isStatus;
 
+    //累计金额
+    @Transient
+    private Integer accumulatedAmount;
+
+    public Integer getAccumulatedAmount() {
+        return accumulatedAmount;
+    }
+
+    public void setAccumulatedAmount(Integer accumulatedAmount) {
+        this.accumulatedAmount = accumulatedAmount;
+    }
 
     public Integer getAreaId() {
         return areaId;
