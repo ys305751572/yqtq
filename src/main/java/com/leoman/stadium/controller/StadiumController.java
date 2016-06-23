@@ -41,6 +41,11 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
     @Autowired
     private StadiumUserService stadiumUserService;
 
+    /**
+     * 列表跳转
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/index")
     public String index(Model model){
         try{
@@ -52,6 +57,15 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
         return "stadium/list";
     }
 
+    /**
+     * 列表显示
+     * @param draw
+     * @param start
+     * @param length
+     * @param stadium
+     * @param cityId
+     * @return
+     */
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(Integer draw, Integer start, Integer length,Stadium stadium,City cityId){
@@ -66,6 +80,12 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
         return DataTableFactory.fitting(draw,stadiumPage);
     }
 
+    /**
+     * 详情
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/detail")
     public String detail(Long id, Model model){
         try{
@@ -98,31 +118,35 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
         }
         return null;
     }
-
-    @RequestMapping(value = "/add")
-    public String add(Model model){
-        try{
-            List<City> city = cityService.queryAll();
-            model.addAttribute("city",city);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return "/stadium/add";
-    }
-
+    /**
+     * 新增
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/edit")
     public String edit(Long id, Model model){
         try{
-            Stadium stadium = stadiumService.findById(id);
-            model.addAttribute("stadium", stadium);
             List<City> city = cityService.queryAll();
             model.addAttribute("city",city);
+            if(id!=null){
+                Stadium stadium = stadiumService.findById(id);
+                model.addAttribute("stadium", stadium);
+            }
+
         }catch (Exception e){
             e.printStackTrace();
         }
         return "/stadium/add";
     }
 
+    /**
+     * 保存
+     * @param stadium
+     * @param imageFile
+     * @param detail
+     * @param city
+     * @return
+     */
     @RequestMapping(value = "/save")
     @ResponseBody
     public Result save(Stadium stadium, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,String detail, City city){

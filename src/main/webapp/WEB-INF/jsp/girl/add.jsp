@@ -109,7 +109,7 @@
                         </c:if>
                     </div>
                     </div>
-                    <div id="addd"><a href="javascript:void(0);" class="btn btn-info btn-sm m-t-10" onclick="$user.fn.addCoverImage($('#num').val());">新增</a></div>
+                    <div id="addd"><a href="javascript:void(0);" class="btn btn-sm btn-alt m-r-5" onclick="$user.fn.addCoverImage($('#num').val());">新增</a></div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15" >
                         <div><label>宝贝相册：</label></div>
@@ -141,7 +141,7 @@
                         </c:if>
                         </div>
                     </div>
-                    <div><a href="javascript:void(0);" class="btn btn-info btn-sm m-t-10" onclick="$user.fn.addAlbumImage($('#num').val());">新增</a></div>
+                    <div><a href="javascript:void(0);" class="btn btn-sm btn-alt m-r-5" onclick="$user.fn.addAlbumImage($('#num').val());">新增</a></div>
                 <hr class="whiter m-t-20"/>
                 <div class="form-group">
                     <div class="col-md-offset-5">
