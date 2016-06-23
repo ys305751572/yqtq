@@ -30,7 +30,7 @@
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="比赛">
+                    <input type="text" class="input-sm form-control" id="teamName" name="teamName" placeholder="比赛队伍">
                 </div>
             </div>
         </div>
@@ -138,7 +138,7 @@
                         }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.name = $("#name").val();
+                        aoData.teamName = $("#teamName").val();
                         aoData.cityId = $("#cityId").val();
                         aoData.status = $("#status").val();
                     }

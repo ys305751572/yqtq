@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>赛制:</label>
-                    <input type="text" id="matchType" value="" name="matchType" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    <input type="text" id="matchType" value="<c:if test="${reserve.matchType == 3}">三人制</c:if><c:if test="${reserve.matchType == 5}">五人制</c:if><c:if test="${reserve.matchType == 7}">七人制</c:if><c:if test="${reserve.matchType == 11}">十一人制</c:if>" name="matchType" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>时常:</label>

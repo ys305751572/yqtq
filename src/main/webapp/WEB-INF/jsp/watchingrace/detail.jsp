@@ -41,17 +41,18 @@
                     </div>
 
                     <div class="col-md-6 m-b-15">
-                        <label>服务价格:</label>
-                        <input type="text" id="createDate" name="createDate" value="${watchingRace.createDate}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <label>创建时间:</label>
+                        <input type="text" id="createDate" name="createDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${watchingRace.createDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
                         <label>邀请次数:</label>
                         <input type="text" id="invitation" name="invitation" value="${watchingRace.invitation}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
+                    <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
                         <label>看球详情</label>
-                        <input type="text" id="description" name="description" value="${watchingRace.description}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <div class="wysiwye-editor" id="detail" name="detail">${watchingRace.description}</div>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>

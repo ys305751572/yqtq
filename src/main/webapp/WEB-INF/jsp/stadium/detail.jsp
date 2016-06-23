@@ -78,7 +78,7 @@
                 <hr class="whiter m-t-20"/>
                 <div class="col-md-6 m-b-15">
                     <label>球场简介:</label>
-                    <input type="text" id="description" name="description" value="${stadium.description}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    <div class="wysiwye-editor" id="description" name="description">${stadium.description}</div>
                 </div>
                 <hr class="whiter m-t-20"/>
             </div>

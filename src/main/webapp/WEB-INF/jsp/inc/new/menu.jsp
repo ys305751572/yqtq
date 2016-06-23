@@ -90,8 +90,8 @@
             <ul class="list-unstyled menu-item">
                 <li><a href="${contextPath}/admin/watchingRace/index">直播看球列表</a></li>
                 <li><a href="${contextPath}/admin/bigRace/index">赛事列表</a></li>
-                <li><a href="${contextPath}/admin/girlUser/index">宝贝订单管理</a></li>
                 <li><a href="${contextPath}/admin/girl/index">宝贝列表</a></li>
+                <li><a href="${contextPath}/admin/girlUser/index">宝贝订单管理</a></li>
             </ul>
         </li>
         <li class="dropdown">

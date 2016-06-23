@@ -101,8 +101,9 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
     //保存
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(HostRace hostRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile, String detail, Stadium stadium) {
+    public Result save(HostRace hostRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile, String detail, Long stadiumId) {
         HostRace h = null;
+        Stadium stadium = new Stadium();
         if (null != hostRace.getId()) {
             h = hostRaceService.queryByPK(hostRace.getId());
         }
@@ -112,8 +113,12 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
             hostRace.setMatchType(h.getMatchType());
             hostRace.setHrSet(h.getHrSet());
             hostRace.setCreateDate(h.getCreateDate());
+            hostRace.setStadium(h.getStadium());
+            hostRace.setAvater(h.getAvater());
         }else {
             hostRace.setStatus(0);
+            stadium.setId(stadiumId);
+            hostRace.setStadium(stadium);
         }
         if(imageFile!=null && imageFile.getSize()>0) {
             FileBo fileBo = null;
@@ -128,9 +133,6 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
         }
         if (detail != null) {
             hostRace.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
-        }
-        if(stadium == null){
-            hostRace.setStadium(h.getStadium());
         }
         hostRaceService.save(hostRace);
             return Result.success();

@@ -62,7 +62,6 @@ public class TeamRaceServiceImpl extends GenericManagerImpl<TeamRace, TeamRaceDa
                 }
 
                 if(t.getCity().getCityId() != null){
-//                    list.add(cb.equal(root.get("cityId").as(Long.class), t.getCityId()));
                     if(p != null) {
                         p = cb.and(p,cb.equal(root.get("city").get("cityId").as(Long.class), t.getCity().getCityId()));
                     }
@@ -72,7 +71,6 @@ public class TeamRaceServiceImpl extends GenericManagerImpl<TeamRace, TeamRaceDa
                     }
                 }
                 if(t.getStadium().getId() !=null){
-//                    list.add(cb.equal(root.get("stadium").as(Long.class), t.getStadiumId()));
                     if(p != null) {
                         p = cb.and(p,cb.equal(root.get("stadium").get("id").as(Long.class), t.getStadium().getId()));
                     }
@@ -81,7 +79,6 @@ public class TeamRaceServiceImpl extends GenericManagerImpl<TeamRace, TeamRaceDa
                     }
 
                 }
-//                Predicate[] p = new Predicate[list.size()];
                 return p;
             }
         };

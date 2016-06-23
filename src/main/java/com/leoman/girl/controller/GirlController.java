@@ -51,6 +51,15 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
         return "/girl/list";
     }
 
+    /**
+     * 列表
+     * @param draw
+     * @param start
+     * @param length
+     * @param girl
+     * @param cityId
+     * @return
+     */
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(Integer draw, Integer start, Integer length,Girl girl,City cityId){
@@ -65,11 +74,17 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
         return DataTableFactory.fitting(draw,Page);
     }
 
-    //详情
+    /**
+     * 详情
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/detail")
     public String detail(Long id, Model model){
         try{
             Girl girl = girlService.queryByPK(id);
+            girl.setGuSize(girlService.findSize(id));
             model.addAttribute("girl", girl);
             List<GirlImage> image = girlImageService.queryByProperty("girlId",id);
             model.addAttribute("image",image);
@@ -96,33 +111,36 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
         return null;
     }
 
-    //新增
-    @RequestMapping(value = "/add")
-    public String add(Model model){
-        try{
-            List<City> city = cityService.queryAll();
-            model.addAttribute("city",city);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return "/girl/add";
-    }
-
+    /**
+     * 新增编辑跳转
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/edit")
     public String edit(Long id, Model model){
         try{
             List<City> city = cityService.queryAll();
             model.addAttribute("city",city);
-            Girl girl = girlService.queryByPK(id);
-            model.addAttribute("girl", girl);
-            List<GirlImage> image = girlImageService.queryByProperty("girlId",id);
-            model.addAttribute("image",image);
+            if(id!=null){
+                Girl girl = girlService.queryByPK(id);
+                model.addAttribute("girl", girl);
+                List<GirlImage> image = girlImageService.queryByProperty("girlId",id);
+                model.addAttribute("image",image);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
         return "/girl/add";
     }
 
+    /**
+     * 保存
+     * @param girl
+     * @param city
+     * @param multipartRequest
+     * @return
+     */
     @RequestMapping(value = "/save")
     @ResponseBody
     public Result save(Girl girl, City city, MultipartHttpServletRequest multipartRequest){
@@ -150,6 +168,11 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
         return Result.success();
     }
 
+    /**
+     * 保存图片
+     * @param girl
+     * @param multipartRequest
+     */
     public void saveImage(Girl girl,MultipartHttpServletRequest multipartRequest){
         Iterator<String> list = multipartRequest.getFileNames();
         MultipartFile albumImageFile =null;
@@ -193,6 +216,11 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
         }
     }
 
+    /**
+     * 编辑删除图片
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/deleteImage")
     @ResponseBody
     public Object deleteBatch(Long id) {
@@ -200,6 +228,11 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
         return Result.success();
     }
 
+    /**
+     * 能否预约
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/status")
     @ResponseBody
     public Result status(Long id){

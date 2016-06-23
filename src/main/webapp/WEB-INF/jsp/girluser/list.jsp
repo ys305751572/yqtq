@@ -101,8 +101,18 @@
                         {"data": "girl.city.city","sDefaultContent" : ""},
                         {"data": "girl.name","sDefaultContent" : ""},
                         {"data": "user.nickName","sDefaultContent" : ""},
-                        {"data": "createDate","sDefaultContent" : ""},
-                        {"data": "startDate","sDefaultContent" : ""},
+                        {
+                            "data": "createDate",
+                            "render": function(data){
+                                return new Date(data).format("yyyy年MM月dd日 hh:mm");
+                            },
+                            "sDefaultContent" : ""},
+                        {
+                            "data": "startDate",
+                            "render": function(data){
+                                return new Date(data).format("yyyy年MM月dd日 hh:mm");
+                            },
+                            "sDefaultContent" : ""},
                         {"data": "duration","sDefaultContent" : ""},
                         {"data": "stadium.name","sDefaultContent" : ""},
                         {

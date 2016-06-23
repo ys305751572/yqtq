@@ -142,7 +142,7 @@
                     alert("球场基本信息不完整!");
                     isCheck=false;
                 }
-                if($('.fileupload-preview img').width()==null || $('.fileupload-preview img').width()==0){
+                if($('.fileupload-preview img').size()<1 || $('.fileupload-preview img').width()==0){
                     alert("球场封面不能为空!");
                     isCheck=false;
                 }

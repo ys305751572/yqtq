@@ -43,12 +43,12 @@
 
                     <div class="col-md-6 m-b-15" >
                         <label>服务次数:</label>
-                        <input type="text" id="1" name="leaderUserId" value="" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="guSize" name="guSize" value="${girl.guSize}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
                         <label>状态:</label>
-                        <input type="text" id="2" name="createDate" value="" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="status" name="status" value="<c:if test='${girl.status == 0}'>可预约</c:if><c:if test='${girl.status == 1}'>不可预约</c:if>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >

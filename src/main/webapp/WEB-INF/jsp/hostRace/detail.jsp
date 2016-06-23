@@ -41,7 +41,7 @@
                 <hr class="whiter m-t-20"/>
                 <div class="col-md-6 m-b-15">
                     <label>赛事详情:</label>
-                    <input type="text" id="description" value="${hostRace.description}" name="description" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    <div class="wysiwye-editor" id="detail" name="detail">${hostRace.description}</div>
                 </div>
                 <hr class="whiter m-t-20"/>
             </div>

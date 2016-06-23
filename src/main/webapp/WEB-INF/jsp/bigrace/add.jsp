@@ -36,7 +36,7 @@
                         <input type="text" id="team1name" name="team1name" value="${bigRace.team1name}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-12 m-b-15">
-                        <label>球场封面：</label>
+                        <label>球队封面：</label>
                         <div class="fileupload fileupload-new" data-provides="fileupload">
                             <div class="fileupload-preview thumbnail form-control">
                                 <c:if test="${bigRace.avater1 ne null}">
@@ -58,7 +58,7 @@
                         <input type="text" id="team2name" name="team2name" value="${bigRace.team2name}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-12 m-b-15">
-                        <label>球场封面：</label>
+                        <label>球队封面：</label>
                         <div class="fileupload fileupload-new" data-provides="fileupload">
                             <div class="fileupload-preview thumbnail form-control">
                                 <c:if test="${bigRace.avater2 ne null}">
@@ -77,7 +77,8 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>比赛时间：</label>
-                        <input type="text" id="startDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${bigRace.startDate}'></date:date>" name="startDate" class="input-sm form_datetime form-control validate[required]" placeholder="..." >
+                        <input type="text" id="sDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${bigRace.startDate}'></date:date>" name="sDate" class="input-sm form_datetime form-control validate[required]" placeholder="..." >
+                        <input type="hidden" id="startDate" value="" name="startDate">
                     </div>
 
                     <hr class="whiter m-t-20"/>
@@ -113,8 +114,6 @@
             },
             save : function () {
                 var code =  $('.wysiwye-editor').code();
-                var startDate = this.transdate($("#startDate").val());
-                $("#startDate").val(startDate);
                 var isCheck = true;
                 if($("#name").val()==""){
                     alert("看球名称不能为空!");
@@ -132,16 +131,12 @@
                     alert("乙方方队名不能为空!");
                     isCheck=false;
                 }
-                if($("#startDate").val()==""){
+                if($("#sDate").val()==""){
                     alert("开始时间不能为空!");
                     isCheck=false;
                 }
-                if($("#siteType").val()=="" || $("#sodType").val()=="" || $("#light").val()=="" || $("#park").val()=="" || $("#giving").val()==""){
-                    alert("球场基本信息不完整!");
-                    isCheck=false;
-                }
-                if($('.fileupload-preview img').width()==null || $('.fileupload-preview img').width()==0){
-                    alert("球场封面不能为空!");
+                if($('.fileupload-preview img').size()<2 || $('.fileupload-preview img').width()==0){
+                    alert("球队封面不能为空!");
                     isCheck=false;
                 }
                 if($('.note-editable').text()==""){
@@ -149,12 +144,13 @@
                     isCheck=false;
                 }
                 if(isCheck){
+                    var startDate = this.transdate($("#sDate").val());
+                    $("#startDate").val(startDate);
                     $("#fromId").ajaxSubmit({
                         url : "${contextPath}/admin/bigRace/save",
                         type : "POST",
                         data : {
                             "detail" : code
-//                            "startDate" : startDate
                         },
                         success : function(result) {
                             if(!result.status) {

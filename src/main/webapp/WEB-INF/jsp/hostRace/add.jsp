@@ -53,7 +53,7 @@
                     <c:if test="${hostRace.id eq null}">
                         <div class="col-md-6 m-b-15">
                             <label>球场名称：</label>
-                            <select id="stadium" name="stadium" class="select">
+                            <select id="stadiumId" name="stadiumId" class="select">
                                 <option value="">...</option>
                                 <c:forEach items="${stadium}" var="v">
                                     <option value="${v.id}">${v.name}</option>
@@ -61,13 +61,20 @@
                             </select>
                         </div>
                         <div class="col-md-6 m-b-15">
-                            <label>比赛地址：</label>
-                            <input type="text" id="address" name="address" value="" class="input-sm form-control validate[required]" placeholder="...">
+                            <label>赛制：</label>
+                            <select id="matchType" name="matchType" class="select">
+                                <option value="">...</option>
+                                <option value="3">三人制</option>
+                                <option value="5">五人制</option>
+                                <option value="7">七人制</option>
+                                <option value="11">十一人制</option>
+                            </select>
                         </div>
                     </c:if>
                     <div class="col-md-6 m-b-15">
                         <label>比赛时间：</label>
-                        <input type="text" id="startDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${hostRace.startDate}'></date:date>" name="startDate" class="input-sm form_datetime form-control validate[required]" placeholder="..." >
+                        <input type="text" id="sDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${hostRace.startDate}'></date:date>" name="sDate" class="input-sm form_datetime form-control validate[required]" placeholder="..." >
+                        <input type="hidden" id="startDate" value="" name="startDate">
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
@@ -103,14 +110,12 @@
             },
             save : function () {
                 var code =  $('.wysiwye-editor').code();
-                var date = this.transdate($("#startDate").val());
-                $("#startDate").val(date);
                 var isCheck = true;
                 if($("#name").val()==""){
                     alert("赛事名称不能为空!");
                     isCheck=false;
                 }
-                if($('.fileupload-preview img').width()==null || $('.fileupload-preview img').width()==0){
+                if($('.fileupload-preview img').size()<1 || $('.fileupload-preview img').width()==0){
                     alert("赛事封面不能为空!");
                     isCheck=false;
                 }
@@ -122,7 +127,7 @@
                     alert("比赛地址不能为空!");
                     isCheck=false;
                 }
-                if($("#startDate").val()==""){
+                if($("#sDate").val()==""){
                     alert("比赛时间不能为空!");
                     isCheck=false;
                 }
@@ -132,6 +137,8 @@
                     isCheck=false;
                 }
                 if(isCheck){
+                    var date = this.transdate($("#sDate").val());
+                    $("#startDate").val(date);
                     $("#fromId").ajaxSubmit({
                         url : "${contextPath}/admin/hostRace/save",
                         type : "POST",

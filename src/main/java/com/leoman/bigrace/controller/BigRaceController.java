@@ -45,14 +45,14 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,BigRace bigRace,City cityId){
+    public Object list(Integer draw, Integer start, Integer length,BigRace bigRace,City cityId,String teamName){
         Page<BigRace> Page = null;
         try {
             int pagenum = getPageNum(start,length);
             Stadium stadium = new Stadium();
             stadium.setCity(cityId);
             bigRace.setStadium(stadium);
-            Page = bigRaceService.findAll(bigRace, pagenum, length);
+            Page = bigRaceService.findAll(teamName,bigRace, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -117,6 +117,8 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
                 bigRace.setCreateDate(b.getCreateDate());
                 bigRace.setStadium(b.getStadium());
                 bigRace.setStatus(b.getStatus());
+                bigRace.setAvater1(b.getAvater1());
+                bigRace.setAvater2(b.getAvater2());
             }else{
                 bigRace.setStatus(0);
             }
@@ -143,18 +145,9 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
                     bigRace.setAvater2(fileBo.getPath());
                 }
             }
-//            if(bigRace.getAvater1()==null){
-//                bigRace.setAvater1(b.getAvater1());
-//            }
-//            if(bigRace.getAvater2()==null){
-//                bigRace.setAvater2(b.getAvater2());
-//            }
             if (detail != null) {
                 bigRace.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
             }
-//            if(startDate!=null){
-//                bigRace.setStartDate(startDate);
-//            }
             bigRaceService.save(bigRace);
         }catch (RuntimeException e){
             e.printStackTrace();

@@ -9,6 +9,6 @@ import org.springframework.data.domain.Page;
  */
 public interface BigRaceService extends GenericManager<BigRace>{
 
-    public Page<BigRace> findAll(BigRace bigRace, Integer currentPage, Integer pageSize) throws Exception;
+    public Page<BigRace> findAll(String teamName,BigRace bigRace, Integer currentPage, Integer pageSize) throws Exception;
 
 }

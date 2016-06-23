@@ -55,7 +55,7 @@
             <div class="row">
                 <ul class="list-inline list-mass-actions">
                     <li>
-                        <a data-toggle="modal" href="${contextPath}/admin/girl/add" title="新增" class="tooltips">
+                        <a data-toggle="modal" href="${contextPath}/admin/girl/edit" title="新增" class="tooltips">
                             <i class="sa-list-add"></i>
                         </a>
                     </li>
@@ -153,7 +153,7 @@
                                     var status = "<button title='可预约' class='btn btn-primary btn-circle detail' onclick='$girl.fn.open("+ data +")'> " +
                                             "<i>可预约</i></button>";
                                 }
-                                return detail + "&nbsp;" + status + "&nbsp;" +edit;
+                                return detail + "&nbsp;" +edit + "&nbsp;" + status;
                             }
                         }
                     ],
