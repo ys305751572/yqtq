@@ -10,6 +10,7 @@
     <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
     <title>Super Admin Responsive Template</title>
     <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="${contextPath}/html/js/jQueryRatyli/css/demo.css" />
     <%@ include file="../inc/new/css.jsp" %>
 </head>
 <body id="skin-cloth">
@@ -73,12 +74,13 @@
 
                     <div class="col-md-6 m-b-15" >
                         <label>评价:</label>
-                        <div id="demo" class="demo">
-                            <span class="ratyli"></span>
-                            <a data-toggle="modal" href="${contextPath}/admin/girlComment/index?id=${girl.id}" title="详情" class="tooltips">
-                                <i>详情</i>
-                            </a>
+                        <%--<input type="text" id="avgStar" name="avgStar" value="${avgStar ne null ? avgStar : '还没有人评价'}" class="input-sm form-control validate[required]" placeholder="..." disabled>--%>
+                        <div id="demo9" class="demo">
+                            <span class="ratyli" data-rate="${avgStar ne null ? avgStar : 0}"></span>
                         </div>
+                        <a data-toggle="modal" href="${contextPath}/admin/girlComment/index?id=${girl.id}" title="详情" class="tooltips">
+                            <i>详情</i>
+                        </a>
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-6 m-b-15" >
@@ -107,7 +109,8 @@
 </section>
 <!-- JS -->
 <%@ include file="../inc/new/foot.jsp" %>
-<script type="text/javascript" src="/js/jquery.raty.js"></script>
+<script src="${contextPath}/html/js/jQueryRatyli/js/demo.js"></script>
+<script src="${contextPath}/html/js/jQueryRatyli/js/jquery.ratyli.js"></script>
 <script>
     $team = {
         v: {
@@ -130,7 +133,6 @@
     }
     $(function () {
         $team.fn.init();
-        $("#demo .ratyli").ratyli();
     })
 </script>
 <script>

@@ -3,6 +3,7 @@ package com.leoman.girl.controller;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.girl.dao.GirlCommentDao;
+import com.leoman.girl.entity.Girl;
 import com.leoman.girl.entity.GirlComment;
 import com.leoman.girl.service.GirlCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,13 @@ public class GirlCommentController extends GenericEntityController<GirlComment,G
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,GirlComment girlComment){
-
+    public Object list(Integer draw, Integer start, Integer length,Girl id){
+        GirlComment girlComment = new GirlComment();
         Page<GirlComment> Page = null;
         try {
             int pagenum = getPageNum(start,length);
-            Page = girlCommentService.findAll(girlComment, pagenum, length);
+            girlComment.setGirl(id);
+             Page = girlCommentService.findAll(girlComment, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();
         }

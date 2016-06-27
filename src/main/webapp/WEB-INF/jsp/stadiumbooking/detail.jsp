@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>球场名称:</label>
-                        <a href="${contextPath}/admin/stadium/detail?id=${stadiumBooking.stadium.id}"><input type="text" id="name" name="name" value="${stadiumBooking.stadium.name}" class="input-sm form-control validate[required]" placeholder="..." disabled></a>
+                        <a href="${contextPath}/admin/stadium/detail?id=${stadiumBooking.stadium.id}&&isEd=1"><input type="text" id="name" name="name" value="${stadiumBooking.stadium.name}" class="input-sm form-control validate[required]" placeholder="..." disabled></a>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>城市:</label>

@@ -25,19 +25,21 @@
                     <input type="text" class="input-sm form-control" id="teamName" name="teamName" placeholder="比赛">
                 </div>
                 <div class="col-md-2 form-group">
+                    <select id="province" name="province" class="select" >
+                        <option value="">省份</option>
+                        <c:forEach items="${province}" var="v" >
+                            <option value="${v.provinceId}" >${v.province}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col-md-2 form-group">
                     <select id="cityId" name="cityId" class="select">
                         <option value="">城市</option>
-                        <c:forEach items="${city}" var="c">
-                            <option value="${c.cityId}">${c.city}</option>
-                        </c:forEach>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
                     <select id="stadiumId" name="stadiumId" class="select">
                         <option value="">球场</option>
-                        <c:forEach items="${stadium}" var="s">
-                            <option value="${s.id}">${s.name}</option>
-                        </c:forEach>
                     </select>
                 </div>
             </div>
@@ -145,6 +147,65 @@
                     }
                 });
             },
+            selectCity : function(data){
+                if(data!=""){
+                    $.ajax({
+                        url:"${contextPath}/admin/reserve/selectCity",
+                        data:{
+                            "provinceId":data
+                        },
+                        success:function(data){
+                            $("#cityId").empty();
+                            for(var i= 0;i<data.length;i++){
+                                var cityId = data[i].cityId;
+                                var city = data[i].city;
+                                var op = "<option value='"+cityId+"'>"+city+"</option>";
+                                $("#cityId").append(op);
+                                if(i==0){
+                                    $teamRace.fn.selectStadium(cityId);
+                                }
+                            }
+                            $("#cityId").selectpicker('refresh');
+                        }
+                    });
+                }else{
+                    $("#cityId").empty();
+                    $("#cityId").append("<option value=''>"+"城市"+"</option>");
+                    $("#cityId").selectpicker('refresh');
+                    $teamRace.fn.selectStadium();
+                }
+            },
+            selectStadium : function(data){
+                if(data!=null){
+                    $.ajax({
+                        url:"${contextPath}/admin/reserve/selectStadium",
+                        data:{
+                            "cityId":data
+                        },
+                        success:function(data){
+                            if(data.length>0){
+                                $("#stadiumId").empty();
+                                $("#stadiumId").append("<option value=''>"+"请选择球场"+"</option>");
+                                for(var i= 0;i<data.length;i++){
+                                    var id = data[i].id;
+                                    var name = data[i].name;
+                                    var op = "<option value='"+id+"'>"+name+"</option>";
+                                    $("#stadiumId").append(op);
+                                }
+                                $("#stadiumId").selectpicker('refresh');
+                            }else{
+                                $("#stadiumId").empty();
+                                $("#stadiumId").append("<option value=''>"+"暂无球场"+"</option>");
+                                $("#stadiumId").selectpicker('refresh');
+                            }
+                        }
+                    });
+                }else{
+                    $("#stadiumId").empty();
+                    $("#stadiumId").append("<option value=''>"+"球场"+"</option>");
+                    $("#stadiumId").selectpicker('refresh');
+                }
+            },
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
@@ -161,6 +222,14 @@
     }
     $(function () {
         $teamRace.fn.init();
+        $("#province").change(function(){
+            var opt=$("#province").val();
+            $teamRace.fn.selectCity(opt);
+        })
+        $("#cityId").change(function(){
+            var opt=$("#cityId").val();
+            $teamRace.fn.selectStadium(opt);
+        })
 
     })
 </script>

@@ -22,11 +22,16 @@
         <div class="block-area" id="search">
             <div class="row">
                 <div class="col-md-2 form-group">
+                    <select id="province" name="province" class="select" >
+                        <option value="">省份</option>
+                        <c:forEach items="${province}" var="v" >
+                            <option value="${v.provinceId}" >${v.province}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col-md-2 form-group">
                     <select id="cityId" name="cityId" class="select">
                         <option value="">城市</option>
-                        <c:forEach items="${city}" var="c">
-                            <option value="${c.cityId}">${c.city}</option>
-                        </c:forEach>
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
@@ -164,6 +169,32 @@
                     }
                 });
             },
+            selectCity : function(data){
+                if(data!=""){
+                    $.ajax({
+                        url:"${contextPath}/admin/reserve/selectCity",
+                        data:{
+                            "provinceId":data
+                        },
+                        success:function(data){
+                            $("#cityId").empty();
+                            for(var i= 0;i<data.length;i++){
+                                var cityId = data[i].cityId;
+                                var city = data[i].city;
+                                var op = "<option value='"+cityId+"'>"+city+"</option>";
+                                $("#cityId").append(op);
+                                if(i==0){
+                                }
+                            }
+                            $("#cityId").selectpicker('refresh');
+                        }
+                    });
+                }else{
+                    $("#cityId").empty();
+                    $("#cityId").append("<option value=''>"+"城市"+"</option>");
+                    $("#cityId").selectpicker('refresh');
+                }
+            },
             edit: function (id){
                 window.location.href = "${contextPath}/admin/watchingRace/edit?id=" + id;
             },
@@ -200,6 +231,10 @@
     }
     $(function () {
         $watchingRace.fn.init();
+        $("#province").change(function(){
+            var opt=$("#province").val();
+            $watchingRace.fn.selectCity(opt);
+        })
     })
 </script>
 <script>

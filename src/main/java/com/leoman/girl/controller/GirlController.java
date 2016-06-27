@@ -2,12 +2,16 @@ package com.leoman.girl.controller;
 
 import com.leoman.city.dao.CityDao;
 import com.leoman.city.entity.City;
+import com.leoman.city.entity.Province;
 import com.leoman.city.service.CityService;
+import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.girl.dao.GirlDao;
 import com.leoman.girl.entity.Girl;
+import com.leoman.girl.entity.GirlComment;
 import com.leoman.girl.entity.GirlImage;
+import com.leoman.girl.service.GirlCommentService;
 import com.leoman.girl.service.GirlImageService;
 import com.leoman.girl.service.GirlService;
 import com.leoman.girl.service.impl.GirlServiceImpl;
@@ -43,11 +47,15 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
     private CityService cityService;
     @Autowired
     private GirlImageService girlImageService;
+    @Autowired
+    private GirlCommentService girlCommentService;
+    @Autowired
+    private ProvinceService provinceService;
 
     @RequestMapping(value = "/index")
     public String index(Model model){
-        List<City> city = cityService.queryAll();
-        model.addAttribute("city",city);
+        List<Province> province = provinceService.queryAll();
+        model.addAttribute("province",province);
         return "/girl/list";
     }
 
@@ -88,6 +96,8 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
             model.addAttribute("girl", girl);
             List<GirlImage> image = girlImageService.queryByProperty("girlId",id);
             model.addAttribute("image",image);
+            Integer avgStar = girlCommentService.avgStar(id);
+            model.addAttribute("avgStar",avgStar);
         }catch (Exception e){
             e.printStackTrace();
         }

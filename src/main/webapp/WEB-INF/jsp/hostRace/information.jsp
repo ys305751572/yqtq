@@ -34,13 +34,13 @@
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
                         <label>赛事资讯</label>
-                        <div class="wysiwye-editor" id="detail" name="detail"></div>
+                        <div class="wysiwye-editor" id="detail" name="detail">${eventInformation.content}</div>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-5">
-                        <button type="button" onclick="" class="btn btn-info btn-sm m-t-10">提交</button>
+                        <button type="button" onclick="$user.fn.save()" class="btn btn-info btn-sm m-t-10">提交</button>
                         <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                     </div>
                 </div>
@@ -61,12 +61,11 @@
         },
         fn: {
             init: function () {
-                $user.fn.initImage();
             },
             save : function () {
                 var code =  $('.wysiwye-editor').code();
                 $("#fromId").ajaxSubmit({
-                    url : "${contextPath}/admin/hostRace/save",
+                    url : "${contextPath}/admin/eventInformation/save",
                     type : "POST",
                     data : {
                         "detail" : code

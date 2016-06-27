@@ -1,6 +1,7 @@
 package com.leoman.city.entity;
 
 import com.leoman.common.entity.BaseEntity;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "t_province")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Province implements Serializable {
 
     @Id

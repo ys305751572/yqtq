@@ -25,11 +25,19 @@
                     <input type="text" class="input-sm form-control" id="name" name="name" placeholder="队名">
                 </div>
                 <div class="col-md-2 form-group">
+                    <select id="province" name="province" class="select" >
+                        <option value="">省份</option>
+                        <c:forEach items="${province}" var="v" >
+                            <option value="${v.provinceId}" >${v.province}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col-md-2 form-group">
                     <select id="cityId" name="cityId" class="select">
                         <option value="">城市</option>
-                        <c:forEach items="${city}" var="c">
-                            <option value="${c.cityId}">${c.city}</option>
-                        </c:forEach>
+                        <%--<c:forEach items="${city}" var="c">--%>
+                            <%--<option value="${c.cityId}">${c.city}</option>--%>
+                        <%--</c:forEach>--%>
                     </select>
                 </div>
             </div>
@@ -133,6 +141,30 @@
                     }
                 });
             },
+            selectCity : function(data){
+                if(data!=""){
+                    $.ajax({
+                        url:"${contextPath}/admin/reserve/selectCity",
+                        data:{
+                            "provinceId":data
+                        },
+                        success:function(data){
+                            $("#cityId").empty();
+                            for(var i= 0;i<data.length;i++){
+                                var cityId = data[i].cityId;
+                                var city = data[i].city;
+                                var op = "<option value='"+cityId+"'>"+city+"</option>";
+                                $("#cityId").append(op);
+                            }
+                            $("#cityId").selectpicker('refresh');
+                        }
+                    });
+                }else{
+                    $("#cityId").empty();
+                    $("#cityId").append("<option value=''>"+"城市"+"</option>");
+                    $("#cityId").selectpicker('refresh');
+                }
+            },
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
@@ -149,6 +181,10 @@
     }
     $(function () {
         $team.fn.init();
+        $("#province").change(function(){
+            var opt=$("#province").val();
+            $team.fn.selectCity(opt);
+        })
     })
 </script>
 <script>

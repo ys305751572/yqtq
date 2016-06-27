@@ -18,6 +18,11 @@
 <section id="main" class="p-relative" role="main">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
+        <!-- Breadcrumb -->
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
+        </ol>
+        <h1 class="page-title">报名队伍</h1>
         <div>
             <input type="hidden" id="hostRaceId" name="hostRaceId" value="${id}">
         </div>

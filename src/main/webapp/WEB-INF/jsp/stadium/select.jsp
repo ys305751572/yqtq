@@ -11,7 +11,11 @@
     <title>Super Admin Responsive Template</title>
     <!-- CSS -->
     <%@ include file="../inc/new/css.jsp" %>
-
+    <style type="text/css">
+        section#content.container{
+            margin-left: 0px;
+        }
+    </style>
 </head>
 <body id="skin-cloth">
 <%--<%@ include file="../inc/new/header.jsp" %>--%>

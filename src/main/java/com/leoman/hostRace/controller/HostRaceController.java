@@ -4,6 +4,8 @@ import com.leoman.city.entity.City;
 import com.leoman.city.service.CityService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
+import com.leoman.eventinformation.entity.EventInformation;
+import com.leoman.eventinformation.service.EventInformationService;
 import com.leoman.hostRace.entity.HostRace;
 import com.leoman.hostRace.service.HostRaceService;
 import com.leoman.hostRace.service.impl.HostRaceServiceImpl;
@@ -36,6 +38,8 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
     private HostRaceService hostRaceService;
     @Autowired
     private StadiumService stadiumService;
+    @Autowired
+    private EventInformationService eventInformationService;
 
 
     @RequestMapping(value ="/index")
@@ -55,7 +59,13 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
         }
         return DataTableFactory.fitting(draw,Page);
     }
-    //详情
+
+    /**
+     * 跳转详情
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/detail")
     public String detail(Long id, Model model){
         try{
@@ -84,6 +94,12 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
         return null;
     }
 
+    /**
+     * 编辑跳转
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/edit")
     public String edit(Long id, Model model){
         try{
@@ -98,7 +114,15 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
         }
         return "/hostRace/add";
     }
-    //保存
+
+    /**
+     * 保存
+     * @param hostRace
+     * @param imageFile
+     * @param detail
+     * @param stadiumId
+     * @return
+     */
     @RequestMapping(value = "/save")
     @ResponseBody
     public Result save(HostRace hostRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile, String detail, Long stadiumId) {
@@ -138,7 +162,11 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
             return Result.success();
     }
 
-    //关闭
+    /**
+     * 改变状态
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "close")
     @ResponseBody
     public Result close(Long id) {
@@ -157,12 +185,19 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
         return Result.success();
     }
 
-    //新增资讯
+    /**
+     * 新增资讯
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/information")
     public String information(Long id, Model model){
         try{
             HostRace hostRace = hostRaceService.findById(id);
             model.addAttribute("hostRace", hostRace);
+            EventInformation eventInformation = eventInformationService.queryByProperty("raceId",id).get(0);
+            model.addAttribute("eventInformation", eventInformation);
         }catch (Exception e){
             e.printStackTrace();
         }

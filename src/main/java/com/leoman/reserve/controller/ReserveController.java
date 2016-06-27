@@ -62,12 +62,8 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
      */
     @RequestMapping(value = "/index")
     public String index(Model model) {
-//        List<City> city = cityService.queryAll();
-//        model.addAttribute("city",city);
         List<Province> province = provinceService.queryAll();
         model.addAttribute("province",province);
-        List<Stadium> stadium = stadiumService.queryAll();
-        model.addAttribute("stadium",stadium);
         return "reserve/list";
     }
 
@@ -131,11 +127,18 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
         return "reserve/detail";
     }
 
-    @RequestMapping(value = "/select")
+    @RequestMapping(value = "/selectCity")
     @ResponseBody
-    public List<City> select(Long provinceId,Model model){
+    public List<City> selectCity(Long provinceId,Model model){
         List<City> cities =  cityService.queryByProperty("provinceId",provinceId);
         return cities;
+    }
+
+    @RequestMapping(value = "/selectStadium")
+    @ResponseBody
+    public List<Stadium> selectStadium(Long cityId,Model model){
+        List<Stadium> stadia =  stadiumService.queryByProperty("city",cityId);
+        return stadia;
     }
 
 }

@@ -12,6 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -27,6 +30,10 @@ public class GirlCommentServiceImpl extends GenericManagerImpl<GirlComment,GirlC
 
     @Autowired
     private GirlCommentDao dao;
+
+    @Autowired
+    private EntityManagerFactory factory;
+
     @Override
     public Page<GirlComment> findAll(GirlComment girlComment, Integer currentPage, Integer pageSize) throws Exception {
         Specification<GirlComment> spec = buildSpecification(girlComment);
@@ -39,13 +46,29 @@ public class GirlCommentServiceImpl extends GenericManagerImpl<GirlComment,GirlC
             public Predicate toPredicate(Root<GirlComment> root, CriteriaQuery<?> cq,
                                          CriteriaBuilder cb) {
                 List<Predicate> list = new ArrayList<Predicate>();
-                if(g.getId()!= null){
-                    list.add(cb.equal(root.get("id").as(Long.class), g.getId() ));
+                if(g.getGirl().getId()!= null){
+                    list.add(cb.equal(root.get("girl").get("id").as(Long.class), g.getGirl().getId() ));
                 }
                 Predicate[] p = new Predicate[list.size()];
                 return cb.and(list.toArray(p));
             }
         };
     }
+    @Override
+    public Integer avgStar(Long id){
+        EntityManager em = factory.createEntityManager();
+        StringBuffer sql = new StringBuffer();
+        sql.append(" SELECT                 ");
+        sql.append("   ROUND(AVG(star), 0) ");
+        sql.append(" FROM                  ");
+        sql.append("   t_girl_comment      ");
+        sql.append(" WHERE girl_id = "+id+"");
+        Query query = em.createNativeQuery(sql.toString());
+        List list = query.getResultList();
+        Double obj = (Double)list.get(0);
+        Integer num = obj.intValue();
+        em.close();
+        return num;
+    };
 
 }

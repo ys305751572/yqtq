@@ -4,7 +4,9 @@ import com.leoman.bigrace.dao.BigRaceDao;
 import com.leoman.bigrace.entity.BigRace;
 import com.leoman.bigrace.service.BigRaceService;
 import com.leoman.city.entity.City;
+import com.leoman.city.entity.Province;
 import com.leoman.city.service.CityService;
+import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.image.entity.FileBo;
@@ -35,11 +37,13 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
     private BigRaceService bigRaceService;
     @Autowired
     private CityService cityService;
+    @Autowired
+    private ProvinceService provinceService;
 
     @RequestMapping(value = "/index")
     public String index(Model model){
-        List<City> city = cityService.queryAll();
-        model.addAttribute("city",city);
+        List<Province> province = provinceService.queryAll();
+        model.addAttribute("province",province);
         return "bigrace/list";
     }
 

@@ -1,7 +1,9 @@
 package com.leoman.stadium.controller;
 
 import com.leoman.city.entity.City;
+import com.leoman.city.entity.Province;
 import com.leoman.city.service.CityService;
+import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.image.entity.FileBo;
@@ -40,6 +42,8 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
     private CityService cityService;
     @Autowired
     private StadiumUserService stadiumUserService;
+    @Autowired
+    private ProvinceService provinceService;
 
     /**
      * 列表跳转
@@ -49,8 +53,8 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
     @RequestMapping(value = "/index")
     public String index(Model model){
         try{
-            List<City> city = cityService.queryAll();
-            model.addAttribute("city",city);
+            List<Province> province = provinceService.queryAll();
+            model.addAttribute("province",province);
         }catch (RuntimeException e){
             e.printStackTrace();
         }
@@ -98,8 +102,11 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
      * @return
      */
     @RequestMapping(value = "/detail")
-    public String detail(Long id, Model model){
+    public String detail(Long id, Model model,Integer isEd){
         try{
+            if(isEd!=null){
+                model.addAttribute("isEd",isEd);
+            }
             Stadium stadium = stadiumService.findById(id);
             model.addAttribute("stadium", stadium);
             List<StadiumUser> list = stadiumUserService.queryByProperty("id",stadium.getStadiumUserId());
@@ -139,6 +146,7 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
         try{
             List<City> city = cityService.queryAll();
             model.addAttribute("city",city);
+
             if(id!=null){
                 Stadium stadium = stadiumService.findById(id);
                 model.addAttribute("stadium", stadium);

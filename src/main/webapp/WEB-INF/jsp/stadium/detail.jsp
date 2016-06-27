@@ -33,9 +33,11 @@
                 <div class="col-md-6 m-b-15">
                     <label>球场名称:</label>
                     <input type="text" id="name" name="name" value="${stadium.name}" class="input-sm form-control validate[required]" placeholder="..." disabled>
-                    <a data-toggle="modal" href="${contextPath}/admin/stadium/edit?id=${stadium.id}" title="编辑" class="tooltips">
-                        <div class="btn btn-alt m-r-5">编辑</div>
-                    </a>
+                    <c:if test="${isEd eq null}">
+                        <a data-toggle="modal" href="${contextPath}/admin/stadium/edit?id=${stadium.id}" title="编辑" class="tooltips">
+                            <div class="btn btn-alt m-r-5">编辑</div>
+                        </a>
+                    </c:if>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>城市:</label>
@@ -103,23 +105,6 @@
         fn: {
             init: function () {
                 $team.fn.initImage();
-            },
-            sfInfo: function (id) {
-                $.ajax({
-                    "url": "${contextPath}/admin/1/sfInfo",
-                    "data": {
-                        "id": id
-                    },
-                    "dataType": "json",
-                    "type": "POST",
-                    "success": function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
-                        }
-                        window.location.href = "${contextPath}/admin/1/detail?id=" + id;
-                    }
-                });
             }
         }
     }

@@ -55,7 +55,7 @@
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>付款方式:</label>
-                    <input type="text" id="payment" value="" name="payment" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    <input type="text" id="payment" value="<c:if test="${reserve.payment == 0}">AA制</c:if><c:if test="${reserve.payment == 1}">全额</c:if>" name="payment" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>保险:</label>

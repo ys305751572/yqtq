@@ -83,9 +83,6 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
             stadiumUser.setToDaySumPrice(stadiumUserService.toDaySumPrice(id, TestUtil.getTimesmorning()));
             model.addAttribute("stadiumUser", stadiumUser);
             List<Stadium> stadium = stadiumService.queryByProperty("stadiumUserId",id);
-//            for(Stadium s : stadium){
-//                s.setAccumulatedAmount(stadiumUserService.accumulatedAmount(id));
-//            }
             for(int i=0;i<stadium.size();i++){
                 stadium.get(i).setAccumulatedAmount(stadiumUserService.accumulatedAmount(stadium.get(i).getId()));
             }
