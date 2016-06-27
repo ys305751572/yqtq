@@ -57,6 +57,17 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
         return "stadium/list";
     }
 
+    @RequestMapping(value = "/select")
+    public String select(Model model){
+        try{
+            List<City> city = cityService.queryAll();
+            model.addAttribute("city",city);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
+        return "stadium/select";
+    }
+
     /**
      * 列表显示
      * @param draw

@@ -77,9 +77,11 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>比赛地点：</label>
-                        <input type="text" id="didian" name="didians" value=""  class="input-sm form_datetime form-control validate[required]" placeholder="..." >
-                        <a href="${contextPath}/admin/stadium/index">选择</a>
+                        <input type="text" id="stadiumName" name="stadiumName" value="${bigRace.stadium.name}"  class="input-sm form-control validate[required]" placeholder="..."  disabled>
+                        <input type="hidden" id="stadiumId" name="stadiumId" value="${bigRace.stadium.id}" >
+                        <a onclick="$user.fn.selectValue()" class="btn btn-alt m-r-5">选择</a>
                     </div>
+
                     <div class="col-md-6 m-b-15">
                         <label>比赛时间：</label>
                         <input type="text" id="sDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${bigRace.startDate}'></date:date>" name="sDate" class="input-sm form_datetime form-control validate[required]" placeholder="..." >
@@ -124,8 +126,8 @@
                     alert("看球名称不能为空!");
                     isCheck=false;
                 }
-                if($("#cityId").val()==""){
-                    alert("城市不能为空!");
+                if($('.fileupload-preview img').size()<2 || $('.fileupload-preview img').width()==0){
+                    alert("球队封面不能为空!");
                     isCheck=false;
                 }
                 if($("#team1name").val()==""){
@@ -136,12 +138,12 @@
                     alert("乙方方队名不能为空!");
                     isCheck=false;
                 }
-                if($("#sDate").val()==""){
-                    alert("开始时间不能为空!");
+                if($("#stadiumId").val()==""){
+                    alert("比赛地点不能为空!");
                     isCheck=false;
                 }
-                if($('.fileupload-preview img').size()<2 || $('.fileupload-preview img').width()==0){
-                    alert("球队封面不能为空!");
+                if($("#sDate").val()==""){
+                    alert("开始时间不能为空!");
                     isCheck=false;
                 }
                 if($('.note-editable').text()==""){
@@ -176,6 +178,9 @@
                 date.setMinutes(endTime.substring(14,16));
                 date.setSeconds(endTime.substring(17,19));
                 return Date.parse(date);
+            },
+            selectValue : function(){
+                window.open("${contextPath}/admin/stadium/select","","status:no;resizable:yes;dialogHeight:410px;dialogWidth:460px;unadorne:yes");
             }
         }
     };

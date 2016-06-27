@@ -37,9 +37,15 @@
                     </div>
 
                     <div class="col-md-6 m-b-15">
-                        <label>球场:</label>
+                        <div><label>球场:</label></div>
                         <c:forEach items="${stadium}" var="v">
-                            <a href="${contextPath}/admin/stadium/detail?id=${v.id}"" >${v.name}-${v.siteNum}个场地-总积累金额${v.accumulatedAmount eq null ? 0.0 : v.accumulatedAmount}</a>
+                        <a href="${contextPath}/admin/stadium/detail?id=${v.id}" >
+                            <div style="float: left;margin-right: 10px;" class="btn btn-alt m-r-5">
+                                <p>${v.name}</p>
+                                <p>${v.siteNum}个场地</p>
+                                <p>总积累金额${v.accumulatedAmount eq null ? 0.0 : v.accumulatedAmount}</p>
+                            </div>
+                        </a>
                         </c:forEach>
                     </div>
                     <div class="col-md-6 m-b-15" >

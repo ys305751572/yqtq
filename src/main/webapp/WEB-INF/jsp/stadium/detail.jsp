@@ -34,7 +34,7 @@
                     <label>球场名称:</label>
                     <input type="text" id="name" name="name" value="${stadium.name}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     <a data-toggle="modal" href="${contextPath}/admin/stadium/edit?id=${stadium.id}" title="编辑" class="tooltips">
-                        <i>编辑</i>
+                        <div class="btn btn-alt m-r-5">编辑</div>
                     </a>
                 </div>
                 <div class="col-md-6 m-b-15">

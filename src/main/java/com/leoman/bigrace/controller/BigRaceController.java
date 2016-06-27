@@ -43,6 +43,16 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
         return "bigrace/list";
     }
 
+    /**
+     * 列表
+     * @param draw
+     * @param start
+     * @param length
+     * @param bigRace
+     * @param cityId
+     * @param teamName
+     * @return
+     */
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(Integer draw, Integer start, Integer length,BigRace bigRace,City cityId,String teamName){
@@ -59,7 +69,12 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
         return DataTableFactory.fitting(draw,Page);
     }
 
-    //详情
+    /**
+     * 详情
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/detail")
     public String detail(Long id, Model model){
         try{
@@ -88,38 +103,49 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
         return null;
     }
 
-    //新增
-    @RequestMapping(value = "/add")
-    public String add(){
-        return "/bigrace/add";
-    }
-
+    /**
+     * 新增
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/edit")
     public String edit(Long id, Model model){
         try{
-            BigRace bigRace = bigRaceService.queryByPK(id);
-            model.addAttribute("bigRace", bigRace);
+            if(id!=null){
+                BigRace bigRace = bigRaceService.queryByPK(id);
+                model.addAttribute("bigRace", bigRace);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
         return "/bigrace/add";
     }
 
+    /**
+     * 保存
+     * @param bigRace
+     * @param imageFile
+     * @param imageFile2
+     * @param detail
+     * @return
+     */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(BigRace bigRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile2,String detail,Long startDate){
+    public Result save(BigRace bigRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile2,String detail,Long stadiumId){
         BigRace b = null;
+        Stadium s = new Stadium();
         try{
             if(null != bigRace.getId()){
                 b = bigRaceService.queryByPK(bigRace.getId());
             }
             if(null != b){
                 bigRace.setCreateDate(b.getCreateDate());
-                bigRace.setStadium(b.getStadium());
                 bigRace.setStatus(b.getStatus());
                 bigRace.setAvater1(b.getAvater1());
                 bigRace.setAvater2(b.getAvater2());
             }else{
+
                 bigRace.setStatus(0);
             }
 
@@ -145,6 +171,11 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
                     bigRace.setAvater2(fileBo.getPath());
                 }
             }
+            if(stadiumId != null){
+                s.setId(stadiumId);
+                bigRace.setStadium(s);
+            }
+
             if (detail != null) {
                 bigRace.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
             }
@@ -156,7 +187,11 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
         return Result.success();
     }
 
-
+    /**
+     * 改变状态
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/status")
     @ResponseBody
     public Result status(Long id){

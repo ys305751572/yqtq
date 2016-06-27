@@ -116,9 +116,9 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
             hostRace.setStadium(h.getStadium());
             hostRace.setAvater(h.getAvater());
         }else {
-            hostRace.setStatus(0);
             stadium.setId(stadiumId);
             hostRace.setStadium(stadium);
+            hostRace.setStatus(0);
         }
         if(imageFile!=null && imageFile.getSize()>0) {
             FileBo fileBo = null;

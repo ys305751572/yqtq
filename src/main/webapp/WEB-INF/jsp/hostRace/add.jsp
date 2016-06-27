@@ -52,13 +52,10 @@
                     </div>
                     <c:if test="${hostRace.id eq null}">
                         <div class="col-md-6 m-b-15">
-                            <label>球场名称：</label>
-                            <select id="stadiumId" name="stadiumId" class="select">
-                                <option value="">...</option>
-                                <c:forEach items="${stadium}" var="v">
-                                    <option value="${v.id}">${v.name}</option>
-                                </c:forEach>
-                            </select>
+                            <label>球场：</label>
+                            <input type="text" id="stadiumName" name="stadiumName" value="${hostRace.stadium.name}"  class="input-sm form-control validate[required]" placeholder="..."  disabled>
+                            <input type="hidden" id="stadiumId" name="stadiumId" value="${hostRace.stadium.id}" >
+                            <a onclick="$user.fn.selectValue()" class="btn btn-alt m-r-5">选择</a>
                         </div>
                         <div class="col-md-6 m-b-15">
                             <label>赛制：</label>
@@ -119,7 +116,7 @@
                     alert("赛事封面不能为空!");
                     isCheck=false;
                 }
-                if($("#stadium").val()==""){
+                if($("#stadiumId").val()==""){
                     alert("球场名称不能为空!");
                     isCheck=false;
                 }
@@ -165,6 +162,9 @@
                 date.setMinutes(endTime.substring(14,16));
                 date.setSeconds(endTime.substring(17,19));
                 return Date.parse(date);
+            },
+            selectValue : function(){
+                window.open("${contextPath}/admin/stadium/select","","status:no;resizable:yes;dialogHeight:410px;dialogWidth:460px;unadorne:yes");
             }
         }
     }

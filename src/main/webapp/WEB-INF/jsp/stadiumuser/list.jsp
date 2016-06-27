@@ -108,7 +108,18 @@
                         {"data": "city.city","sDefaultContent" : ""},
                         {"data": "stadiumNum","sDefaultContent" : ""},//球场数目
                         {"data": "reserveMoney","sDefaultContent" : ""},
-                        {"data": "toDaySumPrice","sDefaultContent" : ""},
+                        {
+                            "data": "toDaySumPrice",
+                            render:function(data){
+                                if(data==null){
+                                    return "0.0";
+                                }else{
+                                    return data;
+                                }
+
+                            },
+                            "sDefaultContent" : ""
+                        },
                         {"data": "status",
                             render:function(data){
                                 if(data==0){

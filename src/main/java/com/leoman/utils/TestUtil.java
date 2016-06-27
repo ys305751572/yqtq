@@ -47,24 +47,24 @@ public class TestUtil {
         cal.set(Calendar.MILLISECOND, 0);
         return (Long) (cal.getTimeInMillis());
     }
-    public static void main(String[] args) throws ParseException {
-        //当前0点
-        System.out.println(new TestUtil().getTimesmorning());
-        //当前24点
-        System.out.println(new TestUtil().getTimesnight());
-        // 当前时间
-        System.out.println(System.currentTimeMillis());
-        //当前0点
-        System.out.println(new TestUtil().getDayBegin());
-        // 当天0点
-        System.out.println(new TestUtil().getDayBeginTimestamp());
-        // 当前时间
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
-                .format(new Date()));
-        System.out.println(Calendar.getInstance().getTime());
-        // 当前时间
-        System.out.println(new Timestamp(System.currentTimeMillis()));
-
-    }
+//    public static void main(String[] args) throws ParseException {
+//        //当前0点
+//        System.out.println(new TestUtil().getTimesmorning());
+//        //当前24点
+//        System.out.println(new TestUtil().getTimesnight());
+//        // 当前时间
+//        System.out.println(System.currentTimeMillis());
+//        //当前0点
+//        System.out.println(new TestUtil().getDayBegin());
+//        // 当天0点
+//        System.out.println(new TestUtil().getDayBeginTimestamp());
+//        // 当前时间
+//        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
+//                .format(new Date()));
+//        System.out.println(Calendar.getInstance().getTime());
+//        // 当前时间
+//        System.out.println(new Timestamp(System.currentTimeMillis()));
+//
+//    }
 
 }

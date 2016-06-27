@@ -41,7 +41,7 @@
             <div class="row">
                 <ul class="list-inline list-mass-actions">
                     <li>
-                        <a data-toggle="modal" href="${contextPath}/admin/bigRace/add" title="新增" class="tooltips">
+                        <a data-toggle="modal" href="${contextPath}/admin/bigRace/edit" title="新增" class="tooltips">
                             <i class="sa-list-add"></i>
                         </a>
                     </li>

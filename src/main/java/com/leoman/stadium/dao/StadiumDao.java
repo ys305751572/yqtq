@@ -1,11 +1,11 @@
 package com.leoman.stadium.dao;
 
-import com.leoman.common.dao.IBaseJpaRepository;
-import com.leoman.stadium.entity.Stadium;
-import com.leoman.user.entity.User;
-import org.springframework.data.jpa.repository.Query;
+        import com.leoman.common.dao.IBaseJpaRepository;
+        import com.leoman.stadium.entity.Stadium;
+        import com.leoman.user.entity.User;
+        import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+        import java.util.List;
 
 /**
  * Created by Administrator on 2016/5/31.

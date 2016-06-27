@@ -4,12 +4,11 @@ import com.leoman.city.entity.City;
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.entity.ReserveTeam;
-import org.hibernate.annotations.JoinColumnOrFormula;
-import org.hibernate.annotations.JoinColumnsOrFormulas;
-import org.hibernate.annotations.JoinFormula;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Set;
 
 /**
@@ -18,6 +17,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "t_stadium")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Stadium extends BaseEntity {
     //城市ID
 //    @Column(name = "city_id")
