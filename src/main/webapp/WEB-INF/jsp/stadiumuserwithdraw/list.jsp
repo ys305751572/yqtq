@@ -18,6 +18,10 @@
 <section id="main" class="p-relative" role="main">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
+        </ol>
+        <h1 class="page-title">提现管理</h1>
         <!-- 查询条件 -->
         <div class="block-area" id="search">
             <div class="row">

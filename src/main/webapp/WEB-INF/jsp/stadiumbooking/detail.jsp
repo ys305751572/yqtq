@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>球场名称:</label>
-                        <a href="${contextPath}/admin/stadium/detail?id=${stadiumBooking.stadium.id}&&isEd=1"><input type="text" id="name" name="name" value="${stadiumBooking.stadium.name}" class="input-sm form-control validate[required]" placeholder="..." disabled></a>
+                        <a href="${contextPath}/admin/stadium/detail?id=${stadiumBooking.stadium.id}&&isEd=1" class="btn btn-block btn-alt" style="font-size: 12px;height: 30px;text-align:left;text-indent:0.5em;background-color:rgba(238, 238, 238, 0.09) !important;" >${stadiumBooking.stadium.name}</a>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>城市:</label>
@@ -89,11 +89,6 @@
         },
         fn: {
             init: function () {
-                $team.fn.initImage();
-            },
-            initImage : function() {
-            },
-            save : function () {
             },
             "detail" : function(userId) {
                 window.location.href = "${contextPath}/admin/user/detail?userId=" + userId;

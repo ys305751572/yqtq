@@ -11,6 +11,9 @@
     <title>Super Admin Responsive Template</title>
     <!-- CSS -->
     <%@ include file="../inc/new/css.jsp" %>
+    <%--<style type="text/css">--%>
+        <%--btn btn-block btn-alt {text-decoration:none;font-size:20px;font-weight:bold;width:222px;height:100px;border:1px solid red}--%>
+    <%--</style>--%>
 </head>
 <body id="skin-cloth">
 <%@ include file="../inc/new/header.jsp" %>
@@ -35,7 +38,7 @@
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>球场:</label>
-                    <a href="${contextPath}/admin/stadiumBooking/detail?stadiumId=${reserve.stadium.id}&&userId=${reserve.user.id}&&startDate=${reserve.startDate}"><input type="text" id="name" value="${reserve.stadium.name}" name="name" class="input-sm form-control validate[required]" placeholder="..." disabled></a>
+                    <a class="btn btn-block btn-alt" style="font-size: 12px;height: 30px;text-align:left;text-indent:0.5em;background-color:rgba(238, 238, 238, 0.09) !important; " href="${contextPath}/admin/stadiumBooking/detail?stadiumId=${reserve.stadium.id}&&userId=${reserve.user.id}&&startDate=${reserve.startDate}">${reserve.stadium.name}</a>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>创建者:</label>

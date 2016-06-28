@@ -18,15 +18,20 @@
 <section id="main" class="p-relative" role="main">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
-        <div class="block-area">
-            <div class="row">
-                <ul class="list-inline list-mass-actions">
-                    <li>
-                        <a data-toggle="modal" href="${contextPath}/admin/hostRace/edit" title="新增" class="tooltips">
-                            <i class="sa-list-add"></i>
-                        </a>
-                    </li>
-                </ul>
+        <%--<div class="block-area">--%>
+            <%--<div class="row">--%>
+                <%--<ul class="list-inline list-mass-actions">--%>
+                    <%--<li>--%>
+                        <%--<a data-toggle="modal" href="${contextPath}/admin/hostRace/edit" title="新增" class="tooltips">--%>
+                            <%--<i class="sa-list-add"></i>--%>
+                        <%--</a>--%>
+                    <%--</li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+        <div class="block-area" id="alternative-buttons">
+            <div>
+                <a data-toggle="modal" href="${contextPath}/admin/hostRace/edit" title="新增" class="btn btn-alt m-r-5">新增</a>
             </div>
         </div>
         <!-- form表格 -->
@@ -134,7 +139,7 @@
                                 var st = full.status;
                                 if(st!=2){
                                     var del = "<button title='关闭' class='btn btn-primary btn-circle ' onclick='$hostRace.fn.close(" + data + ")'>" +
-                                            "<i>关闭</i></button>";
+                                            "关闭</button>";
 
                                 }else{
                                     var del = "<button title='关闭' class='btn btn-primary btn-circle ' disabled " +

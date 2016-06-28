@@ -21,6 +21,7 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
+        <h1 class="page-title">评价详情</h1>
         <input type="hidden" id="id" value="${id}">
         <!-- form表格 -->
         <div class="block-area" id="tableHover">

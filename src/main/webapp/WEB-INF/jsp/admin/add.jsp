@@ -66,7 +66,6 @@
         },
         fn: {
             init: function () {
-                $user.fn.initImage();
             },
             save : function () {
                 var code =  $('.wysiwye-editor').code();

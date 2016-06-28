@@ -138,10 +138,10 @@
                                 var st = full.status;
                                 if(st==0){
                                     var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='_userInfo.fn.close("+data+")'> " +
-                                            "<i>禁用</i></button>";
+                                            "禁用</button>";
                                 }else if(st==1){
                                     var status = "<button title='解禁' class='btn btn-primary btn-circle detail' onclick='_userInfo.fn.open("+ data +")'> " +
-                                            "<i>解禁</i></button>";
+                                            "解禁</button>";
                                 }
 
 

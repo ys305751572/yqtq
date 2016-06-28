@@ -84,7 +84,6 @@
         },
         fn: {
             init: function () {
-                $team.fn.initImage();
             },
             sfTeamInfo: function (id) {
                 $.ajax({

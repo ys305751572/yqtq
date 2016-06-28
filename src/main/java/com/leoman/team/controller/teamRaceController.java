@@ -1,7 +1,9 @@
 package com.leoman.team.controller;
 
 import com.leoman.city.entity.City;
+import com.leoman.city.entity.Province;
 import com.leoman.city.service.CityService;
+import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.stadium.entity.Stadium;
@@ -36,14 +38,14 @@ public class TeamRaceController  extends GenericEntityController<TeamRace, TeamR
     private CityService cityService;
     @Autowired
     private StadiumService stadiumService;
+    @Autowired
+    private ProvinceService provinceService;
 
     @RequestMapping(value = "/index")
     public String index(Model model){
         try{
-            List<City> city = cityService.queryAll();
-            model.addAttribute("city",city);
-            List<Stadium> stadium = stadiumService.findAll();
-            model.addAttribute("stadium",stadium);
+            List<Province> province = provinceService.queryAll();
+            model.addAttribute("province",province);
         }catch (RuntimeException e){
             e.printStackTrace();
         }

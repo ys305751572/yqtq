@@ -67,7 +67,6 @@
         },
         fn: {
             init: function () {
-                $team.fn.initImage();
             },
             information : function (id) {
                 window.location.href = "${contextPath}/admin/hostRace/information?id="+id;

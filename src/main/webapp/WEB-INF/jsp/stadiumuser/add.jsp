@@ -35,13 +35,17 @@
                         <label>密码：</label>
                         <input type="password" id="password" name="password" value="${stadiumUser.password}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
-                    <div class="col-md-6 m-b-15">
-                        <label>城市:</label>
-                        <select id="cityId" name="cityId" class="select">
-                            <option value="${stadiumUser.city.cityId}">${stadiumUser.city.city eq null ? "请选择" : stadiumUser.city.city}</option>
-                            <c:forEach items="${city}" var="c">
-                                <option value="${c.cityId}">${c.city}</option>
+                    <div class="col-md-2 form-group">
+                        <select id="province" name="province" class="select" >
+                            <option value="">省份</option>
+                            <c:forEach items="${province}" var="v" >
+                                <option value="${v.provinceId}" >${v.province}</option>
                             </c:forEach>
+                        </select>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <select id="cityId" name="cityId" class="select">
+                            <option value="${stadiumUser.city.cityId}">${stadiumUser.city.city eq null ? "城市" : stadiumUser.city.city}</option>
                         </select>
                     </div>
                     <hr class="whiter m-t-20"/>
@@ -69,7 +73,6 @@
         },
         fn: {
             init: function () {
-                $user.fn.initImage();
             },
             save : function () {
 
@@ -103,11 +106,41 @@
                         }
                     });
                 }
+            },
+            selectCity : function(data){
+                if(data!=""){
+                    $.ajax({
+                        url:"${contextPath}/admin/reserve/selectCity",
+                        data:{
+                            "provinceId":data
+                        },
+                        success:function(data){
+                            $("#cityId").empty();
+                            for(var i= 0;i<data.length;i++){
+                                var cityId = data[i].cityId;
+                                var city = data[i].city;
+                                var op = "<option value='"+cityId+"'>"+city+"</option>";
+                                $("#cityId").append(op);
+                                if(i==0){
+                                }
+                            }
+                            $("#cityId").selectpicker('refresh');
+                        }
+                    });
+                }else{
+                    $("#cityId").empty();
+                    $("#cityId").append("<option value=''>"+"城市"+"</option>");
+                    $("#cityId").selectpicker('refresh');
+                }
             }
         }
     }
     $(function () {
         $user.fn.init();
+        $("#province").change(function(){
+            var opt=$("#province").val();
+            $user.fn.selectCity(opt);
+        })
     })
 </script>
 <script>

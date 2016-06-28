@@ -48,7 +48,8 @@
 
                     <div class="col-md-6 m-b-15" >
                         <label>队长:</label>
-                        <input type="text" id="leaderUserId" name="leaderUserId" value="${team.user.nickName}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <%--<input type="text" id="leaderUserId" name="leaderUserId" value="${team.user.nickName}" class="input-sm form-control validate[required]" placeholder="..." disabled>--%>
+                        <a class="btn btn-block btn-alt" style="font-size: 12px;height: 30px;text-align:left;text-indent:0.5em;background-color:rgba(238, 238, 238, 0.09) !important;" href="${contextPath}/admin/user/detail?userId=${team.user.id}">${team.user.nickName}</a>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
@@ -103,11 +104,6 @@
         },
         fn: {
             init: function () {
-                $team.fn.initImage();
-            },
-            initImage : function() {
-            },
-            save : function () {
             },
             "detail" : function(userId) {
                 window.location.href = "${contextPath}/admin/user/detail?userId=" + userId;

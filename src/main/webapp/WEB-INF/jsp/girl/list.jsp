@@ -45,28 +45,31 @@
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <select id="" name="" class="select">
+                    <select id="appointment" name="appointment" class="select">
                         <option value="">全部</option>
-                        <option value="">最近比赛无预约</option>
-                        <option value="">最近比赛有预约</option>
+                        <option value="1">今天有预约</option>
+                        <option value="2">今天无预约</option>
                     </select>
                 </div>
             </div>
         </div>
         <div class="block-area" id="alternative-buttons">
             <button id="c_search" class="btn btn-alt m-r-5">查询</button>
-        </div>
-        <div class="block-area">
-            <div class="row">
-                <ul class="list-inline list-mass-actions">
-                    <li>
-                        <a data-toggle="modal" href="${contextPath}/admin/girl/edit" title="新增" class="tooltips">
-                            <i class="sa-list-add"></i>
-                        </a>
-                    </li>
-                </ul>
+            <div style="float:right;margin-right:25px;">
+                <a data-toggle="modal" href="${contextPath}/admin/girl/edit" title="新增" class="btn btn-alt m-r-5" >新增</a>
             </div>
         </div>
+        <%--<div class="block-area">--%>
+            <%--<div class="row">--%>
+                <%--<ul class="list-inline list-mass-actions">--%>
+                    <%--<li>--%>
+                        <%--<a data-toggle="modal" href="${contextPath}/admin/girl/edit" title="新增" class="tooltips">--%>
+                            <%--<i class="sa-list-add"></i>--%>
+                        <%--</a>--%>
+                    <%--</li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
+        <%--</div>--%>
         <hr class="whiter m-t-20"/>
         <!-- form表格 -->
         <div class="block-area" id="tableHover">
@@ -153,10 +156,10 @@
                                 var st = full.status;
                                 if(st==0){
                                     var status = "<button title='不可预约' class='btn btn-primary btn-circle detail' onclick='$girl.fn.close("+ data +")'> " +
-                                            "<i>不可预约</i></button>";
+                                            "不可预约</button>";
                                 }else if(st==1){
                                     var status = "<button title='可预约' class='btn btn-primary btn-circle detail' onclick='$girl.fn.open("+ data +")'> " +
-                                            "<i>可预约</i></button>";
+                                            "可预约</button>";
                                 }
                                 return detail + "&nbsp;" +edit + "&nbsp;" + status;
                             }
@@ -166,6 +169,7 @@
                         aoData.name = $("#name").val();
                         aoData.cityId = $("#cityId").val();
                         aoData.status = $("#status").val();
+                        aoData.appointment = $("#appointment").val();
                     }
                 });
             },
@@ -261,7 +265,7 @@
         $("#province").change(function(){
             var opt=$("#province").val();
             $girl.fn.selectCity(opt);
-        })
+        });
     })
 </script>
 <script>

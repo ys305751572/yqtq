@@ -18,6 +18,7 @@ import com.leoman.girl.service.impl.GirlServiceImpl;
 import com.leoman.image.entity.FileBo;
 import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
+import com.leoman.utils.TestUtil;
 import net.sf.json.JSONArray;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,12 +71,12 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,Girl girl,City cityId){
+    public Object list(Integer draw, Integer start, Integer length,Girl girl,City cityId,Integer appointment){
         Page<Girl> Page = null;
         try {
             int pagenum = getPageNum(start,length);
             girl.setCity(cityId);
-            Page = girlService.findAll(girl, pagenum, length);
+            Page = girlService.findAll(appointment,girl, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();
         }

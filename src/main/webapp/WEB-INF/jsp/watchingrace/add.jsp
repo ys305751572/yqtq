@@ -86,7 +86,6 @@
         },
         fn: {
             init: function () {
-                $user.fn.initImage();
             },
             save : function () {
                 var isCheck = true;

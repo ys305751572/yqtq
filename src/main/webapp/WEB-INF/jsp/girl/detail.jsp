@@ -77,10 +77,8 @@
                         <%--<input type="text" id="avgStar" name="avgStar" value="${avgStar ne null ? avgStar : '还没有人评价'}" class="input-sm form-control validate[required]" placeholder="..." disabled>--%>
                         <div id="demo9" class="demo">
                             <span class="ratyli" data-rate="${avgStar ne null ? avgStar : 0}"></span>
+                            <a data-toggle="modal" href="${contextPath}/admin/girlComment/index?id=${girl.id}" title="详情" class="btn btn-alt m-r-5">详情</a>
                         </div>
-                        <a data-toggle="modal" href="${contextPath}/admin/girlComment/index?id=${girl.id}" title="详情" class="tooltips">
-                            <i>详情</i>
-                        </a>
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-6 m-b-15" >
@@ -120,11 +118,6 @@
         },
         fn: {
             init: function () {
-                $team.fn.initImage();
-            },
-            initImage : function() {
-            },
-            save : function () {
             },
             "detail" : function(userId) {
                 window.location.href = "${contextPath}/admin/user/detail?userId=" + userId;

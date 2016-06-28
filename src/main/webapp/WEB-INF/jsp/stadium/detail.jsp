@@ -104,7 +104,6 @@
         },
         fn: {
             init: function () {
-                $team.fn.initImage();
             }
         }
     }

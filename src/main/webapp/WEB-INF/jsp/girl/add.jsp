@@ -56,7 +56,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>服务价格:</label>
-                        <input type="text" id="price" name="price" value="${girl.price}" class="input-sm form-control validate[required]" placeholder="..." maxlength="6" onkeyup="value=value.replace(/[^0-9]/g,'')">
+                        <input type="text" id="price" name="price" value="${girl.price}" class="input-sm form-control validate[required]" placeholder="..." onkeyup="value=value.replace(/[^0-9.]/g,'')">
                     </div>
 
                     <div class="col-md-6 m-b-15" >
@@ -232,7 +232,7 @@
                 html += "             <input id='coverImageFile"+ a +"' name='coverImageFile"+ a +"' type='file'/>                                 ";
                 html += "         </span>                                                                                                          ";
                 html += "         <a href='#' class='btn fileupload-exists btn-sm' data-dismiss='fileupload'>移除图片</a>                           ";
-                html += "         <a href='javascript:void(0);' onclick='$user.fn.delDiv($(this));'>删除</a>                                      ";
+                html += "         <a href='javascript:void(0);' class='btn btn-sm btn-alt m-r-5' onclick='$user.fn.delDiv($(this));'>删除</a>                                      ";
                 html += "     </div>                                                                                                                ";
                 html += " </div>                                                                                                                    ";
                 $("#cover").append(html);
@@ -254,7 +254,7 @@
                 html += "             <input id='albumImageFile"+ a +"' name='albumImageFile"+ a +"' type='file'/>                                 ";
                 html += "         </span>                                                                                                          ";
                 html += "         <a href='#' class='btn fileupload-exists btn-sm' data-dismiss='fileupload'>移除图片</a>                           ";
-                html += "         <a href='javascript:void(0);' onclick='$user.fn.delDiv($(this));'>删除</a>                                      ";
+                html += "         <a href='javascript:void(0);' class='btn btn-sm btn-alt m-r-5' onclick='$user.fn.delDiv($(this));'>删除</a>                                      ";
                 html += "     </div>                                                                                                                ";
                 html += " </div>                                                                                                                    ";
                 $("#album").append(html);

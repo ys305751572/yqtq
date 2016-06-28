@@ -35,7 +35,7 @@
                     </select>
                 </div>
                 <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="场地名">
+                    <input type="text" class="input-sm form-control" id="name" name="name" placeholder="球场名">
                 </div>
                 <div class="col-md-2 form-group">
                     <input type="text" class="input-sm form-control" id="bookTime" name="bookTime" placeholder="预定时长">

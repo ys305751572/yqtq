@@ -1,7 +1,9 @@
 package com.leoman.stadium.controller;
 
 import com.leoman.city.entity.City;
+import com.leoman.city.entity.Province;
 import com.leoman.city.service.CityService;
+import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.stadium.entity.Stadium;
@@ -41,6 +43,8 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
     private StadiumService stadiumService;
     @Autowired
     private StadiumSubService stadiumSubService;
+    @Autowired
+    private ProvinceService provinceService;
 
     @RequestMapping(value = "/index")
     public String index(){
@@ -118,8 +122,8 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
         @RequestMapping(value = "/add")
         public String add(Long id,Model model){
             try{
-                List<City> city = cityService.queryAll();
-                model.addAttribute("city",city);
+                List<Province> province = provinceService.queryAll();
+                model.addAttribute("province",province);
                 if(id!=null){
                     StadiumUser stadiumUser = stadiumUserService.queryByPK(id);
                     model.addAttribute("stadiumUser", stadiumUser);

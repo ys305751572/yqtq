@@ -41,18 +41,21 @@
         </div>
         <div class="block-area" id="alternative-buttons">
             <button id="c_search" class="btn btn-alt m-r-5">查询</button>
-        </div>
-        <div class="block-area">
-            <div class="row">
-                <ul class="list-inline list-mass-actions">
-                    <li>
-                        <a data-toggle="modal" href="${contextPath}/admin/watchingRace/add" title="新增" class="tooltips">
-                            <i class="sa-list-add"></i>
-                        </a>
-                    </li>
-                </ul>
+            <div style="float:right;margin-right:25px;">
+                <a data-toggle="modal" href="${contextPath}/admin/watchingRace/add" title="新增" class="btn btn-alt m-r-5">新增</a>
             </div>
         </div>
+        <%--<div class="block-area">--%>
+            <%--<div class="row">--%>
+                <%--<ul class="list-inline list-mass-actions">--%>
+                    <%--<li>--%>
+                        <%--<a data-toggle="modal" href="${contextPath}/admin/watchingRace/add" title="新增" class="tooltips">--%>
+                            <%--<i class="sa-list-add"></i>--%>
+                        <%--</a>--%>
+                    <%--</li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
+        <%--</div>--%>
         <hr class="whiter m-t-20"/>
         <!-- form表格 -->
         <div class="block-area" id="tableHover">
@@ -126,10 +129,10 @@
                                 var st = full.status;
                                 if(st==0){
                                     var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$watchingRace.fn.close("+ data +")'> " +
-                                            "<i>禁用</i></button>";
+                                            "禁用</button>";
                                 }else if(st==1){
                                     var status = "<button title='启用' class='btn btn-primary btn-circle detail' onclick='$watchingRace.fn.open("+ data +")'> " +
-                                            "<i>启用</i></button>";
+                                            "启用</button>";
                                 }
                                 return detail + "&nbsp;" + status + "&nbsp;" +edit;
                             }
