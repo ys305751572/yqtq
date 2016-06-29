@@ -13,4 +13,6 @@ public interface HostRaceService extends GenericManager<HostRace> {
 
     public HostRace findById(Long id);
 
+    public Integer matchTeam(Long id);
+
 }

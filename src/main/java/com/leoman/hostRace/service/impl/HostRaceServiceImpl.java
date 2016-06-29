@@ -12,6 +12,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/6/2.
  */
@@ -19,6 +24,8 @@ import org.springframework.stereotype.Service;
 public class HostRaceServiceImpl extends GenericManagerImpl<HostRace, HostRaceDao> implements HostRaceService {
     @Autowired
     private HostRaceDao dao;
+    @Autowired
+    private EntityManagerFactory factory;
 
     @Override
     public Page<HostRace> findAll(HostRace hostRace, Integer currentPage, Integer pageSize) throws Exception {
@@ -31,4 +38,20 @@ public class HostRaceServiceImpl extends GenericManagerImpl<HostRace, HostRaceDa
         return dao.findById(id);
     }
 
+    @Override
+    public Integer matchTeam(Long id){
+        EntityManager em = factory.createEntityManager();
+        StringBuffer sql = new StringBuffer();
+        sql.append(" SELECT                      ");
+        sql.append("   COUNT(1)                  ");
+        sql.append(" FROM                        ");
+        sql.append("   t_host_race_join          ");
+        sql.append(" WHERE host_race_id = "+id+" ");
+        Query query = em.createNativeQuery(sql.toString());
+        Integer num = Integer.parseInt(query.getResultList().get(0).toString());
+        em.close();
+        return num;
+    }
+
 }
+

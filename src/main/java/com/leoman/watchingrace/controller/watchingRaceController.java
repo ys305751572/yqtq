@@ -95,8 +95,8 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
     @RequestMapping(value = "/add")
     public String add(Model model){
         try{
-            List<City> city = cityService.queryAll();
-            model.addAttribute("city",city);
+            List<Province> province = provinceService.queryAll();
+            model.addAttribute("province",province);
         }catch (Exception e){
             e.printStackTrace();
         }

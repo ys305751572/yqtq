@@ -144,9 +144,8 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
     @RequestMapping(value = "/edit")
     public String edit(Long id, Model model){
         try{
-            List<City> city = cityService.queryAll();
-            model.addAttribute("city",city);
-
+            List<Province> province = provinceService.queryAll();
+            model.addAttribute("province",province);
             if(id!=null){
                 Stadium stadium = stadiumService.findById(id);
                 model.addAttribute("stadium", stadium);

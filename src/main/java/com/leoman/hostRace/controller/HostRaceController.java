@@ -71,6 +71,8 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
         try{
             HostRace hostRace = hostRaceService.findById(id);
             model.addAttribute("hostRace", hostRace);
+            Integer matchTeam = hostRaceService.matchTeam(id);
+            model.addAttribute("matchTeam", matchTeam);
         }catch (Exception e){
             e.printStackTrace();
         }

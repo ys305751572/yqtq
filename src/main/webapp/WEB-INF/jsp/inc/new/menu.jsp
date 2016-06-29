@@ -122,8 +122,8 @@
                 <span class="menu-item">APP设置相关</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/1/index">首页设置</a></li>
-                <li><a href="${contextPath}/admin/1/index">vip相关</a></li>
+                <li><a href="${contextPath}/admin/systemBanner/index">首页设置</a></li>
+                <li><a href="${contextPath}/admin/systemVipSetting/index">vip相关</a></li>
                 <li><a href="${contextPath}/admin/1/index">信誉度相关设置</a></li>
                 <li><a href="${contextPath}/admin/1/index">推送设置</a></li>
                 <li><a href="${contextPath}/admin/1/index">系统消息列表</a></li>

@@ -32,12 +32,18 @@
                         <input type="text" id="name" name="name" value="${stadium.name}" class="input-sm form-control validate[required]" placeholder="..." >
                     </div>
                     <div class="col-md-6 m-b-15">
-                        <label>城市：</label>
-                        <select id="cityId" name="cityId" class="select" >
-                            <option value="${stadium.city.cityId}">${stadium.city.city eq null ? "请选择" : stadium.city.city}</option>
-                            <c:forEach items="${city}" var="c">
-                                <option value="${c.cityId}">${c.city}</option>
+                        <label>省份：</label>
+                        <select id="province" name="province" class="select" >
+                            <option value="">省份</option>
+                            <c:forEach items="${province}" var="v" >
+                                <option value="${v.provinceId}" >${v.province}</option>
                             </c:forEach>
+                        </select>
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>城市：</label>
+                        <select id="cityId" name="cityId" class="select">
+                            <option value="">城市</option>
                         </select>
                     </div>
                     <div class="col-md-6 m-b-15">
@@ -82,7 +88,7 @@
                         </div>
                     </div>
                     <hr class="whiter m-t-20"/>
-                    <div class="col-md-12 m-b-15">
+                    <div class="col-md-6 m-b-15">
                         <label>球场简介: </label>
                         <div class="wysiwye-editor" id="detail" name="detail">${stadium.description}</div>
                     </div>
@@ -167,6 +173,32 @@
                     });
                 }
             },
+            selectCity : function(data){
+                if(data!=""){
+                    $.ajax({
+                        url:"${contextPath}/admin/reserve/selectCity",
+                        data:{
+                            "provinceId":data
+                        },
+                        success:function(data){
+                            $("#cityId").empty();
+                            for(var i= 0;i<data.length;i++){
+                                var cityId = data[i].cityId;
+                                var city = data[i].city;
+                                var op = "<option value='"+cityId+"'>"+city+"</option>";
+                                $("#cityId").append(op);
+                                if(i==0){
+                                }
+                            }
+                            $("#cityId").selectpicker('refresh');
+                        }
+                    });
+                }else{
+                    $("#cityId").empty();
+                    $("#cityId").append("<option value=''>"+"城市"+"</option>");
+                    $("#cityId").selectpicker('refresh');
+                }
+            }
 //            check : function(){
 //                if(escape($("#name").val()).indexOf("%u")<0 || $("#name").val()==""){
 //                    alert( "球场名称格式不正确,请输入中文!" );
@@ -179,6 +211,10 @@
     }
     $(function () {
         $user.fn.init();
+        $("#province").change(function(){
+            var opt=$("#province").val();
+            $user.fn.selectCity(opt);
+        })
     })
 </script>
 <script>

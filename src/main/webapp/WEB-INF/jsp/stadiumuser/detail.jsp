@@ -66,7 +66,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>今日预定金额:</label>
-                        <input type="text" id="toDaySumPrice" name="toDaySumPrice" value="${stadiumUser.toDaySumPrice}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="toDaySumPrice" name="toDaySumPrice" value="${stadiumUser.toDaySumPrice eq null ? 0.0 : stadiumUser.toDaySumPrice}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>散客:</label>

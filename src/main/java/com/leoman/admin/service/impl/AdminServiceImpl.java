@@ -45,7 +45,9 @@ public class AdminServiceImpl extends GenericManagerImpl<Admin,AdminDao> impleme
                                          CriteriaBuilder cb) {
                 List<Predicate> list = new ArrayList<Predicate>();
 
-
+                if(!u.getUsername().isEmpty()){
+                    list.add(cb.like(root.get("username").as(String.class),"%"+u.getUsername()+"%"));
+                }
 
                 Predicate[] p = new Predicate[list.size()];
                 return cb.and(list.toArray(p));

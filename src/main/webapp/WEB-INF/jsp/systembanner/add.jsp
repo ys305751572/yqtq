@@ -22,50 +22,38 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">看球编辑</h1>
+        <h1 class="page-title">首页banner</h1>
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${watchingRace.id}">
                 <div class="row">
-                    <div class="col-md-6 m-b-15">
-                        <label>看球名称：</label>
-                        <input type="text" id="name" name="name" value="${watchingRace.name}" class="input-sm form-control validate[required]" placeholder="...">
-                    </div>
-                    <div class="col-md-6 m-b-15">
-                        <label>省份：</label>
-                        <select id="province" name="province" class="select" >
-                            <option value="">省份</option>
-                            <c:forEach items="${province}" var="v" >
-                                <option value="${v.provinceId}" >${v.province}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="col-md-6 m-b-15">
-                        <label>城市：</label>
-                        <select id="cityId" name="cityId" class="select">
-                            <option value="">城市</option>
-                        </select>
-                    </div>
                     <div class="col-md-12 m-b-15">
-                        <label>球场封面：</label>
                         <div class="fileupload fileupload-new" data-provides="fileupload">
                             <div class="fileupload-preview thumbnail form-control">
-                                <img src="${watchingRace.avater}">
+                                <img src="">
                             </div>
                             <div>
                                 <span class="btn btn-file btn-alt btn-sm">
                                     <span class="fileupload-new">选择图片</span>
                                     <span class="fileupload-exists">更改</span>
-                                    <input id="imageFile" name="imageFile" type="file" value="${watchingRace.avater}"/>
+                                    <input id="imageFile" name="imageFile" type="file" value=""/>
                                 </span>
                                 <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
                             </div>
                         </div>
                     </div>
-                    <hr class="whiter m-t-20"/>
-                    <div class="col-md-12 m-b-15">
-                        <label>详细描述</label>
-                        <div class="wysiwye-editor" id="detail" name="detail">${watchingRace.description}</div>
+                    <div class="col-md-6 m-b-15">
+                        <label>跳转类型：</label>
+                        <select id="type" name="type" class="select" >
+                            <option value="0">活动</option>
+                            <option value="1">资讯</option>
+                            <option value="2">球赛</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>跳转对象：</label>
+                        <input type="text" id="toId" name="toId" value=""  class="input-sm form-control validate[required]" placeholder="..."  disabled>
+                        <a onclick="$user.fn.selectValue()" class="btn btn-alt m-r-5">选择</a>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
@@ -95,73 +83,46 @@
             },
             save : function () {
                 var isCheck = true;
-                if($("#name").val()==""){
-                    alert("看球名称不能为空!");
-                    isCheck=false;
-                }
-                if($("#cityId").val()==""){
-                    alert("城市不能为空!");
-                    isCheck=false;
-                }
                 if($('.fileupload-preview img').size()<1 || $('.fileupload-preview img').width()==0){
-                    alert("球场封面不能为空!");
+                    alert("图片不能为空!");
                     isCheck=false;
                 }
-                if($('.note-editable').text()==""){
-                    alert("球场简介不能为空!");
+                if($("#toId").val() == ""){
+                    alert("跳转对象不能为空!");
                     isCheck=false;
                 }
                 if(isCheck){
-                    var code =  $('.wysiwye-editor').code();
+                    var toId =  $('#toId').val();
                     $("#fromId").ajaxSubmit({
-                        url : "${contextPath}/admin/watchingRace/save",
+                        url : "${contextPath}/admin/systemBanner/save",
                         type : "POST",
                         data : {
-                            "detail" : code
+                            "toId" : toId
                         },
                         success : function(result) {
                             if(!result.status) {
                                 $common.fn.notify(result.msg);
                                 return;
                             }
-                            window.location.href = "${contextPath}/admin/watchingRace/index";
+                            window.location.href = "${contextPath}/admin/systemBanner/index";
                         }
                     });
                 }
             },
-            selectCity : function(data){
-                if(data!=""){
-                    $.ajax({
-                        url:"${contextPath}/admin/reserve/selectCity",
-                        data:{
-                            "provinceId":data
-                        },
-                        success:function(data){
-                            $("#cityId").empty();
-                            for(var i= 0;i<data.length;i++){
-                                var cityId = data[i].cityId;
-                                var city = data[i].city;
-                                var op = "<option value='"+cityId+"'>"+city+"</option>";
-                                $("#cityId").append(op);
-                                if(i==0){
-                                }
-                            }
-                            $("#cityId").selectpicker('refresh');
-                        }
-                    });
-                }else{
-                    $("#cityId").empty();
-                    $("#cityId").append("<option value=''>"+"城市"+"</option>");
-                    $("#cityId").selectpicker('refresh');
-                }
+            selectValue : function(){
+                var type = $("#type").val();
+                var iWidth=1000; //弹出窗口的宽度;
+                var iHeight=600; //弹出窗口的高度;
+                var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
+                var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
+                window.open("${contextPath}/admin/systemBanner/select?type="+type,"","height="+iHeight+",width="+iWidth+",top="+iTop +",left="+iLeft+",toolbar=no,menubar=no,resizable=no,location=no,status=no");
             }
         }
     }
     $(function () {
         $user.fn.init();
-        $("#province").change(function(){
-            var opt=$("#province").val();
-            $user.fn.selectCity(opt);
+        $("#type").change(function(){
+            $("#toId").val("");
         })
     })
 </script>

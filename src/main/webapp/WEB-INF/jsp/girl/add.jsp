@@ -100,7 +100,7 @@
                                             <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
                                             </c:if>
                                             <c:if test="${v.url ne null}">
-                                            <a href='javascript:void(0);' onclick='$user.fn.delImage(${v.id});'>删除</a>
+                                            <a href='javascript:void(0);' class='btn btn-sm btn-alt m-r-5' onclick='$user.fn.delImage(${v.id});'>删除</a>
                                             </c:if>
                                         </div>
                                     </div>
@@ -132,7 +132,7 @@
                                             <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
                                             </c:if>
                                             <c:if test="${v.url ne null}">
-                                            <a href='javascript:void(0);' onclick='$user.fn.delImage(${v.id});'>删除</a>
+                                            <a href='javascript:void(0);' class='btn btn-sm btn-alt m-r-5' onclick='$user.fn.delImage(${v.id});'>删除</a>
                                             </c:if>
                                         </div>
                                     </div>

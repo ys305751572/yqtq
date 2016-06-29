@@ -48,7 +48,7 @@
             <div class="form-group">
                 <div class="col-md-offset-5">
                     <button type="button" class="btn btn-info btn-sm m-t-10" onclick="$team.fn.information(${hostRace.id})">增加资讯</button>
-                    <button type="button" class="btn btn-info btn-sm m-t-10" onclick="$team.fn.sign(${hostRace.id})">报名队伍</button>
+                    <button type="button" class="btn btn-info btn-sm m-t-10" onclick="$team.fn.sign(${hostRace.id})">报名队伍 ( ${matchTeam} )</button>
                     <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                 </div>
             </div>
