@@ -111,8 +111,10 @@
                         {"data": "stadium.address","sDefaultContent" : ""},
                         {
                             "data": "id",
-                            "render": function (data) {
-                                var sure = "<button title='确定' class='btn btn-primary btn-circle add' onclick=\"$hostRaceList.fn.sure('"+data+ "')\">" +
+                            "render": function (data,type,full) {
+                                var id = full.id;
+                                var name = full.name;
+                                var sure = "<button title='确定' class='btn btn-primary btn-circle add' onclick=\"$hostRaceList.fn.sure('"+id+ "','"+name+ "')\">" +
                                         "确定</button>";
                                 return sure;
                             }
@@ -123,9 +125,10 @@
                     }
                 });
             },
-            sure : function(data){
+            sure : function(id,name){
                 if(window.opener){
-                    window.opener.document.all.toId.value = data;
+                    window.opener.document.all.toId.value = id;
+                    window.opener.document.all.object.value = name;
                     window.close();
                 }
             },

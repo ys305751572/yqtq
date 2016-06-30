@@ -7,6 +7,8 @@ import com.leoman.vipsetting.service.SystemVipExperienceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/6/29.
  */
@@ -16,4 +18,8 @@ public class SystemVipExperienceServiceImpl extends GenericManagerImpl<SystemVip
     @Autowired
     private SystemVipExperienceDao dao;
 
+    @Override
+    public List<SystemVipExperience> experienceList(Long systemVipId, Integer action) {
+        return dao.experienceList(systemVipId,action);
+    }
 }

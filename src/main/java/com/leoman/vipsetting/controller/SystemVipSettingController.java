@@ -1,9 +1,6 @@
 package com.leoman.vipsetting.controller;
 
 import com.leoman.common.controller.common.GenericEntityController;
-import com.leoman.image.entity.FileBo;
-import com.leoman.systembanner.entity.SystemBanner;
-import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
 import com.leoman.vipsetting.entity.SystemVip;
 import com.leoman.vipsetting.entity.SystemVipExperience;
@@ -42,8 +39,6 @@ public class SystemVipSettingController extends GenericEntityController<SystemVi
         }
         List<SystemVipLevel> systemVipLevels = systemVipLevelService.OrderByLevel();
         model.addAttribute("systemVipLevels",systemVipLevels);
-
-
         return "/systemvipsetting/list";
     }
 
@@ -92,6 +87,40 @@ public class SystemVipSettingController extends GenericEntityController<SystemVi
         }
         return Result.success();
     }
+
+    /**
+     * VIP活动获得经验保存
+     * @param systemVipExperience
+     * @param experience
+     * @param systemVipId
+     * @return
+     */
+    @RequestMapping(value = "/systemVipExperienceSave")
+    @ResponseBody
+    public Result systemVipExperienceSave(SystemVipExperience systemVipExperience,Integer experience,Long systemVipId) {
+        SystemVipExperience s = null;
+        if(null!=systemVipExperience && null!=systemVipId){
+            List<SystemVipExperience> list = systemVipExperienceService.experienceList(systemVipId,systemVipExperience.getAction());
+            if(!list.isEmpty()){
+                s = list.get(0);
+            }
+        }
+        if(null != s){
+            s.setExperience(experience);
+            systemVipExperienceService.update(s);
+        }else {
+            systemVipExperience.setSystemVipId(systemVipId);
+            systemVipExperience.setExperience(experience);
+            systemVipExperienceService.save(systemVipExperience);
+        }
+        return Result.success();
+    }
+
+    /**
+     * 经验列表
+     * @param systemVipId
+     * @return
+     */
     @RequestMapping(value = "/vipExperienceFrom")
     @ResponseBody
     public List<SystemVipExperience> vipExperienceFrom(Long systemVipId){

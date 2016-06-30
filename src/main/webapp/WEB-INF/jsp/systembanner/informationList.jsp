@@ -93,8 +93,10 @@
                         },
                         {
                             "data": "id",
-                            "render": function (data) {
-                                var sure = "<button title='确定' class='btn btn-primary btn-circle add' onclick=\"$informationList.fn.sure('"+data+ "')\">" +
+                            "render": function (data,type,full) {
+                                var id = full.id;
+                                var title = full.title;
+                                var sure = "<button title='确定' class='btn btn-primary btn-circle add' onclick=\"$informationList.fn.sure('"+id+ "','"+title+ "')\">" +
                                         "确定</button>";
                                 return sure;
                             }
@@ -105,9 +107,10 @@
                     }
                 });
             },
-            sure : function(data){
+            sure : function(id,title){
                 if(window.opener){
-                    window.opener.document.all.toId.value = data;
+                    window.opener.document.all.toId.value = id;
+                    window.opener.document.all.object.value = title;
                     window.close();
                 }
             }

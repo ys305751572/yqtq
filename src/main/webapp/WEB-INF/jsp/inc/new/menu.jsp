@@ -123,11 +123,10 @@
             </a>
             <ul class="list-unstyled menu-item">
                 <li><a href="${contextPath}/admin/systemBanner/index">首页设置</a></li>
-                <li><a href="${contextPath}/admin/systemVipSetting/index">vip相关</a></li>
-                <li><a href="${contextPath}/admin/1/index">信誉度相关设置</a></li>
-                <li><a href="${contextPath}/admin/1/index">推送设置</a></li>
-                <li><a href="${contextPath}/admin/1/index">系统消息列表</a></li>
-                <li><a href="${contextPath}/admin/1/index">反馈管理</a></li>
+                <li><a href="${contextPath}/admin/systemVipSetting/index">vip相关设置</a></li>
+                <li><a href="${contextPath}/admin/systemVipCredibility/index">信誉度相关设置</a></li>
+                <li><a href="${contextPath}/admin/systemMessage/index">系统消息列表</a></li>
+                <li><a href="${contextPath}/admin/userFeedback/index">反馈管理</a></li>
                 <li><a href="${contextPath}/admin/systemInsurance/index">保险列表</a></li>
             </ul>
         </li>

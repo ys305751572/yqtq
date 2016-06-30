@@ -72,7 +72,7 @@
                         </div>
                         <div class="asd">
                             <label>折扣:</label>
-                            <input type="text" id="preferente" name="preferente" maxlength="3" value="" class="input-sm form-control validate[required]" style="width: 123px" onkeyup="value=value.replace(/[^0-9.]/g,'')">
+                            <input type="text" id="preferente" name="preferente" maxlength="3" value="" class="input-sm form-control validate[required]" style="width: 123px" onkeyup="$user.fn.asd()">
                         </div>
                         <a onclick="$user.fn.systemVipsLevelSave();" class="btn btn-alt m-r-5" style="margin-top: 10px !important;">设定</a>
                     </div>
@@ -85,18 +85,34 @@
                 </div>
                 <div class="row">
                     <div class="col-md-1 m-b-15">
+                        <label>选择对应等级:</label>
                         <select id="systemVipId" class="select" >
                             <c:forEach items="${systemVipLevels}" var="v">
                                 <option value="${v.systemVipId}">Lv ${v.level}</option>
                             </c:forEach>
                         </select>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-3 m-b-15">
                         <div id="systemVipExperience"></div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1 m-b-15" >
+                        <select id="action" class="select">
+                            <option value="1">散客组队成功</option>
+                            <option value="2">场地预订</option>
+                            <option value="3">约看宝贝</option>
+                        </select>
+                        <a onclick="$user.fn.systemVipExperienceSave();" class="btn btn-alt m-r-5" style="margin-top: 10px !important;">设定</a>
+                    </div>
+                    <div class="col-md-1 m-b-15" style="margin-left: -5px;">
+                        <input type="text" id="vipExperience" name="vipExperience" maxlength="5" value="" class="input-sm form-control validate[required]" style="width: 123px" onkeyup="value=value.replace(/[^0-9]/g,'')">
+                    </div>
                     <hr class="whiter m-t-20"/>
                 </div>
-                <div class="form-group">
+                <div class="form-group" >
                     <div class="col-md-offset-5">
                         <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                     </div>
@@ -145,15 +161,15 @@
             },
             systemVipsLevelSave : function () {
                 var isCheck = true;
-                if($("#level").val()==""){
+                if($("#level1").val()=="" ){
                     alert("等级不能为空!");
                     isCheck=false;
                 }
-                if($("#experience").val()==""){
+                if($("#experience").val()=="" ){
                     alert("经验不能为空!");
                     isCheck=false;
                 }
-                if($("#preferente").val()==""){
+                if($("#preferente").val()=="" ){
                     alert("折扣不能为空!");
                     isCheck=false;
                 }
@@ -175,31 +191,88 @@
                     });
                 }
             },
+            systemVipExperienceSave : function(){
+                var isCheck = true;
+                if($("#vipExperience").val()==""){
+                    alert("经验不能为空!");
+                    isCheck=false;
+                }
+                if(isCheck){
+                    var experience = $("#vipExperience").val();
+                    var systemVipId =  $('#systemVipId').val();
+                    var action =  $('#action').val();
+                    $("#fromId").ajaxSubmit({
+                        url : "${contextPath}/admin/systemVipSetting/systemVipExperienceSave",
+                        type : "POST",
+                        data : {
+                            "experience" : experience,
+                            "systemVipId" : systemVipId,
+                            "action" : action
+                        },
+                        success : function(result) {
+                            if(!result.status) {
+                                $common.fn.notify(result.msg);
+                                return;
+                            }
+                            $user.fn.vipExperienceFrom(systemVipId);
+                        }
+                    });
+                }
+            },
             vipExperienceFrom : function(data){
+                console.log(data);
                 $.ajax({
                     url:"${contextPath}/admin/systemVipSetting/vipExperienceFrom",
                     data:{
                         "systemVipId":data
                     },
                     success:function(data){
-                        $("#cityId").empty();
+                        console.log(data);
+                        $("#systemVipExperience").empty();
                         for(var i= 0;i<data.length;i++){
-                            var cityId = data[i].cityId;
-                            var city = data[i].city;
-                            var op = "<option value='"+cityId+"'>"+city+"</option>";
-                            $("#cityId").append(op);
-                            if(i==0){
-                                $reserve.fn.selectStadium(cityId);
+                            var action = data[i].action;
+                            var experience = data[i].experience;
+                            if(action==1){
+                                var a = "<div class='asd'>" +
+                                            "<label>散客组队成功:</label>" +
+                                            "<input style='width: 123px' type='text' value=\""+experience+ "点经验\" class='input-sm form-control validate[required]' disabled>" +
+                                        "</div>";
                             }
+                            if(action==2){
+                                var a = "<div class='asd'>" +
+                                            "<label>场地预订:</label>" +
+                                            "<input style='width: 123px' type='text' value=\""+experience+ "点经验\" class='input-sm form-control validate[required]' disabled>" +
+                                        "</div>";
+                            }
+                            if(action==3){
+                                var a = "<div class='asd'>" +
+                                            "<label>约看宝贝:</label>" +
+                                            "<input style='width: 123px' type='text' value=\""+experience+ "点经验\" class='input-sm form-control validate[required]' disabled>" +
+                                        "</div>";
+                            }
+                            $("#systemVipExperience").append(a);
+
+
                         }
-                        $("#cityId").selectpicker('refresh');
                     }
                 });
+            },
+            asd : function(){
+                var str = $("#preferente").val();
+                console.log(str);
+                if(str.length!=0){
+                    var reg = /^([0-9])+([.0-9]{2})?$/;
+                    if(!reg.test(str)){
+                        $("#preferente").val("");
+                    }
+                }
+
             }
         }
     }
     $(function () {
         $user.fn.init();
+        $user.fn.vipExperienceFrom($("#systemVipId").val());
         $("#systemVipId").change(function(){
             var opt=$("#systemVipId").val();
             $user.fn.vipExperienceFrom(opt);

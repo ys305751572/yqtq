@@ -79,7 +79,7 @@
                         <label>比赛地点：</label>
                         <input type="text" id="stadiumName" name="stadiumName" value="${bigRace.stadium.name}"  class="input-sm form-control validate[required]" placeholder="..."  disabled>
                         <input type="hidden" id="stadiumId" name="stadiumId" value="${bigRace.stadium.id}" >
-                        <a onclick="$user.fn.selectValue()" class="btn btn-alt m-r-5">选择</a>
+                        <a onclick="$user.fn.selectValue()" class="btn btn-alt m-r-5" style="margin-top: 10px">选择</a>
                     </div>
 
                     <div class="col-md-6 m-b-15">

@@ -46,10 +46,12 @@
                             <option value="">城市</option>
                         </select>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>球场基本信息:</label>
                         <input type="checkbox" id="chk" />
-                        <div class="div_hidden" id="div_hidden"  style="display: none">
+                        <div class="div_hidden" id="div_hidden" style="display: none">
                             <label>场地类型：</label>
                                 <select id="siteType" name="siteType" class="select">
                                     <option value='1'  <c:if test="${stadium.siteType eq 1}">selected</c:if>>室外</option>

@@ -53,9 +53,9 @@
                     <c:if test="${hostRace.id eq null}">
                         <div class="col-md-6 m-b-15">
                             <label>球场：</label>
-                            <input type="text" id="stadiumName" name="stadiumName" value="${hostRace.stadium.name}"  class="input-sm form-control validate[required]" placeholder="..."  disabled>
+                            <input type="text" id="stadiumName" name="stadiumName" value="${hostRace.stadium.name}" class="input-sm form-control validate[required]" placeholder="..."  disabled>
                             <input type="hidden" id="stadiumId" name="stadiumId" value="${hostRace.stadium.id}" >
-                            <a onclick="$user.fn.selectValue()" class="btn btn-alt m-r-5">选择</a>
+                            <a onclick="$user.fn.selectValue()" style="margin-top: 10px" class="btn btn-alt m-r-5">选择</a>
                         </div>
                         <div class="col-md-6 m-b-15">
                             <label>赛制：</label>

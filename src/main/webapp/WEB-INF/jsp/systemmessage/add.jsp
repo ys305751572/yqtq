@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
     <meta name="format-detection" content="telephone=no">
     <meta charset="UTF-8">
@@ -22,45 +23,37 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">首页banner</h1>
+        <h1 class="page-title">平台赛事</h1>
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
-                <input type="hidden" id="id" name="id" value="${watchingRace.id}">
                 <div class="row">
-                    <div class="col-md-12 m-b-15">
-                        <div class="fileupload fileupload-new" data-provides="fileupload">
-                            <div class="fileupload-preview thumbnail form-control">
-                                <img src="">
-                            </div>
-                            <div>
-                                <span class="btn btn-file btn-alt btn-sm">
-                                    <span class="fileupload-new">选择图片</span>
-                                    <span class="fileupload-exists">更改</span>
-                                    <input id="imageFile" name="imageFile" type="file" value=""/>
-                                </span>
-                                <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
-                            </div>
-                        </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>系统标题：</label>
+                        <input type="text" id="systemTitle" name="systemTitle" value="" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
-                        <label>跳转类型：</label>
-                        <select id="type" name="type" class="select" >
-                            <option value="0">活动</option>
-                            <option value="1">资讯</option>
-                            <option value="2">球赛</option>
+                        <label>接收用户：</label>
+                        <select id="userType1" name="userType1" class="select">
+                            <option value="0">全部</option>
+                            <option value="1">个人</option>
                         </select>
                     </div>
-                    <div class="col-md-6 m-b-15">
-                        <label>跳转对象：</label>
-                        <input type="text" id="object" name="object" value=""  class="input-sm form-control validate[required]" placeholder="..."  disabled>
-                        <input type="hidden" id="toId" name="toId" value="" disabled>
-                        <a onclick="$user.fn.selectValue()" class="btn btn-alt m-r-5">选择</a>
+                    <div class="col-md-6 m-b-15" id="uid" style="display: none">
+                        <label>用户：</label>
+                        <input type="text" id="nickName" name="nickName" value="" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="hidden" id="toUserId" name="toUserId" value="" disabled>
+                        <a onclick="_systemMessage.fn.selectValue()" class="btn btn-alt m-r-5" style="margin-top: 10px">选择</a>
+                    </div>
+                    <hr class="whiter m-t-20"/>
+                    <div class="col-md-12 m-b-15">
+                        <label>消息内容: </label>
+                        <div class="wysiwye-editor" id="detail" name="detail"></div>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-5">
-                        <button type="button" onclick="$user.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
+                        <button type="button" onclick="_systemMessage.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
                         <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                     </div>
                 </div>
@@ -73,7 +66,7 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    $user = {
+    _systemMessage = {
         v: {
             list: [],
             chart : null,
@@ -81,49 +74,63 @@
         },
         fn: {
             init: function () {
+
             },
             save : function () {
                 var isCheck = true;
-                if($('.fileupload-preview img').size()<1 || $('.fileupload-preview img').width()==0){
-                    alert("图片不能为空!");
+                if($("#title").val()==""){
+                    alert("系统标题不能为空!");
                     isCheck=false;
                 }
-                if($("#toId").val() == ""){
-                    alert("跳转对象不能为空!");
+                if($("#toUserId").val()==1 && $("#userId").val()==""){
+                    alert("用户ID不能为空!");
+                    isCheck=false;
+                }
+                if($('.note-editable').text()==""){
+                    alert("消息内容不能为空!");
                     isCheck=false;
                 }
                 if(isCheck){
-                    var toId =  $('#toId').val();
+                    var userType = $("#userType1").val();
+                    var title = $("#systemTitle").val();
+                    var toUserId = $("#toUserId").val();
+                    var code =  $('.wysiwye-editor').code();
                     $("#fromId").ajaxSubmit({
-                        url : "${contextPath}/admin/systemBanner/save",
+                        url : "${contextPath}/admin/systemMessage/save",
                         type : "POST",
                         data : {
-                            "toId" : toId
+                            "detail" : code,
+                            "title" : title,
+                            "toUserId" : toUserId,
+                            "userType" : userType
                         },
                         success : function(result) {
                             if(!result.status) {
                                 $common.fn.notify(result.msg);
                                 return;
                             }
-                            window.location.href = "${contextPath}/admin/systemBanner/index";
+                            window.location.href = "${contextPath}/admin/systemMessage/index";
                         }
                     });
                 }
             },
             selectValue : function(){
-                var type = $("#type").val();
                 var iWidth=1000; //弹出窗口的宽度;
                 var iHeight=600; //弹出窗口的高度;
                 var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
                 var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
-                window.open("${contextPath}/admin/systemBanner/select?type="+type,"","height="+iHeight+",width="+iWidth+",top="+iTop +",left="+iLeft+",toolbar=no,menubar=no,resizable=no,location=no,status=no");
+                window.open("${contextPath}/admin/systemMessage/userSelect","球场列表","height="+iHeight+",width="+iWidth+",top="+iTop +",left="+iLeft+",toolbar=no,menubar=no,resizable=no,location=no,status=no");
             }
         }
     }
     $(function () {
-        $user.fn.init();
-        $("#type").change(function(){
-            $("#toId").val("");
+        _systemMessage.fn.init();
+        $("#userType1").change(function(){
+            if($("#userType1").val()==1){
+                $("#uid").css('display','block');
+            }else {
+                $("#uid").css('display','none');
+            }
         })
     })
 </script>
@@ -135,10 +142,8 @@
         autoclose: 1,
         todayHighlight: 1,
         startView: 2,
-        minView: "2",
         forceParse: 0,
-        showMeridian: 1,
-        format: 'yyyy-mm-dd'
+        format: 'yyyy-mm-dd hh:mm'
     });
 </script>
 </body>
