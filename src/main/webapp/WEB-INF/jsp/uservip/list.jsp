@@ -28,12 +28,11 @@
                     <input type="text" class="input-sm form-control" id="nickName" name="nickName" placeholder="昵称" >
                 </div>
                 <div class="col-md-2 form-group">
-                    <select id="vipLevel" name="vipLevel" class="select">
+                    <select id="level" class="select" >
                         <option value="">会员等级</option>
-                        <option value="1">Lv1</option>
-                        <option value="2">Lv2</option>
-                        <option value="3">Lv3</option>
-                        <option value="4">Lv4</option>
+                        <c:forEach items="${systemVipLevels}" var="v">
+                            <option value="${v.level}">Lv ${v.level}</option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>
@@ -117,13 +116,13 @@
                             },
                             "sDefaultContent" : ""
                         },
-                        {"data": "user.nickName","sDefaultContent" : ""},
+                        {"data": "user.nickName","sDefaultContent" : ""}
 
                     ],
                     "fnServerParams": function (aoData) {
                         aoData.mobile = $("#mobile").val();
                         aoData.nickName = $("#nickName").val();
-                        aoData.vipLevel = $("#vipLevel").val();
+                        aoData.level = $("#level").val();
                     }
                 });
             },

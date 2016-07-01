@@ -12,13 +12,10 @@
     <!-- CSS -->
     <%@ include file="../inc/new/css.jsp" %>
     <style>
-        .asd{
+        .from2{
             float: left;
-            margin-right: 10px;
+            margin-right: 1px;
             margin-top: 10px;
-        }
-        .from1{
-            float: left;
         }
     </style>
 </head>
@@ -36,7 +33,7 @@
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <div class="row">
-                    <div class="col-md-1 m-b-15">
+                    <div class="col-md-12 m-b-15" style="width: 164px;">
                         <label>选择对应等级:</label>
                         <select id="systemVipId" class="select" >
                             <c:forEach items="${systemVipLevels}" var="v">
@@ -46,21 +43,23 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 m-b-15">
+                    <div class="col-md-12 m-b-15">
                         <div id="systemVipCredibility"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-1 m-b-15" >
+                    <div class="col-md-12 m-b-15" style="width: 164px;">
                         <select id="action" class="select">
                             <option value="1">散客组队成功</option>
                             <option value="2">场地预订</option>
                             <option value="3">约看宝贝</option>
                         </select>
-                        <a onclick="$user.fn.systemVipExperienceSave();" class="btn btn-alt m-r-5" style="margin-top: 10px !important;">设定</a>
                     </div>
-                    <div class="col-md-1 m-b-15" style="margin-left: -5px;">
-                        <input type="text" id="credibility1" name="credibility" maxlength="5" value="" class="input-sm form-control validate[required]" style="width: 123px" onkeyup="value=value.replace(/[^0-9]/g,'')">
+                </div>
+                <div class="row">
+                    <div class="col-md-12 m-b-15">
+                        <input type="text" id="credibility1" name="credibility" maxlength="6" value="" class="input-sm form-control validate[required]" style="width: auto" onkeyup="value=value.replace(/[^0-9]/g,'')">
+                        <a onclick="$user.fn.systemVipExperienceSave();" class="btn btn-alt m-r-5" style="margin-top: 10px !important;">设定</a>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
@@ -129,21 +128,21 @@
                             var action = data[i].action;
                             var credibility = data[i].credibility;
                             if(action==1){
-                                var a = "<div class='asd'>" +
+                                var a = "<div class='from2'>" +
                                             "<label>散客组队成功:</label>" +
-                                            "<input style='width: 123px' type='text' value=\""+credibility+ "点信誉度\" class='input-sm form-control validate[required]' disabled>" +
+                                            "<input style='width: auto' type='text' value=\""+credibility+ "点信誉度\" class='input-sm form-control validate[required]' disabled>" +
                                         "</div>";
                             }
                             if(action==2){
-                                var a = "<div class='asd'>" +
+                                var a = "<div class='from2'>" +
                                             "<label>场地预订:</label>" +
-                                            "<input style='width: 123px' type='text' value=\""+credibility+ "点信誉度\" class='input-sm form-control validate[required]' disabled>" +
+                                            "<input style='width: auto' type='text' value=\""+credibility+ "点信誉度\" class='input-sm form-control validate[required]' disabled>" +
                                         "</div>";
                             }
                             if(action==3){
-                                var a = "<div class='asd'>" +
+                                var a = "<div class='from2'>" +
                                             "<label>约看宝贝:</label>" +
-                                            "<input style='width: 123px' type='text' value=\""+credibility+ "点信誉度\" class='input-sm form-control validate[required]' disabled>" +
+                                            "<input style='width: auto' type='text' value=\""+credibility+ "点信誉度\" class='input-sm form-control validate[required]' disabled>" +
                                         "</div>";
                             }
                             $("#systemVipCredibility").append(a);

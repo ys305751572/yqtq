@@ -6,11 +6,16 @@ import com.leoman.user.entity.User;
 import com.leoman.user.entity.UserVip;
 import com.leoman.user.service.UserVipService;
 import com.leoman.user.service.impl.UserVipServiceImpl;
+import com.leoman.vipsetting.entity.SystemVipLevel;
+import com.leoman.vipsetting.service.SystemVipLevelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/6/13.
@@ -21,20 +26,26 @@ public class UserVipController extends GenericEntityController<UserVip,UserVip,U
 
     @Autowired
     private UserVipService userVipService;
-
+    @Autowired
+    private SystemVipLevelService systemVipLevelService;
     @RequestMapping(value = "/index")
-    public String index(){
+    public String index(Model model){
+        List<SystemVipLevel> systemVipLevels = systemVipLevelService.OrderByLevel();
+        model.addAttribute("systemVipLevels",systemVipLevels);
         return "/uservip/list";
     }
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length, User user){
+    public Object list(Integer draw, Integer start, Integer length, User user ,Integer level){
         Page<UserVip> page = null;
         UserVip userVip = new UserVip();
+        User u = new User();
         try {
             int pagenum = getPageNum(start,length);
             userVip.setUser(user);
+            u.setVipLevel(level);
+            userVip.setUser(u);
             page = userVipService.findAll(userVip, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();

@@ -34,12 +34,18 @@
                     </div>
 
                     <div class="col-md-6 m-b-15">
-                        <label>地区:</label>
-                        <select id="cityId" name="cityId" class="select" >
-                            <option value="${girl.city.cityId}">${girl.city.city eq null ? "请选择" : girl.city.city}</option>
-                            <c:forEach items="${city}" var="c">
-                                <option value="${c.cityId}">${c.city}</option>
+                        <label>省份：</label>
+                        <select id="province" name="province" class="select" >
+                            <option value="">省份</option>
+                            <c:forEach items="${province}" var="v" >
+                                <option value="${v.provinceId}" >${v.province}</option>
                             </c:forEach>
+                        </select>
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>城市：</label>
+                        <select id="cityId" name="cityId" class="select">
+                            <option value="${girl.city.cityId}">${girl.city.city eq null ? "城市" : girl.city.city}</option>
                         </select>
                     </div>
                     <div class="col-md-6 m-b-15">
@@ -109,7 +115,7 @@
                         </c:if>
                     </div>
                     </div>
-                    <div id="addd"><a href="javascript:void(0);" class="btn btn-sm btn-alt m-r-5" onclick="$user.fn.addCoverImage($('#num').val());">新增</a></div>
+                    <div id="addd" style="float: left"><a href="javascript:void(0);" class="btn btn-sm btn-alt m-r-5" onclick="$user.fn.addCoverImage($('#num').val());">新增</a></div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15" >
                         <div><label>宝贝相册：</label></div>
@@ -141,10 +147,10 @@
                         </c:if>
                         </div>
                     </div>
-                    <div><a href="javascript:void(0);" class="btn btn-sm btn-alt m-r-5" onclick="$user.fn.addAlbumImage($('#num').val());">新增</a></div>
+                    <div style="float: left"><a href="javascript:void(0);" class="btn btn-sm btn-alt m-r-5" onclick="$user.fn.addAlbumImage($('#num').val());">新增</a></div>
                 <hr class="whiter m-t-20"/>
-                <div class="form-group">
-                    <div class="col-md-offset-5">
+                <div class="form-group" >
+                    <div class="col-md-offset-5" style="float: left">
                         <button type="button" onclick="$user.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
                         <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                     </div>
@@ -170,6 +176,7 @@
             },
             save : function () {
                 var isCheck = true;
+                var price = $("#price").val();
                 if($("#name").val()==""){
                     alert("名称不能为空!");
                     isCheck=false;
@@ -190,9 +197,23 @@
                     alert("体重不能为空!");
                     isCheck=false;
                 }
-                if($("#price").val()==""){
+                if(price==""){
                     alert("服务价格不能为空!");
                     isCheck=false;
+                }
+                if(price.length!=0){
+                    var reg = /^([0-9]{1,8})([.]{0,1})([0-9]{0,2})$/;
+                    if(!reg.test(price)){
+                        alert("错误的服务价格!");
+                        var p = "${girl.price}";
+                        if(p==""){
+                            $("#price").val("");
+                        }else{
+                            $("#price").val(${girl.price});
+                        }
+
+                        isCheck=false;
+                    }
                 }
                 if($("#interest").val()==""){
                     alert("兴趣爱好不能为空!");
@@ -285,6 +306,32 @@
 
                     }
                 });
+            },
+            selectCity : function(data){
+                if(data!=""){
+                    $.ajax({
+                        url:"${contextPath}/admin/reserve/selectCity",
+                        data:{
+                            "provinceId":data
+                        },
+                        success:function(data){
+                            $("#cityId").empty();
+                            for(var i= 0;i<data.length;i++){
+                                var cityId = data[i].cityId;
+                                var city = data[i].city;
+                                var op = "<option value='"+cityId+"'>"+city+"</option>";
+                                $("#cityId").append(op);
+                                if(i==0){
+                                }
+                            }
+                            $("#cityId").selectpicker('refresh');
+                        }
+                    });
+                }else{
+                    $("#cityId").empty();
+                    $("#cityId").append("<option value=''>"+"城市"+"</option>");
+                    $("#cityId").selectpicker('refresh');
+                }
             }
         }
     }
@@ -295,6 +342,11 @@
         }else{
             $("#addd").show();
         }
+
+        $("#province").change(function(){
+            var opt=$("#province").val();
+            $user.fn.selectCity(opt);
+        });
 
     })
 

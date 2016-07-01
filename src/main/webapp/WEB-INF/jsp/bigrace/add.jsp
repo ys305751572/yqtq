@@ -84,7 +84,7 @@
 
                     <div class="col-md-6 m-b-15">
                         <label>比赛时间：</label>
-                        <input type="text" id="sDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${bigRace.startDate}'></date:date>" name="sDate" class="input-sm form_datetime form-control validate[required]" placeholder="..." >
+                        <input type="text" id="sDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${bigRace.startDate}'></date:date>" name="sDate" class="input-sm form_datetime form-control " placeholder="..." >
                         <input type="hidden" id="startDate" value="" name="startDate">
                     </div>
 

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/6/27.
  */
@@ -24,9 +26,10 @@ public class EventInformationController extends GenericEntityController<EventInf
     @ResponseBody
     private Result save(String detail,Long id){
             EventInformation eventInformation = new EventInformation();
+            List<EventInformation> list = eventInformationService.queryByProperty("raceId",id);
             EventInformation ei = null;
-            if(eventInformationService.queryByProperty("raceId",id)!=null){
-                ei = eventInformationService.queryByProperty("raceId",id).get(0);
+            if(!list.isEmpty() && list.size()>0){
+                ei = list.get(0);
             }
             try{
                 if(ei!=null){

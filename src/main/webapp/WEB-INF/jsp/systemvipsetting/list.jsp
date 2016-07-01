@@ -12,13 +12,10 @@
     <!-- CSS -->
     <%@ include file="../inc/new/css.jsp" %>
     <style>
-        .asd{
-            float: left;
-            margin-right: 10px;
-            margin-top: 10px;
-        }
         .from1{
             float: left;
+            margin-right: 1px;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -36,55 +33,58 @@
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <div class="row">
-                    <div class="col-md-3 m-b-15">
+                    <div class="col-md-6 m-b-15" style="width: auto">
                         <label>VIP会员价格:</label>
                         <input type="hidden" id="systemVipsId" name="systemVipsId" value="${systemVips.id}">
-                        <input type="text" id="price" name="price" value="${systemVips.price}" class="input-sm form-control validate[required]" placeholder="..." onkeyup="value=value.replace(/[^0-9.]/g,'')">
+                        <input type="text" id="price" name="price" value="${systemVips.price}" maxlength="10" class="input-sm form-control validate[required]" placeholder="..." onkeyup="value=value.replace(/[^0-9.]/g,'')">
                         <a onclick="$user.fn.systemVipsSave();" class="btn btn-alt m-r-5" style="margin-top: 10px !important;">设定</a>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 m-b-15">
+                    <div class="col-md-6 m-b-15">
                         <label>设置VIP级别:</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 m-b-15">
-                        <c:forEach items="${systemVipLevels}" var="v">
-                            <%--<input type="text" id="systemVipLevel" name="systemVipLevel" value="Lv ${v.level}               ${v.experience} 经验               ${v.preferente} 折" class="input-sm form-control validate[required]" disabled>--%>
-                        <div class="from1">
-                            <input style="width: 134px" type="text" id="1" name="1" value="Lv ${v.level}" class="input-sm form-control validate[required]" disabled>
+                    <c:forEach items="${systemVipLevels}" var="v">
+                    <div class="col-md-12 m-b-15">
+                        <div style="float: left">
+                            <input style="width: auto;border-right:none;" type="text" id="1" name="1" value="Lv ${v.level}" class="input-sm form-control validate[required]" disabled>
                         </div>
-                        <div class="from1">
-                            <input style="width: 134px" type="text" id="2" name="2" value="${v.experience} 经验" class="input-sm form-control validate[required]" disabled>
+                        <div style="float: left">
+                            <input style="width: auto;border-right:none;border-left:none;" type="text" id="2" name="2" value="${v.experience} 经验" class="input-sm form-control validate[required]" disabled>
                         </div>
-                        <div class="from1">
-                            <input style="width: 134px" type="text" id="3" name="3" value="${v.preferente} 折" class="input-sm form-control validate[required]" disabled>
+                        <div style="float: left">
+                            <input style="width: 156px;border-left:none;" type="text" id="3" name="3" value="${v.preferente} 折" class="input-sm form-control validate[required]" disabled>
                         </div>
-                        </c:forEach>
-                        <div class="asd">
-                            <label>等级:</label>
-                            <input type="text" id="level1" name="level" value="" maxlength="2" class="input-sm form-control validate[required]" style="width: 123px" onkeyup="value=value.replace(/[^0-9]/g,'')">
-                        </div>
-                        <div class="asd">
-                            <label>经验:</label>
-                            <input type="text" id="experience" name="experience" value="" class="input-sm form-control validate[required]" style="width: 123px" onkeyup="value=value.replace(/[^0-9]/g,'')">
-                        </div>
-                        <div class="asd">
-                            <label>折扣:</label>
-                            <input type="text" id="preferente" name="preferente" maxlength="3" value="" class="input-sm form-control validate[required]" style="width: 123px" onkeyup="$user.fn.asd()">
-                        </div>
-                        <a onclick="$user.fn.systemVipsLevelSave();" class="btn btn-alt m-r-5" style="margin-top: 10px !important;">设定</a>
                     </div>
-
+                    <br/>
+                    </c:forEach>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 m-b-15">
+                    <div class="col-md-12 m-b-15">
+                        <div class="from1">
+                            <label>等级:</label>
+                            <input type="text" id="level1" name="level" value="" maxlength="2" class="input-sm form-control " style="width: auto" onkeyup="value=value.replace(/[^0-9]/g,'')">
+                            <a onclick="$user.fn.systemVipsLevelSave();" class="btn btn-alt m-r-5" style="margin-top: 10px !important;">设定</a>
+                        </div>
+                        <div class="from1">
+                            <label>经验:</label>
+                            <input type="text" id="experience" name="experience" value="" maxlength="8" class="input-sm form-control  " style="width: auto" onkeyup="value=value.replace(/[^0-9]/g,'')">
+                        </div>
+                        <div class="from1">
+                            <label>折扣:</label>
+                            <input type="text" id="preferente" name="preferente" maxlength="3" value="" class="input-sm form-control  " style="width: auto" onkeyup="value=value.replace(/[^0-9.]/g,'')">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 m-b-15" style="width: 164px;">
                         <label>设置获得经验:</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-1 m-b-15">
+                    <div class="col-md-12 m-b-15" style="width: 164px;">
                         <label>选择对应等级:</label>
                         <select id="systemVipId" class="select" >
                             <c:forEach items="${systemVipLevels}" var="v">
@@ -94,21 +94,23 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 m-b-15">
+                    <div class="col-md-12 m-b-15">
                         <div id="systemVipExperience"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-1 m-b-15" >
+                    <div class="col-md-12 m-b-15" style="width: 164px;">
                         <select id="action" class="select">
                             <option value="1">散客组队成功</option>
                             <option value="2">场地预订</option>
                             <option value="3">约看宝贝</option>
                         </select>
-                        <a onclick="$user.fn.systemVipExperienceSave();" class="btn btn-alt m-r-5" style="margin-top: 10px !important;">设定</a>
                     </div>
-                    <div class="col-md-1 m-b-15" style="margin-left: -5px;">
-                        <input type="text" id="vipExperience" name="vipExperience" maxlength="5" value="" class="input-sm form-control validate[required]" style="width: 123px" onkeyup="value=value.replace(/[^0-9]/g,'')">
+                </div>
+                <div class="row">
+                    <div class="col-md-12 m-b-15">
+                        <input type="text" id="vipExperience" name="vipExperience" value="" class="input-sm form-control " maxlength="6" style="width: auto" onkeyup="value=value.replace(/[^0-9]/g,'')">
+                        <a onclick="$user.fn.systemVipExperienceSave();" class="btn btn-alt m-r-5" style="margin-top: 10px !important;">设定</a>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
@@ -137,9 +139,18 @@
             },
             systemVipsSave : function () {
                 var isCheck = true;
-                if($("#price").val()==""){
+                var price = $("#price").val();
+                if(price==""){
                     alert("VIP会员价格不能为空!");
                     isCheck=false;
+                }
+                if(price.length!=0){
+                    var reg = /^([0-9]{1,8})([.]{0,1})([0-9]{0,2})$/;
+                    if(!reg.test(price)){
+                        alert("错误的VIP会员价格!");
+                        $("#price").val(${systemVips.price});
+                        isCheck=false;
+                    }
                 }
                 if(isCheck){
                     var code =  $('#systemVipsId').val();
@@ -161,6 +172,7 @@
             },
             systemVipsLevelSave : function () {
                 var isCheck = true;
+                var preferente = $("#preferente").val();
                 if($("#level1").val()=="" ){
                     alert("等级不能为空!");
                     isCheck=false;
@@ -169,9 +181,20 @@
                     alert("经验不能为空!");
                     isCheck=false;
                 }
-                if($("#preferente").val()=="" ){
+                if(preferente=="" ){
                     alert("折扣不能为空!");
                     isCheck=false;
+                }
+                if(preferente.length!=0){
+                    var reg = /^([0-9])([.])([0-9])$/;
+                    var reg1 = /^([0-9])$/;
+                    if(reg1.test(preferente)){
+                        isCheck=isCheck;
+                    }else if(!reg.test(preferente)){
+                        alert("错误的折扣!");
+                        $("#preferente").val("");
+                        isCheck=false;
+                    }
                 }
                 if(isCheck){
                     var level = $("#level1").val();
@@ -197,6 +220,7 @@
                     alert("经验不能为空!");
                     isCheck=false;
                 }
+
                 if(isCheck){
                     var experience = $("#vipExperience").val();
                     var systemVipId =  $('#systemVipId').val();
@@ -220,53 +244,38 @@
                 }
             },
             vipExperienceFrom : function(data){
-                console.log(data);
                 $.ajax({
                     url:"${contextPath}/admin/systemVipSetting/vipExperienceFrom",
                     data:{
                         "systemVipId":data
                     },
                     success:function(data){
-                        console.log(data);
                         $("#systemVipExperience").empty();
                         for(var i= 0;i<data.length;i++){
                             var action = data[i].action;
                             var experience = data[i].experience;
                             if(action==1){
-                                var a = "<div class='asd'>" +
+                                var a = "<div class='from1'>" +
                                             "<label>散客组队成功:</label>" +
-                                            "<input style='width: 123px' type='text' value=\""+experience+ "点经验\" class='input-sm form-control validate[required]' disabled>" +
+                                            "<input style='width: auto' type='text' value=\""+experience+ "点经验\" class='input-sm form-control validate[required]' disabled>" +
                                         "</div>";
                             }
                             if(action==2){
-                                var a = "<div class='asd'>" +
+                                var a = "<div class='from1'>" +
                                             "<label>场地预订:</label>" +
-                                            "<input style='width: 123px' type='text' value=\""+experience+ "点经验\" class='input-sm form-control validate[required]' disabled>" +
+                                            "<input style='width: auto' type='text' value=\""+experience+ "点经验\" class='input-sm form-control validate[required]' disabled>" +
                                         "</div>";
                             }
                             if(action==3){
-                                var a = "<div class='asd'>" +
+                                var a = "<div class='from1'>" +
                                             "<label>约看宝贝:</label>" +
-                                            "<input style='width: 123px' type='text' value=\""+experience+ "点经验\" class='input-sm form-control validate[required]' disabled>" +
+                                            "<input style='width: auto' type='text' value=\""+experience+ "点经验\" class='input-sm form-control validate[required]' disabled>" +
                                         "</div>";
                             }
                             $("#systemVipExperience").append(a);
-
-
                         }
                     }
                 });
-            },
-            asd : function(){
-                var str = $("#preferente").val();
-                console.log(str);
-                if(str.length!=0){
-                    var reg = /^([0-9])+([.0-9]{2})?$/;
-                    if(!reg.test(str)){
-                        $("#preferente").val("");
-                    }
-                }
-
             }
         }
     }
