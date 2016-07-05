@@ -44,7 +44,19 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 m-b-15">
-                        <div id="systemVipCredibility"></div>
+                        <%--<div id="systemVipCredibility"></div>--%>
+                        <div class='from2'>
+                            <label>散客组队成功:</label>
+                            <input style='width: auto' type='text' id="a" value='' class='input-sm form-control validate[required]' disabled>
+                        </div>
+                        <div class='from2'>
+                            <label>场地预订:</label>
+                            <input style='width: auto' type='text' id="b" value='' class='input-sm form-control validate[required]' disabled>
+                        </div>
+                        <div class='from2'>
+                            <label>约看宝贝:</label>
+                            <input style='width: auto' type='text' id="c" value='' class='input-sm form-control validate[required]' disabled>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -58,7 +70,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 m-b-15">
-                        <input type="text" id="credibility1" name="credibility" maxlength="6" value="" class="input-sm form-control validate[required]" style="width: auto" onkeyup="value=value.replace(/[^0-9]/g,'')">
+                        <input type="text" id="credibility1" name="credibility" maxlength="6" value="" class="input-sm form-control" style="width: auto" onkeyup="value=value.replace(/[^0-9]/g,'')">
                         <a onclick="$user.fn.systemVipExperienceSave();" class="btn btn-alt m-r-5" style="margin-top: 10px !important;">设定</a>
                     </div>
                     <hr class="whiter m-t-20"/>
@@ -88,10 +100,11 @@
             },
             systemVipExperienceSave : function(){
                 var isCheck = true;
-                if($("#vipExperience").val()==""){
+                if($("#credibility1").val()==""){
                     alert("经验不能为空!");
                     isCheck=false;
                 }
+
                 if(isCheck){
                     var credibility1 = $("#credibility1").val();
                     var systemVipId =  $('#systemVipId').val();
@@ -115,38 +128,32 @@
                 }
             },
             vipCredibilityFrom : function(data){
-                console.log(data);
                 $.ajax({
                     url:"${contextPath}/admin/systemVipCredibility/vipCredibilityFrom",
                     data:{
                         "systemVipId":data
                     },
                     success:function(data){
-                        console.log(data);
-                        $("#systemVipCredibility").empty();
+//                        $("#systemVipCredibility").empty();
+                        $("#a").val("");
+                        $("#b").val("");
+                        $("#c").val("");
                         for(var i= 0;i<data.length;i++){
                             var action = data[i].action;
                             var credibility = data[i].credibility;
                             if(action==1){
-                                var a = "<div class='from2'>" +
-                                            "<label>散客组队成功:</label>" +
-                                            "<input style='width: auto' type='text' value=\""+credibility+ "点信誉度\" class='input-sm form-control validate[required]' disabled>" +
-                                        "</div>";
+                                $("#a").val(credibility+"点信誉度");
+//                                var a = "<div class='from2'>" +
+//                                            "<label>散客组队成功:</label>" +
+//                                            "<input style='width: auto' type='text' value=\""+credibility+ "点信誉度\" class='input-sm form-control validate[required]' disabled>" +
+//                                        "</div>";
                             }
                             if(action==2){
-                                var a = "<div class='from2'>" +
-                                            "<label>场地预订:</label>" +
-                                            "<input style='width: auto' type='text' value=\""+credibility+ "点信誉度\" class='input-sm form-control validate[required]' disabled>" +
-                                        "</div>";
+                                $("#b").val(credibility+"点信誉度");
                             }
                             if(action==3){
-                                var a = "<div class='from2'>" +
-                                            "<label>约看宝贝:</label>" +
-                                            "<input style='width: auto' type='text' value=\""+credibility+ "点信誉度\" class='input-sm form-control validate[required]' disabled>" +
-                                        "</div>";
+                                $("#c").val(credibility+"点信誉度");
                             }
-                            $("#systemVipCredibility").append(a);
-
                         }
                     }
                 });
@@ -157,9 +164,13 @@
         $user.fn.init();
         $user.fn.vipCredibilityFrom($("#systemVipId").val());
         $("#systemVipId").change(function(){
+            $("#credibility1").val("");
             var opt=$("#systemVipId").val();
             $user.fn.vipCredibilityFrom(opt);
-        })
+        });
+        $("#action").change(function(){
+            $("#credibility1").val("");
+        });
     })
 </script>
 <script>

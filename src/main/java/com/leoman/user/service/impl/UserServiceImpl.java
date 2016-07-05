@@ -1,5 +1,6 @@
 package com.leoman.user.service.impl;
 
+import com.leoman.common.service.impl.GenericManagerImpl;
 import com.leoman.user.dao.UserDao;
 import com.leoman.user.entity.User;
 import com.leoman.user.service.UserService;
@@ -25,7 +26,7 @@ import java.util.List;
  * Created by Administrator on 2016/5/23.
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends GenericManagerImpl<User,UserDao> implements UserService {
 
     @Autowired
     private UserDao dao;
@@ -65,51 +66,6 @@ public class UserServiceImpl implements UserService {
             }
         };
         return dao.findAll(spec, new PageRequest(pagenum - 1, pagesize, isDesc ? Sort.Direction.DESC : Sort.Direction.ASC, property));
-    }
-
-    @Override
-    public List<User> findAll() {
-        return dao.findAll();
-    }
-
-    @Override
-    public Page<User> find(int pageNum, int pageSize) {
-        return null;
-    }
-
-    @Override
-    public Page<User> find(int pageNum) {
-        return null;
-    }
-
-    @Override
-    public User getById(Long id) {
-        return dao.findOne(id);
-    }
-
-    @Override
-    public User deleteById(Long id) {
-        User user = dao.findOne(id);
-        dao.delete(user);
-        return null;
-    }
-
-    @Override
-    public User create(User user) {
-        return dao.save(user);
-    }
-
-    @Override
-    public User update(User user) {
-        return dao.save(user);
-    }
-
-    @Override
-    @Transactional
-    public void deleteAll(Long[] ids) {
-        for (Long id : ids) {
-            deleteById(id);
-        }
     }
 
 }

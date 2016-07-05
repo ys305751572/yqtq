@@ -1,25 +1,120 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <title>基本地图展示</title>
+    <title>鼠标拾取地图坐标</title>
     <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
-    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
-    <script src="http://webapi.amap.com/maps?v=1.3&key=2d5f22b503004b7c7a48e0cc6cc82cd5"></script>
+    <script type="text/javascript"
+            src="http://webapi.amap.com/maps?v=1.3&key=2d5f22b503004b7c7a48e0cc6cc82cd5&plugin=AMap.Autocomplete"></script>
     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
 </head>
 <body>
 <div id="container"></div>
-
-<script>
-    var map = new AMap.Map('container', {
-        resizeEnable: true,
-        zoom:11,
-        center: [116.397428, 39.90923]
-
+<div id="myPageTop">
+    <table>
+        <tr>
+            <td>
+                <label>按关键字搜索：</label>
+            </td>
+            <td class="column2">
+                <label>左击获取经纬度：</label>
+            </td>
+            <td class="column2">
+                <label>左击获取详细地址：</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" placeholder="请输入关键字进行搜索" id="tipinput">
+            </td>
+            <td class="column2">
+                <input type="text" readonly="true" id="lnglat">
+            </td>
+            <td class="column2">
+                <input type="text" readonly="true" id="iAddress">
+            </td>
+        </tr>
+    </table>
+    <div style="margin-top: 10px;text-align:center;">
+        <button onclick="sure()" >确定</button>
+    </div>
+</div>
+<script type="text/javascript">
+    var map = new AMap.Map("container", {
+        level: 10,
+        resizeEnable: true
     });
+    //为地图注册click事件获取鼠标点击出的经纬度坐标
+    var clickEventListener = map.on('click', function(e) {
+        var x = e.lnglat.getLng();
+        var y = e.lnglat.getLat();
+        document.getElementById("lnglat").value = x + ',' + y;
+        lnglatXY = new AMap.LngLat(x,y);
+        geocoder();
+    });
+    var auto = new AMap.Autocomplete({
+        input: "tipinput"
+    });
+    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+    function select(e) {
+        if (e.poi && e.poi.location) {
+            map.setZoom(15);
+            map.setCenter(e.poi.location);
+        }
+    }
+
+    function geocoder() {
+        var MGeocoder;
+        //加载地理编码插件
+        map.plugin(["AMap.Geocoder"], function() {
+            MGeocoder = new AMap.Geocoder({
+                radius: 1000,
+                extensions: "all"
+            });
+            //返回地理编码结果
+            AMap.event.addListener(MGeocoder, "complete", geocoder_CallBack);
+            //逆地理编码
+            MGeocoder.getAddress(lnglatXY);
+        });
+        //加点
+        var marker = new AMap.Marker({
+            map:map,
+            icon: new AMap.Icon({
+//                image: "http://api.amap.com/Public/images/js/mark.png",
+                size:new AMap.Size(58,30),
+                imageOffset: new AMap.Pixel(-32, -0)
+            }),
+            position: lnglatXY,
+            offset: new AMap.Pixel(-5,-30)
+        });
+        // map.setFitView();
+    }
+    //回调函数
+    function geocoder_CallBack(data) {
+        console.log(data);
+        var address;
+        //返回地址描述
+        address = data.regeocode.formattedAddress;
+        console.log(address);
+        //返回结果拼接输出
+        document.getElementById("iAddress").value = address;
+    }
+
+    function sure(){
+        var address = document.getElementById("iAddress").value;
+        var lnglat = document.getElementById("lnglat").value;
+        var strs= new Array();
+        strs = lnglat.split(",");
+        if(window.opener){
+            window.opener.document.all.address.value = address;
+            window.opener.document.all.longitude.value = strs[0]*1;
+            window.opener.document.all.latitude.value = strs[1]*1;
+            window.close();
+        }
+    }
 
 </script>
 </body>

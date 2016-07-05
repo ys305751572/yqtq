@@ -20,8 +20,6 @@ import java.util.Set;
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Stadium extends BaseEntity {
     //城市ID
-//    @Column(name = "city_id")
-//    private Long cityId;
     @ManyToOne
     @JoinColumn(name = "city_id",referencedColumnName = "city_id")
     private City city;
@@ -58,6 +56,12 @@ public class Stadium extends BaseEntity {
     //球场地址
     @Column(name = "address")
     private String address;
+    //经读
+    @Column(name = "longitude")
+    private Double longitude;
+    //纬度
+    @Column(name = "latitude")
+    private Double latitude;
     //封面
     @Column(name = "avater")
     private String avater;
@@ -270,5 +274,21 @@ public class Stadium extends BaseEntity {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 }

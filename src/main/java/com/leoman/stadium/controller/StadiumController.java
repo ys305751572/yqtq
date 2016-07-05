@@ -73,6 +73,15 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
     }
 
     /**
+     * 地图
+     * @return
+     */
+    @RequestMapping(value = "/map")
+    public String map(){
+        return "ibsamap/map";
+    }
+
+    /**
      * 列表显示
      * @param draw
      * @param start
@@ -176,13 +185,15 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
         if(null != s){
             stadium.setAreaId(s.getAreaId());
             stadium.setStadiumUserId(s.getStadiumUserId());
-            stadium.setAddress(s.getAddress());//详细地址,定位功能还没写
             stadium.setRtSet(s.getRtSet());////预定总数
             stadium.setrSet(s.getrSet());//当前预定数
             stadium.setSsSet(s.getSsSet());//场地数
             stadium.setSsStatus(s.getSsStatus());//状态
             stadium.setCreateDate(s.getCreateDate());
             stadium.setAvater(s.getAvater());
+            stadium.setType(s.getType());
+        }else{
+            stadium.setType(1);//保存都是公共球场
         }
         if(imageFile!=null && imageFile.getSize()>0) {
             FileBo fileBo = null;
@@ -202,7 +213,6 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
             City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
             stadium.setCity(_city);
         }
-        stadium.setType(1);//保存都是公共球场
         stadiumService.save(stadium);
         return Result.success();
     }

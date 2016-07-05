@@ -76,7 +76,7 @@
                 <div class="col-md-6 m-b-15">
                     <label>头像:</label>
                     <c:forEach items="${list}" var="v">
-                        <a onclick="$reserve.fn.detail(${v.userId})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
+                        <a onclick="$reserve.fn.detail(${v.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
                             <img src="${contextPath}/${v.avater}" alt="">
                         </a>
                     </c:forEach>
@@ -122,8 +122,8 @@
                }
 
            },
-            "detail" : function(userId) {
-                window.location.href = "${contextPath}/admin/user/detail?userId=" + userId;
+            "detail" : function(id) {
+                window.location.href = "${contextPath}/admin/user/detail?id=" + id;
             }
 
         }

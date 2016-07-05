@@ -60,6 +60,7 @@ public class GirlServiceImpl extends GenericManagerImpl<Girl,GirlDao> implements
                     list.add(cb.equal(root.get("status").as(Integer.class), g.getStatus() ));
                 }
                 if(appointment !=null){
+                    if(appointment==1){
                         List ids = dao.appointmentId(TestUtil.getTimesmorning(),TestUtil.getTimesnight());
                         if(ids.size()>0 && !ids.isEmpty()) {
                             Iterator iterator = ids.iterator();
@@ -67,15 +68,22 @@ public class GirlServiceImpl extends GenericManagerImpl<Girl,GirlDao> implements
                             while (iterator.hasNext()) {
                                 in.value(iterator.next());
                             }
-                            if(appointment==1){
                                 list.add(in);
-                            }else {
-                                list.add(cb.not(in));
-
-                            }
                         }else {
                             list.add(cb.equal(root.get("id").as(Long.class), 0));
                         }
+                    }else {
+                            //今天没有预约的
+                        List ids = dao.asd(TestUtil.getTimesmorning(),TestUtil.getTimesnight());
+                        if(ids.size()>0 && !ids.isEmpty()) {
+                            Iterator iterator = ids.iterator();
+                            CriteriaBuilder.In in = cb.in(root.get("id"));
+                            while (iterator.hasNext()) {
+                                in.value(iterator.next());
+                            }
+                            list.add(in);
+                        }
+                    }
                 }
 
                 Predicate[] p = new Predicate[list.size()];

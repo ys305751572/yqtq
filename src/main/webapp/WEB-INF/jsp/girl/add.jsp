@@ -93,7 +93,7 @@
                                 <c:if test="${v.type eq 0}">
                                     <div class="fileupload fileupload-new" data-provides="fileupload" style='float: left;margin-right: 10px;'>
                                         <div class="fileupload-preview thumbnail form-control">
-                                            <img src="${v.url}">
+                                            <img src="${v.url}">${v.url}
                                         </div>
                                         <div>
                                             <c:if test="${v.url eq null}">

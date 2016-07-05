@@ -64,5 +64,4 @@ public class SystemVipCredibilityController extends GenericEntityController<Syst
         return Result.success();
     }
 
-
 }

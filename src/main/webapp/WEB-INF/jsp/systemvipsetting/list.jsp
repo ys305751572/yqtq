@@ -95,7 +95,18 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 m-b-15">
-                        <div id="systemVipExperience"></div>
+                        <div class='from1'>
+                            <label>散客组队成功:</label>
+                            <input style='width: auto' type='text' id="a" value='' class='input-sm form-control validate[required]' disabled>
+                        </div>
+                        <div class='from1'>
+                            <label>场地预订:</label>
+                            <input style='width: auto' type='text' id="b" value='' class='input-sm form-control validate[required]' disabled>
+                        </div>
+                        <div class='from1'>
+                            <label>约看宝贝:</label>
+                            <input style='width: auto' type='text' id="c" value='' class='input-sm form-control validate[required]' disabled>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -250,42 +261,38 @@
                         "systemVipId":data
                     },
                     success:function(data){
-                        $("#systemVipExperience").empty();
+                        $("#a").val("");
+                        $("#b").val("");
+                        $("#c").val("");
                         for(var i= 0;i<data.length;i++){
                             var action = data[i].action;
                             var experience = data[i].experience;
                             if(action==1){
-                                var a = "<div class='from1'>" +
-                                            "<label>散客组队成功:</label>" +
-                                            "<input style='width: auto' type='text' value=\""+experience+ "点经验\" class='input-sm form-control validate[required]' disabled>" +
-                                        "</div>";
+                                $("#a").val(experience+"点经验");
                             }
                             if(action==2){
-                                var a = "<div class='from1'>" +
-                                            "<label>场地预订:</label>" +
-                                            "<input style='width: auto' type='text' value=\""+experience+ "点经验\" class='input-sm form-control validate[required]' disabled>" +
-                                        "</div>";
+                                $("#b").val(experience+"点经验");
                             }
                             if(action==3){
-                                var a = "<div class='from1'>" +
-                                            "<label>约看宝贝:</label>" +
-                                            "<input style='width: auto' type='text' value=\""+experience+ "点经验\" class='input-sm form-control validate[required]' disabled>" +
-                                        "</div>";
+                                $("#c").val(experience+"点经验");
                             }
-                            $("#systemVipExperience").append(a);
                         }
                     }
                 });
             }
         }
-    }
+    };
     $(function () {
         $user.fn.init();
         $user.fn.vipExperienceFrom($("#systemVipId").val());
         $("#systemVipId").change(function(){
+            $("#vipExperience").val("");
             var opt=$("#systemVipId").val();
             $user.fn.vipExperienceFrom(opt);
-        })
+        });
+        $("#action").change(function(){
+            $("#vipExperience").val("");
+        });
     })
 </script>
 <script>

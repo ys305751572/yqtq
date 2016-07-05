@@ -35,7 +35,6 @@
                     <th>队名</th>
                     <th>地区</th>
                     <th>人数</th>
-                    <th>比赛场次</th>
                     <th>报名时间</th>
                     <th>队长</th>
                     <th>操作</th>
@@ -84,13 +83,17 @@
                         {"data": "team.name"},
                         {"data": "team.city.city"},
                         {"data": "team.tmSetNum"},
-                        {"data": "team.tmSize"},    //大型比赛场次
-                        {"data": "createDate"},     //比赛报名时间
+                        {
+                            "data": "createDate",
+                            render : function(data){
+                                return new Date(data).format("yyyy-MM-dd hh:mm");
+                            }
+                        },
                         {"data": "team.user.nickName"},
                         {
                             "data": "team.id",
                             "render": function (data) {
-                                var detail = "<button title='查看' class='btn btn-primary btn-circle detail' ONCLICK='$hostRaceJoin.fn.sfInfo("+ data +")'> " +
+                                var detail = "<button title='查看' class='btn btn-primary btn-circle detail' onclick='$hostRaceJoin.fn.sfInfo("+ data +")'> " +
                                         "<i class='fa fa-eye'></i></button>";
                                 return detail;
                             }

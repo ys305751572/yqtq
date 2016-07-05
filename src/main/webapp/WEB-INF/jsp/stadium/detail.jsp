@@ -33,20 +33,20 @@
                 <div class="col-md-6 m-b-15">
                     <label>球场名称:</label>
                     <input type="text" id="name" name="name" value="${stadium.name}" class="input-sm form-control validate[required]" placeholder="..." disabled>
-                    <c:if test="${isEd eq null}">
-                        <a style="margin-top: 10px" class="btn btn-alt m-r-5" data-toggle="modal" href="${contextPath}/admin/stadium/edit?id=${stadium.id}" title="编辑" class="tooltips">
-                            编辑
-                        </a>
-                    </c:if>
+
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>城市:</label>
                     <input type="text" id="city" name="city" value="${stadium.city.city}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
+                <div class="col-md-6 m-b-15">
+                    <label>详细地址:</label>
+                    <input type="text" id="address" name="address" value="${stadium.address}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                </div>
                 <c:if test="${stadium.type eq 0}">
                     <div class="col-md-6 m-b-15">
                         <label>球场主:</label>
-                        <a href="${contextPath}/admin/stadiumUser/detail?id=${stadium.stadiumUserId}"><input type="text" id="nickName" name="nickName" value="${stadiumUser.nickName}" class="input-sm form-control validate[required]" placeholder="..." disabled></a>
+                        <a class="btn btn-block btn-alt" style="font-size: 12px;height: 30px;text-align:left;text-indent:0.5em;background-color:rgba(238, 238, 238, 0.09) !important;" href="${contextPath}/admin/stadiumUser/detail?id=${stadium.stadiumUserId}">${stadiumUser.nickName}</a>
                     </div>
                 </c:if>
                 <hr class="whiter m-t-20"/>
@@ -86,6 +86,11 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-5">
+                    <c:if test="${isEd eq null}">
+                        <a class="btn btn-info btn-sm m-t-10" data-toggle="modal" href="${contextPath}/admin/stadium/edit?id=${stadium.id}" title="编辑" class="tooltips">
+                            编辑
+                        </a>
+                    </c:if>
                     <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                 </div>
             </div>

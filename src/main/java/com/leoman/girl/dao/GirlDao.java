@@ -17,4 +17,7 @@ public interface GirlDao extends IBaseJpaRepository<Girl> {
     @Query("SELECT a.girl.id FROM GirlUser a WHERE a.startDate >=?1 AND a.startDate <=?2")
     public List<Long> appointmentId(Long startDate,Long endDate);
 
+    @Query("SELECT a.girl.id FROM GirlUser a WHERE a.startDate <=?1 AND a.startDate >=?2")
+    public List<Long> asd(Long startDate,Long endDate);
+
 }

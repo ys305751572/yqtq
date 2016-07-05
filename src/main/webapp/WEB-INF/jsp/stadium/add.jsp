@@ -43,8 +43,15 @@
                     <div class="col-md-6 m-b-15">
                         <label>城市：</label>
                         <select id="cityId" name="cityId" class="select">
-                            <option value="">城市</option>
+                            <option value="${stadium.city.cityId}">${stadium.city.city eq null ? "城市" : stadium.city.city}</option>
                         </select>
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>详细地址：</label>
+                        <input type="text" id="address" name="address" value="${stadium.address}"  class="input-sm form-control " placeholder="..."  disabled>
+                        <input type="hidden" id="lng" name="longitude" value="${stadium.longitude}" >
+                        <input type="hidden" id="lat" name="latitude" value="${stadium.latitude}" >
+                        <a onclick="$user.fn.map()" class="btn btn-alt m-r-5" style="margin-top: 10px">选择</a>
                     </div>
                 </div>
                 <div class="row">
@@ -131,12 +138,9 @@
                 }
             },
             save : function () {
-                var code =  $('.wysiwye-editor').code();
                 var sid= "${stadium.id}";
                 var avater= "${stadium.avater}";
                 var description = "${stadium.description}";
-                console.log(sid);
-                console.log(avater);
                 var isCheck = true;
                 if($("#name").val()==""){
                     alert("球场名称不能为空!");
@@ -144,6 +148,10 @@
                 }
                 if($("#cityId").val()==""){
                     alert("城市不能为空!");
+                    isCheck=false;
+                }
+                if($("#address").val()==""){
+                    alert("详细地址不能为空!");
                     isCheck=false;
                 }
                 if($("#siteType").val()=="" || $("#sodType").val()=="" || $("#light").val()=="" || $("#park").val()=="" || $("#giving").val()==""){
@@ -159,11 +167,23 @@
                     isCheck=false;
                 }
                 if(isCheck){
+                    var code =  $('.wysiwye-editor').code();
+                    var address = $("#address").val();
+                    var lng = $("#lng").val();
+                    console.log(lng);
+                    var lat = $("#lat").val();
+                    console.log(lat);
+                    var lnglat = {
+                        longitude : $("#lng").val(),
+                        latitude : $("#lat").val()
+                    }
                     $("#fromId").ajaxSubmit({
                         url : "${contextPath}/admin/stadium/save",
                         type : "POST",
                         data : {
-                            "detail" : code
+                            "detail" : code,
+                            "address" : address,
+                            "lnglat" : lnglat
                         },
                         success : function(result) {
                             if(!result.status) {
@@ -200,15 +220,14 @@
                     $("#cityId").append("<option value=''>"+"城市"+"</option>");
                     $("#cityId").selectpicker('refresh');
                 }
+            },
+            map : function(){
+                var iWidth=1000; //弹出窗口的宽度;
+                var iHeight=600; //弹出窗口的高度;
+                var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
+                var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
+                window.open("${contextPath}/admin/stadium/map","地图","height="+iHeight+",width="+iWidth+",top="+iTop +",left="+iLeft+",toolbar=no,menubar=no,resizable=no,location=no,status=no");
             }
-//            check : function(){
-//                if(escape($("#name").val()).indexOf("%u")<0 || $("#name").val()==""){
-//                    alert( "球场名称格式不正确,请输入中文!" );
-//                    $("#name").val("");
-//                    return false;
-//                }
-//                return true;
-//            }
         }
     }
     $(function () {

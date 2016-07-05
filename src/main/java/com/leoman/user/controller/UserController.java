@@ -76,27 +76,27 @@ public class UserController extends CommonController {
     /**
      * 详情
      *
-     * @param userId
+     * @param id
      * @param model
      * @return
      */
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public String detail(Long userId, Model model) {
-        User user = service.findByUserId(userId);
+    public String detail(Long id, Model model) {
+        User user = service.queryByPK(id);
         model.addAttribute("user", user);
         return "user/detail";
     }
 
     /**
      *
-     * @param userId
+     * @param id
      * @return
      */
     @RequestMapping(value = "/status")
     @ResponseBody
-    public Result status(Long userId){
+    public Result status(Long id){
         Map<String,Object> map = new HashMap<String, Object>();
-        User user = service.findByUserId(userId);
+        User user = service.queryByPK(id);
         Integer status = user.getStatus();
         try{
             if(status == 0) {

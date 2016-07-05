@@ -93,7 +93,7 @@ public class TeamController extends GenericEntityController<Team, Team, TeamServ
             model.addAttribute("team", team);
             List<TeamMember> teamMember = teamMemberService.findByTeamId(id);
             model.addAttribute("teamMember",teamMember);
-            List<User> userList = userService.findAll();
+            List<User> userList = userService.queryAll();
             model.addAttribute("userList",userList);
             List<User> user = teamMemberService.findByAvater(id);
             model.addAttribute("user",user);
