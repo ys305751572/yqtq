@@ -120,7 +120,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Notification Drawer -->
                 <div id="notifications" class="tile drawer animated">
                     <div class="listview narrow">
@@ -191,116 +191,139 @@
                 </div>
                 <h4 class="page-title">首页</h4>
                 <!-- Quick Stats -->
-                <div class="block-area">
-                    <div class="row">
-                        <div class="col-md-3 col-xs-6">
-                            <div class="tile quick-stats">
-                                <div id="stats-line-2" class="pull-left"></div>
-                                <div class="data">
-                                    <h2 data-value="98">0</h2>
-                                    <small>Tickets Today</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-xs-6">
-                            <div class="tile quick-stats media">
-                                <div id="stats-line-3" class="pull-left"></div>
-                                <div class="media-body">
-                                    <h2 data-value="1452">0</h2>
-                                    <small>Shipments today</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-xs-6">
-                            <div class="tile quick-stats media">
-
-                                <div id="stats-line-4" class="pull-left"></div>
-
-                                <div class="media-body">
-                                    <h2 data-value="4896">0</h2>
-                                    <small>Orders today</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-xs-6">
-                            <div class="tile quick-stats media">
-                                <div id="stats-line" class="pull-left"></div>
-                                <div class="media-body">
-                                    <h2 data-value="29356">0</h2>
-                                    <small>Site visits today</small>
-                                </div>
-                            </div>
-                        </div>
+                <div style="background-color: rgba(238, 238, 238, 0.09);width:auto;height: 70px">
+                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/user/index" title="新增用户" class="btn btn-alt m-r-5">新增用户( ${newUserNum} )</a>
+                    </div>
+                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/admin/index" title="新增会员" class="btn btn-alt m-r-5">新增会员( ${newAdminNum} )</a>
+                    </div>
+                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/reserve/index" title="新增约球" class="btn btn-alt m-r-5">新增约球( ${newReserveNum} )</a>
+                    </div>
+                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/stadiumBooking/index" title="场地订单" class="btn btn-alt m-r-5">场地订单( ${newStadiumBookingNum} )</a>
+                    </div>
+                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/team/index" title="新增球队" class="btn btn-alt m-r-5">新增球队( ${newTeamNum} )</a>
+                    </div>
+                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/girlUser/index" title="新增看球" class="btn btn-alt m-r-5">新增看球( ${newGirlUserNum} )</a>
+                    </div>
+                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/post/index" title="新增帖子" class="btn btn-alt m-r-5">新增帖子( ${newPostNum} )</a>
+                    </div>
+                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/stadiumUserWithdraw/index" title="新增提现" class="btn btn-alt m-r-5">新增提现( ${newWithdrawNum} )</a>
                     </div>
                 </div>
-
-                <hr class="whiter" />
-                <!-- Main Widgets -->
-                <div class="block-area">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <!-- Main Chart -->
-                            <div class="tile">
-                                <h2 class="tile-title">Statistics</h2>
-                                <div class="tile-config dropdown">
-                                    <a data-toggle="dropdown" href="" class="tile-menu"></a>
-                                </div>
-                                <div class="p-10">
-                                    <div id="line-chart" class="main-chart" style="height: 250px"></div>
-                                    <div class="chart-info">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
+                <div class="block-area" id="tableBordered">
+                    <div class="col-md-12 m-b-15">
+                        <h5>场地订单统计信息:</h5>
+                        <div class="table-responsive overflow">
+                            <table class="tile table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <td width="40%">已订</td>
+                                    <td >1</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>已使用</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>待使用</td>
+                                    <td>3</td>
+                                </tr>
+                                <tr>
+                                    <td>总金额</td>
+                                    <td>4</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-12 m-b-15">
+                        <h5>散客统计信息:</h5>
+                        <div class="table-responsive overflow">
+                            <table class="tile table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <td width="40%">组队数</td>
+                                    <td>1</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>组队成功数</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>组队失败数</td>
+                                    <td>3</td>
+                                </tr>
+                                <tr>
+                                    <td>总金额</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>确认金额</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>退回金额</td>
+                                    <td>6</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 m-b-15">
+                        <h5>看球统计信息:</h5>
+                        <div class="table-responsive overflow">
+                            <table class="tile table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <td width="40%">宝贝订单</td>
+                                    <td>1</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>订单金额</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>直播看球邀请次数</td>
+                                    <td>3</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 m-b-15">
+                        <h5>访问统计:</h5>
+                        <div class="table-responsive overflow">
+                            <table class="tile table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <td width="40%">今日访问</td>
+                                    <td>1</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>在线人数</td>
+                                    <td>2</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </section>
-
-            <!-- Older IE Message -->
-            <!--[if lt IE 9]>
-                <div class="ie-block">
-                    <h1 class="Ops">Ooops!</h1>
-                    <p>You are using an outdated version of Internet Explorer, upgrade to any of the following web browser in order to access the maximum functionality of this website. </p>
-                    <ul class="browsers">
-                        <li>
-                            <a href="https://www.google.com/intl/en/chrome/browser/">
-                                <img src="img/browsers/chrome.png" alt="">
-                                <div>Google Chrome</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://www.mozilla.org/en-US/firefox/new/">
-                                <img src="img/browsers/firefox.png" alt="">
-                                <div>Mozilla Firefox</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://www.opera.com/computer/windows">
-                                <img src="img/browsers/opera.png" alt="">
-                                <div>Opera</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://safari.en.softonic.com/">
-                                <img src="img/browsers/safari.png" alt="">
-                                <div>Safari</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://windows.microsoft.com/en-us/internet-explorer/downloads/ie-10/worldwide-languages">
-                                <img src="img/browsers/ie.png" alt="">
-                                <div>Internet Explorer(New)</div>
-                            </a>
-                        </li>
-                    </ul>
-                    <p>Upgrade your browser for a Safer and Faster web experience. <br/>Thank you for your patience...</p>
-                </div>   
-            <![endif]-->
         </section>
         <%@ include file="../inc/new/foot.jsp"%>
     </body>

@@ -3,6 +3,7 @@ package com.leoman.index.controller;
 import com.leoman.common.controller.common.CommonController;
 import com.leoman.common.core.Constant;
 import com.leoman.common.log.entity.Log;
+import com.leoman.index.service.IndexService;
 import com.leoman.index.service.LoginService;
 import com.leoman.utils.CookiesUtils;
 import com.leoman.utils.Md5Util;
@@ -25,6 +26,8 @@ public class IndexController extends CommonController {
 
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private IndexService indexService;
 
     @RequestMapping(value = "/login")
     public String login(HttpServletRequest request,
@@ -85,6 +88,31 @@ public class IndexController extends CommonController {
     public String dashboard(HttpServletRequest request,
                             HttpServletResponse response,
                             ModelMap model) {
+
+        Integer newUserNum = indexService.newUserNum();
+        model.addAttribute("newUserNum",newUserNum);
+
+        Integer newAdminNum = indexService.newAdminNum();
+        model.addAttribute("newAdminNum",newAdminNum);
+
+        Integer newReserveNum = indexService.newReserveNum();
+        model.addAttribute("newReserveNum",newReserveNum);
+
+        Integer newStadiumBookingNum = indexService.newStadiumBookingNum();
+        model.addAttribute("newStadiumBookingNum",newStadiumBookingNum);
+
+        Integer newTeamNum = indexService.newTeamNum();
+        model.addAttribute("newTeamNum",newTeamNum);
+
+        Integer newGirlUserNum = indexService.newGirlUserNum();
+        model.addAttribute("newGirlUserNum",newGirlUserNum);
+
+        Integer newPostNum = indexService.newPostNum();
+        model.addAttribute("newPostNum",newPostNum);
+
+
+        Integer newWithdrawNum = indexService.newWithdrawNum();
+        model.addAttribute("newWithdrawNum",newWithdrawNum);
 
         return "index/index";
     }

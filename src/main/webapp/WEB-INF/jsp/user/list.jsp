@@ -137,7 +137,8 @@
                             render : function(data){
                                 return data==null ? 0.0 : data;
                             },
-                            "sDefaultContent" : ""}, //总消费
+                            "sDefaultContent" : ""
+                        }, //总消费
                         {
                             "data": "id",
                             "render": function (data,type,full) {
