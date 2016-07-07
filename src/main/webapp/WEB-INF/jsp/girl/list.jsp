@@ -59,17 +59,6 @@
                 <a data-toggle="modal" href="${contextPath}/admin/girl/edit" title="新增" class="btn btn-alt m-r-5" >新增</a>
             </div>
         </div>
-        <%--<div class="block-area">--%>
-            <%--<div class="row">--%>
-                <%--<ul class="list-inline list-mass-actions">--%>
-                    <%--<li>--%>
-                        <%--<a data-toggle="modal" href="${contextPath}/admin/girl/edit" title="新增" class="tooltips">--%>
-                            <%--<i class="sa-list-add"></i>--%>
-                        <%--</a>--%>
-                    <%--</li>--%>
-                <%--</ul>--%>
-            <%--</div>--%>
-        <%--</div>--%>
         <hr class="whiter m-t-20"/>
         <!-- form表格 -->
         <div class="block-area" id="tableHover">

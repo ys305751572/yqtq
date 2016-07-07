@@ -64,6 +64,17 @@ public class User extends BaseEntity {
     @Column(name = "status")
     private Integer status;
 
+    @Transient
+    private Double sumPrice;
+
+    public Double getSumPrice() {
+        return sumPrice;
+    }
+
+    public void setSumPrice(Double sumPrice) {
+        this.sumPrice = sumPrice;
+    }
+
     public Long getUserId() {
         return userId;
     }

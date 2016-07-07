@@ -41,7 +41,6 @@ public class UserServiceImpl extends GenericManagerImpl<User,UserDao> implements
     public Page<User> findPage(final User user, final Integer sortId, int pagenum, int pagesize) {
         boolean isDesc = false;
         String property = "id";
-
         Specification<User> spec = new Specification<User>() {
             @Override
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
@@ -65,7 +64,12 @@ public class UserServiceImpl extends GenericManagerImpl<User,UserDao> implements
                 return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
             }
         };
-        return dao.findAll(spec, new PageRequest(pagenum - 1, pagesize, isDesc ? Sort.Direction.DESC : Sort.Direction.ASC, property));
+        Page<User> page = dao.findAll(spec, new PageRequest(pagenum - 1, pagesize, isDesc ? Sort.Direction.DESC : Sort.Direction.ASC, property));
+        List<User> userList = page.getContent();
+        for(User u : userList){
+            u.setSumPrice(dao.SumPrice(u.getId()));
+        }
+        return page;
     }
 
 }

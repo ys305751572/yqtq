@@ -94,11 +94,9 @@
     }
     //回调函数
     function geocoder_CallBack(data) {
-        console.log(data);
         var address;
         //返回地址描述
         address = data.regeocode.formattedAddress;
-        console.log(address);
         //返回结果拼接输出
         document.getElementById("iAddress").value = address;
     }

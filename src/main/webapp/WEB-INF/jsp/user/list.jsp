@@ -103,11 +103,12 @@
                                 return checkbox;
                             }
                         },
-                        {"data": "mobile"},
+                        {"data": "mobile","sDefaultContent" : ""},
                         {"data": "createDate",
                             render: function (data) {
                                 return new Date(data).format("yyyy-MM-dd hh:mm:ss")
-                            }
+                            },
+                            "sDefaultContent" : ""
                         },
                         {"data": "credibility"},
                         {"data": "vipLevel",
@@ -117,7 +118,8 @@
                                 }else{
                                     return "Lv" + data;
                                 }
-                            }
+                            },
+                            "sDefaultContent" : ""
                         },
                         {"data": "status",
                             render:function(data){
@@ -126,10 +128,16 @@
                                 }else{
                                     return "禁用";
                                 }
-                            }
+                            },
+                            "sDefaultContent" : ""
                         },
-                        {"data": "nickName"},
-                        {"data": "userId"}, //总消费
+                        {"data": "nickName","sDefaultContent" : ""},
+                        {
+                            "data": "sumPrice",
+                            render : function(data){
+                                return data==null ? 0.0 : data;
+                            },
+                            "sDefaultContent" : ""}, //总消费
                         {
                             "data": "id",
                             "render": function (data,type,full) {
