@@ -6,6 +6,8 @@ import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.service.ReserveService;
 import com.leoman.stadium.entity.Stadium;
 import com.leoman.systemInsurance.entity.SystemInsurance;
+import com.leoman.utils.TestUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +32,7 @@ public class ReserveServiceImpl extends GenericManagerImpl<Reserve,ReserveDao> i
     private ReserveDao dao;
 
     @Override
-    public Page<Reserve> findPage(final Reserve reserve, int pagenum, int pagesize) {
+    public Page<Reserve> findPage(final String details,final Reserve reserve, int pagenum, int pagesize) {
         Specification<Reserve> spec = new Specification<Reserve>() {
             @Override
             public Predicate toPredicate(Root<Reserve> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
@@ -53,6 +55,9 @@ public class ReserveServiceImpl extends GenericManagerImpl<Reserve,ReserveDao> i
                 }
                 if (reserve.getStatus() != null) {
                     list.add(criteriaBuilder.equal(root.get("status").as(Integer.class), reserve.getStatus()));
+                }
+                if (StringUtils.isNotBlank(details) && "1".equals(details)) {
+                    list.add(criteriaBuilder.ge(root.get("createDate").as(Long.class), TestUtil.getTimesmorning()));
                 }
                 return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
             }

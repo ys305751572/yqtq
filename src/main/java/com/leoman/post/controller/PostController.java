@@ -13,6 +13,7 @@ import com.leoman.reserve.entity.Reserve;
 import com.leoman.systemInsurance.entity.SystemInsurance;
 import com.leoman.utils.WebUtil;
 import net.sf.json.JSONArray;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -50,7 +51,10 @@ public class PostController extends CommonController {
      * @return
      */
     @RequestMapping(value = "/index")
-    public String index() {
+    public String index(Model model,String details) {
+        if(StringUtils.isNotBlank(details) && "1".equals(details)){
+            model.addAttribute("details",details);
+        }
         return "post/list";
     }
 
@@ -76,11 +80,12 @@ public class PostController extends CommonController {
                      Integer draw,
                      Integer start,
                      Integer length,
+                     String details,
                      Model model) {
         try {
             int pageNum = getPageNum(start, length);
 
-            Page<Post> page = postService.findPage(nickName, content, status, pageNum, length);
+            Page<Post> page = postService.findPage(details,nickName, content, status, pageNum, length);
             List<Post> list = page.getContent();
             for (Post post1 : list) {
                 List<PostComment> postCommentList = postCommentService.findByPostId(post1.getId());

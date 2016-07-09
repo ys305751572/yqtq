@@ -110,9 +110,51 @@ public class IndexController extends CommonController {
         Integer newPostNum = indexService.newPostNum();
         model.addAttribute("newPostNum",newPostNum);
 
-
         Integer newWithdrawNum = indexService.newWithdrawNum();
         model.addAttribute("newWithdrawNum",newWithdrawNum);
+
+        //场地订单统计信息
+        Integer allStadiumBookingNum = indexService.allStadiumBookingNum();
+        model.addAttribute("allStadiumBookingNum",allStadiumBookingNum);
+
+        Integer useStadiumBookingNum = indexService.useStadiumBookingNum();
+        model.addAttribute("useStadiumBookingNum",useStadiumBookingNum);
+
+        Integer notUsedStadiumBookingNum = indexService.notUsedStadiumBookingNum();
+        model.addAttribute("notUsedStadiumBookingNum",notUsedStadiumBookingNum);
+
+        Integer allStadiumBookingprice = indexService.allStadiumBookingprice();
+        model.addAttribute("allStadiumBookingprice",allStadiumBookingprice);
+
+        //散客统计信息:
+        Integer allReserveNum = indexService.allReserveNum();
+        model.addAttribute("allReserveNum",allReserveNum);
+
+        Integer successReserveNum = indexService.successReserveNum();
+        model.addAttribute("successReserveNum",successReserveNum);
+
+        Integer failureReserveNum = indexService.failureReserveNum();
+        model.addAttribute("failureReserveNum",failureReserveNum);
+
+        Integer allReservePrice = indexService.allReservePrice();
+        model.addAttribute("allReservePrice",allReservePrice);
+
+        Integer confirmReservePrice = indexService.confirmReservePrice();
+        model.addAttribute("confirmReservePrice",confirmReservePrice);
+
+        Integer backReservePrice = indexService.backReservePrice();
+        model.addAttribute("backReservePrice",backReservePrice);
+
+        ////看球统计信息:
+        Integer allGirlUserNum = indexService.allGirlUserNum();
+        model.addAttribute("allGirlUserNum",allGirlUserNum);
+
+        Integer allGirlUserprice = indexService.allGirlUserprice();
+        model.addAttribute("allGirlUserprice",allGirlUserprice);
+
+        Integer watchingRaceInvitation = indexService.watchingRaceInvitation();
+        model.addAttribute("watchingRaceInvitation",watchingRaceInvitation);
+
 
         return "index/index";
     }

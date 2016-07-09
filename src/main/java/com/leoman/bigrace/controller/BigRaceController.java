@@ -198,17 +198,11 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
      */
     @RequestMapping(value = "/status")
     @ResponseBody
-    public Result status(Long id){
+    public Result status(Long id,Integer status){
         BigRace bigRace = bigRaceService.queryByPK(id);
-        Integer status = bigRace.getStatus();
         try{
-            if(status == 0) {
-                bigRace.setStatus(1);
-                bigRaceService.save(bigRace);
-            }else {
-                bigRace.setStatus(0);
-                bigRaceService.save(bigRace);
-            }
+            bigRace.setStatus(status);
+            bigRaceService.save(bigRace);
         }catch (RuntimeException e){
             e.printStackTrace();
             return Result.failure();

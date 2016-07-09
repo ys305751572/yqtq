@@ -173,12 +173,9 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
     @ResponseBody
     public Result close(Long id) {
         HostRace hostRace = hostRaceService.findById(id);
-        Integer status = hostRace.getStatus();
         try{
-            if(status==0 || status==1){
-                hostRace.setStatus(2);
-                hostRaceService.save(hostRace);
-            }
+            hostRace.setStatus(2);
+            hostRaceService.save(hostRace);
         }catch (RuntimeException e){
             e.printStackTrace();
             return Result.failure();

@@ -5,6 +5,8 @@ import com.leoman.team.dao.TeamDao;
 import com.leoman.team.entity.Team;
 import com.leoman.team.entity.vo.TeamVo;
 import com.leoman.team.service.TeamService;
+import com.leoman.utils.TestUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -89,8 +91,8 @@ public class TeamServiceImpl extends GenericManagerImpl<Team, TeamDao> implement
     }
 
     @Override
-    public Page<Team> findAll(Team team, Integer currentPage, Integer pageSize) throws Exception {
-        Specification<Team> spec = buildSpecification(team);
+    public Page<Team> findAll(String details,Team team, Integer currentPage, Integer pageSize) throws Exception {
+        Specification<Team> spec = buildSpecification(details,team);
         Page<Team> page = dao.findAll(spec, new PageRequest(currentPage-1, pageSize, Sort.Direction.DESC, "id"));
         List<Team> list = page.getContent();
         for (Team team1 : list) {
@@ -109,8 +111,7 @@ public class TeamServiceImpl extends GenericManagerImpl<Team, TeamDao> implement
         return dao.findTmSize(teamId);
     }
 
-    @Override
-    public Specification<Team> buildSpecification(final Team t) {
+    public Specification<Team> buildSpecification(final String details,final Team t) {
         return new Specification<Team>() {
             @Override
             public Predicate toPredicate(Root<Team> root, CriteriaQuery<?> cq,
@@ -123,7 +124,9 @@ public class TeamServiceImpl extends GenericManagerImpl<Team, TeamDao> implement
                 if(t.getCity().getCityId() != null){
                     list.add(cb.equal(root.get("city").get("cityId").as(Long.class), t.getCity().getCityId() ));
                 }
-
+                if (StringUtils.isNotBlank(details) && "1".equals(details)) {
+                    list.add(cb.ge(root.get("createDate").as(Long.class), TestUtil.getTimesmorning()));
+                }
                 Predicate[] p = new Predicate[list.size()];
                 return cb.and(list.toArray(p));
             }

@@ -15,7 +15,7 @@ public interface TeamService extends GenericManager<Team> {
 
     public Team findById(Long id) throws Exception ;
 
-    public Page<Team> findAll(Team team, Integer currentPage, Integer pageSize) throws Exception;
+    public Page<Team> findAll(String details,Team team, Integer currentPage, Integer pageSize) throws Exception;
 
     public  List<Team> findAll();
 

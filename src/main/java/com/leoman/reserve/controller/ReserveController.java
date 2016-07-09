@@ -21,6 +21,7 @@ import com.leoman.user.service.UserReserveJoinService;
 import com.leoman.user.service.UserService;
 import com.leoman.utils.Result;
 import com.leoman.utils.WebUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -61,9 +62,12 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
      * @return
      */
     @RequestMapping(value = "/index")
-    public String index(Model model) {
+    public String index(Model model,String details) {
         List<Province> province = provinceService.queryAll();
         model.addAttribute("province",province);
+        if(StringUtils.isNotBlank(details) && "1".equals(details)){
+            model.addAttribute("details",details);
+        }
         return "reserve/list";
     }
 
@@ -86,6 +90,7 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
                      Integer length,
                      Reserve reserve,
                      SystemInsurance id,
+                     String details,
                      City cityId,Stadium stadium) {
         try {
             int pageNum = getPageNum(start, length);
@@ -95,7 +100,7 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
             reserve.setSystemInsurance(id);
             stadium.setCity(cityId);
             reserve.setStadium(stadium);
-            Page<Reserve> page = reserveService.findPage(reserve,pageNum,length);
+            Page<Reserve> page = reserveService.findPage(details,reserve,pageNum,length);
             Map<String, Object> result = DataTableFactory.fitting(draw, page);
             WebUtil.print(response, result);
         } catch (Exception e) {

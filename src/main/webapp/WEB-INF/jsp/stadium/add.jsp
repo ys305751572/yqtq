@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <hr class="whiter m-t-20"/>
-                    <div class="col-md-6 m-b-15">
+                    <div class="col-md-12 m-b-15">
                         <label>球场简介: </label>
                         <div class="wysiwye-editor" id="detail" name="detail">${stadium.description}</div>
                     </div>
@@ -143,27 +143,27 @@
                 var description = "${stadium.description}";
                 var isCheck = true;
                 if($("#name").val()==""){
-                    alert("球场名称不能为空!");
+                    $leoman.notify('球场名称不能为空', "error");
                     isCheck=false;
                 }
                 if($("#cityId").val()==""){
-                    alert("城市不能为空!");
+                    $leoman.notify('城市不能为空', "error");
                     isCheck=false;
                 }
                 if($("#address").val()==""){
-                    alert("详细地址不能为空!");
+                    $leoman.notify('详细地址不能为空', "error");
                     isCheck=false;
                 }
                 if($("#siteType").val()=="" || $("#sodType").val()=="" || $("#light").val()=="" || $("#park").val()=="" || $("#giving").val()==""){
-                    alert("球场基本信息不完整!");
+                    $leoman.notify('球场基本信息不完整', "error");
                     isCheck=false;
                 }
                 if($('.fileupload-preview img').size()<1 || $('.fileupload-preview img').width()==0){
-                    alert("球场封面不能为空!");
+                    $leoman.notify('球场封面不能为空', "error");
                     isCheck=false;
                 }
                 if($('.note-editable').text()==""){
-                    alert("球场简介不能为空!");
+                    $leoman.notify('球场简介不能为空', "error");
                     isCheck=false;
                 }
                 if(isCheck){

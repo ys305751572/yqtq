@@ -106,7 +106,7 @@ var $leoman = {
                 "sZeroRecords": "没有找到符合条件的数据",
                 "sProcessing": "正在处理...",
                 "sInfo": "当前第 _START_ - _END_ 条　共计 _TOTAL_ 条",
-                "sInfoEmpty": "木有记录",
+                "sInfoEmpty": "没有记录",
                 "sInfoFiltered": "(从 _MAX_ 条记录中过滤)",
                 "sSearch": "搜索：",
                 "oPaginate": {
@@ -115,7 +115,7 @@ var $leoman = {
                     "sNext": "后一页",
                     "sLast": "尾页"
                 }
-            },
+            }
         }
     },
     notify: function (msg, status) {

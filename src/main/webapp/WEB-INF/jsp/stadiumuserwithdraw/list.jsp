@@ -24,6 +24,7 @@
         <h1 class="page-title">提现管理</h1>
         <!-- 查询条件 -->
         <div class="block-area" id="search">
+            <input type="hidden" id="details" name="details" value="${details}">
             <div class="row">
                 <div class="col-md-2 form-group">
                     <input type="text" class="input-sm form-control" id="username" name="username" placeholder="账号">
@@ -59,6 +60,22 @@
             </table>
         </div>
     </section>
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="pwdModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div align=center>
+                        <h4 class="modal-title" id="showText" ></h4>
+                    </div>
+                </div>
+                <div class="modal-body" align="center">
+                    <button type="button" id="confirm" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <br/><br/>
 </section>
 <!-- JS -->
@@ -104,7 +121,7 @@
                                 }else if(data==1){
                                     return "已处理";
                                 }else if(data==2){
-                                    return "驳回";
+                                    return "已驳回";
                                 }
                             },
                             "sDefaultContent" : ""
@@ -112,20 +129,22 @@
                         {
                             "data": "id",
                             "render": function (data,type,full) {
-                                var sta = full.status;
-                                if(sta!=0){
+                                var id = data;
+                                var st = full.status;
+                                var handle = 1;
+                                if(st!=0){
                                     var detail = "<button title='处理' class='btn btn-primary btn-circle add' disabled " +
-                                        "<i>处理</i></button>";
+                                        "<a>处理</a></button>";
 
                                     var status = "<button title='禁用' class='btn btn-primary btn-circle detail' disabled " +
-                                            "<i>驳回</i></button>";
+                                            "<a>驳回</a></button>";
                                     return detail + "&nbsp;" + status;
                                 }else{
-                                    var detail = "<button title='处理' class='btn btn-primary btn-circle add' onclick='$stadiumUserWithdraw.fn.handle(" + data + ")'>" +
-                                            "<i>处理</i></button>";
+                                    var detail = "<button title='处理' class='btn btn-primary btn-circle add' onclick=\"$stadiumUserWithdraw.fn.changeStatus(\'" + id + "\',\'" + handle + "\')\"> " +
+                                            "处理</button>";
 
-                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$stadiumUserWithdraw.fn.close("+ data +")'> " +
-                                            "<i>驳回</i></button>";
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick=\"$stadiumUserWithdraw.fn.changeStatus(\'" + id + "\')\"> " +
+                                            "驳回</button>";
                                     return detail + "&nbsp;" + status;
                                 }
                             }
@@ -134,37 +153,40 @@
                     "fnServerParams": function (aoData) {
                         aoData.username = $("#username").val();
                         aoData.status = $("#status").val();
+                        aoData.details = $("#details").val();
                     }
                 });
             },
-            handle:function (data){
-                if(confirm('您确定要处理这笔金额吗？')){
-                    var isNo = 1;
-                    $stadiumUserWithdraw.fn.status(data,isNo);
+            "changeStatus": function (id,handle) {
+                var tempStatus;
+                if(handle==1){
+                    $('#showText').html('您确定要处理这笔金额吗？');
+                    tempStatus = 1;
+                }else{
+                    $('#showText').html('您确定要驳回这笔金额吗？');
+                    tempStatus = 2;
                 }
-            },
-            close:function (data){
-                if(confirm('您确定要驳回这笔金额吗？')){
-                    $stadiumUserWithdraw.fn.status(data);
-                }
-            },
-            status : function(id,isNo) {
-                $.ajax({
-                    "url": "${contextPath}/admin/stadiumUserWithdraw/status",
-                    "data": {
-                        "id": id,
-                        "isNo" : isNo
-                    },
-                    "dataType": "json",
-                    "type": "POST",
-                    success: function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
+                $("#delete").modal("show");
+                $("#confirm").off("click");
+                $("#confirm").on("click",function(){
+                    $.ajax({
+                        "url": "${contextPath}/admin/stadiumUserWithdraw/status",
+                        "data": {
+                            "id": id,
+                            "status":tempStatus
+                        },
+                        "dataType": "json",
+                        "type": "POST",
+                        success: function (result) {
+                            if (result.status) {
+                                $("#delete").modal("hide");
+                                $stadiumUserWithdraw.v.dTable.ajax.reload(null,false);
+                            } else {
+                                $common.fn.notify("操作失败", "error");
+                            }
                         }
-                        $stadiumUserWithdraw.v.dTable.ajax.reload();
-                    }
-                });
+                    });
+                })
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {

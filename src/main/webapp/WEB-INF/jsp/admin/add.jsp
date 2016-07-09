@@ -71,11 +71,11 @@
                 var code =  $('.wysiwye-editor').code();
                 var isCheck = true;
                 if($("#username").val()==""){
-                    alert("用户名不能为空!");
+                    $leoman.notify('用户名不能为空', "error");
                     isCheck=false;
                 }
                 if($("#password").val()==""){
-                    alert("密码不能为空!");
+                    $leoman.notify('密码不能为空', "error");
                     isCheck=false;
                 }
                 if(isCheck){

@@ -14,6 +14,7 @@ import com.leoman.stadium.service.StadiumBookingService;
 import com.leoman.stadium.service.impl.StadiumBookingServiceImpl;
 import com.leoman.user.entity.User;
 import com.leoman.utils.Result;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -40,10 +41,13 @@ public class StadiumBookingController extends GenericEntityController<StadiumBoo
     private ProvinceService provinceService;
 
     @RequestMapping(value ="/index")
-    public String index(Model model){
+    public String index(Model model,String details){
         try{
             List<Province> province = provinceService.queryAll();
             model.addAttribute("province",province);
+            if(StringUtils.isNotBlank(details) && "1".equals(details)){
+                model.addAttribute("details",details);
+            }
         }catch (RuntimeException e){
             e.printStackTrace();
         }
@@ -51,14 +55,14 @@ public class StadiumBookingController extends GenericEntityController<StadiumBoo
     }
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length, StadiumBooking stadiumBooking, City cityId, Stadium name,User nickName){
+    public Object list(Integer draw, Integer start, Integer length, StadiumBooking stadiumBooking, City cityId, Stadium name,User nickName,String details){
         Page<StadiumBooking> Page = null;
         try {
             int pagenum = getPageNum(start,length);
             stadiumBooking.setCity(cityId);
             stadiumBooking.setStadium(name);
             stadiumBooking.setUser(nickName);
-            Page = stadiumBookingService.findAll(stadiumBooking, pagenum, length);
+            Page = stadiumBookingService.findAll(details,stadiumBooking, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();
         }

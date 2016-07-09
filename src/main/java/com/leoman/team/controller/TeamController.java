@@ -14,6 +14,7 @@ import com.leoman.team.service.impl.TeamServiceImpl;
 import com.leoman.user.entity.User;
 import com.leoman.user.service.UserService;
 import com.leoman.utils.Result;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -39,15 +40,16 @@ public class TeamController extends GenericEntityController<Team, Team, TeamServ
     @Autowired
     private TeamService teamService;
     @Autowired
-    private CityService cityService;
-    @Autowired
     private ProvinceService provinceService;
 
     @RequestMapping(value = "/index")
-    public String index(Model model,HttpServletRequest request){
+    public String index(Model model,String details){
         try{
             List<Province> province = provinceService.queryAll();
             model.addAttribute("province",province);
+            if(StringUtils.isNotBlank(details) && "1".equals(details)){
+                model.addAttribute("details",details);
+            }
         }catch (RuntimeException e){
             e.printStackTrace();
         }
@@ -63,13 +65,13 @@ public class TeamController extends GenericEntityController<Team, Team, TeamServ
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,Team team,City cityId){
+    public Object list(Integer draw, Integer start, Integer length,Team team,City cityId,String details){
         Page<Team> teamPage = null;
 //        List<Team> list = null;
         try {
             int pagenum = getPageNum(start,length);
             team.setCity(cityId);
-            teamPage = teamService.findAll(team, pagenum, length);
+            teamPage = teamService.findAll(details,team, pagenum, length);
 
 //            list = teamService.findList(null,null,null,start,length);
         } catch (Exception e) {

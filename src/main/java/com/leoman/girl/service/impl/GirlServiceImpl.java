@@ -74,7 +74,7 @@ public class GirlServiceImpl extends GenericManagerImpl<Girl,GirlDao> implements
                         }
                     }else {
                             //今天没有预约的
-                        List ids = dao.asd(TestUtil.getTimesmorning(),TestUtil.getTimesnight());
+                        List ids = dao.notAppointmentId(TestUtil.getTimesmorning(),TestUtil.getTimesnight());
                         if(ids.size()>0 && !ids.isEmpty()) {
                             Iterator iterator = ids.iterator();
                             CriteriaBuilder.In in = cb.in(root.get("id"));

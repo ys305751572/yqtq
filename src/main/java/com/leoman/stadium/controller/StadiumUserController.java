@@ -42,8 +42,6 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
     @Autowired
     private StadiumService stadiumService;
     @Autowired
-    private StadiumSubService stadiumSubService;
-    @Autowired
     private ProvinceService provinceService;
 
     @RequestMapping(value = "/index")
@@ -184,17 +182,11 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
      */
     @RequestMapping(value = "/status")
     @ResponseBody
-    public Result status(Long id){
+    public Result status(Long id,Integer status){
         StadiumUser stadiumUser = stadiumUserService.queryByPK(id);
-        Integer status = stadiumUser.getStatus();
         try{
-            if(status == 0) {
-                stadiumUser.setStatus(1);
-                stadiumUserService.save(stadiumUser);
-            }else {
-                stadiumUser.setStatus(0);
-                stadiumUserService.save(stadiumUser);
-            }
+            stadiumUser.setStatus(status);
+            stadiumUserService.save(stadiumUser);
         }catch (RuntimeException e){
             e.printStackTrace();
             return Result.failure();

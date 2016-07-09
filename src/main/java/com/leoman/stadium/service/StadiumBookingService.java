@@ -9,5 +9,5 @@ import org.springframework.data.domain.Page;
  */
 public interface StadiumBookingService extends GenericManager<StadiumBooking>{
 
-    public Page<StadiumBooking> findAll(StadiumBooking stadiumBooking, Integer currentPage, Integer pageSize) throws Exception;
+    public Page<StadiumBooking> findAll(String details,StadiumBooking stadiumBooking, Integer currentPage, Integer pageSize) throws Exception;
 }

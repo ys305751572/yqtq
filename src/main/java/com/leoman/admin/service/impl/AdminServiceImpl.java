@@ -4,6 +4,8 @@ import com.leoman.admin.dao.AdminDao;
 import com.leoman.admin.entity.Admin;
 import com.leoman.admin.service.AdminService;
 import com.leoman.common.service.impl.GenericManagerImpl;
+import com.leoman.utils.TestUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,12 +35,12 @@ public class AdminServiceImpl extends GenericManagerImpl<Admin,AdminDao> impleme
     }
 
     @Override
-    public Page<Admin> findAll(Admin admin, Integer currentPage, Integer pageSize) throws Exception {
-        Specification<Admin> spec = buildSpecification(admin);
+    public Page<Admin> findAll(String details,Admin admin, Integer currentPage, Integer pageSize) throws Exception {
+        Specification<Admin> spec = buildSpecification(details,admin);
         return dao.findAll(spec, new PageRequest(currentPage-1, pageSize, Sort.Direction.DESC, "id"));
     }
 
-    public Specification<Admin> buildSpecification(final Admin u) {
+    public Specification<Admin> buildSpecification(final String details,final Admin u) {
         return new Specification<Admin>() {
             @Override
             public Predicate toPredicate(Root<Admin> root, CriteriaQuery<?> cq,
@@ -47,6 +49,9 @@ public class AdminServiceImpl extends GenericManagerImpl<Admin,AdminDao> impleme
 
                 if(!u.getUsername().isEmpty()){
                     list.add(cb.like(root.get("username").as(String.class),"%"+u.getUsername()+"%"));
+                }
+                if (StringUtils.isNotBlank(details) && "1".equals(details)) {
+                    list.add(cb.ge(root.get("createDate").as(Long.class), TestUtil.getTimesmorning()));
                 }
 
                 Predicate[] p = new Predicate[list.size()];

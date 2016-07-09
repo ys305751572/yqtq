@@ -1,9 +1,11 @@
 package com.leoman.user.service.impl;
 
 import com.leoman.common.service.impl.GenericManagerImpl;
+import com.leoman.index.service.IndexService;
 import com.leoman.user.dao.UserDao;
 import com.leoman.user.entity.User;
 import com.leoman.user.service.UserService;
+import com.leoman.utils.TestUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -31,6 +34,9 @@ public class UserServiceImpl extends GenericManagerImpl<User,UserDao> implements
     @Autowired
     private UserDao dao;
 
+    @Autowired
+    private IndexService indexService;
+
 
     @Override
     public User findByUserId(Long userId) {
@@ -38,7 +44,7 @@ public class UserServiceImpl extends GenericManagerImpl<User,UserDao> implements
     }
 
     @Override
-    public Page<User> findPage(final User user, final Integer sortId, int pagenum, int pagesize) {
+    public Page<User> findPage(final String details,final User user, final Integer sortId, int pagenum, int pagesize) {
         boolean isDesc = false;
         String property = "id";
         Specification<User> spec = new Specification<User>() {
@@ -60,6 +66,9 @@ public class UserServiceImpl extends GenericManagerImpl<User,UserDao> implements
                 }
                 if (user.getVipLevel() != null && user.getVipLevel()==1) {
                     list.add(criteriaBuilder.notEqual(root.get("vipLevel").as(Integer.class), 0));
+                }
+                if (StringUtils.isNotBlank(details) && "1".equals(details)) {
+                    list.add(criteriaBuilder.ge(root.get("createDate").as(Long.class), TestUtil.getTimesmorning()));
                 }
                 return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
             }

@@ -20,6 +20,7 @@
     <section id="content" class="container">
         <!-- 查询条件 -->
         <div class="block-area" id="search">
+            <input type="hidden" id="details" name="details" value="${details}">
             <div class="row">
                 <div class="col-md-2 form-group">
                     <input type="text" class="input-sm form-control" id="userName" name="userName" placeholder="账号">
@@ -74,6 +75,22 @@
     </section>
     <br/><br/>
 </section>
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="pwdModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div align=center>
+                    <h4 class="modal-title" id="showText" ></h4>
+                </div>
+            </div>
+            <div class="modal-body" align="center">
+                <button type="button" id="confirm" class="btn btn-primary">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- JS -->
 <%@ include file="../inc/new/foot.jsp" %>
 
@@ -129,12 +146,13 @@
                             "render": function (data,type,full) {
                                 var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$admin.fn.add(\'" + data + "\')\">" +
                                         "<i class='fa fa-pencil-square-o'></i></button>";
+                                var id = data;
                                 var st = full.status;
                                 if(st==0){
-                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$admin.fn.close("+ data +")'> " +
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick=\"$admin.fn.changeStatus(\'" + id + "\',\'" + st + "\')\"> " +
                                             "禁用</button>";
                                 }else if(st==1){
-                                    var status = "<button title='解禁' class='btn btn-primary btn-circle detail' onclick='$admin.fn.open("+ data +")'> " +
+                                    var status = "<button title='解禁' class='btn btn-primary btn-circle detail' onclick=\"$admin.fn.changeStatus(\'" + id + "\',\'" + st + "\')\">" +
                                             "解禁</button>";
                                 }
                                 return edit+ "&nbsp;" + status;
@@ -144,38 +162,42 @@
                     "fnServerParams": function (aoData) {
                         aoData.username = $("#userName").val();
                         aoData.name = $("#roleName").val();
+                        aoData.details = $("#details").val();
                     }
                 });
             },
-            close:function (data){
-                if(confirm('您确定要禁用该用户吗？')){
-                    $admin.fn.status(data);
+            "changeStatus": function (id,st) {
+                var tempStatus = 0;
+                if(st==0){
+                    $('#showText').html('您确定要禁用该用户吗？');
+                    tempStatus = 1;
+                }else if(st==1){
+                    $('#showText').html('您确定要解禁该用户吗？');
                 }
-            },
-            open:function (data){
-                if(confirm('您确定要解禁该用户吗？')){
-                    $admin.fn.status(data);
-                }
+                $("#delete").modal("show");
+                $("#confirm").off("click");
+                $("#confirm").on("click",function(){
+                    $.ajax({
+                        "url": "${contextPath}/admin/admin/status",
+                        "data": {
+                            "id": id,
+                            "status":tempStatus
+                        },
+                        "dataType": "json",
+                        "type": "POST",
+                        success: function (result) {
+                            if (result.status) {
+                                $("#delete").modal("hide");
+                                $admin.v.dTable.ajax.reload(null,false);
+                            } else {
+                                $common.fn.notify("操作失败", "error");
+                            }
+                        }
+                    });
+                })
             },
             add: function (id){
                 window.location.href = "${contextPath}/admin/admin/add?id=" + id;
-            },
-            status : function(id) {
-                $.ajax({
-                    "url": "${contextPath}/admin/admin/status",
-                    "data": {
-                        "id": id
-                    },
-                    "dataType": "json",
-                    "type": "POST",
-                    success: function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
-                        }
-                        $admin.v.dTable.ajax.reload();
-                    }
-                });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {

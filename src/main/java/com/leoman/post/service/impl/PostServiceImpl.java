@@ -3,6 +3,7 @@ package com.leoman.post.service.impl;
 import com.leoman.post.dao.PostDao;
 import com.leoman.post.entity.Post;
 import com.leoman.post.service.PostService;
+import com.leoman.utils.TestUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -69,7 +70,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<Post> findPage(final String nickName, final String content, final Integer status, int pagenum, int pagesize) {
+    public Page<Post> findPage(final String details,final String nickName, final String content, final Integer status, int pagenum, int pagesize) {
         PageRequest pageRequest = new PageRequest(pagenum - 1, pagesize, Sort.Direction.DESC, "id");
 
         Page<Post> page = postDao.findAll(new Specification<Post>() {
@@ -77,6 +78,11 @@ public class PostServiceImpl implements PostService {
             public Predicate toPredicate(Root<Post> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Predicate result = null;
                 List<Predicate> predicateList = new ArrayList<Predicate>();
+
+                if (StringUtils.isNotBlank(details) && "1".equals(details)) {
+                    Predicate pre = cb.ge(root.get("createDate").as(Long.class), TestUtil.getTimesmorning());
+                    predicateList.add(pre);
+                }
                 if (nickName != null) {
                     Predicate pre = cb.like(root.get("user").get("nickName").as(String.class), "%" + nickName + "%");
                     predicateList.add(pre);

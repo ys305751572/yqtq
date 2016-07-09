@@ -192,29 +192,29 @@
                 <h4 class="page-title">首页</h4>
                 <!-- Quick Stats -->
                 <div style="background-color: rgba(238, 238, 238, 0.09);width:auto;height: 70px">
-                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/user/index" title="新增用户" class="btn btn-alt m-r-5">新增用户( ${newUserNum} )</a>
+                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/user/index?details=1" title="新增用户" class="btn btn-alt m-r-5">新增用户( ${newUserNum} )</a>
                     </div>
-                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/admin/index" title="新增会员" class="btn btn-alt m-r-5">新增会员( ${newAdminNum} )</a>
+                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/admin/index?details=1" title="新增会员" class="btn btn-alt m-r-5">新增会员( ${newAdminNum} )</a>
                     </div>
-                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/reserve/index" title="新增约球" class="btn btn-alt m-r-5">新增约球( ${newReserveNum} )</a>
+                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/reserve/index?details=1" title="新增约球" class="btn btn-alt m-r-5">新增约球( ${newReserveNum} )</a>
                     </div>
-                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/stadiumBooking/index" title="场地订单" class="btn btn-alt m-r-5">场地订单( ${newStadiumBookingNum} )</a>
+                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/stadiumBooking/index?details=1" title="场地订单" class="btn btn-alt m-r-5">场地订单( ${newStadiumBookingNum} )</a>
                     </div>
-                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/team/index" title="新增球队" class="btn btn-alt m-r-5">新增球队( ${newTeamNum} )</a>
+                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/team/index?details=1" title="新增球队" class="btn btn-alt m-r-5">新增球队( ${newTeamNum} )</a>
                     </div>
-                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/girlUser/index" title="新增看球" class="btn btn-alt m-r-5">新增看球( ${newGirlUserNum} )</a>
+                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/girlUser/index?details=1" title="新增看球" class="btn btn-alt m-r-5">新增看球( ${newGirlUserNum} )</a>
                     </div>
-                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/post/index" title="新增帖子" class="btn btn-alt m-r-5">新增帖子( ${newPostNum} )</a>
+                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/post/index?details=1" title="新增帖子" class="btn btn-alt m-r-5">新增帖子( ${newPostNum} )</a>
                     </div>
-                    <div style="float: left;margin-left: 10px;margin-top: 10px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/stadiumUserWithdraw/index" title="新增提现" class="btn btn-alt m-r-5">新增提现( ${newWithdrawNum} )</a>
+                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/stadiumUserWithdraw/index?details=1" title="新增提现" class="btn btn-alt m-r-5">新增提现( ${newWithdrawNum} )</a>
                     </div>
                 </div>
                 <div class="block-area" id="tableBordered">
@@ -224,22 +224,22 @@
                             <table class="tile table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <td width="40%">已订</td>
-                                    <td >1</td>
+                                    <td width="45%">已订</td>
+                                    <td >${allStadiumBookingNum}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td>已使用</td>
-                                    <td>2</td>
+                                    <td>${useStadiumBookingNum}</td>
                                 </tr>
                                 <tr>
                                     <td>待使用</td>
-                                    <td>3</td>
+                                    <td>${notUsedStadiumBookingNum}</td>
                                 </tr>
                                 <tr>
                                     <td>总金额</td>
-                                    <td>4</td>
+                                    <td>${allStadiumBookingprice}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -251,30 +251,30 @@
                             <table class="tile table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <td width="40%">组队数</td>
-                                    <td>1</td>
+                                    <td width="45%">组队数</td>
+                                    <td>${allReserveNum}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td>组队成功数</td>
-                                    <td>2</td>
+                                    <td>${successReserveNum}</td>
                                 </tr>
                                 <tr>
                                     <td>组队失败数</td>
-                                    <td>3</td>
+                                    <td>${failureReserveNum}</td>
                                 </tr>
                                 <tr>
                                     <td>总金额</td>
-                                    <td>4</td>
+                                    <td>${allReservePrice}</td>
                                 </tr>
                                 <tr>
                                     <td>确认金额</td>
-                                    <td>5</td>
+                                    <td>${confirmReservePrice}</td>
                                 </tr>
                                 <tr>
                                     <td>退回金额</td>
-                                    <td>6</td>
+                                    <td>${backReservePrice}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -286,18 +286,18 @@
                             <table class="tile table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <td width="40%">宝贝订单</td>
-                                    <td>1</td>
+                                    <td width="45%">宝贝订单</td>
+                                    <td>${allGirlUserNum}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td>订单金额</td>
-                                    <td>2</td>
+                                    <td>${allGirlUserprice}</td>
                                 </tr>
                                 <tr>
                                     <td>直播看球邀请次数</td>
-                                    <td>3</td>
+                                    <td>${watchingRaceInvitation}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -309,14 +309,14 @@
                             <table class="tile table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <td width="40%">今日访问</td>
-                                    <td>1</td>
+                                    <td width="45%">今日访问</td>
+                                    <td>NULL</td>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td>在线人数</td>
-                                    <td>2</td>
+                                    <td>NULL</td>
                                 </tr>
                                 </tbody>
                             </table>

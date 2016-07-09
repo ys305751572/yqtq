@@ -20,6 +20,7 @@
     <section id="content" class="container">
         <!-- 查询条件 -->
         <div class="block-area" id="search">
+            <input type="hidden" id="details" name="details" value="${details}">
             <div class="row">
                 <div class="col-md-2 form-group">
                     <select id="province" name="province" class="select" >
@@ -170,6 +171,7 @@
                         aoData.bookTime = $("#bookTime").val();
                         aoData.type = $("#type").val();
                         aoData.nickName = $("#nickName").val();
+                        aoData.details = $("#details").val();
                     }
                 });
             },

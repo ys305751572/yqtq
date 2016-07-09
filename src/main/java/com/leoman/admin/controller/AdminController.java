@@ -6,6 +6,7 @@ import com.leoman.admin.service.impl.AdminServiceImpl;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.utils.Result;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -24,17 +25,20 @@ public class AdminController extends GenericEntityController<Admin,Admin,AdminSe
     private AdminService adminService;
 
     @RequestMapping(value = "/index")
-    public String index(){
+    public String index(Model model,String details){
+        if(StringUtils.isNotBlank(details) && "1".equals(details)){
+            model.addAttribute("details",details);
+        }
         return "/admin/list";
     }
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,Admin admin){
+    public Object list(Integer draw, Integer start, Integer length,Admin admin,String details){
         Page<Admin> page = null;
         try {
             int pagenum = getPageNum(start,length);
-            page = adminService.findAll(admin, pagenum, length);
+            page = adminService.findAll(details,admin, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,17 +60,11 @@ public class AdminController extends GenericEntityController<Admin,Admin,AdminSe
 
     @RequestMapping(value = "/status")
     @ResponseBody
-    public Result status(Long id){
+    public Result status(Long id,Integer status){
             Admin admin = adminService.queryByPK(id);
-            Integer status = admin.getStatus();
             try{
-                if(status == 0) {
-                    admin.setStatus(1);
-                    adminService.save(admin);
-                }else {
-                    admin.setStatus(0);
-                    adminService.save(admin);
-                }
+                admin.setStatus(status);
+                adminService.update(admin);
             }catch (RuntimeException e){
                 e.printStackTrace();
                 return Result.failure();

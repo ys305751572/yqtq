@@ -67,12 +67,29 @@
                     <th>地区</th>
                     <th>邀约次数</th>
                     <th>创建时间</th>
+                    <th>状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
             </table>
         </div>
     </section>
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="pwdModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div align=center>
+                        <h4 class="modal-title" id="showText" ></h4>
+                    </div>
+                </div>
+                <div class="modal-body" align="center">
+                    <button type="button" id="confirm" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <br/><br/>
 </section>
 <!-- JS -->
@@ -118,7 +135,19 @@
                             "render":function(data){
                                 return new Date(data).format("yyyy-MM-dd hh:mm");
                             },
-                            "sDefaultContent" : ""},
+                            "sDefaultContent" : ""
+                        },
+                        {
+                            "data": "status",
+                            render:function(data){
+                                if(data==0){
+                                    return "—";
+                                }else{
+                                    return "禁用";
+                                }
+                            },
+                            "sDefaultContent" : ""
+                        },
                         {
                             "data": "id",
                             "render": function (data,type,full) {
@@ -126,12 +155,13 @@
                                         "<i class='fa fa-eye'></i></button>";
                                 var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$watchingRace.fn.edit(\'" + data + "\')\">" +
                                         "<i class='fa fa-pencil-square-o'></i></button>";
+                                var id = data;
                                 var st = full.status;
                                 if(st==0){
-                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick='$watchingRace.fn.close("+ data +")'> " +
+                                    var status = "<button title='禁用' class='btn btn-primary btn-circle detail' onclick=\"$watchingRace.fn.changeStatus(\'" + id + "\',\'" + st + "\')\"> " +
                                             "禁用</button>";
                                 }else if(st==1){
-                                    var status = "<button title='启用' class='btn btn-primary btn-circle detail' onclick='$watchingRace.fn.open("+ data +")'> " +
+                                    var status = "<button title='启用' class='btn btn-primary btn-circle detail' onclick=\"$watchingRace.fn.changeStatus(\'" + id + "\',\'" + st + "\')\"> " +
                                             "启用</button>";
                                 }
                                 return detail + "&nbsp;" + status + "&nbsp;" +edit;
@@ -145,15 +175,35 @@
                     }
                 });
             },
-            close:function (data){
-                if(confirm('您确定要禁用该酒吧吗？')){
-                    $watchingRace.fn.status(data);
+            "changeStatus": function (id,st) {
+                var tempStatus = 0;
+                if(st==0){
+                    $('#showText').html('您确定要禁用该酒吧吗？');
+                    tempStatus = 1;
+                }else if(st==1){
+                    $('#showText').html('您确定要解禁该酒吧吗？');
                 }
-            },
-            open:function (data){
-                if(confirm('您确定要启用该酒吧吗？')){
-                    $watchingRace.fn.status(data);
-                }
+                $("#delete").modal("show");
+                $("#confirm").off("click");
+                $("#confirm").on("click",function(){
+                    $.ajax({
+                        "url": "${contextPath}/admin/watchingRace/status",
+                        "data": {
+                            "id": id,
+                            "status":tempStatus
+                        },
+                        "dataType": "json",
+                        "type": "POST",
+                        success: function (result) {
+                            if (result.status) {
+                                $("#delete").modal("hide");
+                                $watchingRace.v.dTable.ajax.reload(null,false);
+                            } else {
+                                $common.fn.notify("操作失败", "error");
+                            }
+                        }
+                    });
+                })
             },
             sfInfo: function (id) {
                 $.ajax({
@@ -200,23 +250,6 @@
             },
             edit: function (id){
                 window.location.href = "${contextPath}/admin/watchingRace/edit?id=" + id;
-            },
-            status : function(id) {
-                $.ajax({
-                    "url": "${contextPath}/admin/watchingRace/status",
-                    "data": {
-                        "id": id
-                    },
-                    "dataType": "json",
-                    "type": "POST",
-                    success: function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            return;
-                        }
-                        $watchingRace.v.dTable.ajax.reload();
-                    }
-                });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {

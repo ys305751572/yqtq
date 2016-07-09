@@ -101,7 +101,7 @@
             systemVipExperienceSave : function(){
                 var isCheck = true;
                 if($("#credibility1").val()==""){
-                    alert("经验不能为空!");
+                    $leoman.notify('信誉度设定不能为空', "error");
                     isCheck=false;
                 }
 

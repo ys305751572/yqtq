@@ -7,6 +7,8 @@ import com.leoman.utils.TestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/7/7.
  */
@@ -55,4 +57,63 @@ public class IndexServiceImpl implements IndexService{
     public Integer newWithdrawNum() {
         return dao.newWithdrawNum(TestUtil.getTimesmorning());
     }
+
+    //场地订单统计信息:
+    @Override
+    public Integer allStadiumBookingNum() {
+        return dao.allStadiumBookingNum();
+    }
+    @Override
+    public Integer useStadiumBookingNum() {
+        return dao.useStadiumBookingNum();
+    }
+    @Override
+    public Integer notUsedStadiumBookingNum() {
+        return dao.notUsedStadiumBookingNum();
+    }
+    @Override
+    public Integer allStadiumBookingprice() {
+        return dao.allStadiumBookingprice();
+    }
+
+    //散客统计信息:
+    @Override
+    public Integer allReserveNum() {
+        return dao.allReserveNum();
+    }
+    @Override
+    public Integer successReserveNum() {
+        return dao.successReserveNum();
+    }
+    @Override
+    public Integer failureReserveNum() {
+        return dao.failureReserveNum();
+    }
+    @Override
+    public Integer allReservePrice() {
+        return dao.allReservePrice();
+    }
+    @Override
+    public Integer confirmReservePrice() {
+        return dao.confirmReservePrice();
+    }
+    @Override
+    public Integer backReservePrice() {
+        return dao.backReservePrice();
+    }
+
+    //看球统计信息:
+    @Override
+    public Integer allGirlUserNum() {
+        return dao.allGirlUserNum();
+    }
+    @Override
+    public Integer allGirlUserprice() {
+        return dao.allGirlUserprice();
+    }
+    @Override
+    public Integer watchingRaceInvitation() {
+        return dao.watchingRaceInvitation();
+    }
+
 }

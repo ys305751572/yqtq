@@ -10,5 +10,5 @@ import org.springframework.data.domain.Page;
  */
 public interface PostService extends ICommonService<Post> {
 
-    public Page<Post> findPage(String nickName, String content, Integer status, int pagenum, int pagesize);
+    public Page<Post> findPage(String details,String nickName, String content, Integer status, int pagenum, int pagesize);
 }

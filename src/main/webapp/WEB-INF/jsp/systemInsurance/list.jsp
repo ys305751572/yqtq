@@ -143,6 +143,7 @@
 
 
                 $("#delete").modal("show");
+                $("#confirm").unbind();
                 $('#confirm').click(function () {
 
                     var tempStatus = 0;

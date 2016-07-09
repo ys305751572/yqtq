@@ -53,6 +53,22 @@
             </table>
         </div>
     </section>
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="pwdModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div align=center>
+                        <h4 class="modal-title" id="showText" ></h4>
+                    </div>
+                </div>
+                <div class="modal-body" align="center">
+                    <button type="button" id="confirm" class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <br/><br/>
 </section>
 <!-- JS -->
@@ -136,9 +152,10 @@
                                         "<i class='fa fa-eye'></i></button>";
                                 var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$hostRace.fn.edit(\'" + data + "\')\">" +
                                         "<i class='fa fa-pencil-square-o'></i></button>";
+                                var id = data;
                                 var st = full.status;
                                 if(st!=2){
-                                    var del = "<button title='关闭' class='btn btn-primary btn-circle ' onclick='$hostRace.fn.close(" + data + ")'>" +
+                                    var del = "<button title='关闭' class='btn btn-primary btn-circle ' onclick=\"$hostRace.fn.close(\'" + id + "\')\"> " +
                                             "关闭</button>";
 
                                 }else{
@@ -154,10 +171,28 @@
                     }
                 });
             },
-            close:function (data){
-                if(confirm('您确定要结束该比赛吗？')){
-                    $hostRace.fn.status(data);
-                };
+            close:function (id){
+                $('#showText').html('您确定要禁用该用户吗？');
+                $("#delete").modal("show");
+                $("#confirm").off("click");
+                $("#confirm").on("click",function(){
+                    $.ajax({
+                        "url": "${contextPath}/admin/hostRace/close",
+                        "data": {
+                            "id": id
+                        },
+                        "dataType": "json",
+                        "type": "POST",
+                        success: function (result) {
+                            if (result.status) {
+                                $("#delete").modal("hide");
+                                $hostRace.v.dTable.ajax.reload(null,false);
+                            } else {
+                                $common.fn.notify("操作失败", "error");
+                            }
+                        }
+                    });
+                })
             },
             sfInfo: function (id) {
                 $.ajax({
@@ -178,24 +213,6 @@
             },
             "edit" : function(id) {
                 window.location.href = "${contextPath}/admin/hostRace/edit?id=" + id;
-            },
-            "status" : function(id) {
-                $.ajax({
-                    "url": "${contextPath}/admin/hostRace/close",
-                    "data": {
-                        "id": id
-                    },
-                    "dataType": "json",
-                    "type": "POST",
-                    "success": function (result) {
-                        if (!result.status) {
-                            $common.fn.notify(result.msg);
-                            $hostRace.v.dTable.ajax.reload();
-                            return;
-                        }
-                        $hostRace.v.dTable.ajax.reload();
-                    }
-                });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {

@@ -152,13 +152,13 @@
                 var isCheck = true;
                 var price = $("#price").val();
                 if(price==""){
-                    alert("VIP会员价格不能为空!");
+                    $leoman.notify('VIP会员价格不能为空', "error");
                     isCheck=false;
                 }
                 if(price.length!=0){
                     var reg = /^([0-9]{1,8})([.]{0,1})([0-9]{0,2})$/;
                     if(!reg.test(price)){
-                        alert("错误的VIP会员价格!");
+                        $leoman.notify('错误的VIP会员价格', "error");
                         $("#price").val(${systemVips.price});
                         isCheck=false;
                     }
@@ -185,15 +185,15 @@
                 var isCheck = true;
                 var preferente = $("#preferente").val();
                 if($("#level1").val()=="" ){
-                    alert("等级不能为空!");
+                    $leoman.notify('等级不能为空', "error");
                     isCheck=false;
                 }
                 if($("#experience").val()=="" ){
-                    alert("经验不能为空!");
+                    $leoman.notify('经验不能为空', "error");
                     isCheck=false;
                 }
                 if(preferente=="" ){
-                    alert("折扣不能为空!");
+                    $leoman.notify('折扣不能为空', "error");
                     isCheck=false;
                 }
                 if(preferente.length!=0){
@@ -202,7 +202,7 @@
                     if(reg1.test(preferente)){
                         isCheck=isCheck;
                     }else if(!reg.test(preferente)){
-                        alert("错误的折扣!");
+                        $leoman.notify('错误的折扣', "error");
                         $("#preferente").val("");
                         isCheck=false;
                     }
@@ -228,7 +228,7 @@
             systemVipExperienceSave : function(){
                 var isCheck = true;
                 if($("#vipExperience").val()==""){
-                    alert("经验不能为空!");
+                    $leoman.notify('经验设定不能为空', "error");
                     isCheck=false;
                 }
 

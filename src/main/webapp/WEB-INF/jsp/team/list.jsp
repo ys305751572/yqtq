@@ -20,6 +20,7 @@
     <section id="content" class="container">
         <!-- 查询条件 -->
         <div class="block-area" id="search">
+            <input type="hidden" id="details" name="details" value="${details}">
             <div class="row">
                 <div class="col-md-2 form-group">
                     <input type="text" class="input-sm form-control" id="name" name="name" placeholder="队名">
@@ -121,6 +122,7 @@
                     "fnServerParams": function (aoData) {
                         aoData.name = $("#name").val();
                         aoData.cityId = $("#cityId").val();
+                        aoData.details = $("#details").val();
                     }
                 });
             },

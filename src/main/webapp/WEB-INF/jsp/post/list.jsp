@@ -20,6 +20,7 @@
     <section id="content" class="container">
         <!-- 查询条件 -->
         <div class="block-area" id="search">
+            <input type="hidden" id="details" name="details" value="${details}">
             <div class="row">
                 <div class="col-md-2 form-group">
                     <label>发布人</label>
@@ -156,6 +157,7 @@
                         aoData.nickName = $("#nickName").val();
                         aoData.content = $("#contentId").val();
                         aoData.status = $("#status").val();
+                        aoData.details = $("#details").val();
                     }
                 });
             },

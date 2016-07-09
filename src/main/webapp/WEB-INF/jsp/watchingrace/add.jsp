@@ -96,19 +96,19 @@
             save : function () {
                 var isCheck = true;
                 if($("#name").val()==""){
-                    alert("看球名称不能为空!");
+                    $leoman.notify('看球名称不能为空', "error");
                     isCheck=false;
                 }
                 if($("#cityId").val()==""){
-                    alert("城市不能为空!");
+                    $leoman.notify('城市不能为空', "error");
                     isCheck=false;
                 }
                 if($('.fileupload-preview img').size()<1 || $('.fileupload-preview img').width()==0){
-                    alert("球场封面不能为空!");
+                    $leoman.notify('球场封面不能为空', "error");
                     isCheck=false;
                 }
                 if($('.note-editable').text()==""){
-                    alert("球场简介不能为空!");
+                    $leoman.notify('球场简介不能为空', "error");
                     isCheck=false;
                 }
                 if(isCheck){

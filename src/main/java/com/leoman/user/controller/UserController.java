@@ -3,11 +3,13 @@ package com.leoman.user.controller;
 import com.leoman.common.controller.common.CommonController;
 import com.leoman.common.exception.GeneralExceptionHandler;
 import com.leoman.common.factory.DataTableFactory;
+import com.leoman.index.service.IndexService;
 import com.leoman.user.entity.User;
 import com.leoman.user.service.UserService;
 import com.leoman.utils.Result;
 import com.leoman.utils.WebUtil;
 import net.sf.json.JSONArray;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -32,13 +34,19 @@ public class UserController extends CommonController {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private IndexService indexService;
+
     /**
      * 列表页面
      *
      * @return
      */
     @RequestMapping(value = "/index")
-    public String index() {
+    public String index(Model model,String details ) {
+        if(StringUtils.isNotBlank(details) && "1".equals(details)){
+            model.addAttribute("details",details);
+        }
         return "user/list";
     }
 
@@ -61,10 +69,11 @@ public class UserController extends CommonController {
                      Integer start,
                      Integer length,
                      User user,
+                     String details,
                      Model model) {
         try {
             int pageNum = getPageNum(start, length);
-            Page<User> page = service.findPage(user, sortId, pageNum, length);
+            Page<User> page = service.findPage(details,user, sortId, pageNum, length);
             Map<String, Object> result = DataTableFactory.fitting(draw, page);
             WebUtil.print(response, result);
         } catch (Exception e) {
@@ -94,18 +103,11 @@ public class UserController extends CommonController {
      */
     @RequestMapping(value = "/status")
     @ResponseBody
-    public Result status(Long id){
-        Map<String,Object> map = new HashMap<String, Object>();
+    public Result status(Long id,Integer status){
         User user = service.queryByPK(id);
-        Integer status = user.getStatus();
         try{
-            if(status == 0) {
-                user.setStatus(1);
-                service.update(user);
-            }else {
-                user.setStatus(0);
-                service.update(user);
-            }
+            user.setStatus(status);
+            service.update(user);
         }catch (RuntimeException e){
             e.printStackTrace();
             return Result.failure();

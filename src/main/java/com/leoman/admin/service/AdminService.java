@@ -13,6 +13,6 @@ public interface AdminService extends GenericManager<Admin> {
 
     public Admin findByUsername(String username);
 
-    public Page<Admin> findAll(Admin admin, Integer currentPage, Integer pageSize) throws Exception;
+    public Page<Admin> findAll(String details,Admin admin, Integer currentPage, Integer pageSize) throws Exception;
 
 }

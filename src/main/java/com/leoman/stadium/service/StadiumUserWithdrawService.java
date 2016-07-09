@@ -9,6 +9,6 @@ import org.springframework.data.domain.Page;
  */
 public interface StadiumUserWithdrawService extends GenericManager<StadiumUserWithdraw> {
 
-    public Page<StadiumUserWithdraw> findAll(StadiumUserWithdraw stadiumUserWithdraw, Integer currentPage, Integer pageSize) throws Exception;
+    public Page<StadiumUserWithdraw> findAll(String details,StadiumUserWithdraw stadiumUserWithdraw, Integer currentPage, Integer pageSize) throws Exception;
 
 }

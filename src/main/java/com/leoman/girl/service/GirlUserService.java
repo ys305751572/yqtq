@@ -9,5 +9,5 @@ import org.springframework.data.domain.Page;
  */
 public interface GirlUserService extends GenericManager<GirlUser> {
 
-    public Page<GirlUser> findAll(GirlUser girlUser, Integer currentPage, Integer pageSize) throws Exception;
+    public Page<GirlUser> findAll(String details,GirlUser girlUser, Integer currentPage, Integer pageSize) throws Exception;
 }

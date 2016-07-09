@@ -4,6 +4,8 @@ import com.leoman.common.service.impl.GenericManagerImpl;
 import com.leoman.stadium.dao.StadiumBookingDao;
 import com.leoman.stadium.entity.StadiumBooking;
 import com.leoman.stadium.service.StadiumBookingService;
+import com.leoman.utils.TestUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,12 +30,12 @@ public class StadiumBookingServiceImpl extends GenericManagerImpl<StadiumBooking
     private StadiumBookingDao dao;
 
     @Override
-    public Page<StadiumBooking> findAll(StadiumBooking stadiumBooking, Integer currentPage, Integer pageSize) throws Exception {
-        Specification<StadiumBooking> spec = buildSpecification(stadiumBooking);
+    public Page<StadiumBooking> findAll(String details,StadiumBooking stadiumBooking, Integer currentPage, Integer pageSize) throws Exception {
+        Specification<StadiumBooking> spec = buildSpecification(details,stadiumBooking);
         return dao.findAll(spec, new PageRequest(currentPage-1, pageSize, Sort.Direction.DESC, "id"));
     }
 
-    public Specification<StadiumBooking> buildSpecification(final StadiumBooking s) {
+    public Specification<StadiumBooking> buildSpecification(final String details,final StadiumBooking s) {
         return new Specification<StadiumBooking>() {
             @Override
             public Predicate toPredicate(Root<StadiumBooking> root, CriteriaQuery<?> cq,
@@ -55,7 +57,9 @@ public class StadiumBookingServiceImpl extends GenericManagerImpl<StadiumBooking
                 if(s.getType() != null) {
                     list.add(cb.equal(root.get("type").as(Integer.class),s.getType()));
                 }
-
+                if (StringUtils.isNotBlank(details) && "1".equals(details)) {
+                    list.add(cb.ge(root.get("createDate").as(Long.class), TestUtil.getTimesmorning()));
+                }
                 Predicate[] p = new Predicate[list.size()];
                 return cb.and(list.toArray(p));
             }

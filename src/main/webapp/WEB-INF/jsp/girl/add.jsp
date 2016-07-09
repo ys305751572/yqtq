@@ -178,33 +178,33 @@
                 var isCheck = true;
                 var price = $("#price").val();
                 if($("#name").val()==""){
-                    alert("名称不能为空!");
+                    $leoman.notify('名称不能为空', "error");
                     isCheck=false;
                 }
                 if($("#cityId").val()==""){
-                    alert("城市不能为空!");
+                    $leoman.notify('城市不能为空', "error");
                     isCheck=false;
                 }
                 if($("#age").val()==""){
-                    alert("年龄不能为空!");
+                    $leoman.notify('年龄不能为空', "error");
                     isCheck=false;
                 }
                 if($("#height").val()==""){
-                    alert("身高不能为空!");
+                    $leoman.notify('身高不能为空', "error");
                     isCheck=false;
                 }
                 if($("#weight").val()==""){
-                    alert("体重不能为空!");
+                    $leoman.notify('体重不能为空', "error");
                     isCheck=false;
                 }
                 if(price==""){
-                    alert("服务价格不能为空!");
+                    $leoman.notify('服务价格不能为空', "error");
                     isCheck=false;
                 }
                 if(price.length!=0){
                     var reg = /^([0-9]{1,8})([.]{0,1})([0-9]{0,2})$/;
                     if(!reg.test(price)){
-                        alert("错误的服务价格!");
+                        $leoman.notify('错误的服务价格', "error");
                         var p = "${girl.price}";
                         if(p==""){
                             $("#price").val("");
@@ -216,15 +216,15 @@
                     }
                 }
                 if($("#interest").val()==""){
-                    alert("兴趣爱好不能为空!");
+                    $leoman.notify('兴趣爱好不能为空', "error");
                     isCheck=false;
                 }
                 if($("#favoriteTeam").val()==""){
-                    alert("喜欢球队不能为空!");
+                    $leoman.notify('喜欢球队不能为空', "error");
                     isCheck=false;
                 }
                 if($("#profession").val()==""){
-                    alert("职业不能为空!");
+                    $leoman.notify('职业不能为空', "error");
                     isCheck=false;
                 }
                 if(isCheck){

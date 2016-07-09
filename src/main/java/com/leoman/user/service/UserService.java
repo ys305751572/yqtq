@@ -14,6 +14,6 @@ public interface UserService extends GenericManager<User>{
 
     public User findByUserId(Long userId);
 
-    public Page<User> findPage(User user, Integer sortId, int pagenum, int pagesize);
+    public Page<User> findPage(String details,User user, Integer sortId, int pagenum, int pagesize);
 
 }

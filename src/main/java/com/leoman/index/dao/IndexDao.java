@@ -4,33 +4,84 @@ import com.leoman.common.dao.IBaseJpaRepository;
 import com.leoman.user.entity.User;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/7/7.
  */
 public interface IndexDao extends IBaseJpaRepository<User>{
-
+    //当天新增的用户
     @Query("SELECT COUNT(a) FROM User a WHERE a.createDate >= ?1")
     public Integer newUserNum(Long date);
-
+    //当天新增的会员
     @Query("SELECT COUNT(a) FROM Admin a WHERE a.createDate >= ?1")
     public Integer newAdminNum(Long date);
-
+    //当天新增的散客约球
     @Query("SELECT COUNT(a) FROM Reserve a WHERE a.createDate >= ?1")
     public Integer newReserveNum(Long date);
-
+    //当天新增的约场地
     @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.createDate >= ?1")
     public Integer newStadiumBookingNum(Long date);
-
+    //当天新增的球队
     @Query("SELECT COUNT(a) FROM Team a WHERE a.createDate >= ?1")
     public Integer newTeamNum(Long date);
-
+    //当天新增的看球
     @Query("SELECT COUNT(a) FROM GirlUser a WHERE a.createDate >= ?1")
     public Integer newGirlUserNum(Long date);
-
+    //当天新增的帖子
     @Query("SELECT COUNT(a) FROM Post a WHERE a.createDate >= ?1")
     public Integer newPostNum(Long date);
-
+    //当天新增的提现
     @Query("SELECT COUNT(a) FROM StadiumUserWithdraw a WHERE a.createDate >= ?1")
     public Integer newWithdrawNum(Long date);
+
+    //场地订单统计信息:
+    //已定
+    @Query("SELECT COUNT(a) FROM StadiumBooking a")
+    public Integer allStadiumBookingNum();
+    //已使用
+    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.status='1'")
+    public Integer useStadiumBookingNum();
+    //未使用
+    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.status='0'")
+    public Integer notUsedStadiumBookingNum();
+    //全部金额
+    @Query("SELECT SUM(a.price) FROM StadiumBooking a")
+    public Integer allStadiumBookingprice();
+
+    //散客统计信息:
+    //组队数
+    @Query("SELECT COUNT(a) FROM Reserve a")
+    public Integer allReserveNum();
+    //组队成功数
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.status='1'")
+    public Integer successReserveNum();
+    //组队失败数
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.status='2'")
+    public Integer failureReserveNum();
+    //总金额
+    @Query("SELECT SUM(a.price) FROM Reserve a")
+    public Integer allReservePrice();
+    //确认金额
+    @Query("SELECT SUM(a.price) FROM Reserve a WHERE a.status='1' OR a.status='3'")
+    public Integer confirmReservePrice();
+    //退回金额
+    @Query("SELECT SUM(a.price) FROM Reserve a WHERE a.status='2'")
+    public Integer backReservePrice();
+
+    //看球统计信息:
+    //宝贝订单
+    @Query("SELECT COUNT(a) FROM GirlUser a")
+    public Integer allGirlUserNum();
+    //订单金额
+    @Query("SELECT SUM(a.price) FROM GirlUser a")
+    public Integer allGirlUserprice();
+    //直播看球邀请次数
+    @Query("SELECT SUM(a.invitation) FROM WatchingRace a")
+    public Integer watchingRaceInvitation();
+
+
+    //访问统计:
+
 
 }

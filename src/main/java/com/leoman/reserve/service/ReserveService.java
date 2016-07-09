@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface ReserveService extends GenericManager<Reserve> {
 
-    public Page<Reserve> findPage(Reserve reserve, int pagenum, int pagesize);
+    public Page<Reserve> findPage(String details,Reserve reserve, int pagenum, int pagesize);
 
     public Integer findNum(Long reserveId);
 
