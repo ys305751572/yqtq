@@ -36,7 +36,17 @@ public class ModuleServiceImpl extends GenericManagerImpl<Module,ModuleDao> impl
                 return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
             }
         };
-        return dao.findAll(spec,new PageRequest(pagenum-1,pagesize, Sort.Direction.DESC,"id"));
+        return dao.findAll(spec,new PageRequest(pagenum-1,pagesize, Sort.Direction.ASC,"sorting"));
+    }
+
+    @Override
+    public List<Module> mainModule() {
+        return dao.mainModule();
+    }
+
+    @Override
+    public List<Module> subModule() {
+        return dao.subModule();
     }
 
     @Override
@@ -58,7 +68,7 @@ public class ModuleServiceImpl extends GenericManagerImpl<Module,ModuleDao> impl
 
     public void saveChildModule(Module module,Long parentId) {
         Module parentModule = this.queryByPK(parentId);
-        module.getChilds().add(module);
+//        module.getChilds().add(module);
         module.setParent(parentModule);
         this.save(module);
     }

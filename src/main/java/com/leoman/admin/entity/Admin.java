@@ -2,6 +2,7 @@ package com.leoman.admin.entity;
 
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.security.entity.Role;
+import com.leoman.user.entity.UserRole;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -31,15 +32,15 @@ public class Admin extends BaseEntity{
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "admin_id")
-    private Set<Role> roles;
+    private Set<UserRole> roles;
 
     @Transient
     private String name;
 
     public String getName() {
         String name = "";
-        for(Role r : roles){
-           name = r.getName();
+        for(UserRole ur : roles){
+           name = ur.getRole().getName();
         }
         return name;
     }
@@ -48,11 +49,11 @@ public class Admin extends BaseEntity{
         this.name = name;
     }
 
-    public Set<Role> getRoles() {
+    public Set<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
 

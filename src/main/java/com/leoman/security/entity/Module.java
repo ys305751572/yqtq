@@ -1,11 +1,13 @@
 package com.leoman.security.entity;
 
+import com.leoman.admin.entity.Admin;
 import com.leoman.common.entity.BaseEntity;
 
 import javax.persistence.*;
 import java.util.List;
 
 /**
+ * 模块表
  * Created by Administrator on 2016/5/22.
  */
 @Entity
@@ -21,22 +23,31 @@ public class Module extends BaseEntity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "admin_id")
-    private Long adminId;
+    @ManyToOne
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
 
-    @OneToMany(mappedBy = "parent")
-    private List<Module> childs;
+    @Column(name = "sorting")
+    private Long sorting;
 
     @ManyToOne
-    @JoinTable(name = "t_module_relation", joinColumns = @JoinColumn(name = "parent_id"), inverseJoinColumns = @JoinColumn(name = "child_id"))
+    @JoinColumn(name = "parent_id")
     private Module parent;
 
-    public List<Module> getChilds() {
-        return childs;
+    public Admin getAdmin() {
+        return admin;
     }
 
-    public void setChilds(List<Module> childs) {
-        this.childs = childs;
+    public Long getSorting() {
+        return sorting;
+    }
+
+    public void setSorting(Long sorting) {
+        this.sorting = sorting;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
     public Module getParent() {
@@ -71,11 +82,4 @@ public class Module extends BaseEntity {
         this.description = description;
     }
 
-    public Long getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(Long adminId) {
-        this.adminId = adminId;
-    }
 }

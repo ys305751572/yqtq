@@ -18,17 +18,10 @@
 <section id="main" class="p-relative" role="main">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
-        <!-- 查询条件 -->
-        <div class="block-area" id="search">
-            <div class="row">
-                <div class="col-md-2 form-group">
-                    <label>姓名</label>
-                    <input type="text" class="input-sm form-control" id="nickname" name="nickname" placeholder="...">
-                </div>
-            </div>
-        </div>
         <div class="block-area" id="alternative-buttons">
-            <button id="c_search" class="btn btn-alt m-r-5">查询</button>
+            <div>
+                <a data-toggle="modal" href="${contextPath}/admin/role/add" title="新增" class="btn btn-alt m-r-5">新增</a>
+            </div>
         </div>
         <hr class="whiter m-t-20"/>
         <!-- form表格 -->
@@ -38,8 +31,8 @@
                 <tr>
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
                     <th>名称</th>
-                    <th>性别</th>
-                    <th>手机</th>
+                    <th>人员数量</th>
+                    <th>更新时间</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -48,30 +41,30 @@
     </section>
     <br/><br/>
 </section>
-<!-- JS -->
-<%@ include file="../inc/new/foot.jsp" %>
+    <!-- JS -->
+    <%@ include file="../inc/new/foot.jsp" %>
 
-<script>
-    $user = {
+    <script>
+    $role = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                $user.fn.dataTableInit();
+                $role.fn.dataTableInit();
 
                 $("#c_search").click(function () {
-                    $user.v.dTable.ajax.reload();
+                    $role.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                $user.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $role.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
                     "ajax": {
-                        "url": "${contextPath}/admin/cuser/list",
+                        "url": "${contextPath}/admin/role/list",
                         "type": "POST"
                     },
                     "columns": [
@@ -83,42 +76,31 @@
                                 return checkbox;
                             }
                         },
-                        {"data": "nickname"},
-                        {
-                            "data": "gender",
-                            "render" : function(data) {
-                                if(data == "0" || data == '男'){
-                                    return '男';
-                                } else if(data == "1" || data == '女'){
-                                    return '女';
-                                }
-                            }
-                        },
-                        {"data": "mobile"},
+                        {"data": "name","sDefaultContent" : ""},
+                        {"data": "num","sDefaultContent" : ""},
+                        {"data": "modifyDate","sDefaultContent" : ""},
                         {
                             "data": "id",
                             "render": function (data) {
-                                var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$user.fn.edit(\'" + data + "\')\">" +
+                                var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$role.fn.edit(\'" + data + "\')\">" +
                                         "<i class='fa fa-pencil-square-o'></i></button>";
                                 return edit;
                             }
                         }
                     ],
                     "fnServerParams": function (aoData) {
-                        aoData.nickname = $("#nickname").val();
                     }
                 });
             },
             edit: function (id) {
-                window.location.href = "${contextPath}/admin/aoluser/foucsIndex?cuserId=" + id ;
+                window.location.href = "${contextPath}/admin/role/add?id=" + id ;
             },
-
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        $user.v.dTable.ajax.reload(null, false);
+                        $role.v.dTable.ajax.reload(null, false);
                     } else {
-                        $user.v.dTable.ajax.reload();
+                        $role.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -128,7 +110,7 @@
         }
     }
     $(function () {
-        $user.fn.init();
+        $role.fn.init();
     })
 </script>
 <script>

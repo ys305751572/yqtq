@@ -116,6 +116,14 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
         return "/watchingrace/add";
     }
 
+    /**
+     * 保存
+     * @param watchingRace
+     * @param imageFile
+     * @param city
+     * @param detail
+     * @return
+     */
     @RequestMapping(value = "/save")
     @ResponseBody
     public Result save(WatchingRace watchingRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,City city, String detail){
@@ -161,19 +169,18 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
         return Result.success();
     }
 
+    /**
+     * 改变状态
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/status")
     @ResponseBody
-    public Result status(Long id){
+    public Result status(Long id,Integer status){
         WatchingRace watchingRace = watchingRaceService.queryByPK(id);
-        Integer status = watchingRace.getStatus();
         try{
-            if(status == 0) {
-                watchingRace.setStatus(1);
-                watchingRaceService.save(watchingRace);
-            }else {
-                watchingRace.setStatus(0);
-                watchingRaceService.save(watchingRace);
-            }
+            watchingRace.setStatus(status);
+            watchingRaceService.save(watchingRace);
         }catch (RuntimeException e){
             e.printStackTrace();
             return Result.failure();

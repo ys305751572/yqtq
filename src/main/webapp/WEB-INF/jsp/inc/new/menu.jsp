@@ -43,6 +43,15 @@
             </ul>
         </li>
         <li class="dropdown">
+            <a class="sa-side-form" href="">
+                <span class="menu-item">权限管理</span>
+            </a>
+            <ul class="list-unstyled menu-item">
+                <li><a href="${contextPath}/admin/module/index">模块列表</a></li>
+                <li><a href="${contextPath}/admin/role/index">角色列表</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
             <a class="sa-side-chart" href="">
                 <span class="menu-item">散客管理</span>
             </a>
