@@ -99,7 +99,7 @@
                     },
                     "columns": [
                         {"data": "city.city","sDefaultContent" : ""},
-                        {"data": "name"},
+                        {"data": "name","sDefaultContent" : ""},
                         {
                             "data": "type",
                             "render":function(data){
@@ -108,7 +108,7 @@
                                 }else {
                                     return "公共球场";
                                 }
-                            }
+                            },"sDefaultContent" : ""
                         },
                         {
                             "data": "",
@@ -118,7 +118,7 @@
                                 var sure = "<button title='确定' class='btn btn-primary btn-circle add' onclick=\"$stadium.fn.sure("+id+",'"+name+ "')\">" +
                                         "确定</button>";
                                 return sure;
-                            }
+                            },"sDefaultContent" : ""
                         }
                     ],
                     "fnServerParams": function (aoData) {

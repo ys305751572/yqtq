@@ -18,6 +18,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -35,12 +36,12 @@ public class AdminServiceImpl extends GenericManagerImpl<Admin,AdminDao> impleme
     }
 
     @Override
-    public Page<Admin> findAll(String details,Admin admin, Integer currentPage, Integer pageSize) throws Exception {
-        Specification<Admin> spec = buildSpecification(details,admin);
+    public Page<Admin> findAll(List roleIds,Admin admin, Integer currentPage, Integer pageSize) throws Exception {
+        Specification<Admin> spec = buildSpecification(roleIds,admin);
         return dao.findAll(spec, new PageRequest(currentPage-1, pageSize, Sort.Direction.DESC, "id"));
     }
 
-    public Specification<Admin> buildSpecification(final String details,final Admin u) {
+    public Specification<Admin> buildSpecification(final List roleIds,final Admin u) {
         return new Specification<Admin>() {
             @Override
             public Predicate toPredicate(Root<Admin> root, CriteriaQuery<?> cq,
@@ -50,10 +51,14 @@ public class AdminServiceImpl extends GenericManagerImpl<Admin,AdminDao> impleme
                 if(!u.getUsername().isEmpty()){
                     list.add(cb.like(root.get("username").as(String.class),"%"+u.getUsername()+"%"));
                 }
-                if (StringUtils.isNotBlank(details) && "1".equals(details)) {
-                    list.add(cb.ge(root.get("createDate").as(Long.class), TestUtil.getTimesmorning()));
+                if(roleIds.size()>0 && !roleIds.isEmpty()) {
+                    Iterator iterator = roleIds.iterator();
+                    CriteriaBuilder.In in = cb.in(root.get("id"));
+                    while (iterator.hasNext()) {
+                        in.value(iterator.next());
+                    }
+                    list.add(in);
                 }
-
                 Predicate[] p = new Predicate[list.size()];
                 return cb.and(list.toArray(p));
             }

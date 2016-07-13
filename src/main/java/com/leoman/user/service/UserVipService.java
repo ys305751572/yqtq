@@ -9,6 +9,6 @@ import org.springframework.data.domain.Page;
  */
 public interface UserVipService extends GenericManager<UserVip>{
 
-    public Page<UserVip> findAll(UserVip userVip, Integer currentPage, Integer pageSize) throws Exception;
+    public Page<UserVip> findAll(String details,UserVip userVip, Integer currentPage, Integer pageSize) throws Exception;
 
 }

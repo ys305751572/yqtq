@@ -78,13 +78,27 @@
                         },
                         {"data": "name","sDefaultContent" : ""},
                         {"data": "num","sDefaultContent" : ""},
-                        {"data": "modifyDate","sDefaultContent" : ""},
                         {
-                            "data": "id",
+                            "data": "createDate",
+                            render : function(data){
+                                return new Date(data).format("yyyy-MM-dd hh:mm");
+                            },
+                            "sDefaultContent" : ""
+                        },
+                        {
+                            "data": null,
                             "render": function (data) {
-                                var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$role.fn.edit(\'" + data + "\')\">" +
+                                var num = data.num;
+                                var id = data.id;
+                                var edit = "<button title='编辑' class='btn btn-primary btn-circle edit' onclick=\"$role.fn.edit(\'" + id + "\')\">" +
                                         "<i class='fa fa-pencil-square-o'></i></button>";
-                                return edit;
+                                if(num==0){
+                                    var del = "<button title='删除' class='btn btn-primary btn-circle edit' onclick=\"$role.fn.del(\'" + id + "\')\">" +
+                                            "删除</button>";
+                                }else{
+                                    var del = "<button title='删除' class='btn btn-primary btn-circle edit' disabled ><a>删除<a></button>";
+                                }
+                                return edit + "&nbsp;" + del;
                             }
                         }
                     ],
@@ -94,6 +108,22 @@
             },
             edit: function (id) {
                 window.location.href = "${contextPath}/admin/role/add?id=" + id ;
+            },
+            del: function (id) {
+                $.ajax({
+                    url: "${contextPath}/admin/role/del",
+                    type: "POST",
+                    data: {
+                        "id": id
+                    },
+                    success: function (result) {
+                        if (result.status) {
+                            $role.v.dTable.ajax.reload();
+                        } else {
+                            $common.fn.notify("操作失败", "error");
+                        }
+                    }
+                });
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {

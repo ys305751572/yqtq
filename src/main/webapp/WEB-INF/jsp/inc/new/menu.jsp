@@ -21,6 +21,13 @@
         <div class="s-widget m-b-25">
             <h2 class="tile-title">
                热门新闻
+                <c:forEach items="${moduleChild}" var="v">
+                    ${v.id}-------${v.name}
+                </c:forEach>
+
+                <c:forEach items="${moduleParent}" var="v">
+                    ${v.id}-------${v.name}
+                </c:forEach>
             </h2>
             
             <div class="s-widget-body">
@@ -28,7 +35,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Side Menu -->
     <ul class="list-unstyled side-menu">
         <li class="dropdown">

@@ -80,16 +80,16 @@
                                 return checkbox;
                             }
                         },
-                        {"data": "team.name"},
-                        {"data": "team.city.city"},
-                        {"data": "team.tmSetNum"},
+                        {"data": "team.name","sDefaultContent" : ""},
+                        {"data": "team.city.city","sDefaultContent" : ""},
+                        {"data": "team.tmSetNum","sDefaultContent" : ""},
                         {
                             "data": "createDate",
                             render : function(data){
                                 return new Date(data).format("yyyy-MM-dd hh:mm");
-                            }
+                            },"sDefaultContent" : ""
                         },
-                        {"data": "team.user.nickName"},
+                        {"data": "team.user.nickName","sDefaultContent" : ""},
                         {
                             "data": "team.id",
                             "render": function (data) {

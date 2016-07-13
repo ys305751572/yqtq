@@ -38,11 +38,11 @@ public class Admin extends BaseEntity{
     private String name;
 
     public String getName() {
-        String name = "";
+        StringBuffer name = new StringBuffer();
         for(UserRole ur : roles){
-           name = ur.getRole().getName();
+           name.append(ur.getRole().getName()+",");
         }
-        return name;
+        return name.toString().substring(0,name.length()-1);
     }
 
     public void setName(String name) {

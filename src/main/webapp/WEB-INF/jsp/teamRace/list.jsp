@@ -104,7 +104,7 @@
                             "data": "",
                             "render": function (data,type,full) {
                                 return full.homeTeam.name +"&nbsp; VS &nbsp;"+full.visitingTeam.name;
-                            }
+                            },"sDefaultContent" : ""
                         },
                         {"data": "city.city","sDefaultContent" : ""},
                         {"data": "stadium.name","sDefaultContent" : ""},
@@ -112,7 +112,7 @@
                             "data": "startDate",
                             "render":function(data){
                                 return new Date(data).format("yyyy年MM月dd日 hh:mm:ss");
-                            }
+                            },"sDefaultContent" : ""
                         },
                         {
                             "data": "id",

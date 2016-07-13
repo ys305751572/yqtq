@@ -20,6 +20,7 @@
     <section id="content" class="container">
         <!-- 查询条件 -->
         <div class="block-area" id="search">
+            <input type="hidden" id="details" name="details" value="${details}">
             <div class="row">
                 <div class="col-md-2 form-group">
                     <input type="text" class="input-sm form-control" id="mobile" name="mobile" placeholder="手机号">
@@ -123,6 +124,7 @@
                         aoData.mobile = $("#mobile").val();
                         aoData.nickName = $("#nickName").val();
                         aoData.level = $("#level").val();
+                        aoData.details = $("#details").val();
                     }
                 });
             },

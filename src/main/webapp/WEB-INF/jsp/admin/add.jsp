@@ -26,6 +26,7 @@
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${admin.id}">
+                <input type="hidden" id="userRole" name="userRole" value="${userRole}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>账号：</label>
@@ -35,17 +36,23 @@
                         <label>密码：</label>
                         <input type="password" id="password" name="password" value="${admin.password}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
-                    <div class="col-md-6 m-b-15">
-                        <label>权限:</label>
-                        <select id="" name="" class="select">
-                            <option value="">权限</option>
-                        </select>
+                    <div class="col-md-12 m-b-15">
+                        <div style="float: left;margin-right: 10px;">
+                            <label>权限:</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 m-b-15">
+                        <c:forEach var="v" items="${role}">
+                                <div style="float: left;margin-right: 10px;">
+                                    <input type="checkbox" name="roles" value="${v.id}" />${v.name}
+                                </div>
+                        </c:forEach>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-5">
-                        <button type="button" onclick="$user.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
+                        <button type="button" onclick="admin_add.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
                         <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                     </div>
                 </div>
@@ -58,17 +65,35 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    $user = {
+    admin_add = {
         v: {
             list: [],
             chart : null,
-            dTable: null
+            dTable: null,
+            ids:[]
         },
         fn: {
             init: function () {
+                var id = $('#id').val();
+                if (null != id && id != '') {
+                    var userRole = $('#userRole').val();
+                    console.log(userRole);
+                    var array = userRole.split(',');
+                    console.log(array);
+                    for (var i = 0; i < array.length; i++) {
+                        $('input:checkbox[name="roles"]').each(function () {
+                            if ($(this).val() == array[i]) {
+                                $(this).iCheck("check");
+                            }
+                        });
+                    }
+                }
             },
             save : function () {
-                var code =  $('.wysiwye-editor').code();
+                var cb = $('input:checkbox[name="roles"]:checked');
+                var username = $("#username").val();
+                var password = $("#password").val();
+                var id = $("#id").val();
                 var isCheck = true;
                 if($("#username").val()==""){
                     $leoman.notify('用户名不能为空', "error");
@@ -78,12 +103,26 @@
                     $leoman.notify('密码不能为空', "error");
                     isCheck=false;
                 }
+                if(cb.length==0){
+                    $leoman.notify('权限不能为空', "error");
+                    isCheck=false;
+                }
                 if(isCheck){
-                    $("#fromId").ajaxSubmit({
+                    admin_add.v.ids = [];
+                    cb.each(function(){
+                        admin_add.v.ids.push($(this).val());
+                    });
+                    console.log(admin_add.v.ids);
+                    var ids = JSON.stringify(admin_add.v.ids);
+                    console.log(ids);
+                    $.ajax({
                         url : "${contextPath}/admin/admin/save",
                         type : "POST",
                         data : {
-                            "detail" : code
+                            "ids" : ids,
+                            "username" : username,
+                            "password" : password,
+                            "id" : id
                         },
                         success : function(result) {
                             if(!result.status) {
@@ -99,7 +138,7 @@
         }
     }
     $(function () {
-        $user.fn.init();
+        admin_add.fn.init();
     })
 </script>
 <script>

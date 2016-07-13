@@ -4,6 +4,8 @@ import com.leoman.common.service.impl.GenericManagerImpl;
 import com.leoman.user.dao.UserVipDao;
 import com.leoman.user.entity.UserVip;
 import com.leoman.user.service.UserVipService;
+import com.leoman.utils.TestUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,12 +30,12 @@ public class UserVipServiceImpl extends GenericManagerImpl<UserVip,UserVipDao> i
     private UserVipDao dao;
 
     @Override
-    public Page<UserVip> findAll(UserVip userVip, Integer currentPage, Integer pageSize) throws Exception {
-        Specification<UserVip> spec = buildSpecification(userVip);
+    public Page<UserVip> findAll(String details,UserVip userVip, Integer currentPage, Integer pageSize) throws Exception {
+        Specification<UserVip> spec = buildSpecification(details,userVip);
         return dao.findAll(spec, new PageRequest(currentPage-1, pageSize, Sort.Direction.DESC, "id"));
     }
 
-    public Specification<UserVip> buildSpecification(final UserVip u) {
+    public Specification<UserVip> buildSpecification(final String details,final UserVip u) {
         return new Specification<UserVip>() {
             @Override
             public Predicate toPredicate(Root<UserVip> root, CriteriaQuery<?> cq,
@@ -51,7 +53,9 @@ public class UserVipServiceImpl extends GenericManagerImpl<UserVip,UserVipDao> i
                 if(u.getUser().getVipLevel() != null) {
                     list.add(cb.equal(root.get("user").get("vipLevel").as(String.class),(u.getUser().getVipLevel())));
                 }
-
+                if (StringUtils.isNotBlank(details) && "1".equals(details)) {
+                    list.add(cb.ge(root.get("createDate").as(Long.class), TestUtil.getTimesmorning()));
+                }
                 Predicate[] p = new Predicate[list.size()];
                 return cb.and(list.toArray(p));
             }

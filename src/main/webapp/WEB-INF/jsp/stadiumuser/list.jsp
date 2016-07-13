@@ -148,7 +148,7 @@
                                 }else{
                                     return "封禁";
                                 }
-                            }
+                            },"sDefaultContent" : ""
                         },
                         {
                             "data": "id",

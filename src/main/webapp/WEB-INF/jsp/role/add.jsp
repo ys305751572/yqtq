@@ -53,7 +53,7 @@
                                                 <c:forEach var="m" items="${subModuleList}">
                                                     <c:if test="${m.parent.id eq n.id}">
                                                     <div style="float: left;margin-right: 10px;">
-                                                        <input type="checkbox" name="roles" value="${m.id}" />${m.name}
+                                                        <input type="checkbox" name="modules" value="${m.id}" />${m.name}
                                                     </div>
                                                     </c:if>
                                                 </c:forEach>
@@ -93,34 +93,21 @@
             init: function () {
                 var id = $('#id').val();
                 if (null != id && id != '') {
-                    // 回选复选框
                     var roleModule = $('#roleModule').val();
                     console.log(roleModule);
                     var array = roleModule.split(',');
                     console.log(array);
                     for (var i = 0; i < array.length; i++) {
-                        $('input:checkbox[name="roles"]').each(function () {
+                        $('input:checkbox[name="modules"]').each(function () {
                             if ($(this).val() == array[i]) {
-                                $(this).prop("checked", true);
+                                $(this).iCheck("check");
                             }
                         });
                     }
-//                    var cb = $('input[type="checkbox"]:checked');
-                    var cb = $('input:checkbox[name="roles"]')
-                    cb.on('ifChecked',function(){
-                        var thisChecked = $(this).closest('.list-container').find('.list-check:checked');
-                        var showon = $(this).closest('.list-container').find('.show-on');
-                        if(thisChecked.length > 0 ) {
-                            showon.show();
-                        }
-                        else {
-                            showon.hide();
-                        }
-                    })
                 }
             },
             save : function () {
-                var cb = $('input[type="checkbox"]:checked');
+                var cb = $('input:checkbox[name="modules"]:checked');
                 var isCheck = true;
                 if($("#name").val()==""){
                     $leoman.notify('角色名称不能为空', "error");
@@ -131,6 +118,7 @@
                     isCheck=false;
                 }
                 if(isCheck){
+                    role_add.v.ids = [];
                     cb.each(function(){
                         role_add.v.ids.push($(this).val());
                     });

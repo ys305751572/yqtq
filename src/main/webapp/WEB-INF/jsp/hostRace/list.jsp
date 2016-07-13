@@ -106,7 +106,7 @@
                                 return checkbox;
                             }
                         },
-                        {"data": "name"},
+                        {"data": "name","sDefaultContent" : ""},
                         {"data": "stadium.city.city","sDefaultContent" : ""},//地区
                         {
                             "data": "status",
@@ -120,7 +120,7 @@
                                 }else {
                                     return "";
                                 }
-                            }
+                            },"sDefaultContent" : ""
                         },
                         {"data": "matchType",
                             render:function(data){
@@ -135,14 +135,14 @@
                                 }else{
                                     return "";
                                 }
-                            }
+                            },"sDefaultContent" : ""
                         },
-                        {"data": "hrNum"},
+                        {"data": "hrNum","sDefaultContent" : ""},
                         {
                             "data": "startDate",
                             "render":function(data){
                                 return new Date(data).format("yyyy-MM-dd hh:mm");
-                            }
+                            },"sDefaultContent" : ""
                         },
                         {"data": "stadium.address","sDefaultContent" : ""},
                         {

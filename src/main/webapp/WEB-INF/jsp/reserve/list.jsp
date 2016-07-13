@@ -141,11 +141,11 @@
                         {"data": "startDate",
                             render: function (data) {
                                 return new Date(data).format("yyyy年MM月dd日 hh:mm")
-                            }
+                            },"sDefaultContent" : ""
                         },
-                        {"data": "stadium.city.city"},
-                        {"data": "stadium.name"},
-                        {"data": "user.nickName"},
+                        {"data": "stadium.city.city","sDefaultContent" : ""},
+                        {"data": "stadium.name","sDefaultContent" : ""},
+                        {"data": "user.nickName","sDefaultContent" : ""},
                         {"data": "matchType",
                             render:function(data){
                                 if(data==3){
@@ -174,12 +174,12 @@
                             },
                             "sDefaultContent" : ""
                         },
-                        {"data":"systemInsurance.name"},
-                        {"data":"num"},
+                        {"data":"systemInsurance.name","sDefaultContent" : ""},
+                        {"data":"num","sDefaultContent" : ""},
                         {"data": "createDate",
                             render: function (data) {
                                 return new Date(data).format("yyyy年MM月dd日 hh:mm")
-                            }
+                            },"sDefaultContent" : ""
                         },
                         {"data": "status",
                             render: function (data) {
@@ -195,7 +195,7 @@
                                 if (data==3){
                                     return"比赛结束";
                                 }
-                            }
+                            },"sDefaultContent" : ""
                         },
                         {
                             "data": "id",

@@ -1,6 +1,7 @@
 package com.leoman.index.dao;
 
 import com.leoman.common.dao.IBaseJpaRepository;
+import com.leoman.security.entity.Module;
 import com.leoman.user.entity.User;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,12 +11,17 @@ import java.util.List;
  * Created by Administrator on 2016/7/7.
  */
 public interface IndexDao extends IBaseJpaRepository<User>{
+
+    //权限
+    @Query("SELECT m FROM Module m WHERE m.id IN (SELECT rm.moduleId FROM RoleModule rm WHERE rm.roleId IN (SELECT ur.role.id FROM UserRole ur WHERE ur.adminId = ?1))")
+    public List<Module> moduleList(Long id);
+
     //当天新增的用户
     @Query("SELECT COUNT(a) FROM User a WHERE a.createDate >= ?1")
     public Integer newUserNum(Long date);
     //当天新增的会员
-    @Query("SELECT COUNT(a) FROM Admin a WHERE a.createDate >= ?1")
-    public Integer newAdminNum(Long date);
+    @Query("SELECT COUNT(a) FROM UserVip a WHERE a.createDate >= ?1")
+    public Integer newUserVipNum(Long date);
     //当天新增的散客约球
     @Query("SELECT COUNT(a) FROM Reserve a WHERE a.createDate >= ?1")
     public Integer newReserveNum(Long date);

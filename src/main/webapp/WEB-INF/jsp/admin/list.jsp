@@ -20,14 +20,16 @@
     <section id="content" class="container">
         <!-- 查询条件 -->
         <div class="block-area" id="search">
-            <input type="hidden" id="details" name="details" value="${details}">
             <div class="row">
                 <div class="col-md-2 form-group">
                     <input type="text" class="input-sm form-control" id="userName" name="userName" placeholder="账号">
                 </div>
                 <div class="col-md-2 form-group">
-                    <select id="roleName" name="roleName" class="select">
+                    <select id="roleId" name="roleId" class="select">
                         <option value="">请选择权限</option>
+                        <c:forEach var="v" items="${role}">
+                            <option value="${v.id}">${v.name}</option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>
@@ -36,7 +38,7 @@
             <button id="c_search" class="btn btn-alt m-r-5">查询</button>
             <div style="float:right;margin-right:25px;">
                 <a href="${contextPath}/admin/admin/add" title="新增" class="btn btn-alt m-r-5">新增</a>
-                <a data-toggle="modal" href="${contextPath}/admin/1/index" title="权限列表" class="btn btn-alt m-r-5">权限列表</a>
+                <a data-toggle="modal" href="${contextPath}/admin/role/index" title="权限列表" class="btn btn-alt m-r-5">权限列表</a>
             </div>
         </div>
 
@@ -107,6 +109,7 @@
                 $("#c_search").click(function () {
                     $admin.v.dTable.ajax.reload();
                 });
+
             },
             dataTableInit: function () {
                 $admin.v.dTable = $leoman.dataTable($('#dataTables'), {
@@ -161,8 +164,7 @@
                     ],
                     "fnServerParams": function (aoData) {
                         aoData.username = $("#userName").val();
-                        aoData.name = $("#roleName").val();
-                        aoData.details = $("#details").val();
+                        aoData.roleId = $("#roleId").val();
                     }
                 });
             },

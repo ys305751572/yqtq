@@ -1,10 +1,13 @@
 package com.leoman.index.controller;
 
+import com.leoman.admin.entity.Admin;
+import com.leoman.admin.service.AdminService;
 import com.leoman.common.controller.common.CommonController;
 import com.leoman.common.core.Constant;
 import com.leoman.common.log.entity.Log;
 import com.leoman.index.service.IndexService;
 import com.leoman.index.service.LoginService;
+import com.leoman.security.entity.Module;
 import com.leoman.utils.CookiesUtils;
 import com.leoman.utils.Md5Util;
 import org.apache.commons.lang.StringUtils;
@@ -15,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,6 +34,8 @@ public class IndexController extends CommonController {
     private LoginService loginService;
     @Autowired
     private IndexService indexService;
+    @Autowired
+    private AdminService adminService;
 
     @RequestMapping(value = "/login")
     public String login(HttpServletRequest request,
@@ -64,6 +72,7 @@ public class IndexController extends CommonController {
             // 登录成功后，将用户名放入cookies
             int loginMaxAge = 30 * 24 * 60 * 60; // 定义cookies的生命周期，这里是一个月。单位为秒
             CookiesUtils.addCookie(response, "username", username, loginMaxAge);
+//            request.getSession().setAttribute("username",username);
             return "redirect:/admin/dashboard";
         }
         model.addAttribute("error", "用户名或密码错误!");
@@ -89,11 +98,29 @@ public class IndexController extends CommonController {
                             HttpServletResponse response,
                             ModelMap model) {
 
+//        String username = request.getParameter("username");
+        HttpSession session=request.getSession();
+//        String username = session.getAttribute("username").toString();
+        Admin admin = (Admin) session.getAttribute(Constant.SESSION_MEMBER_GLOBLE);
+
+        Long id = adminService.queryByProperty("username",admin.getUsername()).get(0).getId();
+        //子模块
+        List<Module> moduleChild = indexService.moduleList(id);
+        if(moduleChild.size()>0){
+            model.addAttribute("moduleChild",moduleChild);
+            //父模块
+            List<Module> moduleParent = new ArrayList<>();
+            for(Module m : moduleChild){
+                moduleParent.add(m.getParent());
+            }
+            model.addAttribute("moduleParent",moduleParent);
+        }
+
         Integer newUserNum = indexService.newUserNum();
         model.addAttribute("newUserNum",newUserNum);
 
-        Integer newAdminNum = indexService.newAdminNum();
-        model.addAttribute("newAdminNum",newAdminNum);
+        Integer newUserVipNum = indexService.newUserVipNum();
+        model.addAttribute("newUserVipNum",newUserVipNum);
 
         Integer newReserveNum = indexService.newReserveNum();
         model.addAttribute("newReserveNum",newReserveNum);
@@ -154,7 +181,6 @@ public class IndexController extends CommonController {
 
         Integer watchingRaceInvitation = indexService.watchingRaceInvitation();
         model.addAttribute("watchingRaceInvitation",watchingRaceInvitation);
-
 
         return "index/index";
     }

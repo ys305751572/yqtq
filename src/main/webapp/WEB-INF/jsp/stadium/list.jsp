@@ -119,7 +119,7 @@
                             }
                         },
                         {"data": "city.city","sDefaultContent" : ""},
-                        {"data": "name"},
+                        {"data": "name","sDefaultContent" : ""},
                         {
                             "data": "type",
                             "render":function(data){
@@ -128,7 +128,7 @@
                                 }else {
                                     return "公共球场";
                                 }
-                            }
+                            },"sDefaultContent" : ""
                         },
                         {"data": "stadiumNum","sDefaultContent" : ""},
                         {"data": "availableStadiumNum","sDefaultContent" : ""},
@@ -141,7 +141,7 @@
                                 }else {
                                     return "可预订";
                                 }
-                            }
+                            },"sDefaultContent" : ""
                         },
                         {
                             "data": "id",

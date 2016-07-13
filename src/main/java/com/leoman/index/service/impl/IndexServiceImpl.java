@@ -3,6 +3,7 @@ package com.leoman.index.service.impl;
 import com.leoman.common.service.impl.GenericManagerImpl;
 import com.leoman.index.dao.IndexDao;
 import com.leoman.index.service.IndexService;
+import com.leoman.security.entity.Module;
 import com.leoman.utils.TestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,11 @@ public class IndexServiceImpl implements IndexService{
 
     @Autowired
     private IndexDao dao;
+
+    public List<Module> moduleList(Long id){
+        return dao.moduleList(id);
+    }
+
     //当天新增的用户
     @Override
     public Integer newUserNum() {
@@ -24,8 +30,8 @@ public class IndexServiceImpl implements IndexService{
     }
     //当天新增的会员
     @Override
-    public Integer newAdminNum() {
-        return dao.newAdminNum(TestUtil.getTimesmorning());
+    public Integer newUserVipNum() {
+        return dao.newUserVipNum(TestUtil.getTimesmorning());
     }
     //当天新增的散客约球
     @Override

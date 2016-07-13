@@ -196,7 +196,7 @@
                         <a data-toggle="modal" href="${contextPath}/admin/user/index?details=1" title="新增用户" class="btn btn-alt m-r-5">新增用户( ${newUserNum} )</a>
                     </div>
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/admin/index?details=1" title="新增会员" class="btn btn-alt m-r-5">新增会员( ${newAdminNum} )</a>
+                        <a data-toggle="modal" href="${contextPath}/admin/userVip/index?details=1" title="新增会员" class="btn btn-alt m-r-5">新增会员( ${newUserVipNum} )</a>
                     </div>
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
                         <a data-toggle="modal" href="${contextPath}/admin/reserve/index?details=1" title="新增约球" class="btn btn-alt m-r-5">新增约球( ${newReserveNum} )</a>

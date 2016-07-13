@@ -101,14 +101,15 @@
                                 return checkbox;
                             }
                         },
-                        {"data": "name"},
-                        {"data": "city.city"},
-                        {"data": "tmSetNum"},
-                        {"data": "tmSize"},
+                        {"data": "name","sDefaultContent" : ""},
+                        {"data": "city.city","sDefaultContent" : ""},
+                        {"data": "tmSetNum","sDefaultContent" : ""},
+                        {"data": "tmSize","sDefaultContent" : ""},
                         {"data": "createDate",
                             render: function (data) {
-                                return new Date(data).format("yyyy年MM月dd日 hh:mm:ss")
-                            }
+                                return new Date(data).format("yyyy-MM-dd hh:mm")
+                            },
+                            "sDefaultContent" : ""
                         },
                         {
                             "data": "id",

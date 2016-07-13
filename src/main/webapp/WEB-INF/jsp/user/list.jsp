@@ -127,7 +127,7 @@
                             },
                             "sDefaultContent" : ""
                         },
-                        {"data": "credibility"},
+                        {"data": "credibility","sDefaultContent" : ""},
                         {"data": "vipLevel",
                             render:function(data){
                                 if(data==0){

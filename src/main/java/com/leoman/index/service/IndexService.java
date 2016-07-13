@@ -1,6 +1,7 @@
 package com.leoman.index.service;
 
 import com.leoman.common.service.GenericManager;
+import com.leoman.security.entity.Module;
 
 import java.util.List;
 
@@ -9,9 +10,11 @@ import java.util.List;
  */
 public interface IndexService{
 
+    public List<Module> moduleList(Long id);
+
     public Integer newUserNum();
 
-    public Integer newAdminNum();
+    public Integer newUserVipNum();
 
     public Integer newReserveNum();
 
