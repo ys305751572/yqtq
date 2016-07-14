@@ -1,6 +1,7 @@
 package com.leoman.stadium.entity;
 
 import com.leoman.city.entity.City;
+import com.leoman.city.entity.Province;
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.entity.ReserveTeam;
@@ -24,6 +25,10 @@ public class Stadium extends BaseEntity {
     @JoinColumn(name = "city_id",referencedColumnName = "city_id")
     private City city;
     //省id
+    @ManyToOne
+    @JoinColumn(name = "province_id",referencedColumnName = "province_id")
+    private Province province;
+    //区id
     @Column(name = "area_id")
     private Integer areaId;
     //球场主ID
@@ -290,5 +295,13 @@ public class Stadium extends BaseEntity {
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
     }
 }

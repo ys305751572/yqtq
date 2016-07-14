@@ -24,19 +24,17 @@ public class TeamRace  extends BaseEntity{
     private Team visitingTeam;
 
     //城市id
-//    @Column(name = "city_id")
-//    private Long cityId;
-
     @ManyToOne
     @JoinColumn(name = "city_id",referencedColumnName = "city_id")
     private City city;
 
-    //球场id
-//    @Column(name = "stadium_id")
-//    private Long stadiumId;
-    @ManyToOne
-    @JoinColumn(name = "stadium_id")
-    private Stadium stadium;
+    @Column(name = "address")
+    private String address;
+
+//    //球场id
+//    @ManyToOne
+//    @JoinColumn(name = "stadium_id")
+//    private Stadium stadium;
 
     //状态 0:等待 1:成功 2.失败
     @Column(name = "status")
@@ -47,6 +45,14 @@ public class TeamRace  extends BaseEntity{
     private Long startDate;
 
     public TeamRace() {
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Integer getStatus() {
@@ -81,13 +87,13 @@ public class TeamRace  extends BaseEntity{
         this.visitingTeam = visitingTeam;
     }
 
-    public Stadium getStadium() {
-        return stadium;
-    }
-
-    public void setStadium(Stadium stadium) {
-        this.stadium = stadium;
-    }
+//    public Stadium getStadium() {
+//        return stadium;
+//    }
+//
+//    public void setStadium(Stadium stadium) {
+//        this.stadium = stadium;
+//    }
 
     public Long getStartDate() {
         return startDate;

@@ -36,6 +36,10 @@
 
                 </div>
                 <div class="col-md-6 m-b-15">
+                    <label>省:</label>
+                    <input type="text" id="province" name="province" value="${stadium.province.province}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                </div>
+                <div class="col-md-6 m-b-15">
                     <label>城市:</label>
                     <input type="text" id="city" name="city" value="${stadium.city.city}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>

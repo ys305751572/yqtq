@@ -79,7 +79,7 @@
                         {"data": "name","sDefaultContent" : ""},
                         {"data": "num","sDefaultContent" : ""},
                         {
-                            "data": "createDate",
+                            "data": "updateDate",
                             render : function(data){
                                 return new Date(data).format("yyyy-MM-dd hh:mm");
                             },

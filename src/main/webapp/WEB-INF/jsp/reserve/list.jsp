@@ -207,6 +207,7 @@
                         }
                     ],
                     "fnServerParams": function (aoData) {
+                        aoData.provinceId = $("#province").val();
                         aoData.cityId = $("#cityId").val();
                         aoData.stadiumId = $("#stadiumId").val();
                         aoData.matchType = $("#matchType").val();
@@ -222,7 +223,7 @@
                 $('td', row).last().find(".add").attr("href", 'admin/reserve/detail?id=' + data.id);
             },
             selectCity : function(data){
-                if(data!=""){
+                if(data!=null && data!=""){
                     $.ajax({
                     url:"${contextPath}/admin/reserve/selectCity",
                     data:{
@@ -230,15 +231,16 @@
                     },
                     success:function(data){
                         $("#cityId").empty();
+                        var op = "<option value=''>请选择城市</option>";
                             for(var i= 0;i<data.length;i++){
                                 var cityId = data[i].cityId;
                                 var city = data[i].city;
-                                var op = "<option value='"+cityId+"'>"+city+"</option>";
-                                $("#cityId").append(op);
-                                if(i==0){
-                                    $reserve.fn.selectStadium(cityId);
-                                }
+                                op += "<option value='"+cityId+"'>"+city+"</option>";
+//                                if(i==0){
+//                                    $reserve.fn.selectStadium(cityId);
+//                                }
                             }
+                        $("#cityId").append(op);
                         $("#cityId").selectpicker('refresh');
                     }
                     });
@@ -250,7 +252,7 @@
                 }
             },
             selectStadium : function(data){
-                if(data!=null){
+                if(data!=null && data!=""){
                     $.ajax({
                         url:"${contextPath}/admin/reserve/selectStadium",
                         data:{
@@ -259,13 +261,13 @@
                         success:function(data){
                             if(data.length>0){
                                 $("#stadiumId").empty();
-                                $("#stadiumId").append("<option value=''>"+"请选择球场"+"</option>");
+                                var op ="<option value=''>请选择球场</option>";
                                 for(var i= 0;i<data.length;i++){
                                     var id = data[i].id;
                                     var name = data[i].name;
-                                    var op = "<option value='"+id+"'>"+name+"</option>";
-                                    $("#stadiumId").append(op);
+                                    op += "<option value='"+id+"'>"+name+"</option>";
                                 }
+                                $("#stadiumId").append(op);
                                 $("#stadiumId").selectpicker('refresh');
                             }else{
                                 $("#stadiumId").empty();

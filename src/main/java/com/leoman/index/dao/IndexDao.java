@@ -12,10 +12,12 @@ import java.util.List;
  */
 public interface IndexDao extends IBaseJpaRepository<User>{
 
-    //权限
+    //权限子模块
     @Query("SELECT m FROM Module m WHERE m.id IN (SELECT rm.moduleId FROM RoleModule rm WHERE rm.roleId IN (SELECT ur.role.id FROM UserRole ur WHERE ur.adminId = ?1))")
     public List<Module> moduleList(Long id);
-
+    //父模块
+    @Query("SELECT a FROM Module a WHERE a.id IN (?1)")
+    public List<Module> parentModelueList(List<Long> ids);
     //当天新增的用户
     @Query("SELECT COUNT(a) FROM User a WHERE a.createDate >= ?1")
     public Integer newUserNum(Long date);

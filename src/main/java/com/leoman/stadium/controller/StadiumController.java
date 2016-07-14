@@ -92,11 +92,12 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,Stadium stadium,City cityId){
+    public Object list(Integer draw, Integer start, Integer length,Stadium stadium,City cityId,Province provinceId){
         Page<Stadium> stadiumPage = null;
         try {
             int pagenum = getPageNum(start,length);
             stadium.setCity(cityId);
+            stadium.setProvince(provinceId);
             stadiumPage = stadiumService.findAll(stadium, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();
@@ -176,7 +177,7 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
      */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(Stadium stadium, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,String detail, City city){
+    public Result save(Stadium stadium, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,String detail, City city,Province province){
         Stadium s = null;
         if(null != stadium.getId()){
             s = stadiumService.queryByPK(stadium.getId());
@@ -212,6 +213,10 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
         if(city != null){
             City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
             stadium.setCity(_city);
+        }
+        if(province != null){
+            Province _province = provinceService.queryByProperty("provinceId",province.getProvinceId()).get(0);
+            stadium.setProvince(_province);
         }
         stadiumService.save(stadium);
         return Result.success();

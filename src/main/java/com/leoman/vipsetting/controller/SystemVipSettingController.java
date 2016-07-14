@@ -91,26 +91,24 @@ public class SystemVipSettingController extends GenericEntityController<SystemVi
     /**
      * VIP活动获得经验保存
      * @param systemVipExperience
-     * @param experience
      * @param systemVipId
      * @return
      */
     @RequestMapping(value = "/systemVipExperienceSave")
     @ResponseBody
-    public Result systemVipExperienceSave(SystemVipExperience systemVipExperience,Integer experience,Long systemVipId) {
+    public Result systemVipExperienceSave(SystemVipExperience systemVipExperience,Long systemVipId) {
         SystemVipExperience s = null;
-        if(null!=systemVipExperience && null!=systemVipId){
-            List<SystemVipExperience> list = systemVipExperienceService.experienceList(systemVipId,systemVipExperience.getAction());
-            if(!list.isEmpty()){
+        if(null!=systemVipExperience){
+//            List<SystemVipExperience> list = systemVipExperienceService.experienceList(systemVipId,systemVipExperience.getAction());
+            List<SystemVipExperience> list = systemVipExperienceService.queryByProperty("action",systemVipExperience.getAction());
+            if(!list.isEmpty() && list.size()>0){
                 s = list.get(0);
             }
         }
         if(null != s){
-            s.setExperience(experience);
+            s.setExperience(systemVipExperience.getExperience());
             systemVipExperienceService.update(s);
         }else {
-            systemVipExperience.setSystemVipId(systemVipId);
-            systemVipExperience.setExperience(experience);
             systemVipExperienceService.save(systemVipExperience);
         }
         return Result.success();
@@ -124,7 +122,7 @@ public class SystemVipSettingController extends GenericEntityController<SystemVi
     @RequestMapping(value = "/vipExperienceFrom")
     @ResponseBody
     public List<SystemVipExperience> vipExperienceFrom(Long systemVipId){
-        List<SystemVipExperience> systemVipExperiences = systemVipExperienceService.queryByProperty("systemVipId",systemVipId);
+        List<SystemVipExperience> systemVipExperiences = systemVipExperienceService.queryAll();
         return systemVipExperiences;
     }
 

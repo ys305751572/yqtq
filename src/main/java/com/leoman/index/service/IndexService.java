@@ -12,6 +12,8 @@ public interface IndexService{
 
     public List<Module> moduleList(Long id);
 
+    public List<Module> parentModelueList(List<Long> ids);
+
     public Integer newUserNum();
 
     public Integer newUserVipNum();

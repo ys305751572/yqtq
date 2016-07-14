@@ -33,18 +33,7 @@
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <div class="row">
-                    <div class="col-md-12 m-b-15" style="width: 164px;">
-                        <label>选择对应等级:</label>
-                        <select id="systemVipId" class="select" >
-                            <c:forEach items="${systemVipLevels}" var="v">
-                                <option value="${v.systemVipId}">Lv ${v.level}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-md-12 m-b-15">
-                        <%--<div id="systemVipCredibility"></div>--%>
                         <div class='from2'>
                             <label>散客组队成功:</label>
                             <input style='width: auto' type='text' id="a" value='' class='input-sm form-control validate[required]' disabled>
@@ -107,14 +96,12 @@
 
                 if(isCheck){
                     var credibility1 = $("#credibility1").val();
-                    var systemVipId =  $('#systemVipId').val();
                     var action =  $('#action').val();
                     $("#fromId").ajaxSubmit({
                         url : "${contextPath}/admin/systemVipCredibility/systemVipCredibilitySave",
                         type : "POST",
                         data : {
                             "credibility1" : credibility1,
-                            "systemVipId" : systemVipId,
                             "action" : action
                         },
                         success : function(result) {
@@ -122,19 +109,15 @@
                                 $common.fn.notify(result.msg);
                                 return;
                             }
-                            $user.fn.vipCredibilityFrom(systemVipId);
+                            $user.fn.vipCredibilityFrom();
                         }
                     });
                 }
             },
-            vipCredibilityFrom : function(data){
+            vipCredibilityFrom : function(){
                 $.ajax({
                     url:"${contextPath}/admin/systemVipCredibility/vipCredibilityFrom",
-                    data:{
-                        "systemVipId":data
-                    },
                     success:function(data){
-//                        $("#systemVipCredibility").empty();
                         $("#a").val("");
                         $("#b").val("");
                         $("#c").val("");
@@ -143,10 +126,6 @@
                             var credibility = data[i].credibility;
                             if(action==1){
                                 $("#a").val(credibility+"点信誉度");
-//                                var a = "<div class='from2'>" +
-//                                            "<label>散客组队成功:</label>" +
-//                                            "<input style='width: auto' type='text' value=\""+credibility+ "点信誉度\" class='input-sm form-control validate[required]' disabled>" +
-//                                        "</div>";
                             }
                             if(action==2){
                                 $("#b").val(credibility+"点信誉度");
@@ -162,12 +141,7 @@
     }
     $(function () {
         $user.fn.init();
-        $user.fn.vipCredibilityFrom($("#systemVipId").val());
-        $("#systemVipId").change(function(){
-            $("#credibility1").val("");
-            var opt=$("#systemVipId").val();
-            $user.fn.vipCredibilityFrom(opt);
-        });
+        $user.fn.vipCredibilityFrom();
         $("#action").change(function(){
             $("#credibility1").val("");
         });

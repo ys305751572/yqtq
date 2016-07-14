@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -98,23 +99,20 @@ public class IndexController extends CommonController {
                             HttpServletResponse response,
                             ModelMap model) {
 
-//        String username = request.getParameter("username");
         HttpSession session=request.getSession();
-//        String username = session.getAttribute("username").toString();
         Admin admin = (Admin) session.getAttribute(Constant.SESSION_MEMBER_GLOBLE);
 
         Long id = adminService.queryByProperty("username",admin.getUsername()).get(0).getId();
         //子模块
         List<Module> moduleChild = indexService.moduleList(id);
-        if(moduleChild.size()>0){
-            model.addAttribute("moduleChild",moduleChild);
-            //父模块
-            List<Module> moduleParent = new ArrayList<>();
-            for(Module m : moduleChild){
-                moduleParent.add(m.getParent());
-            }
-            model.addAttribute("moduleParent",moduleParent);
+        session.setAttribute("moduleChild",moduleChild);
+        //父模块
+        List<Long> parentId = new ArrayList<>();
+        for(Module m : moduleChild){
+            parentId.add(m.getParent().getId());
         }
+        List<Module> moduleParent = indexService.parentModelueList(parentId);
+        session.setAttribute("moduleParent",moduleParent);
 
         Integer newUserNum = indexService.newUserNum();
         model.addAttribute("newUserNum",newUserNum);

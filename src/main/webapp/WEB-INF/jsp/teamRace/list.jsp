@@ -37,11 +37,11 @@
                         <option value="">城市</option>
                     </select>
                 </div>
-                <div class="col-md-2 form-group">
-                    <select id="stadiumId" name="stadiumId" class="select">
-                        <option value="">球场</option>
-                    </select>
-                </div>
+                <%--<div class="col-md-2 form-group">--%>
+                    <%--<select id="stadiumId" name="stadiumId" class="select">--%>
+                        <%--<option value="">球场</option>--%>
+                    <%--</select>--%>
+                <%--</div>--%>
             </div>
         </div>
         <div class="block-area" id="alternative-buttons">
@@ -56,7 +56,7 @@
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
                     <th>比赛队伍</th>
                     <th>比赛城市</th>
-                    <th>比赛球场</th>
+                    <th>比赛地址</th>
                     <th>比赛时间</th>
                     <th>操作</th>
                 </tr>
@@ -107,7 +107,7 @@
                             },"sDefaultContent" : ""
                         },
                         {"data": "city.city","sDefaultContent" : ""},
-                        {"data": "stadium.name","sDefaultContent" : ""},
+                        {"data": "address","sDefaultContent" : ""},
                         {
                             "data": "startDate",
                             "render":function(data){
@@ -126,7 +126,7 @@
                     "fnServerParams": function (aoData) {
                         aoData.teamName = $("#teamName").val();
                         aoData.cityId = $("#cityId").val();
-                        aoData.id = $("#stadiumId").val();
+//                        aoData.id = $("#stadiumId").val();
                     }
                 });
             },
@@ -226,10 +226,10 @@
             var opt=$("#province").val();
             $teamRace.fn.selectCity(opt);
         })
-        $("#cityId").change(function(){
-            var opt=$("#cityId").val();
-            $teamRace.fn.selectStadium(opt);
-        })
+//        $("#cityId").change(function(){
+//            var opt=$("#cityId").val();
+//            $teamRace.fn.selectStadium(opt);
+//        })
 
     })
 </script>

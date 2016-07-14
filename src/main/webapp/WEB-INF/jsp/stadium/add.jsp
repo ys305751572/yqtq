@@ -26,6 +26,7 @@
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${stadium.id}">
+                <input type="hidden" id="cId" name="cId" value="${stadium.city.cityId}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>球场名称：</label>
@@ -33,17 +34,17 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>省份：</label>
-                        <select id="province" name="province" class="select" >
+                        <select id="provinceId" name="provinceId" class="select" >
                             <option value="">省份</option>
                             <c:forEach items="${province}" var="v" >
-                                <option value="${v.provinceId}" >${v.province}</option>
+                                <option value="${v.provinceId}" <c:if test="${stadium.province.provinceId eq v.provinceId}">selected</c:if>>${v.province}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>城市：</label>
                         <select id="cityId" name="cityId" class="select">
-                            <option value="${stadium.city.cityId}">${stadium.city.city eq null ? "城市" : stadium.city.city}</option>
+                            <option value="">城市</option>
                         </select>
                     </div>
                     <div class="col-md-6 m-b-15">
@@ -129,6 +130,9 @@
                 $(".iCheck-helper").click(function() {
                     $user.fn.hid();
                 });
+
+                var opt=$("#provinceId").val();
+                $user.fn.selectCity(opt);
             },
             hid:function(){
                 if($(".icheckbox_minimal").attr("aria-checked")=="true"){
@@ -138,9 +142,6 @@
                 }
             },
             save : function () {
-                var sid= "${stadium.id}";
-                var avater= "${stadium.avater}";
-                var description = "${stadium.description}";
                 var isCheck = true;
                 if($("#name").val()==""){
                     $leoman.notify('球场名称不能为空', "error");
@@ -170,9 +171,7 @@
                     var code =  $('.wysiwye-editor').code();
                     var address = $("#address").val();
                     var lng = $("#lng").val();
-                    console.log(lng);
                     var lat = $("#lat").val();
-                    console.log(lat);
                     var lnglat = {
                         longitude : $("#lng").val(),
                         latitude : $("#lat").val()
@@ -196,6 +195,7 @@
                 }
             },
             selectCity : function(data){
+                var cId = $("#cId").val();
                 if(data!=""){
                     $.ajax({
                         url:"${contextPath}/admin/reserve/selectCity",
@@ -204,14 +204,17 @@
                         },
                         success:function(data){
                             $("#cityId").empty();
+                            var op = "<option value=''>请选择城市</option>";
                             for(var i= 0;i<data.length;i++){
                                 var cityId = data[i].cityId;
                                 var city = data[i].city;
-                                var op = "<option value='"+cityId+"'>"+city+"</option>";
-                                $("#cityId").append(op);
-                                if(i==0){
+                                if(cId==cityId){
+                                    op += "<option value='"+cityId+"' selected>"+city+"</option>";
+                                }else{
+                                    op += "<option value='"+cityId+"'>"+city+"</option>";
                                 }
                             }
+                            $("#cityId").append(op);
                             $("#cityId").selectpicker('refresh');
                         }
                     });
@@ -232,8 +235,8 @@
     }
     $(function () {
         $user.fn.init();
-        $("#province").change(function(){
-            var opt=$("#province").val();
+        $("#provinceId").change(function(){
+            var opt=$("#provinceId").val();
             $user.fn.selectCity(opt);
         })
     })

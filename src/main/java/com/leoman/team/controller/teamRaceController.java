@@ -60,7 +60,7 @@ public class TeamRaceController  extends GenericEntityController<TeamRace, TeamR
             TeamRace t = new TeamRace();
             int pagenum = getPageNum(start,length);
             teamRace.setCity(cityId);
-            teamRace.setStadium(id);
+//            teamRace.setStadium(id);
             teamRacePage = teamRaceService.findAll(teamRace,teamName, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();

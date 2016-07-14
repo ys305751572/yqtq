@@ -74,6 +74,7 @@ public class ModuleController extends GenericEntityController<Module,Module,Modu
     @ResponseBody
     public Result save(Module module,Long moduleParentId) {
         Module m = null;
+        List<Module> module_name =  moduleService.queryByProperty("name",module.getName());
         if(module.getId()!=null){
             m = moduleService.queryByPK(module.getId());
         }

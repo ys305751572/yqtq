@@ -23,6 +23,10 @@ public class IndexServiceImpl implements IndexService{
         return dao.moduleList(id);
     }
 
+    public List<Module> parentModelueList(List<Long> ids){
+        return dao.parentModelueList(ids);
+    }
+
     //当天新增的用户
     @Override
     public Integer newUserNum() {

@@ -83,16 +83,16 @@
                         <label>设置获得经验:</label>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 m-b-15" style="width: 164px;">
-                        <label>选择对应等级:</label>
-                        <select id="systemVipId" class="select" >
-                            <c:forEach items="${systemVipLevels}" var="v">
-                                <option value="${v.systemVipId}">Lv ${v.level}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
+                <%--<div class="row">--%>
+                    <%--<div class="col-md-12 m-b-15" style="width: 164px;">--%>
+                        <%--<label>选择对应等级:</label>--%>
+                        <%--<select id="systemVipId" class="select" >--%>
+                            <%--<c:forEach items="${systemVipLevels}" var="v">--%>
+                                <%--<option value="${v.systemVipId}">Lv ${v.level}</option>--%>
+                            <%--</c:forEach>--%>
+                        <%--</select>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="row">
                     <div class="col-md-12 m-b-15">
                         <div class='from1'>
@@ -234,14 +234,14 @@
 
                 if(isCheck){
                     var experience = $("#vipExperience").val();
-                    var systemVipId =  $('#systemVipId').val();
+//                    var systemVipId =  $('#systemVipId').val();
                     var action =  $('#action').val();
                     $("#fromId").ajaxSubmit({
                         url : "${contextPath}/admin/systemVipSetting/systemVipExperienceSave",
                         type : "POST",
                         data : {
                             "experience" : experience,
-                            "systemVipId" : systemVipId,
+//                            "systemVipId" : systemVipId,
                             "action" : action
                         },
                         success : function(result) {
@@ -249,17 +249,18 @@
                                 $common.fn.notify(result.msg);
                                 return;
                             }
-                            $user.fn.vipExperienceFrom(systemVipId);
+                            $user.fn.vipExperienceFrom();
+                            $("#vipExperience").val("");
                         }
                     });
                 }
             },
-            vipExperienceFrom : function(data){
+            vipExperienceFrom : function(){
                 $.ajax({
                     url:"${contextPath}/admin/systemVipSetting/vipExperienceFrom",
-                    data:{
-                        "systemVipId":data
-                    },
+//                    data:{
+//                        "systemVipId":data
+//                    },
                     success:function(data){
                         $("#a").val("");
                         $("#b").val("");
@@ -284,12 +285,12 @@
     };
     $(function () {
         $user.fn.init();
-        $user.fn.vipExperienceFrom($("#systemVipId").val());
-        $("#systemVipId").change(function(){
-            $("#vipExperience").val("");
-            var opt=$("#systemVipId").val();
-            $user.fn.vipExperienceFrom(opt);
-        });
+        $user.fn.vipExperienceFrom();
+//        $("#systemVipId").change(function(){
+//            $("#vipExperience").val("");
+//            var opt=$("#systemVipId").val();
+//            $user.fn.vipExperienceFrom(opt);
+//        });
         $("#action").change(function(){
             $("#vipExperience").val("");
         });

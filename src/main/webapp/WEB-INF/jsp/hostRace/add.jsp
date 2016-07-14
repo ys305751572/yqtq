@@ -188,8 +188,7 @@
         autoclose: 1,
         todayHighlight: 1,
         startView: 2,
-        forceParse: 0,
-        format: 'yyyy-mm-dd hh:mm'
+        forceParse: 0
     });
 </script>
 </body>
