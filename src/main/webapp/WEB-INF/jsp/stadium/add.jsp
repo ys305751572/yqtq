@@ -147,6 +147,10 @@
                     $leoman.notify('球场名称不能为空', "error");
                     isCheck=false;
                 }
+                if($("#provinceId").val()==""){
+                    $leoman.notify('省份不能为空', "error");
+                    isCheck=false;
+                }
                 if($("#cityId").val()==""){
                     $leoman.notify('城市不能为空', "error");
                     isCheck=false;

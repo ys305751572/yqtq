@@ -55,10 +55,11 @@ public class StadiumBookingController extends GenericEntityController<StadiumBoo
     }
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length, StadiumBooking stadiumBooking, City cityId, Stadium name,User nickName,String details){
+    public Object list(Integer draw, Integer start, Integer length, StadiumBooking stadiumBooking, City cityId,Province provinceId, Stadium name,User nickName,String details){
         Page<StadiumBooking> Page = null;
         try {
             int pagenum = getPageNum(start,length);
+            stadiumBooking.setProvince(provinceId);
             stadiumBooking.setCity(cityId);
             stadiumBooking.setStadium(name);
             stadiumBooking.setUser(nickName);

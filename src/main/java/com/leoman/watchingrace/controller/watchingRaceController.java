@@ -50,11 +50,12 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,WatchingRace watchingRace,City cityId){
+    public Object list(Integer draw, Integer start, Integer length,WatchingRace watchingRace,City cityId,Province provinceId){
         Page<WatchingRace> Page = null;
         try {
             int pagenum = getPageNum(start,length);
             watchingRace.setCity(cityId);
+            watchingRace.setProvince(provinceId);
             Page = watchingRaceService.findAll(watchingRace, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,23 +94,16 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
 
     //新增
     @RequestMapping(value = "/add")
-    public String add(Model model){
-        try{
-            List<Province> province = provinceService.queryAll();
-            model.addAttribute("province",province);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return "/watchingrace/add";
-    }
-
-    @RequestMapping(value = "/edit")
     public String edit(Long id, Model model){
         try{
+            if(id!=null){
+                WatchingRace watchingRace = watchingRaceService.queryByPK(id);
+                model.addAttribute("watchingRace", watchingRace);
+            }
+            List<Province> province = provinceService.queryAll();
+            model.addAttribute("province",province);
             List<City> city = cityService.queryAll();
             model.addAttribute("city",city);
-            WatchingRace watchingRace = watchingRaceService.queryByPK(id);
-            model.addAttribute("watchingRace", watchingRace);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -126,7 +120,7 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
      */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(WatchingRace watchingRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,City city, String detail){
+    public Result save(WatchingRace watchingRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,City city,Province province, String detail){
         WatchingRace w = null;
         try{
             if(null != watchingRace.getId()){
@@ -160,6 +154,10 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
             if(city != null){
                 City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
                 watchingRace.setCity(_city);
+            }
+            if(province != null){
+                Province _province = provinceService.queryByProperty("provinceId",province.getProvinceId()).get(0);
+                watchingRace.setProvince(_province);
             }
             watchingRaceService.save(watchingRace);
         }catch (RuntimeException e){

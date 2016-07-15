@@ -51,7 +51,7 @@
                 <c:if test="${teamRace.status eq 1}">
                     <div class="col-md-6 m-b-15">
                         <label>比赛地点:</label>
-                        <input type="text" id="sName" name="sName" value="${teamRace.stadium.name}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="sName" name="sName" value="${teamRace.address}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                 </c:if>
                 <div class="col-md-6 m-b-15">

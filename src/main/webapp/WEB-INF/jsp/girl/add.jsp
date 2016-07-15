@@ -26,6 +26,7 @@
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${girl.id}">
+                <input type="hidden" id="cId" name="cId" value="${girl.city.cityId}">
                 <input type="hidden" id="num" name="num" value="1">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
@@ -35,17 +36,16 @@
 
                     <div class="col-md-6 m-b-15">
                         <label>省份：</label>
-                        <select id="province" name="province" class="select" >
+                        <select id="provinceId" name="provinceId" class="select" >
                             <option value="">省份</option>
                             <c:forEach items="${province}" var="v" >
-                                <option value="${v.provinceId}" >${v.province}</option>
+                                <option value="${v.provinceId}" <c:if test="${girl.province.provinceId eq v.provinceId}">selected</c:if>>${v.province}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>城市：</label>
                         <select id="cityId" name="cityId" class="select">
-                            <option value="${girl.city.cityId}">${girl.city.city eq null ? "城市" : girl.city.city}</option>
                         </select>
                     </div>
                     <div class="col-md-6 m-b-15">
@@ -93,7 +93,7 @@
                                 <c:if test="${v.type eq 0}">
                                     <div class="fileupload fileupload-new" data-provides="fileupload" style='float: left;margin-right: 10px;'>
                                         <div class="fileupload-preview thumbnail form-control">
-                                            <img src="${v.url}">${v.url}
+                                            <img src="${v.url}">
                                         </div>
                                         <div>
                                             <c:if test="${v.url eq null}">
@@ -172,13 +172,18 @@
         },
         fn: {
             init: function () {
-
+                var opt=$("#provinceId").val();
+                $user.fn.selectCity(opt);
             },
             save : function () {
                 var isCheck = true;
                 var price = $("#price").val();
                 if($("#name").val()==""){
                     $leoman.notify('名称不能为空', "error");
+                    isCheck=false;
+                }
+                if($("#provinceId").val()==""){
+                    $leoman.notify('省份不能为空', "error");
                     isCheck=false;
                 }
                 if($("#cityId").val()==""){
@@ -308,6 +313,7 @@
                 });
             },
             selectCity : function(data){
+                var cId = $("#cId").val();
                 if(data!=""){
                     $.ajax({
                         url:"${contextPath}/admin/reserve/selectCity",
@@ -316,14 +322,17 @@
                         },
                         success:function(data){
                             $("#cityId").empty();
+                            var op = "<option value=''>请选择城市</option>";
                             for(var i= 0;i<data.length;i++){
                                 var cityId = data[i].cityId;
                                 var city = data[i].city;
-                                var op = "<option value='"+cityId+"'>"+city+"</option>";
-                                $("#cityId").append(op);
-                                if(i==0){
+                                if(cId==cityId){
+                                    op += "<option value='"+cityId+"' selected>"+city+"</option>";
+                                }else{
+                                    op += "<option value='"+cityId+"'>"+city+"</option>";
                                 }
                             }
+                            $("#cityId").append(op);
                             $("#cityId").selectpicker('refresh');
                         }
                     });
@@ -343,8 +352,8 @@
             $("#addd").show();
         }
 
-        $("#province").change(function(){
-            var opt=$("#province").val();
+        $("#provinceId").change(function(){
+            var opt=$("#provinceId").val();
             $user.fn.selectCity(opt);
         });
 

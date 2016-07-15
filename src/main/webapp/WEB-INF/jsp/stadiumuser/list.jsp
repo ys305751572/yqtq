@@ -31,7 +31,7 @@
             <div style="float:right;margin-right:25px;">
                 <a href="${contextPath}/admin/stadiumUser/add" title="新增" class="btn btn-alt m-r-5">新增</a>
                 <a data-toggle="modal" href="${contextPath}/admin/stadiumUserWithdraw/index" title="提现管理" class="btn btn-alt m-r-5">提现管理</a>
-                <a data-toggle="modal" href="${contextPath}/admin/1/index" title="权限列表" class="btn btn-alt m-r-5">权限列表</a>
+                <a data-toggle="modal" href="${contextPath}/admin/role/index" title="权限列表" class="btn btn-alt m-r-5">权限列表</a>
             </div>
         </div>
         <%--<div class="block-area">--%>
@@ -57,7 +57,7 @@
         <%--</div>--%>
         <hr class="whiter m-t-20"/>
         <!-- form表格 -->
-        <div class="block-area" id="tableHover">
+        <div class="block-area" id="tableHover" >
             <table class="table table-bordered table-hover tile" id="dataTables" cellspacing="0" width="100%">
                 <thead>
                 <tr>

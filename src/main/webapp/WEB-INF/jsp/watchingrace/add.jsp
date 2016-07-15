@@ -26,6 +26,7 @@
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${watchingRace.id}">
+                <input type="hidden" id="cId" name="cId" value="${watchingRace.city.cityId}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>看球名称：</label>
@@ -33,10 +34,10 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>省份：</label>
-                        <select id="province" name="province" class="select" >
+                        <select id="provinceId" name="provinceId" class="select" >
                             <option value="">省份</option>
                             <c:forEach items="${province}" var="v" >
-                                <option value="${v.provinceId}" >${v.province}</option>
+                                <option value="${v.provinceId}" <c:if test="${watchingRace.province.provinceId eq v.provinceId}">selected</c:if>>${v.province}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -92,11 +93,17 @@
         },
         fn: {
             init: function () {
+                var opt=$("#provinceId").val();
+                $user.fn.selectCity(opt);
             },
             save : function () {
                 var isCheck = true;
                 if($("#name").val()==""){
                     $leoman.notify('看球名称不能为空', "error");
+                    isCheck=false;
+                }
+                if($("#provinceId").val()==""){
+                    $leoman.notify('省份不能为空', "error");
                     isCheck=false;
                 }
                 if($("#cityId").val()==""){
@@ -130,6 +137,7 @@
                 }
             },
             selectCity : function(data){
+                var cId = $("#cId").val();
                 if(data!=""){
                     $.ajax({
                         url:"${contextPath}/admin/reserve/selectCity",
@@ -138,14 +146,17 @@
                         },
                         success:function(data){
                             $("#cityId").empty();
+                            var op = "<option value=''>请选择城市</option>";
                             for(var i= 0;i<data.length;i++){
                                 var cityId = data[i].cityId;
                                 var city = data[i].city;
-                                var op = "<option value='"+cityId+"'>"+city+"</option>";
-                                $("#cityId").append(op);
-                                if(i==0){
+                                if(cId==cityId){
+                                    op += "<option value='"+cityId+"' selected>"+city+"</option>";
+                                }else{
+                                    op += "<option value='"+cityId+"'>"+city+"</option>";
                                 }
                             }
+                            $("#cityId").append(op);
                             $("#cityId").selectpicker('refresh');
                         }
                     });
@@ -159,8 +170,8 @@
     }
     $(function () {
         $user.fn.init();
-        $("#province").change(function(){
-            var opt=$("#province").val();
+        $("#provinceId").change(function(){
+            var opt=$("#provinceId").val();
             $user.fn.selectCity(opt);
         })
     })

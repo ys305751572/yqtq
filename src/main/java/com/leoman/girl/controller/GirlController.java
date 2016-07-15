@@ -71,11 +71,12 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,Girl girl,City cityId,Integer appointment){
+    public Object list(Integer draw, Integer start, Integer length,Girl girl,City cityId,Province provinceId,Integer appointment){
         Page<Girl> Page = null;
         try {
             int pagenum = getPageNum(start,length);
             girl.setCity(cityId);
+            girl.setProvince(provinceId);
             Page = girlService.findAll(appointment,girl, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();
@@ -154,7 +155,7 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
      */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(Girl girl, City city, MultipartHttpServletRequest multipartRequest){
+    public Result save(Girl girl, City city,Province province, MultipartHttpServletRequest multipartRequest){
         Girl g = null;
         try{
             if(null != girl.getId()){
@@ -169,6 +170,10 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
             if(city != null){
                 City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
                 girl.setCity(_city);
+            }
+            if(province != null){
+                Province _province = provinceService.queryByProperty("provinceId",province.getProvinceId()).get(0);
+                girl.setProvince(_province);
             }
             girlService.save(girl);
             this.saveImage(girl,multipartRequest);

@@ -121,6 +121,9 @@ public class TeamServiceImpl extends GenericManagerImpl<Team, TeamDao> implement
                 if(t.getName() != null) {
                     list.add(cb.like(root.get("name").as(String.class), "%" + t.getName() + "%"));
                 }
+                if(t.getProvince().getProvinceId() != null){
+                    list.add(cb.equal(root.get("province").get("provinceId").as(Long.class), t.getProvince().getProvinceId() ));
+                }
                 if(t.getCity().getCityId() != null){
                     list.add(cb.equal(root.get("city").get("cityId").as(Long.class), t.getCity().getCityId() ));
                 }

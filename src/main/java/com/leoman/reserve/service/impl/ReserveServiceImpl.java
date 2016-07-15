@@ -41,6 +41,9 @@ public class ReserveServiceImpl extends GenericManagerImpl<Reserve,ReserveDao> i
                 if (reserve.getStadium().getCity().getCityId() != null) {
                     list.add(criteriaBuilder.equal(root.get("stadium").get("city").get("cityId").as(Long.class), reserve.getStadium().getCity().getCityId()));
                 }
+                if (reserve.getStadium().getProvince().getProvinceId() != null) {
+                    list.add(criteriaBuilder.equal(root.get("stadium").get("province").get("provinceId").as(Long.class), reserve.getStadium().getProvince().getProvinceId()));
+                }
                 if (reserve.getStadium().getId() != null) {
                     list.add(criteriaBuilder.equal(root.get("stadium").get("id").as(Long.class), reserve.getStadium().getId()));
                 }

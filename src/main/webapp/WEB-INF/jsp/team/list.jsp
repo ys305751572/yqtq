@@ -36,9 +36,6 @@
                 <div class="col-md-2 form-group">
                     <select id="cityId" name="cityId" class="select">
                         <option value="">城市</option>
-                        <%--<c:forEach items="${city}" var="c">--%>
-                            <%--<option value="${c.cityId}">${c.city}</option>--%>
-                        <%--</c:forEach>--%>
                     </select>
                 </div>
             </div>
@@ -122,6 +119,7 @@
                     ],
                     "fnServerParams": function (aoData) {
                         aoData.name = $("#name").val();
+                        aoData.provinceId = $("#province").val();
                         aoData.cityId = $("#cityId").val();
                         aoData.details = $("#details").val();
                     }
@@ -152,13 +150,14 @@
                             "provinceId":data
                         },
                         success:function(data){
-                            $("#cityId").empty();
+                            $("#cityId").empty()
+                            var op = "<option value=''>请选择城市</option>";
                             for(var i= 0;i<data.length;i++){
                                 var cityId = data[i].cityId;
                                 var city = data[i].city;
-                                var op = "<option value='"+cityId+"'>"+city+"</option>";
-                                $("#cityId").append(op);
+                                op += "<option value='"+cityId+"'>"+city+"</option>";
                             }
+                            $("#cityId").append(op);
                             $("#cityId").selectpicker('refresh');
                         }
                     });

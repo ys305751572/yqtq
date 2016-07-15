@@ -166,6 +166,7 @@
                         }
                     ],
                     "fnServerParams": function (aoData) {
+                        aoData.provinceId = $("#province").val();
                         aoData.cityId = $("#cityId").val();
                         aoData.name = $("#name").val();
                         aoData.bookTime = $("#bookTime").val();
@@ -200,11 +201,12 @@
                             "provinceId":data
                         },
                         success:function(data){
-                            $("#cityId").empty();
+                            $("#cityId").empty()
+                            var op = "<option value=''>请选择城市</option>";
                             for(var i= 0;i<data.length;i++){
                                 var cityId = data[i].cityId;
                                 var city = data[i].city;
-                                var op = "<option value='"+cityId+"'>"+city+"</option>";
+                                op += "<option value='"+cityId+"'>"+city+"</option>";
                                 $("#cityId").append(op);
                                 if(i==0){
                                 }

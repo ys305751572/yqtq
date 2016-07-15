@@ -170,6 +170,7 @@
                     ],
                     "fnServerParams": function (aoData) {
                         aoData.name = $("#name").val();
+                        aoData.provinceId = $("#province").val();
                         aoData.cityId = $("#cityId").val();
                         aoData.status = $("#status").val();
                     }
@@ -231,14 +232,13 @@
                         },
                         success:function(data){
                             $("#cityId").empty();
+                            var op = "<option value=''>请选择城市</option>";
                             for(var i= 0;i<data.length;i++){
                                 var cityId = data[i].cityId;
                                 var city = data[i].city;
-                                var op = "<option value='"+cityId+"'>"+city+"</option>";
-                                $("#cityId").append(op);
-                                if(i==0){
-                                }
+                                op += "<option value='"+cityId+"'>"+city+"</option>";
                             }
+                            $("#cityId").append(op);
                             $("#cityId").selectpicker('refresh');
                         }
                     });
@@ -249,7 +249,7 @@
                 }
             },
             edit: function (id){
-                window.location.href = "${contextPath}/admin/watchingRace/edit?id=" + id;
+                window.location.href = "${contextPath}/admin/watchingRace/add?id=" + id;
             },
             responseComplete: function (result, action) {
                 if (result.status == "0") {

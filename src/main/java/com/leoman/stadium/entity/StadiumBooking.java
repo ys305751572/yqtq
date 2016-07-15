@@ -1,6 +1,7 @@
 package com.leoman.stadium.entity;
 
 import com.leoman.city.entity.City;
+import com.leoman.city.entity.Province;
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.user.entity.User;
 
@@ -12,6 +13,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "t_stadium_booking")
 public class StadiumBooking extends BaseEntity{
+    //省份ID
+    @ManyToOne
+    @JoinColumn(name = "province_id",referencedColumnName = "province_id")
+    private Province province;
     //城市ID
     @ManyToOne
     @JoinColumn(name = "city_id",referencedColumnName = "city_id")
@@ -114,5 +119,13 @@ public class StadiumBooking extends BaseEntity{
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
     }
 }

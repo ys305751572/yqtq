@@ -47,6 +47,10 @@ public class GirlUserServiceImpl extends GenericManagerImpl<GirlUser,GirlUserDao
                     list.add(cb.equal(root.get("girl").get("city").get("cityId").as(Long.class), g.getGirl().getCity().getCityId()));
                 }
 
+                if (g.getGirl().getProvince().getProvinceId() != null) {
+                    list.add(cb.equal(root.get("girl").get("province").get("provinceId").as(Long.class), g.getGirl().getProvince().getProvinceId()));
+                }
+
                 if (g.getGirl().getName() != null) {
                     list.add(cb.like(root.get("girl").get("name").as(String.class), "%" + g.getGirl().getName() + "%"));
                 }

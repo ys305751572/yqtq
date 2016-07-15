@@ -134,6 +134,7 @@
                     "fnServerParams": function (aoData) {
                         aoData.name = $("#girlName").val();
                         aoData.cityId = $("#cityId").val();
+                        aoData.provinceId = $("#province").val();
                         aoData.nickName = $("#userName").val();
                         aoData.details = $("#details").val();
                     }
@@ -185,14 +186,13 @@
                         },
                         success:function(data){
                             $("#cityId").empty();
+                            var op = "<option value=''>请选择城市</option>";
                             for(var i= 0;i<data.length;i++){
                                 var cityId = data[i].cityId;
                                 var city = data[i].city;
-                                var op = "<option value='"+cityId+"'>"+city+"</option>";
-                                $("#cityId").append(op);
-                                if(i==0){
-                                }
+                                op += "<option value='"+cityId+"'>"+city+"</option>";
                             }
+                            $("#cityId").append(op);
                             $("#cityId").selectpicker('refresh');
                         }
                     });

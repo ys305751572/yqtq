@@ -1,6 +1,7 @@
 package com.leoman.girl.entity;
 
 import com.leoman.city.entity.City;
+import com.leoman.city.entity.Province;
 import com.leoman.common.entity.BaseEntity;
 
 import javax.persistence.*;
@@ -12,6 +13,10 @@ import java.util.Set;
 @Entity
 @Table(name = "t_girl")
 public class Girl extends BaseEntity{
+    //省份ID
+    @ManyToOne
+    @JoinColumn(name = "province_id",referencedColumnName = "province_id")
+    private Province province;
     //城市ID
     @ManyToOne
     @JoinColumn(name = "city_id",referencedColumnName = "city_id")
@@ -149,5 +154,13 @@ public class Girl extends BaseEntity{
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
     }
 }

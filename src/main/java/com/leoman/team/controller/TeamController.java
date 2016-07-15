@@ -65,14 +65,14 @@ public class TeamController extends GenericEntityController<Team, Team, TeamServ
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,Team team,City cityId,String details){
+    public Object list(Integer draw, Integer start, Integer length,Team team,City cityId,Province provinceId,String details){
         Page<Team> teamPage = null;
 //        List<Team> list = null;
         try {
             int pagenum = getPageNum(start,length);
             team.setCity(cityId);
+            team.setProvince(provinceId);
             teamPage = teamService.findAll(details,team, pagenum, length);
-
 //            list = teamService.findList(null,null,null,start,length);
         } catch (Exception e) {
             e.printStackTrace();

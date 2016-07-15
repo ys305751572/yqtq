@@ -47,6 +47,9 @@ public class WatchingRaceServiceImpl extends GenericManagerImpl<WatchingRace,Wat
                 if(w.getCity().getCityId() != null){
                     list.add(cb.equal(root.get("city").get("cityId").as(Long.class),w.getCity().getCityId()));
                 }
+                if(w.getProvince().getProvinceId() != null){
+                    list.add(cb.equal(root.get("province").get("provinceId").as(Long.class),w.getProvince().getProvinceId()));
+                }
 
                 Predicate[] p = new Predicate[list.size()];
                 return cb.and(list.toArray(p));

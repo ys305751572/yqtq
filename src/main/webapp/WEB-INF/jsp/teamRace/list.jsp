@@ -126,6 +126,7 @@
                     "fnServerParams": function (aoData) {
                         aoData.teamName = $("#teamName").val();
                         aoData.cityId = $("#cityId").val();
+                        aoData.provinceId = $("#province").val();
 //                        aoData.id = $("#stadiumId").val();
                     }
                 });
@@ -156,15 +157,16 @@
                         },
                         success:function(data){
                             $("#cityId").empty();
+                            var op = "<option value=''>请选择城市</option>";
                             for(var i= 0;i<data.length;i++){
                                 var cityId = data[i].cityId;
                                 var city = data[i].city;
-                                var op = "<option value='"+cityId+"'>"+city+"</option>";
-                                $("#cityId").append(op);
+                                op += "<option value='"+cityId+"'>"+city+"</option>";
                                 if(i==0){
                                     $teamRace.fn.selectStadium(cityId);
                                 }
                             }
+                            $("#cityId").append(op);
                             $("#cityId").selectpicker('refresh');
                         }
                     });

@@ -1,6 +1,7 @@
 package com.leoman.team.entity;//package com.leoman.team.entity;
 
 import com.leoman.city.entity.City;
+import com.leoman.city.entity.Province;
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.stadium.entity.Stadium;
 
@@ -23,11 +24,15 @@ public class TeamRace  extends BaseEntity{
     @JoinColumn(name = "visiting_team_id")
     private Team visitingTeam;
 
+    //省份id
+    @ManyToOne
+    @JoinColumn(name = "province_id",referencedColumnName = "province_id")
+    private Province province;
     //城市id
     @ManyToOne
     @JoinColumn(name = "city_id",referencedColumnName = "city_id")
     private City city;
-
+    //比赛地址
     @Column(name = "address")
     private String address;
 
@@ -94,6 +99,15 @@ public class TeamRace  extends BaseEntity{
 //    public void setStadium(Stadium stadium) {
 //        this.stadium = stadium;
 //    }
+
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
+    }
 
     public Long getStartDate() {
         return startDate;

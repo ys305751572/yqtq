@@ -45,11 +45,12 @@ public class GirlUserController extends GenericEntityController<GirlUser, GirlUs
 
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length, GirlUser girlUser, Girl girl,User nickName,City cityId,String details){
+    public Object list(Integer draw, Integer start, Integer length, GirlUser girlUser, Girl girl,User nickName,City cityId,Province provinceId,String details){
         Page<GirlUser> Page = null;
         try {
             int pagenum = getPageNum(start,length);
             girl.setCity(cityId);
+            girl.setProvince(provinceId);
             girlUser.setGirl(girl);
             girlUser.setUser(nickName);
             Page = girlUserService.findAll(details,girlUser, pagenum, length);

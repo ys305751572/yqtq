@@ -59,12 +59,13 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,BigRace bigRace,City cityId,String teamName){
+    public Object list(Integer draw, Integer start, Integer length,BigRace bigRace,City cityId,Province provinceId,String teamName){
         Page<BigRace> Page = null;
         try {
             int pagenum = getPageNum(start,length);
             Stadium stadium = new Stadium();
             stadium.setCity(cityId);
+            stadium.setProvince(provinceId);
             bigRace.setStadium(stadium);
             Page = bigRaceService.findAll(teamName,bigRace, pagenum, length);
         } catch (Exception e) {

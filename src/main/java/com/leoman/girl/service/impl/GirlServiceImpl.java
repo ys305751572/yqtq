@@ -56,6 +56,9 @@ public class GirlServiceImpl extends GenericManagerImpl<Girl,GirlDao> implements
                 if(g.getCity().getCityId() != null){
                     list.add(cb.equal(root.get("city").get("cityId").as(Long.class), g.getCity().getCityId() ));
                 }
+                if(g.getProvince().getProvinceId() != null){
+                    list.add(cb.equal(root.get("province").get("provinceId").as(Long.class), g.getProvince().getProvinceId() ));
+                }
                 if(g.getStatus() != null){
                     list.add(cb.equal(root.get("status").as(Integer.class), g.getStatus() ));
                 }

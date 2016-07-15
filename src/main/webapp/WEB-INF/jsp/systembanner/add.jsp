@@ -124,6 +124,7 @@
         $user.fn.init();
         $("#type").change(function(){
             $("#toId").val("");
+            $("#object").val("");
         })
     })
 </script>

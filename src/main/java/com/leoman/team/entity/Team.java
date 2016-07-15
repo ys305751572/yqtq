@@ -1,6 +1,7 @@
 package com.leoman.team.entity;
 
 import com.leoman.city.entity.City;
+import com.leoman.city.entity.Province;
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.user.entity.User;
 import org.hibernate.annotations.JoinFormula;
@@ -20,6 +21,11 @@ public class Team extends BaseEntity {
     //球队名称
     @Column(name = "name")
     private String name;
+
+    //省ID
+    @ManyToOne
+    @JoinColumn(name = "province_id",referencedColumnName = "province_id")
+    private Province province;
 
     //城市ID
     @ManyToOne
@@ -96,6 +102,14 @@ public class Team extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
     }
 
     public City getCity() {

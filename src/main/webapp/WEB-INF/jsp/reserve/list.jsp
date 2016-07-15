@@ -307,6 +307,7 @@
         $("#province").change(function(){
             var opt=$("#province").val();
             $reserve.fn.selectCity(opt);
+            $reserve.fn.selectStadium();
         })
         $("#cityId").change(function(){
             var opt=$("#cityId").val();

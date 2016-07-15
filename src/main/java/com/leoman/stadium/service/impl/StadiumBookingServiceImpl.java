@@ -48,6 +48,9 @@ public class StadiumBookingServiceImpl extends GenericManagerImpl<StadiumBooking
                 if(s.getCity().getCityId() != null) {
                     list.add(cb.equal(root.get("city").get("cityId").as(Long.class),s.getCity().getCityId()));
                 }
+                if(s.getProvince().getProvinceId() != null) {
+                    list.add(cb.equal(root.get("province").get("provinceId").as(Long.class),s.getProvince().getProvinceId()));
+                }
                 if(s.getStadium().getName() != null) {
                     list.add(cb.like(root.get("stadium").get("name").as(String.class),"%" + s.getStadium().getName()+"%"));
                 }

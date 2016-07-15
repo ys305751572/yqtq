@@ -53,6 +53,14 @@ public class BigRaceServiceImpl extends GenericManagerImpl<BigRace,BigRaceDao> i
                         cb.and(p);
                     }
                 }
+                if(b.getStadium().getProvince().getProvinceId() != null){
+                    if(p != null) {
+                        p = cb.and(p,cb.equal(root.get("stadium").get("province").get("provinceId").as(Long.class), b.getStadium().getProvince().getProvinceId()));
+                    }else {
+                        p = cb.equal(root.get("stadium").get("province").get("provinceId").as(Long.class), b.getStadium().getProvince().getProvinceId());
+                        cb.and(p);
+                    }
+                }
                 return p;
             }
         };

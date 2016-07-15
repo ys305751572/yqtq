@@ -91,7 +91,7 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
                      Reserve reserve,
                      SystemInsurance id,
                      String details,
-                     City cityId,Stadium stadium) {
+                     City cityId,Province provinceId,Stadium stadium) {
         try {
             int pageNum = getPageNum(start, length);
             if(request.getParameter("stadiumId")!=null && request.getParameter("stadiumId")!=""){
@@ -99,6 +99,7 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
             }
             reserve.setSystemInsurance(id);
             stadium.setCity(cityId);
+            stadium.setProvince(provinceId);
             reserve.setStadium(stadium);
             Page<Reserve> page = reserveService.findPage(details,reserve,pageNum,length);
             Map<String, Object> result = DataTableFactory.fitting(draw, page);

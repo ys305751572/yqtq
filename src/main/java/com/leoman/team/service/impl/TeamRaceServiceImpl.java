@@ -70,6 +70,15 @@ public class TeamRaceServiceImpl extends GenericManagerImpl<TeamRace, TeamRaceDa
                         cb.and(p);
                     }
                 }
+                if(t.getProvince().getProvinceId() != null){
+                    if(p != null) {
+                        p = cb.and(p,cb.equal(root.get("province").get("provinceId").as(Long.class), t.getProvince().getProvinceId()));
+                    }
+                    else {
+                        p = cb.equal(root.get("province").get("provinceId").as(Long.class), t.getProvince().getProvinceId());
+                        cb.and(p);
+                    }
+                }
 //                if(t.getStadium().getId() !=null){
 //                    if(p != null) {
 //                        p = cb.and(p,cb.equal(root.get("stadium").get("id").as(Long.class), t.getStadium().getId()));
