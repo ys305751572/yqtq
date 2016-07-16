@@ -140,7 +140,7 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
      */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(StadiumUser stadiumUser,City city){
+    public Result save(StadiumUser stadiumUser,City city,Province province){
         Md5Util md5Util = new Md5Util();
         StadiumUser s = null;
         try{
@@ -164,6 +164,10 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
             if(city != null){
                 City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
                 stadiumUser.setCity(_city);
+            }
+            if(province != null){
+                Province _province = provinceService.queryByProperty("provinceId",province.getProvinceId()).get(0);
+                stadiumUser.setProvince(_province);
             }
             stadiumUserService.save(stadiumUser);
         }catch (RuntimeException e){

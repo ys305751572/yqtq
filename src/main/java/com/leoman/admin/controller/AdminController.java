@@ -113,25 +113,28 @@ public class AdminController extends GenericEntityController<Admin,Admin,AdminSe
         Admin a = null;
         Long[] roleIds = JsonUtil.json2Obj(ids, Long[].class);
         List<UserRole> list = null;
+        List<Admin> admin_name =  adminService.queryByProperty("username",admin.getUsername());
         Md5Util md5Util = new Md5Util();
+        Result result = new Result();
+        result.setStatus(false);
+        result.setMsg("已有相同的账号名称!");
         try{
             if(admin.getId()!=null){
                 a = adminService.queryByPK(admin.getId());
                 list = userRoleService.queryByProperty("adminId",admin.getId());
             }
             if(a != null){
+                if(admin_name!=null && admin_name.size()>0 && !admin_name.get(0).getId().equals(admin.getId())){
+                    return result;
+                }
                 admin.setCreateDate(a.getCreateDate());
                 admin.setLastLoginDate(a.getLastLoginDate());
                 admin.setStatus(a.getStatus());
             }else {
-                admin.setStatus(0);
-                List<Admin> admin_name =  adminService.queryByProperty("username",admin.getUsername());
                 if(admin_name!=null && admin_name.size()>0){
-                    Result result = new Result();
-                    result.setStatus(false);
-                    result.setMsg("已有相同的名称!");
                     return result;
                 }
+                admin.setStatus(0);
             }
             if(list != null && list.size()>0){
                 for(UserRole urList : list){

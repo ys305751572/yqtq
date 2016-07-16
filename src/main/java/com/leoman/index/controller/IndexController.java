@@ -73,7 +73,6 @@ public class IndexController extends CommonController {
             // 登录成功后，将用户名放入cookies
             int loginMaxAge = 30 * 24 * 60 * 60; // 定义cookies的生命周期，这里是一个月。单位为秒
             CookiesUtils.addCookie(response, "username", username, loginMaxAge);
-//            request.getSession().setAttribute("username",username);
             return "redirect:/admin/dashboard";
         }
         model.addAttribute("error", "用户名或密码错误!");
@@ -180,6 +179,7 @@ public class IndexController extends CommonController {
         Integer watchingRaceInvitation = indexService.watchingRaceInvitation();
         model.addAttribute("watchingRaceInvitation",watchingRaceInvitation);
 
+//        return "stadiumuserjsp/index/index";
         return "index/index";
     }
 

@@ -90,6 +90,9 @@ public class RoleController extends GenericEntityController<Role,Role,RoleServic
         List<RoleModule> list = null;
         Long[] moduleIds = JsonUtil.json2Obj(ids, Long[].class);
         List<Role> role_name =  roleService.queryByProperty("name",role.getName());
+        Result result = new Result();
+        result.setStatus(false);
+        result.setMsg("已有相同的名称!");
         try {
             if(role.getId()!=null){
                 r = roleService.queryByPK(role.getId());
@@ -98,17 +101,11 @@ public class RoleController extends GenericEntityController<Role,Role,RoleServic
 
             if(r!=null){
                 role.setCreateDate(r.getCreateDate());
-                if(role_name!=null && role_name.size()>0 && !role_name.get(0).getName().equals(role.getName())){
-                    Result result = new Result();
-                    result.setStatus(false);
-                    result.setMsg("已有相同的名称!");
+                if(role_name!=null && role_name.size()>0 && !role_name.get(0).getId().equals(role.getId())){
                     return result;
                 }
             }else {
                 if(role_name!=null && role_name.size()>0){
-                    Result result = new Result();
-                    result.setStatus(false);
-                    result.setMsg("已有相同的名称!");
                     return result;
                 }
             }

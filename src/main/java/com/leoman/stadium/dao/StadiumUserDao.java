@@ -1,8 +1,12 @@
 package com.leoman.stadium.dao;
 
+import com.leoman.admin.entity.Admin;
 import com.leoman.common.dao.IBaseJpaRepository;
 import com.leoman.stadium.entity.StadiumUser;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
+
+import javax.persistence.QueryHint;
 
 /**
  * Created by Administrator on 2016/6/12.
@@ -24,4 +28,9 @@ public interface StadiumUserDao extends IBaseJpaRepository<StadiumUser> {
     //球场积累金额
     @Query("SELECT SUM(a.price) FROM StadiumBooking a WHERE a.stadium.id = ?1")
     public Integer accumulatedAmount(Long id);
+
+    //球场主登录
+    @Query("select a from StadiumUser a where a.username = ?1")
+    @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value ="true") })
+    public StadiumUser findByUsername(String username);
 }

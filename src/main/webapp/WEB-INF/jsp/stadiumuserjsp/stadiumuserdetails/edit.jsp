@@ -29,12 +29,16 @@
                 <input type="hidden" id="cId" name="cId" value="${stadiumUser.city.cityId}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
-                        <label>账号：</label>
-                        <input type="text" id="username" name="username" value="${stadiumUser.username}" class="input-sm form-control validate[required]" placeholder="...">
+                        <label>名称：</label>
+                        <input type="text" id="nickName" name="nickName" value="${stadiumUser.username}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
-                        <label>密码：</label>
-                        <input type="password" id="password" name="password" value="${stadiumUser.password}" class="input-sm form-control validate[required]" placeholder="...">
+                        <label>电话：</label>
+                        <input type="text" id="mobile" name="mobile" value="${stadiumUser.mobile}" class="input-sm form-control validate[required]" placeholder="...">
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>银行卡号：</label>
+                        <input type="text" id="1" name="1" value="${stadiumUser.mobile}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>省份：</label>
@@ -82,12 +86,12 @@
             save : function () {
 
                 var isCheck = true;
-                if($("#username").val()==""){
-                    $leoman.notify('用户名不能为空', "error");
+                if($("#nickName").val()==""){
+                    $leoman.notify('姓名不能为空', "error");
                     isCheck=false;
                 }
-                if($("#password").val()==""){
-                    $leoman.notify('密码不能为空', "error");
+                if($("#mobile").val()==""){
+                    $leoman.notify('电话不能为空', "error");
                     isCheck=false;
                 }
                 if($("#provinceId").val()==""){
@@ -101,7 +105,7 @@
                 if(isCheck){
                     var code =  $('.wysiwye-editor').code();
                     $("#fromId").ajaxSubmit({
-                        url : "${contextPath}/admin/stadiumUser/save",
+                        url : "${contextPath}/stadiumUser/details/save",
                         type : "POST",
                         data : {
                             "detail" : code
@@ -111,7 +115,7 @@
                                 $common.fn.notify(result.msg);
                                 return;
                             }
-                            window.location.href = "${contextPath}/admin/stadiumUser/index";
+                            window.location.href = "${contextPath}/stadiumUser/details/index";
                         }
                     });
                 }
