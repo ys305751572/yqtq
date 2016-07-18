@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>省份：</label>
-                        <select id="provinceId" name="province" class="select" >
+                        <select id="provinceId" name="provinceId" class="select" >
                             <option value="">省份</option>
                             <c:forEach items="${province}" var="v" >
                                 <option value="${v.provinceId}" <c:if test="${stadiumUser.province.provinceId eq v.provinceId}">selected</c:if> >${v.province}</option>

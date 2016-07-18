@@ -10,21 +10,24 @@ import com.leoman.stadium.entity.StadiumUser;
 import com.leoman.stadium.service.StadiumService;
 import com.leoman.stadium.service.StadiumUserService;
 import com.leoman.stadium.service.impl.StadiumUserServiceImpl;
+import com.leoman.utils.Md5Util;
 import com.leoman.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
  * Created by Administrator on 2016/7/16.
  */
 @Controller
-@RequestMapping(value = "/stadiumUser/details")
+@RequestMapping(value = "/stadium/details")
 public class StadiumUserDetailsController extends GenericEntityController<StadiumUser,StadiumUser,StadiumUserServiceImpl>{
 
     @Autowired
@@ -33,21 +36,40 @@ public class StadiumUserDetailsController extends GenericEntityController<Stadiu
     private CityService cityService;
     @Autowired
     private ProvinceService provinceService;
+
     @RequestMapping(value = "/index")
     public String index(HttpServletRequest request,Model model){
-        HttpSession session = request.getSession();
-        StadiumUser stadiumUser = (StadiumUser) session.getAttribute(Constant.SESSION_MEMBER_GLOBLE);
+        StadiumUser stadiumUser = stadiumUserService.queryByPK(this.getStadiumUser(request).getId());
         model.addAttribute("stadiumUser",stadiumUser);
-        return "stadiumuserdetailes/list";
+        return "stadiumuserjsp/details/list";
     }
 
+    /**
+     * 编辑详情
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/edit")
     public String edit(Long id,Model model){
         StadiumUser stadiumUser = stadiumUserService.queryByPK(id);
         model.addAttribute("stadiumUser",stadiumUser);
-        return "stadiumuserdetailes/edit";
+        List<Province> province = provinceService.queryAll();
+        model.addAttribute("province",province);
+        List<City> city = cityService.queryAll();
+        model.addAttribute("city",city);
+        return "stadiumuserjsp/details/edit";
     }
 
+    /**
+     * 保存详情
+     * @param stadiumUser
+     * @param city
+     * @param province
+     * @return
+     */
+    @RequestMapping(value = "/save")
+    @ResponseBody
     public Result save(StadiumUser stadiumUser, City city, Province province){
         StadiumUser s = null;
         try{
@@ -56,13 +78,13 @@ public class StadiumUserDetailsController extends GenericEntityController<Stadiu
             }
 
             if(s!=null){
+                stadiumUser.setUsername(s.getUsername());
+                stadiumUser.setPassword(s.getPassword());
                 stadiumUser.setStatus(s.getStatus());
                 stadiumUser.setReserveMoney(s.getReserveMoney());
                 stadiumUser.setWithdrawMoney(s.getWithdrawMoney());
                 stadiumUser.setBalance(s.getBalance());
                 stadiumUser.setCreateDate(s.getCreateDate());
-            }else {
-
             }
 
             if(city != null){
@@ -79,6 +101,76 @@ public class StadiumUserDetailsController extends GenericEntityController<Stadiu
             return  Result.failure();
         }
         return Result.success();
+    }
+
+
+
+    /**
+     * 修改密码
+     * @return
+     */
+    @RequestMapping(value = "/changePwd")
+    public String changePwd(HttpServletRequest request,Model model){
+        StadiumUser stadiumUser = stadiumUserService.queryByPK(this.getStadiumUser(request).getId());
+        model.addAttribute("stadiumUser",stadiumUser);
+        return "stadiumuserjsp/details/changepwd";
+    }
+
+    /**
+     * 保存密码
+     * @param password
+     * @return
+     */
+    @RequestMapping(value = "/savePwd")
+    @ResponseBody
+    public Result savePwd(String password,Long id){
+        try{
+            StadiumUser stadiumUser = stadiumUserService.queryByPK(id);
+            stadiumUser.setPassword(password);
+            stadiumUserService.update(stadiumUser);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            return Result.failure();
+        }
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/checkPwd")
+    @ResponseBody
+    public Result checkPwd(String password,HttpServletRequest request){
+        Result result = new Result();
+        if(getStadiumUser(request).getPassword().equals(Md5Util.md5(password))){
+            result.setStatus(true);
+            return result;
+        }
+        result.setStatus(false);
+        result.setMsg("原密码输入有误");
+        return result;
+    }
+
+    /**
+     * 关联城市
+     * @param provinceId
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/selectCity")
+    @ResponseBody
+    public List<City> selectCity(Long provinceId,Model model){
+        List<City> cities =  cityService.queryByProperty("provinceId",provinceId);
+        return cities;
+    }
+
+
+    /**
+     * 获取用户信息
+     * @param request
+     * @return
+     */
+    private StadiumUser getStadiumUser(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        StadiumUser stadiumUser = (StadiumUser) session.getAttribute(Constant.SESSION_MEMBER_GLOBLE);
+        return stadiumUser;
     }
 
 }

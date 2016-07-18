@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>入住时间:</label>
-                        <input type="text" id="createDate" name="createDate" value="${stadiumUser.createDate}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="createDate" name="createDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${stadiumUser.createDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>帐户金额:</label>
@@ -75,7 +75,7 @@
             },
             edit: function (){
                 var id = $("#id").val();
-                window.location.href = "${contextPath}/stadiumUser/details/edit?id="+id;
+                window.location.href = "${contextPath}/stadium/details/edit?id="+id;
             }
         }
     };

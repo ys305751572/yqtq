@@ -19,7 +19,7 @@
             </header>
             <div class="clearfix"></div>
             <!-- Login -->
-            <form role="form" class="box tile animated active form-validation-1" id="box-login" action="${contextPath}/admin/login/check">
+            <form role="form" class="box tile animated active form-validation-1" id="box-login" action="${contextPath}/stadium/login/check">
                 <h2 class="m-t-0 m-b-15">登录</h2>
                 <input type="text" id="username" name="username" class="login-control m-b-10 validate[required]" placeholder="请输入用户名">
                 <input type="password" id="password" name="password" class="login-control validate[required]" placeholder="请输入密码">

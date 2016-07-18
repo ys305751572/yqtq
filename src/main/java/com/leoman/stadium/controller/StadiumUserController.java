@@ -141,13 +141,14 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
     @RequestMapping(value = "/save")
     @ResponseBody
     public Result save(StadiumUser stadiumUser,City city,Province province){
-        Md5Util md5Util = new Md5Util();
         StadiumUser s = null;
         try{
             if(null != stadiumUser.getId()){
                 s = stadiumUserService.queryByPK(stadiumUser.getId());
             }
             if(s!=null){
+                stadiumUser.setBank(s.getBank());
+                stadiumUser.setBankCardNumber(s.getBankCardNumber());
                 stadiumUser.setStatus(s.getStatus());
                 stadiumUser.setReserveMoney(s.getReserveMoney());
                 stadiumUser.setWithdrawMoney(s.getWithdrawMoney());
@@ -159,7 +160,7 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
                 stadiumUser.setWithdrawMoney(0.0);
                 stadiumUser.setBalance(0.0);
             }
-            String pwd = md5Util.md5(stadiumUser.getPassword());
+            String pwd = Md5Util.md5(stadiumUser.getPassword());
             stadiumUser.setPassword(pwd);
             if(city != null){
                 City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);

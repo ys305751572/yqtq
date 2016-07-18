@@ -45,6 +45,12 @@ public class StadiumUser extends BaseEntity{
     //状态 0:正常 1:冻结
     @Column(name = "status")
     private Integer status;
+    //银行
+    @Column(name = "bank")
+    private String bank;
+    //银行卡号
+    @Column(name = "bank_card_number")
+    private Integer bankCardNumber;
     //场地数量
     @Transient
     private Integer stadiumNum;
@@ -157,5 +163,21 @@ public class StadiumUser extends BaseEntity{
 
     public void setProvince(Province province) {
         this.province = province;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public Integer getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(Integer bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
     }
 }

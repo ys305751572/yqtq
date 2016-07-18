@@ -114,7 +114,6 @@ public class AdminController extends GenericEntityController<Admin,Admin,AdminSe
         Long[] roleIds = JsonUtil.json2Obj(ids, Long[].class);
         List<UserRole> list = null;
         List<Admin> admin_name =  adminService.queryByProperty("username",admin.getUsername());
-        Md5Util md5Util = new Md5Util();
         Result result = new Result();
         result.setStatus(false);
         result.setMsg("已有相同的账号名称!");
@@ -141,7 +140,7 @@ public class AdminController extends GenericEntityController<Admin,Admin,AdminSe
                     userRoleService.deleteByPK(urList.getId());
                 }
             }
-            String pwd = md5Util.md5(admin.getPassword());
+            String pwd = Md5Util.md5(admin.getPassword());
             admin.setPassword(pwd);
             adminService.save(admin);
             for(Long roleId : roleIds){

@@ -30,19 +30,23 @@
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>名称：</label>
-                        <input type="text" id="nickName" name="nickName" value="${stadiumUser.username}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="nickName" name="nickName" value="${stadiumUser.nickName}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>电话：</label>
-                        <input type="text" id="mobile" name="mobile" value="${stadiumUser.mobile}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="mobile" name="mobile" value="${stadiumUser.mobile}" maxlength="11" class="form-control input-sm validate[required,custom[phone]]" placeholder="..." onkeyup="value=value.replace(/[^0-9]/g,'')" >
+                    </div>
+                    <div class="col-md-6 m-b-15">
+                        <label>银行：</label>
+                        <input type="text" id="bank" name="bank" value="${stadiumUser.bank}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>银行卡号：</label>
-                        <input type="text" id="1" name="1" value="${stadiumUser.mobile}" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="bankCardNumber" name="bankCardNumber" value="${stadiumUser.bankCardNumber}" class="input-sm form-control validate[required]" placeholder="..." onkeyup="value=value.replace(/[^0-9]/g,'')" >
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>省份：</label>
-                        <select id="provinceId" name="province" class="select" >
+                        <select id="provinceId" name="provinceId" class="select" >
                             <option value="">省份</option>
                             <c:forEach items="${province}" var="v" >
                                 <option value="${v.provinceId}" <c:if test="${stadiumUser.province.provinceId eq v.provinceId}">selected</c:if> >${v.province}</option>
@@ -80,6 +84,7 @@
         },
         fn: {
             init: function () {
+                $("#fromId").validationEngine();
                 var opt=$("#provinceId").val();
                 $user.fn.selectCity(opt);
             },
@@ -90,8 +95,16 @@
                     $leoman.notify('姓名不能为空', "error");
                     isCheck=false;
                 }
-                if($("#mobile").val()==""){
-                    $leoman.notify('电话不能为空', "error");
+//                if($("#mobile").val()==""){
+//                    $leoman.notify('电话不能为空', "error");
+//                    isCheck=false;
+//                }
+                if($("#bank").val()==""){
+                    $leoman.notify('银行不能为空', "error");
+                    isCheck=false;
+                }
+                if($("#bankCardNumber").val()==""){
+                    $leoman.notify('银行卡号不能为空', "error");
                     isCheck=false;
                 }
                 if($("#provinceId").val()==""){
@@ -105,7 +118,7 @@
                 if(isCheck){
                     var code =  $('.wysiwye-editor').code();
                     $("#fromId").ajaxSubmit({
-                        url : "${contextPath}/stadiumUser/details/save",
+                        url : "${contextPath}/stadium/details/save",
                         type : "POST",
                         data : {
                             "detail" : code
@@ -115,7 +128,7 @@
                                 $common.fn.notify(result.msg);
                                 return;
                             }
-                            window.location.href = "${contextPath}/stadiumUser/details/index";
+                            window.location.href = "${contextPath}/stadium/details/index";
                         }
                     });
                 }
@@ -124,7 +137,7 @@
                 var cId = $("#cId").val();
                 if(data!=""){
                     $.ajax({
-                        url:"${contextPath}/admin/reserve/selectCity",
+                        url:"${contextPath}/stadium/details/selectCity",
                         data:{
                             "provinceId":data
                         },

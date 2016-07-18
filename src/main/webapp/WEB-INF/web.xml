@@ -61,6 +61,19 @@
         <url-pattern>/admin/*</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>StadiumFilter</filter-name>
+        <filter-class>com.leoman.common.filter.StadiumFilter</filter-class>
+        <init-param>
+            <param-name>skipUrls</param-name>
+            <param-value>/stadium/login/*,/stadium/login,/stadium/test/*</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>StadiumFilter</filter-name>
+        <url-pattern>/stadium/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>DruidStatView</servlet-name>
         <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
@@ -87,6 +100,10 @@
 
     <welcome-file-list>
         <welcome-file>/admin/</welcome-file>
+    </welcome-file-list>
+
+    <welcome-file-list>
+        <welcome-file>/stadium/</welcome-file>
     </welcome-file-list>
 
     <session-config>

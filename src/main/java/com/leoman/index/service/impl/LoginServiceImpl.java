@@ -4,6 +4,8 @@ import com.leoman.admin.entity.Admin;
 import com.leoman.admin.service.AdminService;
 import com.leoman.common.core.Constant;
 import com.leoman.index.service.LoginService;
+import com.leoman.stadium.entity.StadiumUser;
+import com.leoman.stadium.service.StadiumUserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private StadiumUserService stadiumUserService;
 
     @Override
     public Admin getMember(HttpServletRequest request, String type) {
@@ -96,5 +100,24 @@ public class LoginServiceImpl implements LoginService {
     public Boolean loginWeixin(HttpServletRequest request, HttpServletResponse response, String username, String password) {
 
         return false;
+    }
+
+    @Override
+    public Boolean stadiumUserLogin(HttpServletRequest request, String username, String password, String type, String remark) {
+        StadiumUser stadiumUser = null;
+        try {
+            stadiumUser = stadiumUserService.findByUsername(username);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (stadiumUser != null && password.equals(stadiumUser.getPassword())) {
+            request.getSession().setAttribute(Constant.SESSION_MEMBER_GLOBLE, stadiumUser);
+            if (StringUtils.isNotBlank(remark)) {
+                request.getSession().setMaxInactiveInterval(60 * 60 * 24 * 7);
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 }

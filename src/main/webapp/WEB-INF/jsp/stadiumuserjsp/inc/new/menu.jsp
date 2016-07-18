@@ -37,8 +37,8 @@
                 <span class="menu-item">个人管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/1/index">个人资料</a></li>
-                <li><a href="${contextPath}/admin/1/index">修改密码</a></li>
+                <li><a href="${contextPath}/stadium/details/index">个人资料</a></li>
+                <li><a href="${contextPath}/stadium/details/changePwd">修改密码</a></li>
             </ul>
         </li>
         <li class="dropdown">
@@ -46,8 +46,8 @@
                 <span class="menu-item">球场管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/1/index">球场列表</a></li>
-                <li><a href="${contextPath}/admin/1/index">订单列表</a></li>
+                <li><a href="${contextPath}/stadium/1/index">球场列表</a></li>
+                <li><a href="${contextPath}/stadium/1/index">订单列表</a></li>
             </ul>
         </li>
         <li class="dropdown">
@@ -55,9 +55,9 @@
                 <span class="menu-item">账单管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/1/index">提现申请</a></li>
-                <li><a href="${contextPath}/admin/1/index">提现列表</a></li>
-                <li><a href="${contextPath}/admin/1/index">提现详情</a></li>
+                <li><a href="${contextPath}/stadium/1/index">提现申请</a></li>
+                <li><a href="${contextPath}/stadium/1/index">提现列表</a></li>
+                <li><a href="${contextPath}/stadium/1/index">提现详情</a></li>
             </ul>
         </li>
         <li class="dropdown">
@@ -65,7 +65,7 @@
                 <span class="menu-item">相关设置</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/admin/1/index">参数设置</a></li>
+                <li><a href="${contextPath}/stadium/1/index">参数设置</a></li>
             </ul>
         </li>
 

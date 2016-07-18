@@ -22,4 +22,6 @@ public interface LoginService {
 
     public Boolean loginWeixin(HttpServletRequest request, HttpServletResponse response, String username, String password);
 
+    public Boolean stadiumUserLogin(HttpServletRequest request, String username, String password, String type, String remark);
+
 }

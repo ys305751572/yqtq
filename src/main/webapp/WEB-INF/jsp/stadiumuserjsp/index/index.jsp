@@ -193,53 +193,41 @@
                 <!-- Quick Stats -->
                 <div style="background-color: rgba(238, 238, 238, 0.09);width:auto;height: 70px">
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/user/index?details=1" title="新增用户" class="btn btn-alt m-r-5">新增用户( ${newUserNum} )</a>
+                        <a data-toggle="modal" href="${contextPath}/admin/user/index?details=1" title="新增用户" class="btn btn-alt m-r-5">最新订单( ${newUserNum} )</a>
                     </div>
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/userVip/index?details=1" title="新增会员" class="btn btn-alt m-r-5">新增会员( ${newUserVipNum} )</a>
+                        <a data-toggle="modal" href="${contextPath}/admin/userVip/index?details=1" title="新增会员" class="btn btn-alt m-r-5">退场订单( ${newUserVipNum} )</a>
                     </div>
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/reserve/index?details=1" title="新增约球" class="btn btn-alt m-r-5">新增约球( ${newReserveNum} )</a>
+                        <a data-toggle="modal" href="${contextPath}/admin/reserve/index?details=1" title="新增约球" class="btn btn-alt m-r-5">成功订单( ${newReserveNum} )</a>
                     </div>
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
                         <a data-toggle="modal" href="${contextPath}/admin/stadiumBooking/index?details=1" title="场地订单" class="btn btn-alt m-r-5">场地订单( ${newStadiumBookingNum} )</a>
                     </div>
-                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/team/index?details=1" title="新增球队" class="btn btn-alt m-r-5">新增球队( ${newTeamNum} )</a>
-                    </div>
-                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/girlUser/index?details=1" title="新增看球" class="btn btn-alt m-r-5">新增看球( ${newGirlUserNum} )</a>
-                    </div>
-                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/post/index?details=1" title="新增帖子" class="btn btn-alt m-r-5">新增帖子( ${newPostNum} )</a>
-                    </div>
-                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/stadiumUserWithdraw/index?details=1" title="新增提现" class="btn btn-alt m-r-5">新增提现( ${newWithdrawNum} )</a>
-                    </div>
                 </div>
                 <div class="block-area" id="tableBordered">
                     <div class="col-md-12 m-b-15">
-                        <h5>场地订单统计信息:</h5>
+                        <h5>金额统计:</h5>
                         <div class="table-responsive overflow">
                             <table class="tile table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <td width="45%">已订</td>
-                                    <td >${allStadiumBookingNum}</td>
+                                    <td width="45%">当日</td>
+                                    <td > </td>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>已使用</td>
-                                    <td>${useStadiumBookingNum}</td>
+                                    <td>当周</td>
+                                    <td> </td>
                                 </tr>
                                 <tr>
-                                    <td>待使用</td>
-                                    <td>${notUsedStadiumBookingNum}</td>
+                                    <td>当月</td>
+                                    <td> </td>
                                 </tr>
                                 <tr>
                                     <td>总金额</td>
-                                    <td>${allStadiumBookingprice}</td>
+                                    <td> </td>
                                 </tr>
                                 </tbody>
                             </table>
