@@ -166,7 +166,7 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
      */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(HttpServletRequest request,Stadium stadium, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,String detail, City city,Province province,String code,String type,String price){
+    public Result save(HttpServletRequest request,Stadium stadium, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,String detail, City city,Province province,String codes,String types,String prices){
         Stadium s = null;
 
         if(null != stadium.getId()){
@@ -207,7 +207,7 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
             stadium.setProvince(_province);
         }
         stadiumService.save(stadium);
-        this.subSave(stadium.getId(),code,type,price);
+        this.subSave(stadium.getId(),codes,types,prices);
 
         return Result.success();
     }
@@ -215,9 +215,6 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
     /**
      * 新增球场场地
      * @param id 球场id
-     * @param code
-     * @param type
-     * @param price
      */
     private void subSave(Long id,String code,String type,String price){
         String[] codes = JsonUtil.json2Obj(code, String[].class);
@@ -239,27 +236,18 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
 
     /**
      * 保存球场场地
-     * @param stadiumSub
      * @return
      */
-    @RequestMapping(value = "/stadiumSubSave")
+    @RequestMapping(value = "/editStadiumSub")
     @ResponseBody
-    public Result stadiumSubSave(StadiumSub stadiumSub,Stadium Stadium){
+    public Result stadiumSubSave(Stadium Stadium,String subCode,Integer subType,Double subPrice){
         try{
-            StadiumSub sub = stadiumSubService.findSite(Stadium.getId(),stadiumSub.getCode());
+            StadiumSub sub = stadiumSubService.findSite(Stadium.getId(),subCode);
             if(sub!=null){
-                sub.setCode(stadiumSub.getCode());
-                sub.setPrice(stadiumSub.getPrice());
-                sub.setType(stadiumSub.getType());
+                sub.setCode(subCode);
+                sub.setType(subType);
+                sub.setPrice(subPrice);
                 stadiumSubService.update(sub);
-            }else {
-                StadiumSub _s = new StadiumSub();
-                _s.setCode(stadiumSub.getCode());
-                _s.setPrice(stadiumSub.getPrice());
-                _s.setType(stadiumSub.getType());
-                _s.setStadiumId(Stadium.getId());
-                _s.setStatus(1);
-                stadiumSubService.save(_s);
             }
         }catch (RuntimeException e){
             e.printStackTrace();

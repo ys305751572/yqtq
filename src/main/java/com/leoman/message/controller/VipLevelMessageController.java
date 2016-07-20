@@ -4,9 +4,7 @@ import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.message.entity.Message;
 import com.leoman.message.service.MessageService;
 import com.leoman.message.service.impl.MessageServiceImpl;
-import com.leoman.vipLevelMessage.entity.VipLevelMessage;
-import com.leoman.vipLevelMessage.service.VipLevelMessageService;
-import com.leoman.vipLevelMessage.service.impl.VipLevelMessageServiceImpl;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

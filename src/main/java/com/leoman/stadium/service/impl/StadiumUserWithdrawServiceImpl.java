@@ -43,8 +43,11 @@ public class StadiumUserWithdrawServiceImpl extends GenericManagerImpl<StadiumUs
                                          CriteriaBuilder cb) {
                 List<Predicate> list = new ArrayList<Predicate>();
 
-                if(s.getStadiumUser().getUsername() != null) {
+                if(s.getStadiumUser()!= null && s.getStadiumUser().getUsername() != null) {
                     list.add(cb.like(root.get("stadiumUser").get("username").as(String.class), "%" + s.getStadiumUser().getUsername() +"%" ));
+                }
+                if(s.getStadiumUser()!= null && s.getStadiumUser().getId() != null) {
+                    list.add(cb.equal(root.get("stadiumUser").get("id").as(String.class), s.getStadiumUser().getId()));
                 }
                 if(s.getStatus() != null){
                     list.add(cb.equal(root.get("status").as(Integer.class),s.getStatus()));

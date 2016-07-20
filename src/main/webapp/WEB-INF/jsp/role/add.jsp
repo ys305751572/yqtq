@@ -139,9 +139,9 @@
                     });
                 }
 
-            },
+            }
         }
-    }
+    };
     $(function () {
         role_add.fn.init();
     })

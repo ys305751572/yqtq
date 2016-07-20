@@ -8,7 +8,7 @@
                 <img class="profile-pic animated" src="${contextPath}/html/img/profile-pic.jpg" alt="">
             </a>
             <ul class="dropdown-menu profile-menu">
-                <li><a href="${contextPath}/admin/logout">退&nbsp;&nbsp;&nbsp;出</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                <li><a href="${contextPath}/stadium/logout">退&nbsp;&nbsp;&nbsp;出</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
             </ul>
         </div>
         
@@ -55,9 +55,9 @@
                 <span class="menu-item">账单管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/stadium/1/index">提现申请</a></li>
-                <li><a href="${contextPath}/stadium/1/index">提现列表</a></li>
-                <li><a href="${contextPath}/stadium/1/index">提现详情</a></li>
+                <li><a href="${contextPath}/stadium/stadiumUserWithdraw/index">提现列表</a></li>
+                <li><a href="${contextPath}/stadium/stadiumUserWithdraw/apply">提现申请</a></li>
+                <%--<li><a href="${contextPath}/stadium/1/index">提现详情</a></li>--%>
             </ul>
         </li>
         <li class="dropdown">

@@ -120,7 +120,7 @@
                             </div>
                             <div class="from1" style="width: 164px;">
                                 <label>赛制:</label>
-                                <select id="type" class="select" >
+                                <select id="type" name="type" class="select" >
                                     <option value="3">3人场</option>
                                     <option value="5">5人场</option>
                                     <option value="7">7人场</option>
@@ -215,37 +215,53 @@
 
 
             },
-            <%--stadiumSubSave : function(){--%>
-                <%--var code = $("#code").val();--%>
-                <%--var type = $("#type").val();--%>
-                <%--var price = $("#price").val();--%>
-                <%--var isCheck = true;--%>
-                <%--if(code=="" ){--%>
-                    <%--$leoman.notify('场地编号不能为空', "error");--%>
-                    <%--isCheck=false;--%>
-                <%--}--%>
-                <%--if(price=="" ){--%>
-                    <%--$leoman.notify('价格不能为空', "error");--%>
-                    <%--isCheck=false;--%>
-                <%--}--%>
-                <%--if(isCheck){--%>
-                    <%--$("#fromId").ajaxSubmit({--%>
-                        <%--url : "${contextPath}/stadium/stadium/stadiumSubSave",--%>
-                        <%--type : "POST",--%>
-                        <%--data : {--%>
-                            <%--"type" : type--%>
-                        <%--},--%>
-                        <%--success : function(result) {--%>
-                            <%--if(!result.status) {--%>
-                                <%--$common.fn.notify(result.msg);--%>
-                                <%--return;--%>
-                            <%--}--%>
-<%--//                            window.location.reload();--%>
-                            <%--$user.fn.stadiumSubFrom();--%>
-                        <%--}--%>
-                    <%--});--%>
-                <%--}--%>
-            <%--},--%>
+            editStadiumSub : function(){
+                var code = $("#code").val();
+                var type = $("#type").val();
+                var price = $("#price").val();
+                console.log(code);
+                console.log(type);
+                console.log(price);
+                var isCheck = true;
+                $("#stadiumSubs input[name='code']").each(function(){
+                    console.log($(this).val());
+                    if($(this).val()!=code){
+                        isCheck = false;
+                    }else{
+                        isCheck = true;
+                        return false;
+                    }
+                    console.log(isCheck);
+                });
+                console.log("------------------------");
+                console.log(isCheck);
+                if(!isCheck){
+                    $leoman.notify('请输入一个已存在的场地', "error");
+                }
+                if(price=="" ){
+                    $leoman.notify('价格不能为空', "error");
+                    isCheck=false;
+                }
+                if(isCheck){
+                    $("#fromId").ajaxSubmit({
+                        url : "${contextPath}/stadium/stadium/editStadiumSub",
+                        type : "POST",
+                        data : {
+                            "subCode" : code,
+                            "subType" : type,
+                            "subPrice" : price
+                        },
+                        success : function(result) {
+                            if(!result.status) {
+                                $common.fn.notify(result.msg);
+                                return;
+                            }
+//                            window.location.reload();
+                            $user.fn.stadiumSubFrom();
+                        }
+                    });
+                }
+            },
             stadiumSubFrom :function(){
                 var id = $("#id").val();
                 $.ajax({
@@ -261,11 +277,14 @@
                                 var type = data[i].type;
                                 var price = data[i].price;
                                 var html = "";
-                                html += "<div style='float: left;margin-right: 10px;' class='btn btn-alt m-r-5' name='a'>";
-                                html += "    <p>"+code+"号场地</p>                                             ";
-                                html += "    <p>("+type+"人场)</p>                                             ";
-                                html += "    <p>￥"+price+"/小时</p>                                           ";
-                                html += "</div>                                                                 ";
+                                html += "<div style='float: left;margin-right: 10px;' class='btn btn-alt m-r-5' name='addSub'>";
+                                html += "    <p>"+code+"号场地</p>                                                            ";
+                                html += "	<input type='hidden' value='"+code+"' name='code'>                                ";
+                                html += "    <p>("+type+"人场)</p>                                                            ";
+                                html += "	<input type='hidden' value='"+type+"' name='type'>					              ";
+                                html += "    <p>￥"+price+"/小时</p>                                                          ";
+                                html += "	<input type='hidden' value='"+price+"' name='price'>					          ";
+                                html += "</div>                                                                               ";
                                 $("#stadiumSubs").append(html);
                             }
                         }
@@ -274,7 +293,6 @@
             },
             save : function () {
                 var isCheck = true;
-
                 if($("#name").val()==""){
                     $leoman.notify('球场名称不能为空', "error");
                     isCheck=false;
@@ -309,18 +327,18 @@
                     $("#stadiumSubs input[name='code']").each(function(){
                         $user.v.code.push($(this).val());
                     });
-                    console.log("code:"+$user.v.code);
+                    console.log("code:"+JSON.stringify($user.v.code));
                     $user.v.type = [];
                     $("#stadiumSubs input[name='type']").each(function(){
                         $user.v.type.push($(this).val());
                     });
-                    console.log("type:"+$user.v.type);
+                    console.log("type:"+JSON.stringify($user.v.type));
                     $user.v.price = [];
                     $("#stadiumSubs input[name='price']").each(function(){
                         $user.v.price.push($(this).val());
                     });
-                    console.log("price:"+$user.v.code);
-                    var code =  $('.wysiwye-editor').code();
+                    console.log("price:"+JSON.stringify($user.v.price));
+                    var detail =  $('.wysiwye-editor').code();
                     var address = $("#address").val();
                     var lng = $("#lng").val();
                     var lat = $("#lat").val();
@@ -332,10 +350,10 @@
                         url : "${contextPath}/stadium/stadium/save",
                         type : "POST",
                         data : {
-                            "detail" : code,
-                            "code" : JSON.stringify($user.v.code),
-                            "type" : JSON.stringify($user.v.type),
-                            "price" : JSON.stringify($user.v.price),
+                            "detail" : detail,
+                            "codes" : JSON.stringify($user.v.code),
+                            "types" : JSON.stringify($user.v.type),
+                            "prices" : JSON.stringify($user.v.price),
                             "address" : address,
                             "lnglat" : lnglat
                         },

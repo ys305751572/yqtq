@@ -4,9 +4,7 @@ import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.message.entity.Message;
 import com.leoman.message.service.MessageService;
 import com.leoman.message.service.impl.MessageServiceImpl;
-import com.leoman.girlServiceMessage.entity.GirlServiceMessage;
-import com.leoman.girlServiceMessage.service.GirlServiceMessageService;
-import com.leoman.girlServiceMessage.service.impl.GirlServiceMessageServiceImpl;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
