@@ -126,7 +126,7 @@ public class StadiumUserDetailsController extends GenericEntityController<Stadiu
     public Result savePwd(String password,Long id){
         try{
             StadiumUser stadiumUser = stadiumUserService.queryByPK(id);
-            stadiumUser.setPassword(password);
+            stadiumUser.setPassword(Md5Util.md5(password));
             stadiumUserService.update(stadiumUser);
         }catch (RuntimeException e){
             e.printStackTrace();
@@ -139,7 +139,8 @@ public class StadiumUserDetailsController extends GenericEntityController<Stadiu
     @ResponseBody
     public Result checkPwd(String password,HttpServletRequest request){
         Result result = new Result();
-        if(getStadiumUser(request).getPassword().equals(Md5Util.md5(password))){
+        StadiumUser stadiumUser = stadiumUserService.queryByPK(this.getStadiumUser(request).getId());
+        if(stadiumUser.getPassword().equals(Md5Util.md5(password))){
             result.setStatus(true);
             return result;
         }

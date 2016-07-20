@@ -42,17 +42,21 @@ public class StadiumBookingServiceImpl extends GenericManagerImpl<StadiumBooking
                                          CriteriaBuilder cb) {
                 List<Predicate> list = new ArrayList<Predicate>();
 
-                if(s.getUser().getNickName() != null) {
+                if(s.getUser() != null && s.getUser().getNickName() != null) {
                     list.add(cb.like(root.get("user").get("nickName").as(String.class), "%" + s.getUser().getNickName() +"%" ));
                 }
-                if(s.getCity().getCityId() != null) {
+                if(s.getCity() != null && s.getCity().getCityId() != null) {
                     list.add(cb.equal(root.get("city").get("cityId").as(Long.class),s.getCity().getCityId()));
                 }
-                if(s.getProvince().getProvinceId() != null) {
+                if(s.getProvince() != null && s.getProvince().getProvinceId() != null) {
                     list.add(cb.equal(root.get("province").get("provinceId").as(Long.class),s.getProvince().getProvinceId()));
                 }
-                if(s.getStadium().getName() != null) {
+                if(s.getStadium() != null && s.getStadium().getName() != null) {
                     list.add(cb.like(root.get("stadium").get("name").as(String.class),"%" + s.getStadium().getName()+"%"));
+                }
+
+                if(s.getStadium() != null && s.getStadium().getStadiumUserId() != null) {
+                    list.add(cb.equal(root.get("stadium").get("stadiumUserId").as(Long.class),s.getStadium().getStadiumUserId()));
                 }
                 if(s.getBookTime() != null) {
                     list.add(cb.equal(root.get("bookTime").as(Integer.class),s.getBookTime()));

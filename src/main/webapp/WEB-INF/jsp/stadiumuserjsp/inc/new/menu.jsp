@@ -46,8 +46,8 @@
                 <span class="menu-item">球场管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/stadium/1/index">球场列表</a></li>
-                <li><a href="${contextPath}/stadium/1/index">订单列表</a></li>
+                <li><a href="${contextPath}/stadium/stadium/index">球场列表</a></li>
+                <li><a href="${contextPath}/stadium/stadiumBooking/index">订单列表</a></li>
             </ul>
         </li>
         <li class="dropdown">

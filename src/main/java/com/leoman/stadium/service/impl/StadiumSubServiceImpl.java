@@ -17,4 +17,8 @@ public class StadiumSubServiceImpl extends GenericManagerImpl<StadiumSub,Stadium
     private StadiumSubDao dao;
 
 
+    @Override
+    public StadiumSub findSite(Long stadiumId, String code) {
+        return dao.findSite(stadiumId,code);
+    }
 }

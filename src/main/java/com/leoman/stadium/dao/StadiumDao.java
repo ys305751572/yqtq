@@ -2,6 +2,7 @@ package com.leoman.stadium.dao;
 
         import com.leoman.common.dao.IBaseJpaRepository;
         import com.leoman.stadium.entity.Stadium;
+        import com.leoman.stadium.entity.StadiumSub;
         import com.leoman.user.entity.User;
         import org.springframework.data.jpa.repository.Query;
 
@@ -16,4 +17,16 @@ public interface StadiumDao extends IBaseJpaRepository<Stadium> {
 
     @Query("SELECT a FROM User a WHERE a.userId=(SELECT b.stadiumUserId FROM Stadium b WHERE b.id=?1)")
     public List<User> findByNickName(Long id);
+
+
+    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.stadium.id = ?1")
+    public Integer stadiumNum(Long id);
+
+    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.stadium.id = ?1 AND a.status='0'")
+    public Integer availableStadiumNum(Long id);
+
+    //球场积累金额
+    @Query("SELECT SUM(a.price) FROM StadiumBooking a WHERE a.stadium.id = ?1")
+    public Integer accumulatedAmount(Long id);
+
 }

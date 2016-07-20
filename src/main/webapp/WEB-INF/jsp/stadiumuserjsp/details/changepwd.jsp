@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-md-12 m-b-15">
                         <label>新密码：</label>
-                        <input onblur="$changePwd.fn.checknNewPwd()" type="password" id="newPwd" name="newPwd" value="" maxlength="12" class="input-sm form-control validate" placeholder="输入新密码" style="width: 50%" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')" >
+                        <input type="password" id="newPwd" name="newPwd" value="" maxlength="12" class="input-sm form-control validate" placeholder="输入新密码" style="width: 50%" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')" >
                     </div>
                     <div class="col-md-12 m-b-15">
                         <label>确认新密码：</label>
@@ -95,7 +95,7 @@
                     $leoman.notify('原密码长度不能小于六位', "error");
                     isCheck=false;
                 }
-                if(originalPwd!=(newPwd)){
+                if(originalPwd==(newPwd)){
                     $leoman.notify('新密码不能和原密码相同', "error");
                     isCheck=false;
                 }

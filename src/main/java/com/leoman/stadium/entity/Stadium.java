@@ -72,17 +72,10 @@ public class Stadium extends BaseEntity {
     private String avater;
 
     //预定总数
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "stadium_id")
-    private Set<ReserveTeam> rtSet;
     @Transient
     private Integer stadiumNum;
 
     //当前预定没使用的数
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "stadium_id")
-    @Where(clause = "status = '1'")
-    private Set<ReserveTeam> rSet;
     @Transient
     private Integer availableStadiumNum;
 
@@ -193,22 +186,6 @@ public class Stadium extends BaseEntity {
         this.isStatus = isStatus;
     }
 
-    public Set<ReserveTeam> getrSet() {
-        return rSet;
-    }
-
-    public void setrSet(Set<ReserveTeam> rSet) {
-        this.rSet = rSet;
-    }
-
-    public Integer getAvailableStadiumNum() {
-        return rSet.size();
-    }
-
-    public void setAvailableStadiumNum(Integer availableStadiumNum) {
-        this.availableStadiumNum = availableStadiumNum;
-    }
-
     public Set<StadiumSub> getSsSet() {
         return ssSet;
     }
@@ -223,22 +200,6 @@ public class Stadium extends BaseEntity {
 
     public void setSiteNum(Integer siteNum) {
         this.siteNum = siteNum;
-    }
-
-    public Set<ReserveTeam> getRtSet() {
-        return rtSet;
-    }
-
-    public void setRtSet(Set<ReserveTeam> rtSet) {
-        this.rtSet = rtSet;
-    }
-
-    public Integer getStadiumNum() {
-        return rtSet.size();
-    }
-
-    public void setStadiumNum(Integer stadiumNum) {
-        this.stadiumNum = stadiumNum;
     }
 
     public Long getStadiumUserId() {
@@ -303,5 +264,21 @@ public class Stadium extends BaseEntity {
 
     public void setProvince(Province province) {
         this.province = province;
+    }
+
+    public Integer getStadiumNum() {
+        return stadiumNum;
+    }
+
+    public void setStadiumNum(Integer stadiumNum) {
+        this.stadiumNum = stadiumNum;
+    }
+
+    public Integer getAvailableStadiumNum() {
+        return availableStadiumNum;
+    }
+
+    public void setAvailableStadiumNum(Integer availableStadiumNum) {
+        this.availableStadiumNum = availableStadiumNum;
     }
 }

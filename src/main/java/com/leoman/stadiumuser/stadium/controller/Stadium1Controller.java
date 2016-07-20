@@ -1,20 +1,22 @@
-package com.leoman.stadium.controller;
+package com.leoman.stadiumuser.stadium.controller;
 
 import com.leoman.city.entity.City;
 import com.leoman.city.entity.Province;
 import com.leoman.city.service.CityService;
 import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
+import com.leoman.common.core.Constant;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.image.entity.FileBo;
 import com.leoman.stadium.entity.Stadium;
+import com.leoman.stadium.entity.StadiumSub;
 import com.leoman.stadium.entity.StadiumUser;
 import com.leoman.stadium.service.StadiumService;
+import com.leoman.stadium.service.StadiumSubService;
 import com.leoman.stadium.service.StadiumUserService;
 import com.leoman.stadium.service.impl.StadiumServiceImpl;
-import com.leoman.team.entity.TeamRace;
-import com.leoman.user.entity.User;
 import com.leoman.utils.FileUtil;
+import com.leoman.utils.JsonUtil;
 import com.leoman.utils.Result;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -33,15 +37,17 @@ import java.util.List;
  * Created by Administrator on 2016/5/31.
  */
 @Controller
-@RequestMapping(value = "/admin/stadium")
-public class StadiumController extends GenericEntityController<Stadium, Stadium, StadiumServiceImpl> {
+@RequestMapping(value = "/stadium/stadium")
+public class Stadium1Controller extends GenericEntityController<Stadium, Stadium, StadiumServiceImpl> {
 
     @Autowired
     private StadiumService stadiumService;
     @Autowired
-    private CityService cityService;
-    @Autowired
     private StadiumUserService stadiumUserService;
+    @Autowired
+    private StadiumSubService stadiumSubService;
+    @Autowired
+    private CityService cityService;
     @Autowired
     private ProvinceService provinceService;
 
@@ -52,24 +58,7 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
      */
     @RequestMapping(value = "/index")
     public String index(Model model){
-        try{
-            List<Province> province = provinceService.queryAll();
-            model.addAttribute("province",province);
-        }catch (RuntimeException e){
-            e.printStackTrace();
-        }
-        return "stadium/list";
-    }
-
-    @RequestMapping(value = "/select")
-    public String select(Model model){
-        try{
-            List<Province> province = provinceService.queryAll();
-            model.addAttribute("province",province);
-        }catch (RuntimeException e){
-            e.printStackTrace();
-        }
-        return "stadium/select";
+        return "stadiumuserjsp/stadium/list";
     }
 
     /**
@@ -78,7 +67,7 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
      */
     @RequestMapping(value = "/map")
     public String map(){
-        return "ibsamap/map";
+        return "stadiumuserjsp/ibsamap/map";
     }
 
     /**
@@ -87,24 +76,22 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
      * @param start
      * @param length
      * @param stadium
-     * @param cityId
      * @return
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer draw, Integer start, Integer length,Stadium stadium,City cityId,Province provinceId){
+    public Object list(HttpServletRequest request,Integer draw, Integer start, Integer length,Stadium stadium){
         Page<Stadium> stadiumPage = null;
         try {
             int pagenum = getPageNum(start,length);
-            stadium.setCity(cityId);
-            stadium.setProvince(provinceId);
+            stadium.setStadiumUserId(getStadiumUser(request).getId());
             stadiumPage = stadiumService.findAll(stadium, pagenum, length);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return DataTableFactory.fitting(draw,stadiumPage);
     }
-
+    
     /**
      * 详情
      * @param id
@@ -127,7 +114,7 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "/stadium/detail";
+        return "stadiumuserjsp/stadium/detail";
     }
 
     @RequestMapping(value = "/sfStadiumInfo")
@@ -157,18 +144,20 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
             List<Province> province = provinceService.queryAll();
             model.addAttribute("province",province);
             if(id!=null){
-                Stadium stadium = stadiumService.findById(id);
+                Stadium stadium = stadiumService.queryByPK(id);
                 model.addAttribute("stadium", stadium);
+                List<StadiumSub> stadiumSubs = stadiumSubService.queryByProperty("stadiumId",id);
+                model.addAttribute("stadiumSubs", stadiumSubs);
             }
 
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "/stadium/add";
+        return "stadiumuserjsp/stadium/add";
     }
 
     /**
-     * 保存
+     * 保存私人球场
      * @param stadium
      * @param imageFile
      * @param detail
@@ -177,8 +166,9 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
      */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(Stadium stadium, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,String detail, City city,Province province){
+    public Result save(HttpServletRequest request,Stadium stadium, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,String detail, City city,Province province,String code,String type,String price){
         Stadium s = null;
+
         if(null != stadium.getId()){
             s = stadiumService.queryByPK(stadium.getId());
         }
@@ -189,8 +179,10 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
             stadium.setCreateDate(s.getCreateDate());
             stadium.setAvater(s.getAvater());
             stadium.setType(s.getType());
+            stadium.setStadiumUserId(s.getStadiumUserId());
         }else{
-            stadium.setType(1);//保存都是公共球场
+            stadium.setType(0);//保存都是私人球场
+            stadium.setStadiumUserId(getStadiumUser(request).getId());
         }
         if(imageFile!=null && imageFile.getSize()>0) {
             FileBo fileBo = null;
@@ -215,6 +207,87 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
             stadium.setProvince(_province);
         }
         stadiumService.save(stadium);
+        this.subSave(stadium.getId(),code,type,price);
+
         return Result.success();
+    }
+
+    /**
+     * 新增球场场地
+     * @param id 球场id
+     * @param code
+     * @param type
+     * @param price
+     */
+    private void subSave(Long id,String code,String type,String price){
+        String[] codes = JsonUtil.json2Obj(code, String[].class);
+        Integer[] types = JsonUtil.json2Obj(type, Integer[].class);
+        Double[] prices = JsonUtil.json2Obj(price, Double[].class);
+
+        for(int i=0;i<codes.length;i++){
+            StadiumSub sub = new StadiumSub();
+            sub.setStadiumId(id);
+                sub.setCode(codes[i]);
+                sub.setType(types[i]);
+                sub.setPrice(prices[i]);
+                sub.setStatus(1);
+            stadiumSubService.save(sub);
+
+        }
+    }
+
+
+    /**
+     * 保存球场场地
+     * @param stadiumSub
+     * @return
+     */
+    @RequestMapping(value = "/stadiumSubSave")
+    @ResponseBody
+    public Result stadiumSubSave(StadiumSub stadiumSub,Stadium Stadium){
+        try{
+            StadiumSub sub = stadiumSubService.findSite(Stadium.getId(),stadiumSub.getCode());
+            if(sub!=null){
+                sub.setCode(stadiumSub.getCode());
+                sub.setPrice(stadiumSub.getPrice());
+                sub.setType(stadiumSub.getType());
+                stadiumSubService.update(sub);
+            }else {
+                StadiumSub _s = new StadiumSub();
+                _s.setCode(stadiumSub.getCode());
+                _s.setPrice(stadiumSub.getPrice());
+                _s.setType(stadiumSub.getType());
+                _s.setStadiumId(Stadium.getId());
+                _s.setStatus(1);
+                stadiumSubService.save(_s);
+            }
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            return Result.failure();
+        }
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/stadiumSubFrom")
+    @ResponseBody
+    public List<StadiumSub> stadiumSubFrom(Long id){
+        if(id!=null){
+            List<StadiumSub> list = stadiumSubService.queryByProperty("stadiumId",id);
+            return list;
+        }else {
+            return null;
+        }
+    }
+
+
+    /**
+     * 获取用户信息
+     * @param request
+     * @return
+     */
+    private StadiumUser getStadiumUser(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        StadiumUser stadiumUser = (StadiumUser) session.getAttribute(Constant.SESSION_MEMBER_GLOBLE);
+        return stadiumUser;
     }
 }
