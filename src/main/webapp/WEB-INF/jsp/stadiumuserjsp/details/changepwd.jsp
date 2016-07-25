@@ -67,20 +67,22 @@
                 $("#fromId").validationEngine();
             },
             checkPwd : function(){
-                var originalPwd = $("#originalPwd").val();
-                $.ajax({
-                    url : "${contextPath}/stadium/details/checkPwd",
-                    type : "POST",
-                    data : {
-                        "password" : originalPwd
-                    },
-                    success : function(result) {
-                        if(!result.status) {
-                            $leoman.notify(result.msg,"error");
-                            return;
+                if($("#originalPwd").val()!=""){
+                    var originalPwd = $("#originalPwd").val();
+                    $.ajax({
+                        url : "${contextPath}/stadium/details/checkPwd",
+                        type : "POST",
+                        data : {
+                            "password" : originalPwd
+                        },
+                        success : function(result) {
+                            if(!result.status) {
+                                $leoman.notify(result.msg,"error");
+                                return;
+                            }
                         }
-                    }
-                })
+                    })
+                }
             },
             save : function () {
                 var isCheck = true;

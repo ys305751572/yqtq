@@ -65,7 +65,7 @@
                 <span class="menu-item">相关设置</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="${contextPath}/stadium/1/index">参数设置</a></li>
+                <li><a href="${contextPath}/stadium/stadium/settings">参数设置</a></li>
             </ul>
         </li>
 

@@ -77,7 +77,7 @@ public class StadiumIndexController extends CommonController {
                          HttpServletResponse response,
                          ModelMap model) {
         loginService.logOut(request,Constant.MEMBER_TYPE_GLOBLE);
-        return "index/login";
+        return "stadiumuserjsp/index/login";
     }
 
     @RequestMapping(value = "/")

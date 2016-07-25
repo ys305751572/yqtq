@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/7/20.
@@ -82,9 +83,40 @@ public class StadiumUserWithdraw1Controller extends GenericEntityController<Stad
         return null;
     }
 
+    /**
+     * 申请提现金额
+     * @return
+     */
     @RequestMapping(value = "/apply")
-    public String apply(){
+    public String apply(HttpServletRequest request,Model model){
+        StadiumUser stadiumUser = getStadiumUser(request);
+        model.addAttribute("stadiumUser",stadiumUser);
         return "stadiumuserjsp/stadiumuserwithdraw/apply";
+    }
+
+    @RequestMapping(value = "/applySave")
+    @ResponseBody
+    public Result applySave(Long id,Double withdrawMoney){
+
+        StadiumUserWithdraw stadiumUserWithdraw = new StadiumUserWithdraw();
+        StadiumUser stadiumUser = new StadiumUser();
+
+        List<Integer> list = stadiumUserWithdrawService.findStatus(id);
+        if(!list.isEmpty() && list.size()>0){
+            for(Integer status : list){
+                if(status==0){
+                    return Result.failure();
+                }
+            }
+        }else {
+            stadiumUser.setId(id);
+            stadiumUserWithdraw.setWithdrawMoney(withdrawMoney);
+            stadiumUserWithdraw.setStadiumUser(stadiumUser);
+            stadiumUserWithdraw.setStatus(0);
+            stadiumUserWithdrawService.save(stadiumUserWithdraw);
+            return Result.success();
+        }
+        return null;
     }
 
     /**

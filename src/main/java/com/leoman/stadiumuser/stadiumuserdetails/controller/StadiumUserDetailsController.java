@@ -41,6 +41,8 @@ public class StadiumUserDetailsController extends GenericEntityController<Stadiu
     public String index(HttpServletRequest request,Model model){
         StadiumUser stadiumUser = stadiumUserService.queryByPK(this.getStadiumUser(request).getId());
         model.addAttribute("stadiumUser",stadiumUser);
+        Integer haveStadium = stadiumUserService.haveStadium(stadiumUser.getId());
+        model.addAttribute("haveStadium",haveStadium);
         return "stadiumuserjsp/details/list";
     }
 

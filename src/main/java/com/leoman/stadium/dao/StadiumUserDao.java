@@ -33,4 +33,9 @@ public interface StadiumUserDao extends IBaseJpaRepository<StadiumUser> {
     @Query("select a from StadiumUser a where a.username = ?1")
     @QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value ="true") })
     public StadiumUser findByUsername(String username);
+
+    //球场数
+    @Query("SELECT COUNT(a) FROM Stadium a WHERE a.stadiumUserId=?1")
+    public Integer haveStadium(Long id);
+
 }

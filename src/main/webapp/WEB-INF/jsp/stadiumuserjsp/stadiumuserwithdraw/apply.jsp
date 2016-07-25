@@ -25,10 +25,11 @@
         <h1 class="page-title">看球编辑</h1>
         <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
+                <input type="hidden" id="id" name="id" value="${stadiumUser.id}">
                 <div class="row">
-                    <div class="col-md-6 m-b-15">
+                    <div class="col-md-12 m-b-15">
                         <label>提现金额：</label>
-                        <input type="text" id="withdrawMoney" name="withdrawMoney" value="" class="input-sm form-control validate[required]" placeholder="...">
+                        <input type="text" id="withdrawMoney" name="withdrawMoney" maxlength="10" value="" class="input-sm form-control validate[required]" placeholder="..." style="width: 50%" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                         <span>最低金额为100元</span>
                     </div>
                     <div>
@@ -39,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-5">
-                        <button type="button" onclick="$user.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
+                        <button type="button" id="submit" onclick="$user.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
                         <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                     </div>
                 </div>
@@ -65,30 +66,38 @@
             },
             save : function () {
                 var isCheck = true;
-                if($("#name").val()==""){
-                    $leoman.notify('看球名称不能为空', "error");
+                var num = 100;
+                var withdrawMoney = $("#withdrawMoney").val();
+                if(withdrawMoney==""){
+                    $leoman.notify('提现金额不能为空', "error");
+                    isCheck=false;
+                }
+                if(withdrawMoney<num){
+                    $leoman.notify('金额不能小于100', "error");
                     isCheck=false;
                 }
                 if(isCheck){
-                    var code =  $('.wysiwye-editor').code();
-                    $("#fromId").ajaxSubmit({
-                        url : "${contextPath}/admin/watchingRace/save",
+                    var id = $("#id").val();
+                    var withdrawMoney = $("#withdrawMoney").val();
+                    $.ajax({
+                        url : "${contextPath}/stadium/stadiumUserWithdraw/applySave",
                         type : "POST",
                         data : {
-                            "detail" : code
+                            "id" : id,
+                            "withdrawMoney" : withdrawMoney
                         },
                         success : function(result) {
                             if(!result.status) {
-                                $common.fn.notify(result.msg);
+                                $common.fn.notify("您还有取现未通过审核");
                                 return;
                             }
-                            window.location.href = "${contextPath}/admin/watchingRace/index";
+                            window.location.href = "${contextPath}/stadium/stadiumUserWithdraw/index";
                         }
                     });
                 }
             }
         }
-    }
+    };
     $(function () {
         $user.fn.init();
         $("#provinceId").change(function(){

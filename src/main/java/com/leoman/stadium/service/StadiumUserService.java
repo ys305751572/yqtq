@@ -20,4 +20,6 @@ public interface StadiumUserService extends GenericManager<StadiumUser>{
     public Integer accumulatedAmount(Long id);
 
     public StadiumUser findByUsername(String username);
+
+    public Integer haveStadium(Long id);
 }

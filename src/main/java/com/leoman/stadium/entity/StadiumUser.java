@@ -50,7 +50,7 @@ public class StadiumUser extends BaseEntity{
     private String bank;
     //银行卡号
     @Column(name = "bank_card_number")
-    private Integer bankCardNumber;
+    private String bankCardNumber;
     //场地数量
     @Transient
     private Integer stadiumNum;
@@ -173,11 +173,11 @@ public class StadiumUser extends BaseEntity{
         this.bank = bank;
     }
 
-    public Integer getBankCardNumber() {
+    public String getBankCardNumber() {
         return bankCardNumber;
     }
 
-    public void setBankCardNumber(Integer bankCardNumber) {
+    public void setBankCardNumber(String bankCardNumber) {
         this.bankCardNumber = bankCardNumber;
     }
 }

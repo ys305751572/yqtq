@@ -277,7 +277,7 @@
                                 var type = data[i].type;
                                 var price = data[i].price;
                                 var html = "";
-                                html += "<div style='float: left;margin-right: 10px;' class='btn btn-alt m-r-5' name='addSub'>";
+                                html += "<div style='float: left;margin-right: 10px;' class='btn btn-alt m-r-5' name='addSub' onclick='$user.fn.reserve(this)'>";
                                 html += "    <p>"+code+"号场地</p>                                                            ";
                                 html += "	<input type='hidden' value='"+code+"' name='code'>                                ";
                                 html += "    <p>("+type+"人场)</p>                                                            ";
@@ -290,6 +290,12 @@
                         }
                     }
                 })
+            },
+            reserve :function(data){
+                var input = $(data).find("input").get(0);
+                var code = $(input).val();
+                var id = $("#id").val();
+                window.location.href = "${contextPath}/stadium/stadium/reserve?id="+id+"&code="+code;
             },
             save : function () {
                 var isCheck = true;

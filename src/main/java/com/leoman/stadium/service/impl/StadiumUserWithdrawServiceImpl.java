@@ -35,6 +35,11 @@ public class StadiumUserWithdrawServiceImpl extends GenericManagerImpl<StadiumUs
         return dao.findAll(spec, new PageRequest(currentPage-1, pageSize, Sort.Direction.DESC, "id"));
     }
 
+    @Override
+    public List<Integer> findStatus(Long id) {
+        return dao.findStatus(id);
+    }
+
 
     public Specification<StadiumUserWithdraw> buildSpecification(final String details,final StadiumUserWithdraw s) {
         return new Specification<StadiumUserWithdraw>() {

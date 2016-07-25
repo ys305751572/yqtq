@@ -22,37 +22,20 @@
         <ol class="breadcrumb hidden-xs">
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
-        <h1 class="page-title">球场主详情</h1>
+        <h1 class="page-title">参数设置</h1>
+        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
-                <input type="hidden" id="id" name="id" value="${stadiumUser.id}">
+                <input type="hidden" id="id" name="id" value="">
                 <div class="row">
-                    <div class="col-md-6 m-b-15">
-                        <label>场主名称:</label>
-                        <input type="text" id="nickName" name="nickName" value="${stadiumUser.nickName}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                    <div class="col-md-12 m-b-15">
+                        <label>可预定时间：</label>
+                        <input type="text" id="withdrawMoney" name="withdrawMoney" maxlength="10" value="" class="input-sm form-control validate[required]" placeholder="..." style="width: 50%" onkeyup="value=value.replace(/[^0-9.]/g,'')">
                     </div>
-                    <div class="col-md-6 m-b-15" >
-                        <label>电话:</label>
-                        <input type="text" id="mobile" name="mobile" value="${stadiumUser.mobile}" class="input-sm form-control validate[required]" placeholder="..." disabled>
-                    </div>
-                    <div class="col-md-6 m-b-15">
-                        <label>足球场数:</label>
-                        <input type="text" id="haveStadium" name="haveStadium" value="${haveStadium}" class="input-sm form-control validate[required]" placeholder="..." disabled>
-                    </div>
-                    <div class="col-md-6 m-b-15">
-                        <label>入住时间:</label>
-                        <input type="text" id="createDate" name="createDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${stadiumUser.createDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
-                    </div>
-                    <div class="col-md-6 m-b-15">
-                        <label>帐户金额:</label>
-                        <input type="text" id="balance" name="balance" value="${stadiumUser.balance}" class="input-sm form-control validate[required]" placeholder="..." disabled>
-                    </div>
-
-
                     <hr class="whiter m-t-20"/>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-5">
-                        <button type="button" class="btn btn-info btn-sm m-t-10" onclick="stadiumUser_detail.fn.edit()">编辑</button>
+                        <button type="button" id="submit" onclick="$user.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
                         <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                     </div>
                 </div>
@@ -63,8 +46,9 @@
 </section>
 <!-- JS -->
 <%@ include file="../inc/new/foot.jsp" %>
+
 <script>
-    stadiumUser_detail = {
+    $user = {
         v: {
             list: [],
             chart : null,
@@ -72,15 +56,40 @@
         },
         fn: {
             init: function () {
+                var opt=$("#provinceId").val();
+                $user.fn.selectCity(opt);
             },
-            edit: function (){
-                var id = $("#id").val();
-                window.location.href = "${contextPath}/stadium/details/edit?id="+id;
+            save : function () {
+                var isCheck = true;
+//                if(withdrawMoney==""){
+//                    $leoman.notify('提现金额不能为空', "error");
+//                    isCheck=false;
+//                }
+                if(isCheck){
+                    $("#fromId").ajaxSubmit({
+                        url : "${contextPath}/stadium/stdaium/saveSettings",
+                        type : "POST",
+                        data : {
+                            "id" : id,
+                        },
+                        success : function(result) {
+                            if(!result.status) {
+                                $common.fn.notify(result.message);
+                                return;
+                            }
+                            window.location.href = "${contextPath}/stadium/1/index";
+                        }
+                    });
+                }
             }
         }
     };
     $(function () {
-        stadiumUser_detail.fn.init();
+        $user.fn.init();
+        $("#provinceId").change(function(){
+            var opt=$("#provinceId").val();
+            $user.fn.selectCity(opt);
+        })
     })
 </script>
 <script>

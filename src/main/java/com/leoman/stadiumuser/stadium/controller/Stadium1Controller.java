@@ -256,6 +256,11 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
         return Result.success();
     }
 
+    /**
+     * 球场场次
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/stadiumSubFrom")
     @ResponseBody
     public List<StadiumSub> stadiumSubFrom(Long id){
@@ -267,6 +272,38 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
         }
     }
 
+    /**
+     * 场地预约时间
+     * @param id
+     * @param code
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/reserve")
+    public String reserve(Long id,String code,Model model){
+        StadiumSub sub = stadiumSubService.findSite(id,code);
+        model.addAttribute("sub",sub);
+        Stadium stadium = stadiumService.queryByPK(id);
+        model.addAttribute("stadium",stadium.getName());
+        return "stadiumuserjsp/stadium/reserve";
+    }
+
+
+    @RequestMapping(value = "/dayEdit")
+    public String dayEdit(String action,String date,Model model){
+        model.addAttribute("date",date);
+        model.addAttribute("action",action);
+        return "stadiumuserjsp/stadium/event";
+    }
+
+    /**
+     * 参数设置页面
+     * @return
+     */
+    @RequestMapping(value = "/settings")
+    public String settings(){
+        return "stadiumuserjsp/parametersettings/settings";
+    }
 
     /**
      * 获取用户信息

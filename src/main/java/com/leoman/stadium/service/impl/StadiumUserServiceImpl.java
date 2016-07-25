@@ -67,6 +67,11 @@ public class StadiumUserServiceImpl extends GenericManagerImpl<StadiumUser,Stadi
         return dao.findByUsername(username);
     }
 
+    @Override
+    public Integer haveStadium(Long id) {
+        return dao.haveStadium(id);
+    }
+
     public Specification<StadiumUser> buildSpecification(final StadiumUser s) {
         return new Specification<StadiumUser>() {
             @Override
