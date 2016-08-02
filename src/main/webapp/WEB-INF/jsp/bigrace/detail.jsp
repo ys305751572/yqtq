@@ -27,9 +27,9 @@
                 <input type="hidden" id="id" name="id" value="${bigRace.id}">
                 <div class="row">
                     <h3>${bigRace.name}</h3>
-                    <div class="col-md-6 m-b-15">
+                    <div class="col-md-12 m-b-15">
                         <label>比赛队伍:</label>
-                        <img src="${contextPath}/${bigRace.avater1}" alt="">VS<img src="${contextPath}/${bigRace.avater2}" alt="">
+                        <img src="${bigRace.avater1}" alt=""> VS <img src="${bigRace.avater2}" alt="">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>地区:</label>

@@ -6,6 +6,7 @@ import com.leoman.common.factory.DataTableFactory;
 import com.leoman.index.service.IndexService;
 import com.leoman.user.entity.User;
 import com.leoman.user.service.UserService;
+import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.Result;
 import com.leoman.utils.WebUtil;
 import net.sf.json.JSONArray;
@@ -92,6 +93,7 @@ public class UserController extends CommonController {
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public String detail(Long id, Model model) {
         User user = service.queryByPK(id);
+        user.setAvater(StringUtils.isNotBlank(user.getAvater()) ? ConfigUtil.getString("upload.url") + user.getAvater() : "");
         model.addAttribute("user", user);
         return "user/detail";
     }

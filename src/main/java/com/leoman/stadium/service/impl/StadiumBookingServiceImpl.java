@@ -67,6 +67,16 @@ public class StadiumBookingServiceImpl extends GenericManagerImpl<StadiumBooking
                 if (StringUtils.isNotBlank(details) && "1".equals(details)) {
                     list.add(cb.ge(root.get("createDate").as(Long.class), TestUtil.getTimesmorning()));
                 }
+                //退场
+                if (StringUtils.isNotBlank(details) && "2".equals(details)) {
+                    list.add(cb.ge(root.get("createDate").as(Long.class), TestUtil.getTimesmorning()));
+                    list.add(cb.equal(root.get("status").as(Integer.class), 2));
+                }
+                //成功
+                if (StringUtils.isNotBlank(details) && "3".equals(details)) {
+                    list.add(cb.ge(root.get("createDate").as(Long.class), TestUtil.getTimesmorning()));
+                    list.add(cb.equal(root.get("status").as(Integer.class), 1));
+                }
                 Predicate[] p = new Predicate[list.size()];
                 return cb.and(list.toArray(p));
             }

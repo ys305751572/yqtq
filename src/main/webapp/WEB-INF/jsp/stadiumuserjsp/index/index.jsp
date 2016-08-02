@@ -193,16 +193,16 @@
                 <!-- Quick Stats -->
                 <div style="background-color: rgba(238, 238, 238, 0.09);width:auto;height: 70px">
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/user/index?details=1" title="新增用户" class="btn btn-alt m-r-5">最新订单( ${newUserNum} )</a>
+                        <a data-toggle="modal" href="${contextPath}/stadium/stadiumBooking/index?details=1" title="最新订单" class="btn btn-alt m-r-5">最新订单( ${newStadiumBooking} )</a>
                     </div>
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/userVip/index?details=1" title="新增会员" class="btn btn-alt m-r-5">退场订单( ${newUserVipNum} )</a>
+                        <a data-toggle="modal" href="${contextPath}/stadium/stadiumBooking/index?details=2" title="退场订单" class="btn btn-alt m-r-5">退场订单( ${exitStadiumBooking} )</a>
                     </div>
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/reserve/index?details=1" title="新增约球" class="btn btn-alt m-r-5">成功订单( ${newReserveNum} )</a>
+                        <a data-toggle="modal" href="${contextPath}/stadium/stadiumBooking/index?details=3" title="成功订单" class="btn btn-alt m-r-5">成功订单( ${successfulStadiumBooking} )</a>
                     </div>
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/admin/stadiumBooking/index?details=1" title="场地订单" class="btn btn-alt m-r-5">场地订单( ${newStadiumBookingNum} )</a>
+                        <a data-toggle="modal" href="${contextPath}/stadium/stadiumBooking/index" title="场地订单" class="btn btn-alt m-r-5">场地订单( ${newStadiumBookingNum} )</a>
                     </div>
                 </div>
                 <div class="block-area" id="tableBordered">
@@ -213,21 +213,21 @@
                                 <thead>
                                 <tr>
                                     <td width="45%">当日</td>
-                                    <td > </td>
+                                    <td >${day ne null ? day : 0}</td>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td>当周</td>
-                                    <td> </td>
+                                    <td>${week ne null ? week : 0}</td>
                                 </tr>
                                 <tr>
                                     <td>当月</td>
-                                    <td> </td>
+                                    <td>${month ne null ? month : 0}</td>
                                 </tr>
                                 <tr>
                                     <td>总金额</td>
-                                    <td> </td>
+                                    <td>${sum ne null ? sum : 0}</td>
                                 </tr>
                                 </tbody>
                             </table>

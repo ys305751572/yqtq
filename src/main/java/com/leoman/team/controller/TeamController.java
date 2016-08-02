@@ -13,7 +13,9 @@ import com.leoman.team.service.TeamService;
 import com.leoman.team.service.impl.TeamServiceImpl;
 import com.leoman.user.entity.User;
 import com.leoman.user.service.UserService;
+import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.Result;
+import org.apache.commons.collections.list.SynchronizedList;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,10 +95,16 @@ public class TeamController extends GenericEntityController<Team, Team, TeamServ
         try{
             Team team = teamService.findById(id);
             team.setTmSize(teamService.findTmSize(id));
+            team.setAvater(StringUtils.isNotBlank(team.getAvater()) ? ConfigUtil.getString("upload.url") + team.getAvater() : "");
             model.addAttribute("team", team);
             List<TeamMember> teamMember = teamMemberService.findByTeamId(id);
             model.addAttribute("teamMember",teamMember);
-            List<User> userList = userService.queryAll();
+            List<User> list = userService.queryAll();
+            List<User> userList = new ArrayList<>();
+            for(User u : list){
+                u.setAvater(StringUtils.isNotBlank(u.getAvater()) ? ConfigUtil.getString("upload.url") + u.getAvater() : "");
+                userList.add(u);
+            }
             model.addAttribute("userList",userList);
             List<User> user = teamMemberService.findByAvater(id);
             model.addAttribute("user",user);

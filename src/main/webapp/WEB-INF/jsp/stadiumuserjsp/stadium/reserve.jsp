@@ -72,7 +72,6 @@
             </div>
         </div>
     </section>
-
     <br/><br/>
 </section>
 <!-- JS -->
@@ -88,6 +87,7 @@
         },
         fn: {
             init: function () {
+
                 $(document).ready(function() {
                     var date = new Date();
                     var d = date.getDate();
@@ -130,10 +130,10 @@
 
                         selectable: true,
                         selectHelper: true,
-                        editable: true,     //是否可以拖动
+                        editable: false,     //是否可以拖动
                         events: [
                             {
-                                title: '不会用烦的一笔',
+                                title: '啊啊啊啊啊',
                                 start: new Date(y, m, d),
                                 end: new Date(y, m, d)
                             }
@@ -163,6 +163,7 @@
                                 revertFunc();
                             })
                         }
+
                     });
 
                     $('body').on('click', '#addEvent', function(){
@@ -174,20 +175,26 @@
                             //Event Name
                             var eventName = $('#eventName').val();
 
+                            var s_time = $('#s_hour').val()+":"+$('#s_minute').val();
+                            var e_time = $('#e_hour').val()+":"+$('#e_minute').val();
+
                             //Render Event
                             $('#calendar').fullCalendar('renderEvent',{
-                                title: eventName,
+                                title: s_time+"---"+e_time,
                                 start: $('#getStart').val(),
                                 end:  $('#getEnd').val(),
-                                allDay: true,
+                                allDay: true
                             },true ); //Stick the event
 
                             $('#addNew-event form')[0].reset();
                             $('#addNew-event').modal('hide');
-                        }
-                    });
-                });
+                        };
 
+                    });
+
+
+
+                });
                 //Calendar views
                 $('body').on('click', '.calendar-actions > li > a', function(e){
                     e.preventDefault();
@@ -199,11 +206,33 @@
                     overflowRegular = $('.overflow').niceScroll();
 
                 });
+
+                $('body').on('click', '#chk', function(){
+                    if($(".icheckbox_minimal").attr("aria-checked")=="true"){
+                        $("#div_hidden").css('display','block');
+                    }else {
+                        $("#div_hidden").css('display','none');
+                    }
+                });
+
+            },
+            hid:function(){
+
+                if($(".icheckbox_minimal").attr("aria-checked")=="true"){
+                    $("#div_hidden").css('display','block');
+                }else {
+                    $("#div_hidden").css('display','none');
+                }
             }
+
         }
     };
     $(function () {
         $team.fn.init();
+        $("#chk").on("click",function(){
+            alert("I'm ");
+        })
+
     })
 </script>
 <script>

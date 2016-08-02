@@ -1,14 +1,9 @@
 package com.leoman.systemInsurance.service.impl;
 
-import com.leoman.activity.entity.Activity;
 import com.leoman.common.service.impl.GenericManagerImpl;
-import com.leoman.girlServiceMessage.dao.GirlServiceMessageDao;
-import com.leoman.girlServiceMessage.entity.GirlServiceMessage;
-import com.leoman.girlServiceMessage.service.GirlServiceMessageService;
 import com.leoman.systemInsurance.dao.SystemInsuranceDao;
 import com.leoman.systemInsurance.entity.SystemInsurance;
 import com.leoman.systemInsurance.service.SystemInsuranceService;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

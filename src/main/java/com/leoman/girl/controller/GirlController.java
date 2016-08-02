@@ -16,6 +16,7 @@ import com.leoman.girl.service.GirlImageService;
 import com.leoman.girl.service.GirlService;
 import com.leoman.girl.service.impl.GirlServiceImpl;
 import com.leoman.image.entity.FileBo;
+import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
 import com.leoman.utils.TestUtil;
@@ -96,7 +97,12 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
             Girl girl = girlService.queryByPK(id);
             girl.setGuSize(girlService.findSize(id));
             model.addAttribute("girl", girl);
-            List<GirlImage> image = girlImageService.queryByProperty("girlId",id);
+            List<GirlImage> imageList = girlImageService.queryByProperty("girlId",id);
+            List image = new ArrayList();
+            for(GirlImage _image : imageList){
+                _image.setUrl(StringUtils.isNotBlank(_image.getUrl()) ? ConfigUtil.getString("upload.url") + _image.getUrl() : "");
+                image.add(_image);
+            }
             model.addAttribute("image",image);
             Integer avgStar = girlCommentService.avgStar(id);
             model.addAttribute("avgStar",avgStar);
@@ -137,7 +143,12 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
             if(id!=null){
                 Girl girl = girlService.queryByPK(id);
                 model.addAttribute("girl", girl);
-                List<GirlImage> image = girlImageService.queryByProperty("girlId",id);
+                List<GirlImage> imageList = girlImageService.queryByProperty("girlId",id);
+                List image = new ArrayList();
+                for(GirlImage _image : imageList){
+                    _image.setUrl(StringUtils.isNotBlank(_image.getUrl()) ? ConfigUtil.getString("upload.url") + _image.getUrl() : "");
+                    image.add(_image);
+                }
                 model.addAttribute("image",image);
             }
         }catch (Exception e){
@@ -240,7 +251,13 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
     @RequestMapping(value = "/deleteImage")
     @ResponseBody
     public Object deleteBatch(Long id) {
-        girlImageService.deleteByPK(id);
+        try {
+            GirlImage girlImage = girlImageService.queryByPK(id);
+            girlImageService.delete(girlImage);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            return Result.failure();
+        }
         return Result.success();
     }
 

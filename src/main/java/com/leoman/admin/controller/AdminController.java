@@ -126,6 +126,10 @@ public class AdminController extends GenericEntityController<Admin,Admin,AdminSe
                 if(admin_name!=null && admin_name.size()>0 && !admin_name.get(0).getId().equals(admin.getId())){
                     return result;
                 }
+                if(!a.getPassword().equals(admin.getPassword())){
+                    String pwd = Md5Util.md5(admin.getPassword());
+                    admin.setPassword(pwd);
+                }
                 admin.setCreateDate(a.getCreateDate());
                 admin.setLastLoginDate(a.getLastLoginDate());
                 admin.setStatus(a.getStatus());
@@ -134,14 +138,15 @@ public class AdminController extends GenericEntityController<Admin,Admin,AdminSe
                     return result;
                 }
                 admin.setStatus(0);
+                String pwd = Md5Util.md5(admin.getPassword());
+                admin.setPassword(pwd);
             }
             if(list != null && list.size()>0){
                 for(UserRole urList : list){
-                    userRoleService.deleteByPK(urList.getId());
+                    UserRole u = userRoleService.queryByPK(urList.getId());
+                    userRoleService.delete(u);
                 }
             }
-            String pwd = Md5Util.md5(admin.getPassword());
-            admin.setPassword(pwd);
             adminService.save(admin);
             for(Long roleId : roleIds){
                 UserRole userRole = new UserRole();

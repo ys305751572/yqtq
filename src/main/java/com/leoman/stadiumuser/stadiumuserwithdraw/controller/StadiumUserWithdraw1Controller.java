@@ -8,7 +8,6 @@ import com.leoman.stadium.entity.StadiumUserWithdraw;
 import com.leoman.stadium.service.StadiumUserWithdrawService;
 import com.leoman.stadium.service.impl.StadiumUserWithdrawServiceImpl;
 import com.leoman.utils.Result;
-import javafx.scene.shape.VLineTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -21,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
+ *
  * Created by Administrator on 2016/7/20.
  */
 @Controller

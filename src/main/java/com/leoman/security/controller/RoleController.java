@@ -112,7 +112,8 @@ public class RoleController extends GenericEntityController<Role,Role,RoleServic
             roleService.save(role);
             if(list!=null && list.size()>0){
                 for(RoleModule rmList : list){
-                    roleModuleService.deleteByPK(rmList.getId());
+                    RoleModule rm = roleModuleService.queryByPK(rmList.getId());
+                    roleModuleService.delete(rm);
                 }
             }
             for(Long moduleId : moduleIds){

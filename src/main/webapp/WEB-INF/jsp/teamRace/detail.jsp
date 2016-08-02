@@ -28,12 +28,12 @@
                 <div class="col-md-6 m-b-15">
                     <label>比赛队伍:</label>
                     <a onclick="$team.fn.sfTeamInfo(${teamRace.homeTeam.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                        <img src="${contextPath}/${teamRace.homeTeam.avater}" alt="">
+                        <img src="${teamRace.homeTeam.avater}" alt="">
                         ${teamRace.homeTeam.name}
                     </a>
                     VS
                     <a onclick="$team.fn.sfTeamInfo(${teamRace.visitingTeam.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                        <img src="${contextPath}/${teamRace.visitingTeam.avater}" alt="">
+                        <img src="${teamRace.visitingTeam.avater}" alt="">
                         ${teamRace.visitingTeam.name}
                     </a>
                 </div>

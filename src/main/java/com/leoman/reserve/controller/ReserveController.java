@@ -19,6 +19,7 @@ import com.leoman.user.entity.User;
 import com.leoman.user.entity.UserReserveJoin;
 import com.leoman.user.service.UserReserveJoinService;
 import com.leoman.user.service.UserService;
+import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.Result;
 import com.leoman.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
@@ -126,8 +127,11 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
         model.addAttribute("num",userReserveJoins.size());
         List<User> list = new ArrayList<User>();
         for(UserReserveJoin u : userReserveJoins){
-            User user = userService.findByUserId(u.getUserId());
-            list.add(user);
+            User user = userService.queryByPK(u.getUserId());
+            if(user!=null){
+                user.setAvater(StringUtils.isNotBlank(user.getAvater()) ? ConfigUtil.getString("upload.url") + user.getAvater() : "");
+                list.add(user);
+            }
         }
         model.addAttribute("list", list);
         return "reserve/detail";

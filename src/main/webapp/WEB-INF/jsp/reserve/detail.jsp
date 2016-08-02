@@ -77,7 +77,7 @@
                     <label>头像:</label>
                     <c:forEach items="${list}" var="v">
                         <a onclick="$reserve.fn.detail(${v.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                            <img src="${contextPath}/${v.avater}" alt="">
+                            <img src="${v.avater}" alt="">
                         </a>
                     </c:forEach>
                 </div>

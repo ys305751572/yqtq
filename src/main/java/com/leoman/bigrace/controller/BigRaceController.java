@@ -11,6 +11,7 @@ import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.image.entity.FileBo;
 import com.leoman.stadium.entity.Stadium;
+import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
 import org.apache.commons.lang.StringUtils;
@@ -84,6 +85,8 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
     public String detail(Long id, Model model){
         try{
             BigRace bigRace = bigRaceService.queryByPK(id);
+            bigRace.setAvater1(StringUtils.isNotBlank(bigRace.getAvater1()) ? ConfigUtil.getString("upload.url")+bigRace.getAvater1() : "");
+            bigRace.setAvater2(StringUtils.isNotBlank(bigRace.getAvater2()) ? ConfigUtil.getString("upload.url")+bigRace.getAvater2() : "");
             model.addAttribute("bigRace", bigRace);
         }catch (Exception e){
             e.printStackTrace();
@@ -119,6 +122,8 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
         try{
             if(id!=null){
                 BigRace bigRace = bigRaceService.queryByPK(id);
+                bigRace.setAvater1(StringUtils.isNotBlank(bigRace.getAvater1()) ? ConfigUtil.getString("upload.url")+bigRace.getAvater1() : "");
+                bigRace.setAvater2(StringUtils.isNotBlank(bigRace.getAvater2()) ? ConfigUtil.getString("upload.url")+bigRace.getAvater2() : "");
                 model.addAttribute("bigRace", bigRace);
             }
         }catch (Exception e){

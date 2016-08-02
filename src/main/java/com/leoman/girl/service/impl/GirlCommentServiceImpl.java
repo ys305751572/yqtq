@@ -66,9 +66,16 @@ public class GirlCommentServiceImpl extends GenericManagerImpl<GirlComment,GirlC
         Query query = em.createNativeQuery(sql.toString());
         List list = query.getResultList();
         Double obj = (Double)list.get(0);
-        Integer num = obj.intValue();
-        em.close();
-        return num;
+        if(obj!=null){
+            Integer num = obj.intValue();
+            em.close();
+            return num;
+        }else {
+            em.close();
+            return null;
+        }
+
+
     };
 
 }

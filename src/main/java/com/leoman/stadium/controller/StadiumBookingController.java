@@ -13,6 +13,7 @@ import com.leoman.stadium.entity.StadiumBooking;
 import com.leoman.stadium.service.StadiumBookingService;
 import com.leoman.stadium.service.impl.StadiumBookingServiceImpl;
 import com.leoman.user.entity.User;
+import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.Result;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,9 +83,15 @@ public class StadiumBookingController extends GenericEntityController<StadiumBoo
         try{
             if(id1 !=null){
                 StadiumBooking stadiumBooking = stadiumBookingService.queryByPK(id1);
+                Stadium _s = stadiumBooking.getStadium();
+                _s.setAvater(StringUtils.isNotBlank(stadiumBooking.getStadium().getAvater()) ? ConfigUtil.getString("upload.url")+stadiumBooking.getStadium().getAvater() : "");
+                stadiumBooking.setStadium(_s);
                 model.addAttribute("stadiumBooking", stadiumBooking);
             }else if(id !=null){
                 StadiumBooking stadiumBooking = stadiumBookingService.queryByPK(id);
+                Stadium _s = stadiumBooking.getStadium();
+                _s.setAvater(StringUtils.isNotBlank(stadiumBooking.getStadium().getAvater()) ? ConfigUtil.getString("upload.url")+stadiumBooking.getStadium().getAvater() : "");
+                stadiumBooking.setStadium(_s);
                 model.addAttribute("stadiumBooking", stadiumBooking);
             }else {
                 return "/stadiumbooking/detail";

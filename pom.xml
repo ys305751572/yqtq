@@ -325,16 +325,18 @@
 	<profiles>
 		<profile>
 			<id>dev-localhost</id>
-			<properties>
-				<pro.jdbc.url>jdbc:mysql://4.16.1.158:3306/yqtq?characterEncoding=UTF-8</pro.jdbc.url>
-				<pro.jdbc.username>root</pro.jdbc.username>
-				<pro.jdbc.password>root</pro.jdbc.password>
-				<pro.upload.url>http://4.16.0.180:8081/files/upload/</pro.upload.url>
-				<pro.upload.path>D:/server/tomcat-kdxg/webapps/files/upload/</pro.upload.path>
-				<base.url>http://localhost/kdxgServer/</base.url>
-				<base.domain>http://localhost:8080</base.domain>
-			</properties>
-		</profile>
+		<properties>
+			<pro.jdbc.url>jdbc:mysql://4.16.1.158:3306/yqtq?characterEncoding=UTF-8</pro.jdbc.url>
+			<pro.jdbc.username>root</pro.jdbc.username>
+			<pro.jdbc.password>root</pro.jdbc.password>
+			<!--<pro.upload.url>http://4.16.0.180:8081/files/upload/</pro.upload.url>-->
+			<pro.upload.url>http://localhost:8080/files/upload/</pro.upload.url>
+			<!--<pro.upload.path>D:/server/tomcat-kdxg/webapps/files/upload/</pro.upload.path>-->
+			<pro.upload.path>D:/tomcat/apache-tomcat-7.0.69/webapps/files/upload/</pro.upload.path>
+			<base.url>http://localhost/kdxgServer/</base.url>
+			<base.domain>http://localhost:8080</base.domain>
+		</properties>
+	</profile>
 		<profile>
 			<id>deploy-test</id>
 			<properties>

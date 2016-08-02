@@ -92,4 +92,29 @@ public interface IndexDao extends IBaseJpaRepository<User>{
     //访问统计:
 
 
+    //---------------------------------场主端--------------------------------------
+
+    //最新订单
+    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.createDate >= ?1 AND a.stadium.stadiumUserId=?2")
+    public Integer newStadiumBooking(Long daten,Long id);
+
+    //退场订单
+    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.createDate >= ?1 AND a.stadium.stadiumUserId=?2 AND a.status = '2' ")
+    public Integer exitStadiumBooking(Long date,Long id);
+
+    //成功订单
+    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.createDate >= ?1 AND a.stadium.stadiumUserId=?2 AND a.status = '1' ")
+    public Integer successfulStadiumBooking(Long date,Long id);
+
+    //场地订单
+
+
+    //金额统计:
+    //按时间查询
+    @Query("SELECT SUM(a.price) FROM StadiumSub a WHERE a.stadiumId IN (SELECT b FROM Stadium b WHERE b.stadiumUserId = ?1) AND a.createDate >=?2")
+    public Integer income(Long id,Long date);
+
+    @Query("SELECT SUM(a.price) FROM StadiumSub a WHERE a.stadiumId IN (SELECT b FROM Stadium b WHERE b.stadiumUserId = ?1)")
+    public Integer sumIncome(Long id);
+
 }

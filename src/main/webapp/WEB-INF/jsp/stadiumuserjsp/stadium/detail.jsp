@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-md-6 m-b-15">
                     <label>图片:</label>
-                    <img src="${contextPath}/${stadium.avater}" alt="">
+                    <img src="${stadium.avater}" alt="">
                 </div>
                 <hr class="whiter m-t-20"/>
                 <div class="col-md-6 m-b-15">

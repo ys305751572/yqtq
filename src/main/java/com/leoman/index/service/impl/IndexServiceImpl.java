@@ -126,4 +126,33 @@ public class IndexServiceImpl implements IndexService{
         return dao.watchingRaceInvitation();
     }
 
+    //---------------------------------场主端--------------------------------------
+
+    //最新订单
+    @Override
+    public Integer newStadiumBooking(Long id ){
+        return dao.newStadiumBooking(TestUtil.getTimesmorning(),id);
+    }
+    //退场订单
+    @Override
+    public Integer exitStadiumBooking(Long id) {
+        return dao.exitStadiumBooking(TestUtil.getTimesmorning(),id);
+    }
+    //成功订单
+    @Override
+    public Integer successfulStadiumBooking(Long id) {
+        return dao.successfulStadiumBooking(TestUtil.getTimesmorning(),id);
+    }
+
+    @Override
+    public Integer income(Long id, Long date) {
+        return dao.income(id,date);
+    }
+
+    @Override
+    public Integer sumIncome(Long id) {
+        return dao.sumIncome(id);
+    }
+
+
 }

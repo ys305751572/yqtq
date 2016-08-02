@@ -14,6 +14,7 @@ import com.leoman.stadium.service.StadiumUserService;
 import com.leoman.stadium.service.impl.StadiumServiceImpl;
 import com.leoman.team.entity.TeamRace;
 import com.leoman.user.entity.User;
+import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
 import org.apache.commons.lang.StringUtils;
@@ -118,6 +119,7 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
                 model.addAttribute("isEd",isEd);
             }
             Stadium stadium = stadiumService.findById(id);
+            stadium.setAvater(StringUtils.isNotBlank(stadium.getAvater()) ? ConfigUtil.getString("upload.url")+stadium.getAvater() : "");
             model.addAttribute("stadium", stadium);
             List<StadiumUser> list = stadiumUserService.queryByProperty("id",stadium.getStadiumUserId());
             if(list.size()>0 && list!=null){
@@ -158,6 +160,7 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
             model.addAttribute("province",province);
             if(id!=null){
                 Stadium stadium = stadiumService.findById(id);
+                stadium.setAvater(StringUtils.isNotBlank(stadium.getAvater()) ? ConfigUtil.getString("upload.url")+stadium.getAvater() : "");
                 model.addAttribute("stadium", stadium);
             }
 

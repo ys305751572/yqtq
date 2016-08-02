@@ -7,6 +7,7 @@ import com.leoman.stadium.entity.Stadium;
 import com.leoman.systembanner.entity.SystemBanner;
 import com.leoman.systembanner.service.SystemBannerService;
 import com.leoman.systembanner.service.impl.SystemBannerServiceImpl;
+import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
 import org.apache.commons.lang.StringUtils;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +36,12 @@ public class SystemBannerController extends GenericEntityController<SystemBanner
 
     @RequestMapping(value = "/index")
     public String index(Model model){
-        List<SystemBanner> systemBanner =  systemBannerService.queryAll();
+        List<SystemBanner> systemBannerList =  systemBannerService.queryAll();
+        List<SystemBanner> systemBanner = new ArrayList<>();
+        for(SystemBanner s :  systemBannerList){
+            s.setAvater(StringUtils.isNotBlank(s.getAvater()) ? ConfigUtil.getString("upload.url")+s.getAvater() : "");
+            systemBanner.add(s);
+        }
         model.addAttribute("systemBanner",systemBanner);
         return "/systembanner/list";
     }
@@ -85,8 +92,14 @@ public class SystemBannerController extends GenericEntityController<SystemBanner
      */
     @RequestMapping(value = "/deleteImage")
     @ResponseBody
-    public Object deleteBatch(Long id) {
-        systemBannerService.deleteByPK(id);
+    public Result deleteBatch(Long id) {
+        try{
+            SystemBanner systemBanner = systemBannerService.queryByPK(id);
+            systemBannerService.delete(systemBanner);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            return Result.failure();
+        }
         return Result.success();
     }
 

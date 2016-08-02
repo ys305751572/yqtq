@@ -12,6 +12,7 @@ import com.leoman.hostRace.service.impl.HostRaceServiceImpl;
 import com.leoman.image.entity.FileBo;
 import com.leoman.stadium.entity.Stadium;
 import com.leoman.stadium.service.StadiumService;
+import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
 import org.apache.commons.lang.StringUtils;
@@ -70,6 +71,7 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
     public String detail(Long id, Model model){
         try{
             HostRace hostRace = hostRaceService.findById(id);
+            hostRace.setAvater(StringUtils.isNotBlank(hostRace.getAvater()) ? ConfigUtil.getString("upload.url")+hostRace.getAvater() : "");
             model.addAttribute("hostRace", hostRace);
             Integer matchTeam = hostRaceService.matchTeam(id);
             model.addAttribute("matchTeam", matchTeam);
@@ -107,6 +109,7 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
         try{
             if(id !=null){
                 HostRace hostRace = hostRaceService.findById(id);
+                hostRace.setAvater(StringUtils.isNotBlank(hostRace.getAvater()) ? ConfigUtil.getString("upload.url")+hostRace.getAvater() : "");
                 model.addAttribute("hostRace", hostRace);
             }
             List<Stadium> stadium = stadiumService.queryAll();

@@ -9,26 +9,36 @@ import java.util.GregorianCalendar;
 
 public class TestUtil {
 
-    //当前0点
-    public static Timestamp getDayBegin() {
+    //获得本周一0点时间
+    public static Long getTimesWeekmorning(){
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.MILLISECOND, 001);
-        return new Timestamp(cal.getTimeInMillis());
+        cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0,0);
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        return (Long) (cal.getTimeInMillis());
+    }
+    //获得本周日24点时间
+    public static Long getTimesWeeknight(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0,0);
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        return (Long) ((cal.getTime().getTime()+ (7*24*60*60*1000)));
+    }
+    //获得本月第一天0点时间
+    public static Long getTimesMonthmorning(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0,0);
+        cal.set(Calendar.DAY_OF_MONTH,cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+        return (Long) (cal.getTimeInMillis());
+    }
+    //获得本月最后一天24点时间
+    public static Long getTimesMonthnight() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.HOUR_OF_DAY, 24);
+        return (Long) (cal.getTimeInMillis());
     }
 
-    // 当天0点
-    public static Timestamp getDayBeginTimestamp() {
-        Date date = new Date();
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.setTime(date);
-        Date date2 = new Date(date.getTime() - gc.get(gc.HOUR_OF_DAY) * 60 * 60
-                * 1000 - gc.get(gc.MINUTE) * 60 * 1000 - gc.get(gc.SECOND)
-                * 1000);
-        return new Timestamp(date2.getTime());
-    }
     //获得当天0点时间
     public static Long getTimesmorning(){
         Calendar cal = Calendar.getInstance();

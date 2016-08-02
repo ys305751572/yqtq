@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>logo:</label>
-                        <img id="avater" name="avater" src="${contextPath}/${team.avater}" alt="">
+                        <img id="avater" name="avater" src="${team.avater}" alt="">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>队名:</label>
@@ -75,7 +75,7 @@
                                 <c:forEach items="${userList}" var="u">
                                     <c:if test="${item.userId eq u.id}">
                                         <a onclick="$team.fn.detail(${item.userId})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                                            <img src="${contextPath}/${u.avater}" alt="">
+                                            <img src="${u.avater}" alt="">
                                         </a>
                                     </c:if>
                                 </c:forEach>

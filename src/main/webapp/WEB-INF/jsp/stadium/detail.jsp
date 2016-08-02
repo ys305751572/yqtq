@@ -11,6 +11,13 @@
     <title>Super Admin Responsive Template</title>
     <!-- CSS -->
     <%@ include file="../inc/new/css.jsp" %>
+    <style>
+        .asd{
+        height: 60px;
+        width: 100px;
+        background-color: #3b97d7!important;
+        }
+    </style>
 </head>
 <body id="skin-cloth">
 <%@ include file="../inc/new/header.jsp" %>
@@ -27,7 +34,7 @@
             <div class="row">
                 <div class="col-md-6 m-b-15">
                     <label>图片:</label>
-                    <img src="${contextPath}/${stadium.avater}" alt="">
+                    <img src="${stadium.avater}" alt="">
                 </div>
                 <hr class="whiter m-t-20"/>
                 <div class="col-md-6 m-b-15">
@@ -76,9 +83,16 @@
                         <input type="text" id="giving" name="giving" value="${stadium.giving}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                 </div>
+                <hr class="whiter m-t-20"/>
                 <c:if test="${stadium.type eq 0}">
                     <div class="col-md-6 m-b-15">
                         <label>球场场次:</label>
+                        <p><button type="checkbox" name="time" style="height: 60px;width: 100px;background-color: #3b97d7">13:00-15:00</button></p>
+                        <p><button type="checkbox" name="time" style="height: 60px;width: 100px;background-color: #3b97d7">15:00-17:00</button></p>
+                        <p><button type="checkbox" name="time" style="height: 60px;width: 100px;background-color: #3b97d7">17:00-19:00</button></p>
+                        <p><button type="checkbox" name="time" style="height: 60px;width: 100px;background-color: #3b97d7">19:00-21:00</button></p>
+                        <p><button type="checkbox" name="time" style="height: 60px;width: 100px;background-color: #3b97d7">21:00-23:00</button></p>
+                        <input type="checkbox" name="time" class="asd" >123</input>
                     </div>
                 </c:if>
                 <hr class="whiter m-t-20"/>

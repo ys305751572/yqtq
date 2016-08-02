@@ -99,7 +99,9 @@ public class IndexController extends CommonController {
 
         HttpSession session=request.getSession();
         Admin admin = (Admin) session.getAttribute(Constant.SESSION_MEMBER_GLOBLE);
-
+        //最近一次登录时间
+        admin.setLastLoginDate(System.currentTimeMillis());
+        adminService.update(admin);
         Long id = adminService.queryByProperty("username",admin.getUsername()).get(0).getId();
         //子模块
         List<Module> moduleChild = indexService.moduleList(id);

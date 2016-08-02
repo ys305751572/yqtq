@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>logo:</label>
-                        <img id="avater" name="avater" src="${contextPath}/${stadiumBooking.stadium.avater}" alt="">
+                        <img id="avater" name="avater" src="${stadiumBooking.stadium.avater}" alt="">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>球场名称:</label>

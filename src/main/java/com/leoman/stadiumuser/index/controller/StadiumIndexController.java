@@ -5,9 +5,11 @@ import com.leoman.common.core.Constant;
 import com.leoman.common.log.entity.Log;
 import com.leoman.index.service.IndexService;
 import com.leoman.index.service.LoginService;
+import com.leoman.stadium.entity.StadiumUser;
 import com.leoman.stadium.service.StadiumUserService;
 import com.leoman.utils.CookiesUtils;
 import com.leoman.utils.Md5Util;
+import com.leoman.utils.TestUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -91,7 +94,37 @@ public class StadiumIndexController extends CommonController {
                             HttpServletResponse response,
                             ModelMap model) {
 
+        StadiumUser stadiumUser = getStadiumUser(request);
+        //最新订单
+        Integer newStadiumBooking = indexService.newStadiumBooking(stadiumUser.getId());
+        model.addAttribute("newStadiumBooking",newStadiumBooking);
+        //退场订单
+        Integer exitStadiumBooking = indexService.exitStadiumBooking(stadiumUser.getId());
+        model.addAttribute("exitStadiumBooking",exitStadiumBooking);
+        //成功订单
+        Integer successfulStadiumBooking = indexService.successfulStadiumBooking(stadiumUser.getId());
+        model.addAttribute("successfulStadiumBooking",successfulStadiumBooking);
+
+        Integer day = indexService.income(stadiumUser.getId(), TestUtil.getTimesmorning());
+        model.addAttribute("day",day);
+        Integer week = indexService.income(stadiumUser.getId(), TestUtil.getTimesWeekmorning());
+        model.addAttribute("week",week);
+        Integer month = indexService.income(stadiumUser.getId(), TestUtil.getTimesMonthmorning());
+        model.addAttribute("month",month);
+        Integer sum = indexService.sumIncome(stadiumUser.getId());
+        model.addAttribute("sum",sum);
         return "stadiumuserjsp/index/index";
+    }
+
+    /**
+     * 获取用户信息
+     * @param request
+     * @return
+     */
+    private StadiumUser getStadiumUser(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        StadiumUser stadiumUser = (StadiumUser) session.getAttribute(Constant.SESSION_MEMBER_GLOBLE);
+        return stadiumUser;
     }
 
 

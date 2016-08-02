@@ -2,7 +2,7 @@
 <%@ include file="../taglibs.jsp" %>
 <header id="header">
     <a href="" id="menu-toggle"></a> 
-    <a class="logo pull-left" href="${contextPath}/admin/dashboard">一起踢球后台管理系统</a>
+    <a class="logo pull-left" href="${contextPath}/stadium/dashboard">球场主后台管理系统</a>
     
     <div class="media-body">
         <div class="media" id="top-menu">

@@ -7,6 +7,7 @@ import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.image.entity.FileBo;
+import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
 import com.leoman.watchingrace.dao.WatchingRaceDao;
@@ -68,6 +69,7 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
     public String detail(Long id, Model model){
         try{
             WatchingRace watchingRace = watchingRaceService.queryByPK(id);
+            watchingRace.setAvater(StringUtils.isNotBlank(watchingRace.getAvater()) ? ConfigUtil.getString("upload.url")+watchingRace.getAvater() : "");
             model.addAttribute("watchingRace", watchingRace);
         }catch (Exception e){
             e.printStackTrace();
@@ -98,6 +100,7 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
         try{
             if(id!=null){
                 WatchingRace watchingRace = watchingRaceService.queryByPK(id);
+                watchingRace.setAvater(StringUtils.isNotBlank(watchingRace.getAvater()) ? ConfigUtil.getString("upload.url")+watchingRace.getAvater() : "");
                 model.addAttribute("watchingRace", watchingRace);
             }
             List<Province> province = provinceService.queryAll();

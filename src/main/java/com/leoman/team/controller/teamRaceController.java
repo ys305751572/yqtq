@@ -13,7 +13,9 @@ import com.leoman.team.entity.TeamRace;
 import com.leoman.team.service.TeamRaceService;
 import com.leoman.team.service.TeamService;
 import com.leoman.team.service.impl.TeamRaceServiceImpl;
+import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.Result;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -73,6 +75,12 @@ public class TeamRaceController  extends GenericEntityController<TeamRace, TeamR
     public String detail(Long id, Model model){
         try{
             TeamRace teamRace = teamRaceService.findById(id);
+            Team homeTeam = teamRace.getHomeTeam();
+            homeTeam.setAvater(StringUtils.isNotBlank(homeTeam.getAvater()) ? ConfigUtil.getString("upload.url")+homeTeam.getAvater() : "");
+            teamRace.setHomeTeam(homeTeam);
+            Team visitingTeam = teamRace.getVisitingTeam();
+            visitingTeam.setAvater(StringUtils.isNotBlank(visitingTeam.getAvater()) ? ConfigUtil.getString("upload.url")+visitingTeam.getAvater() : "");
+            teamRace.setVisitingTeam(visitingTeam);
             model.addAttribute("teamRace", teamRace);
             List<Team> team = teamService.findAll();
             model.addAttribute("team", team);

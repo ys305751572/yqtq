@@ -19,6 +19,7 @@
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
         <!-- 查询条件 -->
+        <input type="hidden" id="details" name="details" value="${details}">
         <!-- form表格 -->
         <div class="block-area" id="tableHover">
             <table class="table table-bordered table-hover tile" id="dataTables" cellspacing="0" width="100%">
@@ -116,7 +117,7 @@
                         }
                     ],
                     "fnServerParams": function (aoData) {
-
+                        aoData.details = $("#details").val();
                     }
                 });
             },

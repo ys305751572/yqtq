@@ -5,8 +5,6 @@ import com.leoman.activity.service.ActivityService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.exception.GeneralExceptionHandler;
 import com.leoman.common.factory.DataTableFactory;
-import com.leoman.girlServiceMessage.entity.GirlServiceMessage;
-import com.leoman.girlServiceMessage.service.impl.GirlServiceMessageServiceImpl;
 import com.leoman.image.entity.FileBo;
 import com.leoman.insurance.entity.Insurance;
 import com.leoman.insurance.service.InsuranceService;

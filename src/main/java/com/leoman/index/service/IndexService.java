@@ -56,4 +56,16 @@ public interface IndexService{
 
     public Integer watchingRaceInvitation();
 
+    //---------------------------------场主端--------------------------------------
+
+    public Integer newStadiumBooking(Long id );
+
+    public Integer exitStadiumBooking(Long id);
+
+    public Integer successfulStadiumBooking(Long id);
+
+    public Integer income(Long id,Long date);
+
+    public Integer sumIncome(Long id);
+
 }
