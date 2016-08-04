@@ -69,7 +69,6 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
     public String detail(Long id, Model model){
         try{
             WatchingRace watchingRace = watchingRaceService.queryByPK(id);
-            watchingRace.setAvater(StringUtils.isNotBlank(watchingRace.getAvater()) ? ConfigUtil.getString("upload.url")+watchingRace.getAvater() : "");
             model.addAttribute("watchingRace", watchingRace);
         }catch (Exception e){
             e.printStackTrace();
@@ -100,7 +99,6 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
         try{
             if(id!=null){
                 WatchingRace watchingRace = watchingRaceService.queryByPK(id);
-                watchingRace.setAvater(StringUtils.isNotBlank(watchingRace.getAvater()) ? ConfigUtil.getString("upload.url")+watchingRace.getAvater() : "");
                 model.addAttribute("watchingRace", watchingRace);
             }
             List<Province> province = provinceService.queryAll();
@@ -133,6 +131,7 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
                 watchingRace.setCreateDate(w.getCreateDate());
                 watchingRace.setInvitation(w.getInvitation());
                 watchingRace.setStatus(w.getStatus());
+                watchingRace.setAvater(w.getAvater());
             }else {
                 watchingRace.setInvitation(0);  //新增邀约0
                 watchingRace.setStatus(0);  //新增状态正常
@@ -147,9 +146,6 @@ public class WatchingRaceController extends GenericEntityController<WatchingRace
                 if (fileBo != null && StringUtils.isNotBlank(fileBo.getPath())) {
                     watchingRace.setAvater(fileBo.getPath());
                 }
-            }
-            if(watchingRace.getAvater()==null){
-                watchingRace.setAvater(w.getAvater());
             }
             if (detail != null) {
                 watchingRace.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));

@@ -80,22 +80,14 @@ public class StadiumBookingController extends GenericEntityController<StadiumBoo
     @RequestMapping(value = "/detail")
     public String detail(Long id, Model model,Long stadiumId,Long userId,Long startDate){
         Long id1 =reserveService.findStadiumBookingId(stadiumId,userId,startDate);
+        StadiumBooking stadiumBooking = null;
         try{
             if(id1 !=null){
-                StadiumBooking stadiumBooking = stadiumBookingService.queryByPK(id1);
-                Stadium _s = stadiumBooking.getStadium();
-                _s.setAvater(StringUtils.isNotBlank(stadiumBooking.getStadium().getAvater()) ? ConfigUtil.getString("upload.url")+stadiumBooking.getStadium().getAvater() : "");
-                stadiumBooking.setStadium(_s);
-                model.addAttribute("stadiumBooking", stadiumBooking);
-            }else if(id !=null){
-                StadiumBooking stadiumBooking = stadiumBookingService.queryByPK(id);
-                Stadium _s = stadiumBooking.getStadium();
-                _s.setAvater(StringUtils.isNotBlank(stadiumBooking.getStadium().getAvater()) ? ConfigUtil.getString("upload.url")+stadiumBooking.getStadium().getAvater() : "");
-                stadiumBooking.setStadium(_s);
-                model.addAttribute("stadiumBooking", stadiumBooking);
-            }else {
-                return "/stadiumbooking/detail";
+                stadiumBooking = stadiumBookingService.queryByPK(id1);
+            }else{
+                stadiumBooking = stadiumBookingService.queryByPK(id);
             }
+            model.addAttribute("stadiumBooking", stadiumBooking);
         }catch (Exception e){
             e.printStackTrace();
         }

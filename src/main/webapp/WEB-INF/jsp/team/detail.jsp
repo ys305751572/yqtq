@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>logo:</label>
-                        <img id="avater" name="avater" src="${team.avater}" alt="">
+                        <img id="avater" name="avater" src="${team.avaterAbsolutePath}" alt="">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>队名:</label>
@@ -68,18 +68,14 @@
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
-                            <label>头像</label>
-                            <p></p>
-                            <p></p>
-                            <c:forEach items="${teamMember}" var="item">
-                                <c:forEach items="${userList}" var="u">
-                                    <c:if test="${item.userId eq u.id}">
-                                        <a onclick="$team.fn.detail(${item.userId})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                                            <img src="${u.avater}" alt="">
-                                        </a>
-                                    </c:if>
-                                </c:forEach>
-                            </c:forEach>
+                        <label>头像</label>
+                        <p></p>
+                        <p></p>
+                        <c:forEach items="${user}" var="v">
+                            <a onclick="$team.fn.detail(${v.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
+                                <img src="${v.avaterAbsolutePath}" alt="">
+                            </a>
+                        </c:forEach>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>

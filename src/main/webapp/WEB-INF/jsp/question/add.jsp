@@ -35,7 +35,7 @@
         </div>
         <hr class="whiter m-t-20"/>
         <h1 class="page-title">题库信息</h1>
-        <form id="fromId" name="formName" method="post" action="${contextPath}/admin/question/q/save" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" action="${contextPath}/admin/question/q/save" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="tid" name="tid" value="${tidMap.tid}">
                 <div class="row questionRow" id="question1">

@@ -85,8 +85,6 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
     public String detail(Long id, Model model){
         try{
             BigRace bigRace = bigRaceService.queryByPK(id);
-            bigRace.setAvater1(StringUtils.isNotBlank(bigRace.getAvater1()) ? ConfigUtil.getString("upload.url")+bigRace.getAvater1() : "");
-            bigRace.setAvater2(StringUtils.isNotBlank(bigRace.getAvater2()) ? ConfigUtil.getString("upload.url")+bigRace.getAvater2() : "");
             model.addAttribute("bigRace", bigRace);
         }catch (Exception e){
             e.printStackTrace();
@@ -122,8 +120,6 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
         try{
             if(id!=null){
                 BigRace bigRace = bigRaceService.queryByPK(id);
-                bigRace.setAvater1(StringUtils.isNotBlank(bigRace.getAvater1()) ? ConfigUtil.getString("upload.url")+bigRace.getAvater1() : "");
-                bigRace.setAvater2(StringUtils.isNotBlank(bigRace.getAvater2()) ? ConfigUtil.getString("upload.url")+bigRace.getAvater2() : "");
                 model.addAttribute("bigRace", bigRace);
             }
         }catch (Exception e){
@@ -142,7 +138,7 @@ public class BigRaceController extends GenericEntityController<BigRace,BigRace,B
      */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(BigRace bigRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile2,String detail,Long stadiumId){
+    public Result save(BigRace bigRace, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile, @RequestParam(value = "imageFile2",required = false) MultipartFile imageFile2,String detail,Long stadiumId){
         BigRace b = null;
         Stadium s = new Stadium();
         try{

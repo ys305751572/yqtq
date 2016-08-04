@@ -192,7 +192,7 @@
                 <h4 class="page-title">首页</h4>
                 <!-- Quick Stats -->
                 <div style="background-color: rgba(238, 238, 238, 0.09);width:auto;height: 70px">
-                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
+                    <div style="float: left;margin-left: 25px;margin-top: 15px;">
                         <a data-toggle="modal" href="${contextPath}/admin/user/index?details=1" title="新增用户" class="btn btn-alt m-r-5">新增用户( ${newUserNum} )</a>
                     </div>
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
@@ -215,6 +215,9 @@
                     </div>
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
                         <a data-toggle="modal" href="${contextPath}/admin/stadiumUserWithdraw/index?details=1" title="新增提现" class="btn btn-alt m-r-5">新增提现( ${newWithdrawNum} )</a>
+                    </div>
+                    <div style="float: right;margin-right: 20px;margin-top: 15px;">
+                        <a data-toggle="modal" href="${contextPath}/admin/logout" title="退出" class="btn btn-alt m-r-5">退&nbsp;&nbsp;&nbsp;出</a>
                     </div>
                 </div>
                 <div class="block-area" id="tableBordered">

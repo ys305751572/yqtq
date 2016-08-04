@@ -28,6 +28,7 @@
                     <th>反馈时间</th>
                     <th>联系方式</th>
                     <th>反馈内容</th>
+                    <th>反馈详情</th>
                 </tr>
                 </thead>
             </table>
@@ -37,23 +38,23 @@
 </section>
 <!-- JS -->
 <%@ include file="../inc/new/foot.jsp" %>
-
+<%@ include file="detail.jsp" %>
 <script>
-    $girl = {
+    $userfeedback = {
         v: {
             list: [],
             dTable: null
         },
         fn: {
             init: function () {
-                $girl.fn.dataTableInit();
+                $userfeedback.fn.dataTableInit();
 
                 $("#c_search").click(function () {
-                    $girl.v.dTable.ajax.reload();
+                    $userfeedback.v.dTable.ajax.reload();
                 });
             },
             dataTableInit: function () {
-                $girl.v.dTable = $leoman.dataTable($('#dataTables'), {
+                $userfeedback.v.dTable = $leoman.dataTable($('#dataTables'), {
                     "processing": true,
                     "serverSide": true,
                     "searching": false,
@@ -78,7 +79,25 @@
                             "sDefaultContent" : ""
                         },
                         {"data": "user.mobile","sDefaultContent" : ""},
-                        {"data": "content","sDefaultContent" : ""}
+                        {
+                            "data": "content",
+                            render: function (data) {
+                                if (null != data && data != '') {
+                                    return data.length > 30 ? (data.substring(0, 30) + '...') : data;
+                                } else {
+                                    return "";
+                                }
+                            },
+                            "sDefaultContent" : ""
+                        },
+                        {
+                            "data": "content",
+                            "render": function (data,type,full) {
+                                var detail = "<button title='查看详情' class='btn btn-primary btn-circle detail' onclick=\"$userfeedback.fn.detail(\'" + data + "\')\">" +
+                                        "<i class='fa fa-eye'></i></button>";
+                                return detail
+                            }
+                        }
 
                     ],
                     "fnServerParams": function (aoData) {
@@ -86,12 +105,16 @@
                     }
                 });
             },
+            detail : function(data){
+                $('#detail').html(data);
+                $("#form_detail").modal("show");
+            },
             responseComplete: function (result, action) {
                 if (result.status == "0") {
                     if (action) {
-                        $girl.v.dTable.ajax.reload(null, false);
+                        $userfeedback.v.dTable.ajax.reload(null, false);
                     } else {
-                        $girl.v.dTable.ajax.reload();
+                        $userfeedback.v.dTable.ajax.reload();
                     }
                     $leoman.notify(result.msg, "success");
                 } else {
@@ -101,7 +124,7 @@
         }
     }
     $(function () {
-        $girl.fn.init();
+        $userfeedback.fn.init();
     })
 </script>
 <script>

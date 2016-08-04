@@ -24,7 +24,7 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">平台赛事</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${hostRace.id}">
                 <div class="row">
@@ -36,9 +36,7 @@
                         <label>赛事封面：</label>
                         <div class="fileupload fileupload-new" data-provides="fileupload">
                             <div class="fileupload-preview thumbnail form-control">
-                                <c:if test="${hostRace.avater ne null}">
-                                    <img src="${hostRace.avater}">
-                                </c:if>
+                                <img src="${hostRace.avaterAbsolutePath}">
                             </div>
                             <div>
                                 <span class="btn btn-file btn-alt btn-sm">
@@ -70,13 +68,13 @@
                     </c:if>
                     <div class="col-md-6 m-b-15">
                         <label>比赛时间：</label>
-                        <input type="text" id="sDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${hostRace.startDate}'></date:date>" name="sDate" class="input-sm form_datetime form-control " placeholder="..." >
+                        <input type="text" id="sDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${hostRace.startDate}'></date:date>" name="sDate" class="input-sm form_datetime form-control validate[required]" placeholder="..." >
                         <input type="hidden" id="startDate" value="" name="startDate">
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15">
                         <label>赛事简介: </label>
-                        <div class="wysiwye-editor" id="detail" name="detail">${hostRace.description}</div>
+                        <div class="wysiwye-editor validate[required]" id="detail" name="detail">${hostRace.description}</div>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
@@ -108,6 +106,9 @@
             save : function () {
                 var code =  $('.wysiwye-editor').code();
                 var isCheck = true;
+                if(!$("#formId").validationEngine("validate")) {
+                    return;
+                }
                 if($("#name").val()==""){
                     $leoman.notify('赛事名称不能为空', "error");
                     isCheck=false;
@@ -140,7 +141,7 @@
                 if(isCheck){
                     var date = this.transdate($("#sDate").val());
                     $("#startDate").val(date);
-                    $("#fromId").ajaxSubmit({
+                    $("#formId").ajaxSubmit({
                         url : "${contextPath}/admin/hostRace/save",
                         type : "POST",
                         data : {

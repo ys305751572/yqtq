@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-md-6 m-b-15">
                     <label>赛事封面:</label>
-                    <img src="${hostRace.avater}" alt="">
+                    <img src="${hostRace.avaterAbsolutePath}" alt="">
                 </div>
                 <hr class="whiter m-t-20"/>
                 <div class="col-md-6 m-b-15">
@@ -39,7 +39,7 @@
                     <input type="text" id="address" value="${hostRace.stadium.address}" name="address" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <hr class="whiter m-t-20"/>
-                <div class="col-md-6 m-b-15">
+                <div class="col-md-12 m-b-15">
                     <label>赛事详情:</label>
                     <div class="wysiwye-editor" id="detail" name="detail">${hostRace.description}</div>
                 </div>

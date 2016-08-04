@@ -4,6 +4,8 @@ import com.leoman.city.entity.City;
 import com.leoman.city.entity.Province;
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.user.entity.User;
+import com.leoman.utils.ConfigUtil;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.JoinFormula;
 
 import javax.persistence.*;
@@ -58,6 +60,21 @@ public class Team extends BaseEntity {
     @Transient
     private Integer tmSetNum;
 
+    @Transient
+    private String avaterAbsolutePath;
+
+    public String getAvaterAbsolutePath() {
+        if(StringUtils.isNotBlank(avater)){
+            return ConfigUtil.getString("upload.url") + getAvater();
+        }else {
+            return "";
+        }
+    }
+
+    public void setAvaterAbsolutePath(String avaterAbsolutePath) {
+        this.avaterAbsolutePath = avaterAbsolutePath;
+    }
+
     public Integer getTmSetNum() {
         return tmSet.size();
     }
@@ -84,15 +101,25 @@ public class Team extends BaseEntity {
 
     public String getName() {
         return name;
-    }public void setName(String name) {
+    }
+
+    public void setName(String name) {
         this.name = name;
-    }public String getSlogan() {
+    }
+
+    public String getSlogan() {
         return slogan;
-    }public void setSlogan(String slogan) {
+    }
+
+    public void setSlogan(String slogan) {
         this.slogan = slogan;
-    }public String getAvater() {
+    }
+
+    public String getAvater() {
         return avater;
-    }public void setAvater(String avater) {
+    }
+
+    public void setAvater(String avater) {
         this.avater = avater;
     }
 

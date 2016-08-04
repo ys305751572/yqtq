@@ -28,7 +28,7 @@
                 <input type="hidden" id="id" name="id" value="${watchingRace.id}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
-                        <img src="${watchingRace.avater}" alt="">
+                        <img src="${watchingRace.avaterAbsolutePath}" alt="">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>看球名称:</label>

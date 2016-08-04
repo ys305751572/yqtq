@@ -23,7 +23,7 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">场地编辑</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${stadium.id}">
                 <input type="hidden" id="cId" name="cId" value="${stadium.city.cityId}">
@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>详细地址：</label>
-                        <input type="text" id="address" name="address" value="${stadium.address}"  class="input-sm form-control " placeholder="..."  disabled>
+                        <input type="text" id="address" name="address" value="${stadium.address}"  class="input-sm form-control validate[required]" placeholder="..."  disabled>
                         <input type="hidden" id="lng" name="longitude" value="${stadium.longitude}" >
                         <input type="hidden" id="lat" name="latitude" value="${stadium.latitude}" >
                         <a onclick="$user.fn.map()" class="btn btn-alt m-r-5" style="margin-top: 10px">选择</a>
@@ -83,9 +83,7 @@
                         <label>球场封面：</label>
                         <div class="fileupload fileupload-new" data-provides="fileupload">
                             <div class="fileupload-preview thumbnail form-control">
-                                <c:if test="${stadium.avater ne null}">
-                                    <img src="${stadium.avater}">
-                                </c:if>
+                                <img src="${stadium.avaterAbsolutePath}">
                             </div>
                             <div>
                                 <span class="btn btn-file btn-alt btn-sm">
@@ -143,9 +141,8 @@
             },
             save : function () {
                 var isCheck = true;
-                if($("#name").val()==""){
-                    $leoman.notify('球场名称不能为空', "error");
-                    isCheck=false;
+                if(!$("#formId").validationEngine("validate")) {
+                    return;
                 }
                 if($("#provinceId").val()==""){
                     $leoman.notify('省份不能为空', "error");
@@ -180,7 +177,7 @@
                         longitude : $("#lng").val(),
                         latitude : $("#lat").val()
                     }
-                    $("#fromId").ajaxSubmit({
+                    $("#formId").ajaxSubmit({
                         url : "${contextPath}/admin/stadium/save",
                         type : "POST",
                         data : {

@@ -3,6 +3,8 @@ package com.leoman.watchingrace.entity;
 import com.leoman.city.entity.City;
 import com.leoman.city.entity.Province;
 import com.leoman.common.entity.BaseEntity;
+import com.leoman.utils.ConfigUtil;
+import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.*;
 
@@ -35,6 +37,21 @@ public class WatchingRace extends BaseEntity{
 
     @Column(name = "description")
     private String description;
+
+    @Transient
+    private String avaterAbsolutePath;
+
+    public String getAvaterAbsolutePath() {
+        if(StringUtils.isNotBlank(avater)){
+            return ConfigUtil.getString("upload.url") + getAvater();
+        }else {
+            return "";
+        }
+    }
+
+    public void setAvaterAbsolutePath(String avaterAbsolutePath) {
+        this.avaterAbsolutePath = avaterAbsolutePath;
+    }
 
     public Integer getInvitation() {
         return invitation;

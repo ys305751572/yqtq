@@ -23,7 +23,7 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">管理权限</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${role.id}">
                 <input type="hidden" id="roleModule" name="roleModule" value="${roleModule}">
@@ -109,6 +109,9 @@
             save : function () {
                 var cb = $('input:checkbox[name="modules"]:checked');
                 var isCheck = true;
+                if(!$("#formId").validationEngine("validate")) {
+                    return;
+                }
                 if($("#name").val()==""){
                     $leoman.notify('角色名称不能为空', "error");
                     isCheck=false;
@@ -123,7 +126,7 @@
                         role_add.v.ids.push($(this).val());
                     });
                     console.log(role_add.v.ids);
-                    $("#fromId").ajaxSubmit({
+                    $("#formId").ajaxSubmit({
                         url : "${contextPath}/admin/role/save",
                         type : "POST",
                         data : {

@@ -98,12 +98,7 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
             girl.setGuSize(girlService.findSize(id));
             model.addAttribute("girl", girl);
             List<GirlImage> imageList = girlImageService.queryByProperty("girlId",id);
-            List image = new ArrayList();
-            for(GirlImage _image : imageList){
-                _image.setUrl(StringUtils.isNotBlank(_image.getUrl()) ? ConfigUtil.getString("upload.url") + _image.getUrl() : "");
-                image.add(_image);
-            }
-            model.addAttribute("image",image);
+            model.addAttribute("image",imageList);
             Integer avgStar = girlCommentService.avgStar(id);
             model.addAttribute("avgStar",avgStar);
         }catch (Exception e){
@@ -144,12 +139,7 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
                 Girl girl = girlService.queryByPK(id);
                 model.addAttribute("girl", girl);
                 List<GirlImage> imageList = girlImageService.queryByProperty("girlId",id);
-                List image = new ArrayList();
-                for(GirlImage _image : imageList){
-                    _image.setUrl(StringUtils.isNotBlank(_image.getUrl()) ? ConfigUtil.getString("upload.url") + _image.getUrl() : "");
-                    image.add(_image);
-                }
-                model.addAttribute("image",image);
+                model.addAttribute("image",imageList);
             }
         }catch (Exception e){
             e.printStackTrace();

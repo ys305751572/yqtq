@@ -23,7 +23,7 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">看球编辑</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${watchingRace.id}">
                 <input type="hidden" id="cId" name="cId" value="${watchingRace.city.cityId}">
@@ -51,13 +51,13 @@
                         <label>球场封面：</label>
                         <div class="fileupload fileupload-new" data-provides="fileupload">
                             <div class="fileupload-preview thumbnail form-control">
-                                <img src="${watchingRace.avater}">
+                                <img src="${watchingRace.avaterAbsolutePath}">
                             </div>
                             <div>
                                 <span class="btn btn-file btn-alt btn-sm">
                                     <span class="fileupload-new">选择图片</span>
                                     <span class="fileupload-exists">更改</span>
-                                    <input id="imageFile" name="imageFile" type="file" value="${watchingRace.avater}"/>
+                                    <input id="imageFile" name="imageFile" type="file" value="${watchingRace.avaterAbsolutePath}"/>
                                 </span>
                                 <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
                             </div>
@@ -98,6 +98,9 @@
             },
             save : function () {
                 var isCheck = true;
+                if(!$("#formId").validationEngine("validate")) {
+                    return;
+                }
                 if($("#name").val()==""){
                     $leoman.notify('看球名称不能为空', "error");
                     isCheck=false;
@@ -120,7 +123,7 @@
                 }
                 if(isCheck){
                     var code =  $('.wysiwye-editor').code();
-                    $("#fromId").ajaxSubmit({
+                    $("#formId").ajaxSubmit({
                         url : "${contextPath}/admin/watchingRace/save",
                         type : "POST",
                         data : {

@@ -129,7 +129,6 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
         for(UserReserveJoin u : userReserveJoins){
             User user = userService.queryByPK(u.getUserId());
             if(user!=null){
-                user.setAvater(StringUtils.isNotBlank(user.getAvater()) ? ConfigUtil.getString("upload.url") + user.getAvater() : "");
                 list.add(user);
             }
         }

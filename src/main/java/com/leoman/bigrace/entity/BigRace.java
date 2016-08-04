@@ -2,6 +2,8 @@ package com.leoman.bigrace.entity;
 
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.stadium.entity.Stadium;
+import com.leoman.utils.ConfigUtil;
+import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.*;
 
@@ -39,6 +41,35 @@ public class BigRace extends BaseEntity{
     @Column(name = "description")
     private String description;
 
+    @Transient
+    private String avater1AbsolutePath;
+
+    @Transient
+    private String avater2AbsolutePath;
+
+    public String getAvater2AbsolutePath() {
+        if(StringUtils.isNotBlank(avater2)){
+            return ConfigUtil.getString("upload.url") + getAvater2();
+        }else {
+            return "";
+        }
+    }
+
+    public void setAvater2AbsolutePath(String avater2AbsolutePath) {
+        this.avater2AbsolutePath = avater2AbsolutePath;
+    }
+
+    public String getAvater1AbsolutePath() {
+        if(StringUtils.isNotBlank(avater1)){
+            return ConfigUtil.getString("upload.url") + getAvater1();
+        }else {
+            return "";
+        }
+    }
+
+    public void setAvater1AbsolutePath(String avater1AbsolutePath) {
+        this.avater1AbsolutePath = avater1AbsolutePath;
+    }
 
     public Stadium getStadium() {
         return stadium;

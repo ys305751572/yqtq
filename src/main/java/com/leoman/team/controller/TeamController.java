@@ -95,17 +95,7 @@ public class TeamController extends GenericEntityController<Team, Team, TeamServ
         try{
             Team team = teamService.findById(id);
             team.setTmSize(teamService.findTmSize(id));
-            team.setAvater(StringUtils.isNotBlank(team.getAvater()) ? ConfigUtil.getString("upload.url") + team.getAvater() : "");
             model.addAttribute("team", team);
-            List<TeamMember> teamMember = teamMemberService.findByTeamId(id);
-            model.addAttribute("teamMember",teamMember);
-            List<User> list = userService.queryAll();
-            List<User> userList = new ArrayList<>();
-            for(User u : list){
-                u.setAvater(StringUtils.isNotBlank(u.getAvater()) ? ConfigUtil.getString("upload.url") + u.getAvater() : "");
-                userList.add(u);
-            }
-            model.addAttribute("userList",userList);
             List<User> user = teamMemberService.findByAvater(id);
             model.addAttribute("user",user);
 

@@ -119,7 +119,6 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
                 model.addAttribute("isEd",isEd);
             }
             Stadium stadium = stadiumService.findById(id);
-            stadium.setAvater(StringUtils.isNotBlank(stadium.getAvater()) ? ConfigUtil.getString("upload.url")+stadium.getAvater() : "");
             model.addAttribute("stadium", stadium);
             List<StadiumUser> list = stadiumUserService.queryByProperty("id",stadium.getStadiumUserId());
             if(list.size()>0 && list!=null){
@@ -160,7 +159,6 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
             model.addAttribute("province",province);
             if(id!=null){
                 Stadium stadium = stadiumService.findById(id);
-                stadium.setAvater(StringUtils.isNotBlank(stadium.getAvater()) ? ConfigUtil.getString("upload.url")+stadium.getAvater() : "");
                 model.addAttribute("stadium", stadium);
             }
 

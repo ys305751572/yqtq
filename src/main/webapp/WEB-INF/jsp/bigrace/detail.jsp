@@ -29,7 +29,7 @@
                     <h3>${bigRace.name}</h3>
                     <div class="col-md-12 m-b-15">
                         <label>比赛队伍:</label>
-                        <img src="${bigRace.avater1}" alt=""> VS <img src="${bigRace.avater2}" alt="">
+                        <img src="${bigRace.avater1AbsolutePath}" alt=""> VS <img src="${bigRace.avater2AbsolutePath}" alt="">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>地区:</label>

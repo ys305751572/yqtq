@@ -23,7 +23,7 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">vip等级说明编辑</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data"
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data"
               class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${vipLevelMessage.id}">
@@ -62,7 +62,7 @@
             },
             save: function () {
                 var code = $('.wysiwye-editor').code();
-                $("#fromId").ajaxSubmit({
+                $("#formId").ajaxSubmit({
                     url: "${contextPath}/admin/vipLevelMessage/save",
                     type: "POST",
                     data: {

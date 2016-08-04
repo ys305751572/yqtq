@@ -5,6 +5,8 @@ import com.leoman.city.entity.Province;
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.entity.ReserveTeam;
+import com.leoman.utils.ConfigUtil;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -97,6 +99,21 @@ public class Stadium extends BaseEntity {
     //累计金额
     @Transient
     private Integer accumulatedAmount;
+
+    @Transient
+    private String avaterAbsolutePath;
+
+    public String getAvaterAbsolutePath() {
+        if(StringUtils.isNotBlank(avater)){
+            return ConfigUtil.getString("upload.url") + getAvater();
+        }else {
+            return "";
+        }
+    }
+
+    public void setAvaterAbsolutePath(String avaterAbsolutePath) {
+        this.avaterAbsolutePath = avaterAbsolutePath;
+    }
 
     public Integer getAccumulatedAmount() {
         return accumulatedAmount;

@@ -76,10 +76,8 @@ public class TeamRaceController  extends GenericEntityController<TeamRace, TeamR
         try{
             TeamRace teamRace = teamRaceService.findById(id);
             Team homeTeam = teamRace.getHomeTeam();
-            homeTeam.setAvater(StringUtils.isNotBlank(homeTeam.getAvater()) ? ConfigUtil.getString("upload.url")+homeTeam.getAvater() : "");
             teamRace.setHomeTeam(homeTeam);
             Team visitingTeam = teamRace.getVisitingTeam();
-            visitingTeam.setAvater(StringUtils.isNotBlank(visitingTeam.getAvater()) ? ConfigUtil.getString("upload.url")+visitingTeam.getAvater() : "");
             teamRace.setVisitingTeam(visitingTeam);
             model.addAttribute("teamRace", teamRace);
             List<Team> team = teamService.findAll();

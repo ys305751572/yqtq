@@ -36,12 +36,7 @@ public class SystemBannerController extends GenericEntityController<SystemBanner
 
     @RequestMapping(value = "/index")
     public String index(Model model){
-        List<SystemBanner> systemBannerList =  systemBannerService.queryAll();
-        List<SystemBanner> systemBanner = new ArrayList<>();
-        for(SystemBanner s :  systemBannerList){
-            s.setAvater(StringUtils.isNotBlank(s.getAvater()) ? ConfigUtil.getString("upload.url")+s.getAvater() : "");
-            systemBanner.add(s);
-        }
+        List<SystemBanner> systemBanner =  systemBannerService.queryAll();
         model.addAttribute("systemBanner",systemBanner);
         return "/systembanner/list";
     }

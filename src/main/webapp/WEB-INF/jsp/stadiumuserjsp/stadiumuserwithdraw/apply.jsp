@@ -23,16 +23,16 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">看球编辑</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${stadiumUser.id}">
                 <div class="row">
-                    <div class="col-md-12 m-b-15">
+                    <div class="col-md-6 m-b-15">
                         <label>提现金额：</label>
-                        <input type="text" id="withdrawMoney" name="withdrawMoney" maxlength="10" value="" class="input-sm form-control validate[required]" placeholder="..." style="width: 50%" onkeyup="value=value.replace(/[^0-9.]/g,'')">
+                        <input type="text" id="withdrawMoney" name="withdrawMoney" maxlength="10" value="" class="input-sm form-control validate[required]" placeholder="..."  onkeyup="value=value.replace(/[^0-9.]/g,'')">
                         <span>最低金额为100元</span>
                     </div>
-                    <div>
+                    <div class="col-md-12 m-b-15">
                         <p>1.申请取现后，平台审核后会转账到您的帐户最低金额为100元</p>
                         <p>2.之前审核未结束之前不能再次取现</p>
                     </div>
@@ -65,6 +65,9 @@
                 $user.fn.selectCity(opt);
             },
             save : function () {
+                if(!$("#formId").validationEngine("validate")) {
+                    return;
+                }
                 var isCheck = true;
                 var num = 100;
                 var withdrawMoney = $("#withdrawMoney").val();

@@ -93,7 +93,6 @@ public class UserController extends CommonController {
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public String detail(Long id, Model model) {
         User user = service.queryByPK(id);
-        user.setAvater(StringUtils.isNotBlank(user.getAvater()) ? ConfigUtil.getString("upload.url") + user.getAvater() : "");
         model.addAttribute("user", user);
         return "user/detail";
     }

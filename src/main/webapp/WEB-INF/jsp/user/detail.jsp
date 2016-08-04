@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-md-6 m-b-15">
                     <label>头像</label>
-                    <img src="${user.avater}" alt="">
+                    <img src="${user.avaterAbsolutePath}" alt="">
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>账 号:</label>

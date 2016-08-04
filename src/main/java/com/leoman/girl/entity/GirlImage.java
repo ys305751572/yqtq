@@ -1,6 +1,8 @@
 package com.leoman.girl.entity;
 
 import com.leoman.common.entity.BaseEntity;
+import com.leoman.utils.ConfigUtil;
+import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +42,11 @@ public class GirlImage extends BaseEntity{
     }
 
     public String getUrl() {
-        return url;
+        if(StringUtils.isNotBlank(url)){
+            return ConfigUtil.getString("upload.url") + this.url;
+        }else {
+            return "";
+        }
     }
 
     public void setUrl(String url) {

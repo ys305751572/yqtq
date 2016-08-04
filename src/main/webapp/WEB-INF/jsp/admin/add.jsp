@@ -23,7 +23,7 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">管理人员</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${admin.id}">
                 <input type="hidden" id="userRole" name="userRole" value="${userRole}">
@@ -95,13 +95,8 @@
                 var password = $("#password").val();
                 var id = $("#id").val();
                 var isCheck = true;
-                if($("#username").val()==""){
-                    $leoman.notify('用户名不能为空', "error");
-                    isCheck=false;
-                }
-                if($("#password").val()==""){
-                    $leoman.notify('密码不能为空', "error");
-                    isCheck=false;
+                if(!$("#formId").validationEngine("validate")) {
+                    return;
                 }
                 if(cb.length==0){
                     $leoman.notify('权限不能为空', "error");

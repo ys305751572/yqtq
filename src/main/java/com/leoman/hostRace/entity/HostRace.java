@@ -2,6 +2,8 @@ package com.leoman.hostRace.entity;
 
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.stadium.entity.Stadium;
+import com.leoman.utils.ConfigUtil;
+import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -41,6 +43,21 @@ public class HostRace extends BaseEntity {
     //队伍数
     @Transient
     private Integer hrNum;
+
+    @Transient
+    private String avaterAbsolutePath;
+
+    public String getAvaterAbsolutePath() {
+        if(StringUtils.isNotBlank(avater)){
+            return ConfigUtil.getString("upload.url") + getAvater();
+        }else {
+            return "";
+        }
+    }
+
+    public void setAvaterAbsolutePath(String avaterAbsolutePath) {
+        this.avaterAbsolutePath = avaterAbsolutePath;
+    }
 
     public Integer getHrNum() {
         return hrSet.size();

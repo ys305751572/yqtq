@@ -30,7 +30,7 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">场地编辑</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${stadium.id}">
                 <input type="hidden" id="cId" name="cId" value="${stadium.city.cityId}">
@@ -243,7 +243,7 @@
                     isCheck=false;
                 }
                 if(isCheck){
-                    $("#fromId").ajaxSubmit({
+                    $("#formId").ajaxSubmit({
                         url : "${contextPath}/stadium/stadium/editStadiumSub",
                         type : "POST",
                         data : {
@@ -298,6 +298,9 @@
                 window.location.href = "${contextPath}/stadium/stadium/reserve?id="+id+"&code="+code;
             },
             save : function () {
+                if(!$("#formId").validationEngine("validate")) {
+                    return;
+                }
                 var isCheck = true;
                 if($("#name").val()==""){
                     $leoman.notify('球场名称不能为空', "error");
@@ -329,6 +332,9 @@
                 }
 
                 if(isCheck){
+                    if(!$("#formId").validationEngine("validate")) {
+                        return;
+                    }
                     $user.v.code = [];
                     $("#stadiumSubs input[name='code']").each(function(){
                         $user.v.code.push($(this).val());
@@ -352,7 +358,7 @@
                         longitude : $("#lng").val(),
                         latitude : $("#lat").val()
                     };
-                    $("#fromId").ajaxSubmit({
+                    $("#formId").ajaxSubmit({
                         url : "${contextPath}/stadium/stadium/save",
                         type : "POST",
                         data : {

@@ -30,7 +30,7 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">信誉度设置</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <div class="row">
                     <div class="col-md-12 m-b-15">
@@ -97,7 +97,7 @@
                 if(isCheck){
                     var credibility1 = $("#credibility1").val();
                     var action =  $('#action').val();
-                    $("#fromId").ajaxSubmit({
+                    $("#formId").ajaxSubmit({
                         url : "${contextPath}/admin/systemVipCredibility/systemVipCredibilitySave",
                         type : "POST",
                         data : {

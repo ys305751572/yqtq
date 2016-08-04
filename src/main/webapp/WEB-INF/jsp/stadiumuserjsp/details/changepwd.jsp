@@ -23,21 +23,21 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">新增球场主</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${stadiumUser.id}">
                 <div class="row">
-                    <div class="col-md-12 m-b-15">
+                    <div class="col-md-6 m-b-15">
                         <label>密码：</label>
-                        <input onblur="$changePwd.fn.checkPwd()" type="password" id="originalPwd" name="originalPwd" value="" maxlength="12" class="input-sm form-control validate" placeholder="请输入登录密码" style="width: 50%">
+                        <input onblur="$changePwd.fn.checkPwd()" type="password" id="originalPwd" name="originalPwd" value="" maxlength="12" class="input-sm form-control validate[required]" placeholder="请输入登录密码" >
                     </div>
-                    <div class="col-md-12 m-b-15">
+                    <div class="col-md-6 m-b-15">
                         <label>新密码：</label>
-                        <input type="password" id="newPwd" name="newPwd" value="" maxlength="12" class="input-sm form-control validate" placeholder="输入新密码" style="width: 50%" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')" >
+                        <input type="password" id="newPwd" name="newPwd" value="" maxlength="12" class="input-sm form-control validate[required]" placeholder="输入新密码" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')" >
                     </div>
-                    <div class="col-md-12 m-b-15">
+                    <div class="col-md-6 m-b-15">
                         <label>确认新密码：</label>
-                        <input type="password" id="confirmPwd" name="confirmPwd" value="" maxlength="12" class="input-sm form-control validate" placeholder="再次输入新密码" style="width: 50%" onkeyup="value=value.replace(/[^0-9]/g,'')">
+                        <input type="password" id="confirmPwd" name="confirmPwd" value="" maxlength="12" class="input-sm form-control validate[required]" placeholder="再次输入新密码" onkeyup="value=value.replace(/[^0-9]/g,'')">
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
@@ -64,7 +64,7 @@
         },
         fn: {
             init: function () {
-                $("#fromId").validationEngine();
+                $("#formId").validationEngine();
             },
             checkPwd : function(){
                 if($("#originalPwd").val()!=""){
@@ -78,6 +78,7 @@
                         success : function(result) {
                             if(!result.status) {
                                 $leoman.notify(result.msg,"error");
+                                $("#originalPwd").val("");
                                 return;
                             }
                         }
@@ -86,6 +87,9 @@
             },
             save : function () {
                 var isCheck = true;
+                if(!$("#formId").validationEngine("validate")) {
+                    return;
+                }
                 var originalPwd = $("#originalPwd").val();
                 var newPwd = $("#newPwd").val();
                 var confirmPwd = $("#confirmPwd").val();
@@ -119,7 +123,7 @@
                 }
 
                 if(isCheck){
-                    $("#fromId").ajaxSubmit({
+                    $("#formId").ajaxSubmit({
                         url : "${contextPath}/stadium/details/savePwd",
                         type : "POST",
                         data : {

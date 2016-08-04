@@ -23,7 +23,7 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">新增球场主</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${stadiumUser.id}">
                 <input type="hidden" id="cId" name="cId" value="${stadiumUser.city.cityId}">
@@ -84,12 +84,14 @@
         },
         fn: {
             init: function () {
-                $("#fromId").validationEngine();
+                $("#formId").validationEngine();
                 var opt=$("#provinceId").val();
                 $user.fn.selectCity(opt);
             },
             save : function () {
-
+                if(!$("#formId").validationEngine("validate")) {
+                    return;
+                }
                 var isCheck = true;
                 if($("#nickName").val()==""){
                     $leoman.notify('姓名不能为空', "error");
@@ -117,7 +119,7 @@
                 }
                 if(isCheck){
                     var code =  $('.wysiwye-editor').code();
-                    $("#fromId").ajaxSubmit({
+                    $("#formId").ajaxSubmit({
                         url : "${contextPath}/stadium/details/save",
                         type : "POST",
                         data : {

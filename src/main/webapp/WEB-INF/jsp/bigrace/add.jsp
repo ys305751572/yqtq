@@ -23,7 +23,7 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">赛事编辑</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${bigRace.id}">
                 <div class="row">
@@ -31,6 +31,7 @@
                         <label>看球名称：</label>
                         <input type="text" id="name" name="name" value="${bigRace.name}" class="input-sm form-control validate[required]" placeholder="...">
                     </div>
+                    <hr class="whiter m-t-20"/>
                     <div class="col-md-6 m-b-15">
                         <label>球队甲方：</label>
                         <input type="text" id="team1name" name="team1name" value="${bigRace.team1name}" class="input-sm form-control validate[required]" placeholder="...">
@@ -39,8 +40,8 @@
                         <label>球队封面：</label>
                         <div class="fileupload fileupload-new" data-provides="fileupload">
                             <div class="fileupload-preview thumbnail form-control">
-                                <c:if test="${bigRace.avater1 ne null}">
-                                    <img src="${bigRace.avater1}">
+                                <c:if test="${bigRace.avater1AbsolutePath ne null}">
+                                    <img src="${bigRace.avater1AbsolutePath}">
                                 </c:if>
                             </div>
                             <div>
@@ -61,15 +62,15 @@
                         <label>球队封面：</label>
                         <div class="fileupload fileupload-new" data-provides="fileupload">
                             <div class="fileupload-preview thumbnail form-control">
-                                <c:if test="${bigRace.avater2 ne null}">
-                                    <img src="${bigRace.avater2}">
+                                <c:if test="${bigRace.avater2AbsolutePath ne null}">
+                                    <img src="${bigRace.avater2AbsolutePath}">
                                 </c:if>
                             </div>
                             <div>
                                 <span class="btn btn-file btn-alt btn-sm">
                                     <span class="fileupload-new">选择图片</span>
                                     <span class="fileupload-exists">更改</span>
-                                    <input id="imageFile2" name="imageFile" type="file"/>
+                                    <input id="imageFile2" name="imageFile2" type="file"/>
                                 </span>
                                 <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
                             </div>
@@ -84,7 +85,7 @@
 
                     <div class="col-md-6 m-b-15">
                         <label>比赛时间：</label>
-                        <input type="text" id="sDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${bigRace.startDate}'></date:date>" name="sDate" class="input-sm form_datetime form-control " placeholder="..." >
+                        <input type="text" id="sDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${bigRace.startDate}'></date:date>" name="sDate" class="input-sm form_datetime form-control validate[required]" placeholder="..." >
                         <input type="hidden" id="startDate" value="" name="startDate">
                     </div>
 
@@ -122,6 +123,9 @@
             save : function () {
                 var code =  $('.wysiwye-editor').code();
                 var isCheck = true;
+                if(!$("#formId").validationEngine("validate")) {
+                    return;
+                }
                 if($("#name").val()==""){
                     $leoman.notify('看球名称不能为空', "error");
                     isCheck=false;
@@ -153,7 +157,7 @@
                 if(isCheck){
                     var startDate = this.transdate($("#sDate").val());
                     $("#startDate").val(startDate);
-                    $("#fromId").ajaxSubmit({
+                    $("#formId").ajaxSubmit({
                         url : "${contextPath}/admin/bigRace/save",
                         type : "POST",
                         data : {

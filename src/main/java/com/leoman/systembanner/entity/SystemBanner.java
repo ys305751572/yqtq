@@ -1,6 +1,8 @@
 package com.leoman.systembanner.entity;
 
 import com.leoman.common.entity.BaseEntity;
+import com.leoman.utils.ConfigUtil;
+import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +25,11 @@ public class SystemBanner extends BaseEntity{
     private Integer type;
 
     public String getAvater() {
-        return avater;
+        if(StringUtils.isNotBlank(avater)){
+            return ConfigUtil.getString("upload.url") + this.avater;
+        }else {
+            return "";
+        }
     }
 
     public void setAvater(String avater) {

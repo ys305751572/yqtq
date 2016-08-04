@@ -23,7 +23,7 @@
             <li><a href="javascript:history.go(-1);" title="返回"><span class="icon">&#61771;</span></a></li>
         </ol>
         <h1 class="page-title">管理人员</h1>
-        <form id="fromId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
+        <form id="formId" name="formName" method="post" enctype="multipart/form-data" class="box tile animated active form-validation-1">
             <div class="block-area">
                 <c:if test="${isEdit ne null }"><input type="hidden" id="id" name="id" value="${module.id}"></c:if>
                 <input type="hidden" id="isEditModule" name="isEdit" value="${isEdit}">
@@ -84,6 +84,9 @@
             init: function () {
             },
             save : function () {
+                if(!$("#formId").validationEngine("validate")) {
+                    return;
+                }
                 var moduleParentId = $("#moduleParentId").val();
                 var parentName = $("#parentName").val();
                 var name = $("#name").val();
@@ -104,7 +107,7 @@
                 }
                 console.log(isCheck);
                 if(isCheck){
-                    $("#fromId").ajaxSubmit({
+                    $("#formId").ajaxSubmit({
                         url : "${contextPath}/admin/module/save",
                         type : "POST",
                         data : {

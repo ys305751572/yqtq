@@ -71,7 +71,6 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
     public String detail(Long id, Model model){
         try{
             HostRace hostRace = hostRaceService.findById(id);
-            hostRace.setAvater(StringUtils.isNotBlank(hostRace.getAvater()) ? ConfigUtil.getString("upload.url")+hostRace.getAvater() : "");
             model.addAttribute("hostRace", hostRace);
             Integer matchTeam = hostRaceService.matchTeam(id);
             model.addAttribute("matchTeam", matchTeam);
@@ -109,7 +108,6 @@ public class HostRaceController extends GenericEntityController<HostRace, HostRa
         try{
             if(id !=null){
                 HostRace hostRace = hostRaceService.findById(id);
-                hostRace.setAvater(StringUtils.isNotBlank(hostRace.getAvater()) ? ConfigUtil.getString("upload.url")+hostRace.getAvater() : "");
                 model.addAttribute("hostRace", hostRace);
             }
             List<Stadium> stadium = stadiumService.queryAll();

@@ -147,7 +147,7 @@ public class StadiumUserDetailsController extends GenericEntityController<Stadiu
             return result;
         }
         result.setStatus(false);
-        result.setMsg("原密码输入有误");
+        result.setMsg("原密码输入有误!  请重新输入!");
         return result;
     }
 
