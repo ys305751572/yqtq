@@ -1,18 +1,15 @@
 $(function () {
 
     //menu
-    $('#side-menu').find("li").each(function () {
-        var menu_a = $(this).find("a").eq(0);
-        var page_title = $("#page-wrapper .page-header").text();
-        if (menu_a.text() == page_title) {
-            menu_a.addClass("active");
-            var ul = $(this).parent("ul .nav-second-level")
-            if (ul.length > 0) {
-                ul.addClass("in")
-                ul.parent("li").addClass("active")
+    $('.dropdown').each(function(){
+        $(this).find('ul').each(function() {
+            var menu_a = $(this).parent().find("a").eq(0).text().trim();
+            var page_title = $("#main input").eq(0).val();
+            if (menu_a == page_title) {
+                $(this).slideToggle();
             }
-        }
-    })
+        });
+    });
 
     //小提示框
     $('.img_tooltip').tooltip({
