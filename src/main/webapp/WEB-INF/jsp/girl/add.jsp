@@ -89,6 +89,21 @@
                     <div class="col-md-12 m-b-15">
                     <div><label>宝贝封面：</label></div>
                     <div id = "cover">
+                        <c:if test="${girl.id eq null}">
+                            <div class="fileupload fileupload-new" data-provides="fileupload" style='float: left;margin-right: 10px;'>
+                                <div class="fileupload-preview thumbnail form-control">
+                                    <img src="">
+                                </div>
+                                <div>
+                                <span class="btn btn-file btn-alt btn-sm">
+                                    <span class="fileupload-new">选择图片</span>
+                                    <span class="fileupload-exists">更改</span>
+                                    <input name="coverImageFile" type="file"/>
+                                </span>
+                                    <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
+                                </div>
+                            </div>
+                        </c:if>
                         <c:if test="${girl.id ne null}">
                             <c:forEach var="v" items="${image}">
                                 <c:if test="${v.type eq 0}">
@@ -101,7 +116,7 @@
                                             <span class="btn btn-file btn-alt btn-sm">
                                                 <span class="fileupload-new">选择图片</span>
                                                 <span class="fileupload-exists">更改</span>
-                                                <input id='coverImageFile' name="coverImageFile" type="file"value="${v.id}" />
+                                                <input id='coverImageFile' name="coverImageFile" type="file" value="${v.id}" />
                                                 <input id="cover1" name="cover1" value="${v.id}" type="hidden">
                                             </span>
                                             <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
@@ -121,6 +136,21 @@
                     <div class="col-md-12 m-b-15" >
                         <div><label>宝贝相册：</label></div>
                         <div id = "album">
+                        <c:if test="${girl.id eq null}">
+                            <div class="fileupload fileupload-new" data-provides="fileupload" style='float: left;margin-right: 10px;'>
+                                <div class="fileupload-preview thumbnail form-control">
+                                    <img src="">
+                                </div>
+                                <div>
+                            <span class="btn btn-file btn-alt btn-sm">
+                                <span class="fileupload-new">选择图片</span>
+                                <span class="fileupload-exists">更改</span>
+                                <input name="albumImageFile" type="file"/>
+                            </span>
+                                    <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
+                                </div>
+                            </div>
+                        </c:if>
                         <c:if test="${girl.id ne null}">
                             <c:forEach var="v" items="${image}">
                                 <c:if test="${v.type eq 1}">
@@ -179,8 +209,17 @@
             save : function () {
                 var isCheck = true;
                 var price = $("#price").val();
+
                 if(!$("#formId").validationEngine("validate")) {
                     return;
+                }
+                if($('#cover .fileupload-preview img').size()<1 || $('#cover .fileupload-preview img').width()==0){
+                    $leoman.notify('宝贝封面不能为空', "error");
+                    isCheck=false;
+                }
+                if($('#album .fileupload-preview img').size()<1 || $('#album .fileupload-preview img').width()==0){
+                    $leoman.notify('宝贝相册不能为空', "error");
+                    isCheck=false;
                 }
                 if($("#name").val()==""){
                     $leoman.notify('名称不能为空', "error");
