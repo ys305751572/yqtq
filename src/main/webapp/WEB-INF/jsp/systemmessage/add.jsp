@@ -17,7 +17,8 @@
 <%@ include file="../inc/new/header.jsp" %>
 <div class="clearfix"></div>
 <section id="main" class="p-relative" role="main">
-    <input type="hidden" value="APP相关设置">
+    <input type="hidden" id="mian_module" value="APP相关设置">
+    <input type="hidden" id="child_module" value="系统消息列表">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
         <!-- Breadcrumb -->

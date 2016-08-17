@@ -1,14 +1,18 @@
 package com.leoman.stadium.controller;
 
+import com.leoman.city.entity.Area;
 import com.leoman.city.entity.City;
 import com.leoman.city.entity.Province;
+import com.leoman.city.service.AreaService;
 import com.leoman.city.service.CityService;
 import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.image.entity.FileBo;
+import com.leoman.stadium.entity.ScheduledTime;
 import com.leoman.stadium.entity.Stadium;
 import com.leoman.stadium.entity.StadiumUser;
+import com.leoman.stadium.service.ScheduledTimeService;
 import com.leoman.stadium.service.StadiumService;
 import com.leoman.stadium.service.StadiumUserService;
 import com.leoman.stadium.service.impl.StadiumServiceImpl;
@@ -28,6 +32,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,9 +49,13 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
     @Autowired
     private CityService cityService;
     @Autowired
+    private AreaService areaService;
+    @Autowired
     private StadiumUserService stadiumUserService;
     @Autowired
     private ProvinceService provinceService;
+    @Autowired
+    private ScheduledTimeService scheduledTimeService;
 
     /**
      * 列表跳转
@@ -125,6 +136,27 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
                 StadiumUser stadiumUser = list.get(0);
                 model.addAttribute("stadiumUser", stadiumUser);
             }
+
+            List<String> timeList = new ArrayList<String>();
+            Calendar calendar = Calendar.getInstance();
+            int month = calendar.get(Calendar.MONTH)+1;
+            int date = calendar.get(Calendar.DAY_OF_MONTH);
+
+            List<ScheduledTime> list1 = scheduledTimeService.queryByProperty("stadiumUserId",stadium.getStadiumUserId());
+            if(!list1.isEmpty() && list1.size()>0){
+                for(int i=0;i<list1.get(0).getScheduledTime();i++){
+                    int day = date + i;
+                    String time = month+"月"+day+"号";
+                    timeList.add(time);
+                }
+            }else {
+                for(int i=0;i<5;i++){
+                    int day = date + i;
+                    String time = month+"月"+day+"号";
+                    timeList.add(time);
+                }
+            }
+            model.addAttribute("timeList",timeList);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -178,14 +210,13 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
      */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(Stadium stadium, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,String detail, City city,Province province){
+    public Result save(Stadium stadium, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile, String detail, Area area, City city, Province province){
         Stadium s = null;
         if(null != stadium.getId()){
             s = stadiumService.queryByPK(stadium.getId());
         }
 
         if(null != s){
-            stadium.setAreaId(s.getAreaId());
             stadium.setStadiumUserId(s.getStadiumUserId());
             stadium.setCreateDate(s.getCreateDate());
             stadium.setAvater(s.getAvater());
@@ -210,6 +241,10 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
         if(city != null){
             City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
             stadium.setCity(_city);
+        }
+        if(area != null){
+            Area _area = areaService.queryByProperty("areaId",area.getAreaId()).get(0);
+            stadium.setArea(_area);
         }
         if(province != null){
             Province _province = provinceService.queryByProperty("provinceId",province.getProvinceId()).get(0);

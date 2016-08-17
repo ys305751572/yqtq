@@ -1,5 +1,6 @@
 package com.leoman.stadium.entity;
 
+import com.leoman.city.entity.Area;
 import com.leoman.city.entity.City;
 import com.leoman.city.entity.Province;
 import com.leoman.common.entity.BaseEntity;
@@ -31,8 +32,9 @@ public class Stadium extends BaseEntity {
     @JoinColumn(name = "province_id",referencedColumnName = "province_id")
     private Province province;
     //区id
-    @Column(name = "area_id")
-    private Integer areaId;
+    @ManyToOne
+    @JoinColumn(name = "area_id",referencedColumnName = "area_id")
+    private Area area;
     //球场主ID
     @Column(name = "stadium_user_id")
     private Long stadiumUserId;
@@ -123,12 +125,12 @@ public class Stadium extends BaseEntity {
         this.accumulatedAmount = accumulatedAmount;
     }
 
-    public Integer getAreaId() {
-        return areaId;
+    public Area getArea() {
+        return area;
     }
 
-    public void setAreaId(Integer areaId) {
-        this.areaId = areaId;
+    public void setArea(Area area) {
+        this.area = area;
     }
 
     public Integer getSiteType() {

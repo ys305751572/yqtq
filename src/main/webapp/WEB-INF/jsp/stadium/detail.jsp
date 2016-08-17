@@ -23,7 +23,8 @@
 <%@ include file="../inc/new/header.jsp" %>
 <div class="clearfix"></div>
 <section id="main" class="p-relative" role="main">
-    <input type="hidden" value="球场管理">
+    <input type="hidden" id="mian_module" value="球场管理">
+    <input type="hidden" id="child_module" value="球场列表">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
         <!-- Breadcrumb -->
@@ -41,15 +42,18 @@
                 <div class="col-md-6 m-b-15">
                     <label>球场名称:</label>
                     <input type="text" id="name" name="name" value="${stadium.name}" class="input-sm form-control validate[required]" placeholder="..." disabled>
-
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>省:</label>
                     <input type="text" id="province" name="province" value="${stadium.province.province}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
-                    <label>城市:</label>
+                    <label>市:</label>
                     <input type="text" id="city" name="city" value="${stadium.city.city}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                </div>
+                <div class="col-md-6 m-b-15">
+                    <label>区:</label>
+                    <input type="text" id="area" name="area" value="${stadium.area.area}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>详细地址:</label>
@@ -88,12 +92,39 @@
                 <c:if test="${stadium.type eq 0}">
                     <div class="col-md-6 m-b-15">
                         <label>球场场次:</label>
-                        <p><button type="checkbox" name="time" style="height: 60px;width: 100px;background-color: #3b97d7">13:00-15:00</button></p>
-                        <p><button type="checkbox" name="time" style="height: 60px;width: 100px;background-color: #3b97d7">15:00-17:00</button></p>
-                        <p><button type="checkbox" name="time" style="height: 60px;width: 100px;background-color: #3b97d7">17:00-19:00</button></p>
-                        <p><button type="checkbox" name="time" style="height: 60px;width: 100px;background-color: #3b97d7">19:00-21:00</button></p>
-                        <p><button type="checkbox" name="time" style="height: 60px;width: 100px;background-color: #3b97d7">21:00-23:00</button></p>
-                        <input type="checkbox" name="time" class="asd" >123</input>
+                        <table>
+                            <tr>
+                                <c:forEach items="${timeList}" var="v">
+                                    <td style="text-align: center;font-size: 15px">${v}</td>
+                                </c:forEach>
+                            </tr>
+                            <tr>
+                                <c:forEach items="${timeList}" var="v">
+                                    <td><button name="time" style="height: 60px;width: 100px;background-color: #3b97d7">13:00-15:00</button></td>
+                                </c:forEach>
+                            </tr>
+                            <tr>
+                                <c:forEach items="${timeList}" var="v">
+                                    <td><button name="time" style="height: 60px;width: 100px;background-color: #3b97d7">15:00-17:00</button></td>
+                                </c:forEach>
+                            </tr>
+                            <tr>
+                                <c:forEach items="${timeList}" var="v">
+                                    <td><button name="time" style="height: 60px;width: 100px;background-color: #3b97d7">17:00-19:00</button></td>
+                                </c:forEach>
+                            </tr>
+                            <tr>
+                                <c:forEach items="${timeList}" var="v">
+                                    <td><button name="time" style="height: 60px;width: 100px;background-color: #3b97d7">19:00-21:00</button></td>
+                                </c:forEach>
+                            </tr>
+                            <tr>
+                                <c:forEach items="${timeList}" var="v">
+                                    <td><button name="time" style="height: 60px;width: 100px;background-color: #3b97d7">21:00-23:00</button></td>
+                                </c:forEach>
+                            </tr>
+
+                        </table>
                     </div>
                 </c:if>
                 <hr class="whiter m-t-20"/>

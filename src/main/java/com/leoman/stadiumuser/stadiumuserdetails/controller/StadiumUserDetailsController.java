@@ -1,7 +1,9 @@
 package com.leoman.stadiumuser.stadiumuserdetails.controller;
 
+import com.leoman.city.entity.Area;
 import com.leoman.city.entity.City;
 import com.leoman.city.entity.Province;
+import com.leoman.city.service.AreaService;
 import com.leoman.city.service.CityService;
 import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
@@ -36,6 +38,8 @@ public class StadiumUserDetailsController extends GenericEntityController<Stadiu
     private CityService cityService;
     @Autowired
     private ProvinceService provinceService;
+    @Autowired
+    private AreaService areaService;
 
     @RequestMapping(value = "/index")
     public String index(HttpServletRequest request,Model model){
@@ -164,7 +168,12 @@ public class StadiumUserDetailsController extends GenericEntityController<Stadiu
         return cities;
     }
 
-
+    @RequestMapping(value = "/selectArea")
+    @ResponseBody
+    public List<Area> selectArea(Long cityId, Model model){
+        List<Area> areas =  areaService.queryByProperty("cityId",cityId);
+        return areas;
+    }
     /**
      * 获取用户信息
      * @param request

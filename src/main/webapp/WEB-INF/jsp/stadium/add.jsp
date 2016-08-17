@@ -16,7 +16,8 @@
 <%@ include file="../inc/new/header.jsp" %>
 <div class="clearfix"></div>
 <section id="main" class="p-relative" role="main">
-    <input type="hidden" value="球场管理">
+    <input type="hidden" id="mian_module" value="球场管理">
+    <input type="hidden" id="child_module" value="球场列表">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
         <!-- Breadcrumb -->
@@ -28,6 +29,7 @@
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${stadium.id}">
                 <input type="hidden" id="cId" name="cId" value="${stadium.city.cityId}">
+                <input type="hidden" id="aId" name="aId" value="${stadium.area.areaId}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>球场名称：</label>
@@ -49,11 +51,17 @@
                         </select>
                     </div>
                     <div class="col-md-6 m-b-15">
+                        <label>区：</label>
+                        <select id="areaId" name="areaId" class="select">
+                            <option value="">区</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 m-b-15">
                         <label>详细地址：</label>
                         <input type="text" id="address" name="address" value="${stadium.address}"  class="input-sm form-control validate[required]" placeholder="..."  disabled>
                         <input type="hidden" id="lng" name="longitude" value="${stadium.longitude}" >
                         <input type="hidden" id="lat" name="latitude" value="${stadium.latitude}" >
-                        <a onclick="$user.fn.map()" class="btn btn-alt m-r-5" style="margin-top: 10px">选择</a>
+                        <a onclick="$stadium.fn.map()" class="btn btn-alt m-r-5" style="margin-top: 10px">选择</a>
                     </div>
                 </div>
                 <div class="row">
@@ -105,7 +113,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-5">
-                        <button type="button" onclick="$user.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
+                        <button type="button" onclick="$stadium.fn.save();" class="btn btn-info btn-sm m-t-10">提交</button>
                         <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                     </div>
                 </div>
@@ -118,7 +126,7 @@
 <%@ include file="../inc/new/foot.jsp" %>
 
 <script>
-    $user = {
+    $stadium = {
         v: {
             list: [],
             chart : null,
@@ -127,11 +135,11 @@
         fn: {
             init: function () {
                 $(".iCheck-helper").click(function() {
-                    $user.fn.hid();
+                    $stadium.fn.hid();
                 });
 
                 var opt=$("#provinceId").val();
-                $user.fn.selectCity(opt);
+                $stadium.fn.selectCity(opt);
             },
             hid:function(){
                 if($(".icheckbox_minimal").attr("aria-checked")=="true"){
@@ -197,8 +205,11 @@
                 }
             },
             selectCity : function(data){
+                console.log("selectCity (provinceId):");
+                console.log(data);
                 var cId = $("#cId").val();
                 if(data!=""){
+                    console.log("selectCitydata!=''");
                     $.ajax({
                         url:"${contextPath}/admin/reserve/selectCity",
                         data:{
@@ -218,12 +229,48 @@
                             }
                             $("#cityId").append(op);
                             $("#cityId").selectpicker('refresh');
+                            $stadium.fn.selectArea($("#cityId").val());
                         }
                     });
                 }else{
                     $("#cityId").empty();
-                    $("#cityId").append("<option value=''>"+"城市"+"</option>");
+                    $("#cityId").append("<option value=\"\">"+"城市"+"</option>");
                     $("#cityId").selectpicker('refresh');
+                    $stadium.fn.selectArea($("#cityId").val());
+                    console.log("进到city")
+                }
+            },
+            selectArea : function(data){
+                var aId = $("#aId").val();
+                console.log("selectArea (cityId):");
+                console.log(data);
+                if(data!=""){
+                    console.log("dataselectArea!=''");
+                    $.ajax({
+                        url:"${contextPath}/admin/reserve/selectArea",
+                        data:{
+                            "cityId":data
+                        },
+                        success:function(data){
+                            $("#areaId").empty();
+                            var op = "<option value=''>请选择区</option>";
+                            for(var i= 0;i<data.length;i++){
+                                var areaId = data[i].areaId;
+                                var area = data[i].area;
+                                if(aId==areaId){
+                                    op += "<option value='"+areaId+"' selected>"+area+"</option>";
+                                }else{
+                                    op += "<option value='"+areaId+"'>"+area+"</option>";
+                                }
+                            }
+                            $("#areaId").append(op);
+                            $("#areaId").selectpicker('refresh');
+                        }
+                    });
+                }else{
+                    $("#areaId").empty();
+                    $("#areaId").append("<option value=''>"+"区"+"</option>");
+                    $("#areaId").selectpicker('refresh');
                 }
             },
             map : function(){
@@ -236,10 +283,15 @@
         }
     }
     $(function () {
-        $user.fn.init();
+        $stadium.fn.init();
         $("#provinceId").change(function(){
             var opt=$("#provinceId").val();
-            $user.fn.selectCity(opt);
+            $stadium.fn.selectCity(opt);
+        });
+        $("#cityId").change(function(){
+            console.log("进来cityChange了")
+            var opt=$("#cityId").val();
+            $stadium.fn.selectArea(opt);
         })
     })
 </script>

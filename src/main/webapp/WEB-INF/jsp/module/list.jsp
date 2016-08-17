@@ -16,7 +16,8 @@
 <%@ include file="../inc/new/header.jsp" %>
 <div class="clearfix"></div>
 <section id="main" class="p-relative" role="main">
-    <input type="hidden" value="权限管理">
+    <input type="hidden" id="mian_module" value="权限管理">
+    <input type="hidden" id="child_module" value="模块列表">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
         <div class="block-area" id="alternative-buttons">

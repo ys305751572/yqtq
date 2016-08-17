@@ -1,7 +1,9 @@
 package com.leoman.reserve.controller;
 
+import com.leoman.city.entity.Area;
 import com.leoman.city.entity.City;
 import com.leoman.city.entity.Province;
+import com.leoman.city.service.AreaService;
 import com.leoman.city.service.CityService;
 import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.CommonController;
@@ -48,6 +50,8 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
     private ReserveService reserveService;
     @Autowired
     private UserReserveJoinService userReserveJoinService;
+    @Autowired
+    private AreaService areaService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -141,6 +145,13 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
     public List<City> selectCity(Long provinceId,Model model){
         List<City> cities =  cityService.queryByProperty("provinceId",provinceId);
         return cities;
+    }
+
+    @RequestMapping(value = "/selectArea")
+    @ResponseBody
+    public List<Area> selectArea(Long cityId,Model model){
+        List<Area> areas =  areaService.queryByProperty("cityId",cityId);
+        return areas;
     }
 
     @RequestMapping(value = "/selectStadium")

@@ -84,10 +84,11 @@ public class StadiumBookingController extends GenericEntityController<StadiumBoo
         try{
             if(id1 !=null){
                 stadiumBooking = stadiumBookingService.queryByPK(id1);
-            }else{
+                model.addAttribute("stadiumBooking", stadiumBooking);
+            }else if(id != null){
                 stadiumBooking = stadiumBookingService.queryByPK(id);
+                model.addAttribute("stadiumBooking", stadiumBooking);
             }
-            model.addAttribute("stadiumBooking", stadiumBooking);
         }catch (Exception e){
             e.printStackTrace();
         }

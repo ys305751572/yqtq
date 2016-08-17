@@ -16,7 +16,8 @@
 <%@ include file="../inc/new/header.jsp" %>
 <div class="clearfix"></div>
 <section id="main" class="p-relative" role="main">
-    <input type="hidden" value="用户管理">
+    <input type="hidden" id="mian_module" value="用户管理">
+    <input type="hidden" id="child_module" value="球场主列表">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
         <!-- Breadcrumb -->
@@ -28,7 +29,7 @@
                 <input type="hidden" id="id" name="id" value="${stadiumUser.id}">
                 <div class="row">
                     <div class="col-md-6 m-b-15">
-                        <label>场主名称:</label>
+                        <label>昵称:</label>
                         <input type="text" id="nickName" name="nickName" value="${stadiumUser.nickName}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 

@@ -1,27 +1,33 @@
 package com.leoman.stadiumuser.stadium.controller;
 
+import com.leoman.city.entity.Area;
 import com.leoman.city.entity.City;
 import com.leoman.city.entity.Province;
+import com.leoman.city.service.AreaService;
 import com.leoman.city.service.CityService;
 import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.core.Constant;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.image.entity.FileBo;
+import com.leoman.sitemanage.entity.SiteManage;
+import com.leoman.sitemanage.service.SiteManageService;
+import com.leoman.stadium.entity.ScheduledTime;
 import com.leoman.stadium.entity.Stadium;
 import com.leoman.stadium.entity.StadiumSub;
 import com.leoman.stadium.entity.StadiumUser;
+import com.leoman.stadium.service.ScheduledTimeService;
 import com.leoman.stadium.service.StadiumService;
 import com.leoman.stadium.service.StadiumSubService;
 import com.leoman.stadium.service.StadiumUserService;
 import com.leoman.stadium.service.impl.StadiumServiceImpl;
-import com.leoman.utils.ConfigUtil;
-import com.leoman.utils.FileUtil;
-import com.leoman.utils.JsonUtil;
-import com.leoman.utils.Result;
+import com.leoman.utils.*;
+import com.leoman.utils.DateUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +38,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,6 +54,8 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
     @Autowired
     private StadiumService stadiumService;
     @Autowired
+    private AreaService areaService;
+    @Autowired
     private StadiumUserService stadiumUserService;
     @Autowired
     private StadiumSubService stadiumSubService;
@@ -51,6 +63,12 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
     private CityService cityService;
     @Autowired
     private ProvinceService provinceService;
+    @Autowired
+    private ScheduledTimeService scheduledTimeService;
+    @Autowired
+    private SiteManageService siteManageService;
+
+
 
     /**
      * 列表跳转
@@ -107,16 +125,48 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
             }
             Stadium stadium = stadiumService.findById(id);
             model.addAttribute("stadium", stadium);
-            List<StadiumUser> list = stadiumUserService.queryByProperty("id",stadium.getStadiumUserId());
-            if(list.size()>0 && list!=null){
-                StadiumUser stadiumUser = list.get(0);
-                model.addAttribute("stadiumUser", stadiumUser);
+            StadiumUser stadiumUser = stadiumUserService.queryByPK(stadium.getStadiumUserId());
+            model.addAttribute("stadiumUser", stadiumUser);
+
+            //天数设置 横轴
+            List<String> timeList = new ArrayList<String>();
+            Calendar calendar = Calendar.getInstance();
+            int month = calendar.get(Calendar.MONTH)+1;
+            int date = calendar.get(Calendar.DAY_OF_MONTH);
+
+            List<ScheduledTime> list1 = scheduledTimeService.queryByProperty("stadiumUserId",stadium.getStadiumUserId());
+            if(!list1.isEmpty() && list1.size()>0){
+                for(int i=0;i<list1.get(0).getScheduledTime();i++){
+                    int day = date + i;
+                    String time = month+"月"+day+"号";
+                    timeList.add(time);
+                }
+            }else {
+                for(int i=0;i<5;i++){
+                    int day = date + i;
+                    String time = month+"月"+day+"号";
+                    timeList.add(time);
+                }
             }
+            model.addAttribute("timeList",timeList);
+            //场次AND时间
+//            List<StadiumSub> stadiumSubList = stadiumSubService.queryByProperty("stadiumId",stadium.getStadiumUserId());
+//            if(!stadiumSubList.isEmpty() && stadiumSubList.size()>0){
+//                for(StadiumSub _s : stadiumSubList){
+//                    _s.getId();
+//                    List<SiteManage> siteManageList = siteManageService.queryByProperty("siteId",_s.getId());
+//                }
+//            }
         }catch (Exception e){
             e.printStackTrace();
         }
         return "stadiumuserjsp/stadium/detail";
     }
+
+    public void siteList(String time){
+//        DateUtils.stringToLong(time);
+    }
+
 
     @RequestMapping(value = "/sfStadiumInfo")
     @ResponseBody
@@ -145,7 +195,7 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
             List<Province> province = provinceService.queryAll();
             model.addAttribute("province",province);
             if(id!=null){
-                Stadium stadium = stadiumService.queryByPK(id);
+                Stadium stadium = stadiumService.findById(id);
                 model.addAttribute("stadium", stadium);
                 List<StadiumSub> stadiumSubs = stadiumSubService.queryByProperty("stadiumId",id);
                 model.addAttribute("stadiumSubs", stadiumSubs);
@@ -167,7 +217,7 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
      */
     @RequestMapping(value = "/save")
     @ResponseBody
-    public Result save(HttpServletRequest request,Stadium stadium, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,String detail, City city,Province province,String codes,String types,String prices){
+    public Result save(HttpServletRequest request,Stadium stadium, @RequestParam(value = "imageFile",required = false) MultipartFile imageFile,Area area,String detail, City city,Province province,String codes,String types,String prices){
         Stadium s = null;
 
         if(null != stadium.getId()){
@@ -175,7 +225,6 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
         }
 
         if(null != s){
-            stadium.setAreaId(s.getAreaId());
             stadium.setStadiumUserId(s.getStadiumUserId());
             stadium.setCreateDate(s.getCreateDate());
             stadium.setAvater(s.getAvater());
@@ -198,6 +247,10 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
         }
         if (detail != null) {
             stadium.setDescription(detail.replace("&lt", "<").replace("&gt", ">"));
+        }
+        if(area != null){
+            Area _area = areaService.queryByProperty("areaId",area.getAreaId()).get(0);
+            stadium.setArea(_area);
         }
         if(city != null){
             City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
@@ -289,21 +342,87 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
         return "stadiumuserjsp/stadium/reserve";
     }
 
+    /**
+     * 设置场次时间
+     * @param start
+     * @param end
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/siteManageSave")
+    @ResponseBody
+    public Result siteManageSave(String start, String end, Long siteId, Long id){
+        SiteManage siteManage = new SiteManage();
+        SiteManage _s = null;
 
-    @RequestMapping(value = "/dayEdit")
-    public String dayEdit(String action,String date,Model model){
-        model.addAttribute("date",date);
-        model.addAttribute("action",action);
-        return "stadiumuserjsp/stadium/event";
+        try{
+            if(id!=null){
+                _s = siteManageService.queryByPK(id);
+            }
+            Long startDate = DateUtils.stringToLong(start, "yyyy-MM-dd HH:mm");
+            Long endDate = DateUtils.stringToLong(end, "yyyy-MM-dd HH:mm");
+            if(_s!=null){
+                _s.setStartDate(startDate);
+                _s.setEndDate(endDate);
+                siteManageService.update(_s);
+            }else {
+                siteManage.setSiteId(siteId);
+                siteManage.setStartDate(startDate);
+                siteManage.setEndDate(endDate);
+                siteManageService.save(siteManage);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.print("---场次时间保存错误---");
+            return Result.failure();
+        }
+        return Result.success();
     }
+
+    @RequestMapping(value = "findTimeList")
+    @ResponseBody
+    public List<SiteManage> findTimeList(Long id){
+        List<SiteManage> siteManages = siteManageService.queryByProperty("siteId",id);
+        return siteManages;
+    }
+
 
     /**
      * 参数设置页面
      * @return
      */
     @RequestMapping(value = "/settings")
-    public String settings(){
+    public String settings(HttpServletRequest request,Model model){
+        Long stadiumUserId = getStadiumUser(request).getId();
+        List<ScheduledTime> list = scheduledTimeService.queryByProperty("stadiumUserId",stadiumUserId);
+        if(!list.isEmpty() && list.size()>0){
+            model.addAttribute("scheduledTime",list.get(0).getScheduledTime());
+        }
         return "stadiumuserjsp/parametersettings/settings";
+    }
+
+    @RequestMapping(value = "/saveScheduledTime")
+    @ResponseBody
+    public Result saveScheduledTime(ScheduledTime scheduledTime,HttpServletRequest request){
+        try{
+            Long stadiumUserId = getStadiumUser(request).getId();
+            List<ScheduledTime> list = scheduledTimeService.queryByProperty("stadiumUserId",stadiumUserId);
+            if(!list.isEmpty() && list.size()>0){
+                ScheduledTime st =  scheduledTimeService.queryByPK(list.get(0).getId());
+                st.setScheduledTime(scheduledTime.getScheduledTime());
+                scheduledTimeService.update(st);
+            }else {
+                scheduledTime.setStadiumUserId(stadiumUserId);
+                scheduledTimeService.save(scheduledTime);
+            }
+
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            return Result.failure();
+        }
+
+        return Result.success();
     }
 
     /**

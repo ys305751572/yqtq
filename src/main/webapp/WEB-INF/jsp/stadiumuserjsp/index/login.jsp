@@ -28,8 +28,8 @@
                 </c:if>
                 <div class="checkbox m-b-20">
                     <label>
-                        <input type="checkbox" id="remark" name="remark">
-                        记住我
+                        <%--<input type="checkbox" id="remark" name="remark">--%>
+                        <%--记住我--%>
                     </label>
                 </div>
                 <button class="btn btn-sm m-r-5"　type="submit">登录</button>

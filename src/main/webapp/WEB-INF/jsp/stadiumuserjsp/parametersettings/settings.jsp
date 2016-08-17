@@ -16,6 +16,7 @@
 <%@ include file="../inc/new/header.jsp" %>
 <div class="clearfix"></div>
 <section id="main" class="p-relative" role="main">
+    <input type="hidden" value="相关设置">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
         <!-- Breadcrumb -->
@@ -29,7 +30,7 @@
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>可预定时间：</label>
-                        <input type="text" id="withdrawMoney" name="withdrawMoney" maxlength="10" value="" class="input-sm form-control validate[required]" placeholder="..."  onkeyup="value=value.replace(/[^0-9.]/g,'')">
+                        <input type="text" id="scheduledTime" name="scheduledTime" maxlength="1" value="${scheduledTime}" class="input-sm form-control validate[required]" placeholder="..."  onkeyup="value=value.replace(/[^0-9.]/g,'')">
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>
@@ -60,26 +61,23 @@
                 $user.fn.selectCity(opt);
             },
             save : function () {
-                var isCheck = true;
                 if(!$("#formId").validationEngine("validate")) {
                     return;
                 }
-                if(isCheck){
-                    $("#formId").ajaxSubmit({
-                        url : "${contextPath}/stadium/stadium/saveSettings",
-                        type : "POST",
-                        data : {
-                            "id" : id,
-                        },
-                        success : function(result) {
-                            if(!result.status) {
-                                $common.fn.notify(result.message);
-                                return;
-                            }
-                            window.location.href = "${contextPath}/stadium/1/index";
+                $("#formId").ajaxSubmit({
+                    url : "${contextPath}/stadium/stadium/saveScheduledTime",
+                    type : "POST",
+//                    data : {
+//                        "id" : id,
+//                    },
+                    success : function(result) {
+                        if(!result.status) {
+                            $common.fn.notify(result.message);
+                            return;
                         }
-                    });
-                }
+                        window.location.href = "${contextPath}/stadium/stadium/settings";
+                    }
+                });
             }
         }
     };

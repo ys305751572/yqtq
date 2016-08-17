@@ -16,6 +16,7 @@
 <%@ include file="../inc/new/header.jsp" %>
 <div class="clearfix"></div>
 <section id="main" class="p-relative" role="main">
+    <input type="hidden" value="球场管理">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
         <!-- Breadcrumb -->
@@ -40,8 +41,12 @@
                     <input type="text" id="province" name="province" value="${stadium.province.province}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
-                    <label>城市:</label>
+                    <label>市:</label>
                     <input type="text" id="city" name="city" value="${stadium.city.city}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                </div>
+                <div class="col-md-6 m-b-15">
+                    <label>区:</label>
+                    <input type="text" id="area" name="area" value="${stadium.area.area}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>详细地址:</label>
@@ -77,11 +82,15 @@
                         <input type="text" id="giving" name="giving" value="${stadium.giving}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                 </div>
-                <c:if test="${stadium.type eq 0}">
-                    <div class="col-md-6 m-b-15">
-                        <label>球场场次:</label>
+                <hr class="whiter m-t-20"/>
+                <div class="col-md-6 m-b-15">
+                    <label>球场场次:</label>
+                    <div>
+                        <c:forEach items="${timeList}" var="v">
+                            <a data-toggle="modal" title="${v}" onclick="$team.fn.siteList(${v})" class="btn btn-alt m-r-5">${v}</a>
+                        </c:forEach>
                     </div>
-                </c:if>
+                </div>
                 <hr class="whiter m-t-20"/>
                 <div class="col-md-6 m-b-15">
                     <label>球场简介:</label>
@@ -91,11 +100,6 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-5">
-                    <c:if test="${isEd eq null}">
-                        <a class="btn btn-info btn-sm m-t-10" data-toggle="modal" href="${contextPath}/admin/stadium/edit?id=${stadium.id}" title="编辑" class="tooltips">
-                            编辑
-                        </a>
-                    </c:if>
                     <button type="button" class="btn btn-info btn-sm m-t-10" onclick="history.go(-1);">返回</button>
                 </div>
             </div>
@@ -114,6 +118,9 @@
         },
         fn: {
             init: function () {
+            },
+            siteList: function(){
+
             }
         }
     }

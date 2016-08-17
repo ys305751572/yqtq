@@ -16,7 +16,8 @@
 <%@ include file="../inc/new/header.jsp" %>
 <div class="clearfix"></div>
 <section id="main" class="p-relative" role="main">
-    <input type="hidden" value="平台赛事管理">
+    <input type="hidden" id="mian_module" value="平台赛事管理">
+    <input type="hidden" id="child_module" value="平台赛事列表">
     <%@ include file="../inc/new/menu.jsp" %>
     <section id="content" class="container">
         <%--<div class="block-area">--%>
