@@ -74,6 +74,9 @@ public class Stadium extends BaseEntity {
     //封面
     @Column(name = "avater")
     private String avater;
+    //可预定时间
+    @Column(name = "scheduled_time")
+    private Integer scheduledTime;
 
     //预定总数
     @Transient
@@ -299,5 +302,13 @@ public class Stadium extends BaseEntity {
 
     public void setAvailableStadiumNum(Integer availableStadiumNum) {
         this.availableStadiumNum = availableStadiumNum;
+    }
+
+    public Integer getScheduledTime() {
+        return scheduledTime;
+    }
+
+    public void setScheduledTime(Integer scheduledTime) {
+        this.scheduledTime = scheduledTime;
     }
 }

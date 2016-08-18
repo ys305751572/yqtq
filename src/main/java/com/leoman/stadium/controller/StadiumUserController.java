@@ -154,14 +154,20 @@ public class StadiumUserController extends GenericEntityController<StadiumUser,S
                 stadiumUser.setWithdrawMoney(s.getWithdrawMoney());
                 stadiumUser.setBalance(s.getBalance());
                 stadiumUser.setCreateDate(s.getCreateDate());
+                if(stadiumUser.getPassword().equals(s.getPassword())){
+                    stadiumUser.setPassword(s.getPassword());
+                }else {
+                    String pwd = Md5Util.md5(stadiumUser.getPassword());
+                    stadiumUser.setPassword(pwd);
+                }
             }else{
                 stadiumUser.setStatus(0);
                 stadiumUser.setReserveMoney(0.0);
                 stadiumUser.setWithdrawMoney(0.0);
                 stadiumUser.setBalance(0.0);
+                String pwd = Md5Util.md5(stadiumUser.getPassword());
+                stadiumUser.setPassword(pwd);
             }
-            String pwd = Md5Util.md5(stadiumUser.getPassword());
-            stadiumUser.setPassword(pwd);
             if(city != null){
                 City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
                 stadiumUser.setCity(_city);

@@ -92,39 +92,7 @@
                 <c:if test="${stadium.type eq 0}">
                     <div class="col-md-6 m-b-15">
                         <label>球场场次:</label>
-                        <table>
-                            <tr>
-                                <c:forEach items="${timeList}" var="v">
-                                    <td style="text-align: center;font-size: 15px">${v}</td>
-                                </c:forEach>
-                            </tr>
-                            <tr>
-                                <c:forEach items="${timeList}" var="v">
-                                    <td><button name="time" style="height: 60px;width: 100px;background-color: #3b97d7">13:00-15:00</button></td>
-                                </c:forEach>
-                            </tr>
-                            <tr>
-                                <c:forEach items="${timeList}" var="v">
-                                    <td><button name="time" style="height: 60px;width: 100px;background-color: #3b97d7">15:00-17:00</button></td>
-                                </c:forEach>
-                            </tr>
-                            <tr>
-                                <c:forEach items="${timeList}" var="v">
-                                    <td><button name="time" style="height: 60px;width: 100px;background-color: #3b97d7">17:00-19:00</button></td>
-                                </c:forEach>
-                            </tr>
-                            <tr>
-                                <c:forEach items="${timeList}" var="v">
-                                    <td><button name="time" style="height: 60px;width: 100px;background-color: #3b97d7">19:00-21:00</button></td>
-                                </c:forEach>
-                            </tr>
-                            <tr>
-                                <c:forEach items="${timeList}" var="v">
-                                    <td><button name="time" style="height: 60px;width: 100px;background-color: #3b97d7">21:00-23:00</button></td>
-                                </c:forEach>
-                            </tr>
 
-                        </table>
                     </div>
                 </c:if>
                 <hr class="whiter m-t-20"/>

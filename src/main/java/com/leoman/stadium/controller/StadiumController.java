@@ -9,16 +9,12 @@ import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.image.entity.FileBo;
-import com.leoman.stadium.entity.ScheduledTime;
 import com.leoman.stadium.entity.Stadium;
 import com.leoman.stadium.entity.StadiumUser;
-import com.leoman.stadium.service.ScheduledTimeService;
 import com.leoman.stadium.service.StadiumService;
 import com.leoman.stadium.service.StadiumUserService;
 import com.leoman.stadium.service.impl.StadiumServiceImpl;
-import com.leoman.team.entity.TeamRace;
-import com.leoman.user.entity.User;
-import com.leoman.utils.ConfigUtil;
+import com.leoman.stadiumuser.stadium.vo.TimeVo;
 import com.leoman.utils.FileUtil;
 import com.leoman.utils.Result;
 import org.apache.commons.lang.StringUtils;
@@ -34,7 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,8 +49,6 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
     private StadiumUserService stadiumUserService;
     @Autowired
     private ProvinceService provinceService;
-    @Autowired
-    private ScheduledTimeService scheduledTimeService;
 
     /**
      * 列表跳转
@@ -137,23 +130,31 @@ public class StadiumController extends GenericEntityController<Stadium, Stadium,
                 model.addAttribute("stadiumUser", stadiumUser);
             }
 
-            List<String> timeList = new ArrayList<String>();
+            //天数设置 横轴
+            List<TimeVo> timeList = new ArrayList<TimeVo>();
             Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH)+1;
             int date = calendar.get(Calendar.DAY_OF_MONTH);
 
-            List<ScheduledTime> list1 = scheduledTimeService.queryByProperty("stadiumUserId",stadium.getStadiumUserId());
+            List<Stadium> list1 = stadiumService.queryByProperty("stadiumUserId",stadium.getStadiumUserId());
             if(!list1.isEmpty() && list1.size()>0){
                 for(int i=0;i<list1.get(0).getScheduledTime();i++){
                     int day = date + i;
-                    String time = month+"月"+day+"号";
-                    timeList.add(time);
+                    TimeVo timeVo = new TimeVo();
+                    timeVo.setYear(year);
+                    timeVo.setMonth(month);
+                    timeVo.setDay(day);
+                    timeList.add(timeVo);
                 }
             }else {
-                for(int i=0;i<5;i++){
+                for(int i=0;i<7;i++){
                     int day = date + i;
-                    String time = month+"月"+day+"号";
-                    timeList.add(time);
+                    TimeVo timeVo = new TimeVo();
+                    timeVo.setYear(year);
+                    timeVo.setMonth(month);
+                    timeVo.setDay(day);
+                    timeList.add(timeVo);
                 }
             }
             model.addAttribute("timeList",timeList);

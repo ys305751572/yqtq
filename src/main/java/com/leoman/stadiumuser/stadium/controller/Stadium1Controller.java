@@ -12,22 +12,20 @@ import com.leoman.common.factory.DataTableFactory;
 import com.leoman.image.entity.FileBo;
 import com.leoman.sitemanage.entity.SiteManage;
 import com.leoman.sitemanage.service.SiteManageService;
-import com.leoman.stadium.entity.ScheduledTime;
 import com.leoman.stadium.entity.Stadium;
 import com.leoman.stadium.entity.StadiumSub;
 import com.leoman.stadium.entity.StadiumUser;
-import com.leoman.stadium.service.ScheduledTimeService;
 import com.leoman.stadium.service.StadiumService;
 import com.leoman.stadium.service.StadiumSubService;
 import com.leoman.stadium.service.StadiumUserService;
 import com.leoman.stadium.service.impl.StadiumServiceImpl;
+import com.leoman.stadiumuser.stadium.vo.StartEndDate;
+import com.leoman.stadiumuser.stadium.vo.TimeVo;
 import com.leoman.utils.*;
 import com.leoman.utils.DateUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,11 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Administrator on 2016/5/31.
@@ -63,8 +57,6 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
     private CityService cityService;
     @Autowired
     private ProvinceService provinceService;
-    @Autowired
-    private ScheduledTimeService scheduledTimeService;
     @Autowired
     private SiteManageService siteManageService;
 
@@ -129,42 +121,82 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
             model.addAttribute("stadiumUser", stadiumUser);
 
             //天数设置 横轴
-            List<String> timeList = new ArrayList<String>();
+            List<TimeVo> timeList = new ArrayList<TimeVo>();
             Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH)+1;
             int date = calendar.get(Calendar.DAY_OF_MONTH);
 
-            List<ScheduledTime> list1 = scheduledTimeService.queryByProperty("stadiumUserId",stadium.getStadiumUserId());
+            List<Stadium> list1 = stadiumService.queryByProperty("stadiumUserId",stadium.getStadiumUserId());
             if(!list1.isEmpty() && list1.size()>0){
                 for(int i=0;i<list1.get(0).getScheduledTime();i++){
                     int day = date + i;
-                    String time = month+"月"+day+"号";
-                    timeList.add(time);
+                    TimeVo timeVo = new TimeVo();
+                    timeVo.setYear(year);
+                    timeVo.setMonth(month);
+                    timeVo.setDay(day);
+                    timeList.add(timeVo);
                 }
             }else {
-                for(int i=0;i<5;i++){
+                for(int i=0;i<7;i++){
                     int day = date + i;
-                    String time = month+"月"+day+"号";
-                    timeList.add(time);
+                    TimeVo timeVo = new TimeVo();
+                    timeVo.setYear(year);
+                    timeVo.setMonth(month);
+                    timeVo.setDay(day);
+                    timeList.add(timeVo);
                 }
             }
             model.addAttribute("timeList",timeList);
-            //场次AND时间
-//            List<StadiumSub> stadiumSubList = stadiumSubService.queryByProperty("stadiumId",stadium.getStadiumUserId());
-//            if(!stadiumSubList.isEmpty() && stadiumSubList.size()>0){
-//                for(StadiumSub _s : stadiumSubList){
-//                    _s.getId();
-//                    List<SiteManage> siteManageList = siteManageService.queryByProperty("siteId",_s.getId());
-//                }
-//            }
+            List<StadiumSub> stadiumSubList = stadiumSubService.queryByProperty("stadiumId",stadium.getId(),"code",true);
+            model.addAttribute("stadiumSubList",stadiumSubList);
         }catch (Exception e){
             e.printStackTrace();
         }
         return "stadiumuserjsp/stadium/detail";
     }
 
-    public void siteList(String time){
-//        DateUtils.stringToLong(time);
+
+    //场次AND时间
+    @RequestMapping(value = "/siteList")
+    @ResponseBody
+    public List<StartEndDate> siteList(String time,Long stadiumId,Model model){
+        List<StartEndDate> seDate = new ArrayList<StartEndDate>();
+        try{
+            Long t = DateUtils.stringToLong(time,"yyyy-MM-dd");
+            List<StadiumSub> stadiumSubList = stadiumSubService.queryByProperty("stadiumId",stadiumId,"code",true);
+            model.addAttribute("stadiumSubList",stadiumSubList);
+            if(!stadiumSubList.isEmpty() && stadiumSubList.size()>0){
+                for(StadiumSub _s : stadiumSubList){
+                    List<SiteManage> siteManages = siteManageService.queryByProperty("siteId",_s.getId());
+                    if(!siteManages.isEmpty() && siteManages.size()>0){
+                        for(SiteManage siteManage : siteManages){
+                            String sTime = DateUtils.longToString(siteManage.getStartDate(),"yyyy-MM-dd");
+                            Long st = DateUtils.stringToLong(sTime,"yyyy-MM-dd");
+                            if(st.equals(t)){
+                                String start = DateUtils.longToString(siteManage.getStartDate(),"HH:mm");
+                                String end = DateUtils.longToString(siteManage.getEndDate(),"HH:mm");
+                                StartEndDate startEndDate = new StartEndDate();
+                                startEndDate.setCode(_s.getCode());
+                                startEndDate.setStart(start);
+                                startEndDate.setEnd(end);
+                                seDate.add(startEndDate);
+
+                                System.out.println("---------------进---了----------------");
+                                System.out.println("code:" + _s.getCode());
+                                System.out.println("开始时间:" + start);
+                                System.out.println("结束时间:" + end);
+                            }
+                        }
+                    }
+                }
+            }
+            model.addAttribute("seDate",seDate);
+            System.out.println("seDate:" + seDate.size());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return seDate;
     }
 
 
@@ -230,9 +262,16 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
             stadium.setAvater(s.getAvater());
             stadium.setType(s.getType());
             stadium.setStadiumUserId(s.getStadiumUserId());
+            stadium.setScheduledTime(s.getScheduledTime());
         }else{
             stadium.setType(0);//保存都是私人球场
             stadium.setStadiumUserId(getStadiumUser(request).getId());
+            List<Stadium> list = stadiumService.queryByProperty("stadiumUserId",stadium.getStadiumUserId());
+            if(!list.isEmpty() && list.size()>0){
+                if(list.get(0).getScheduledTime() != null){
+                    stadium.setScheduledTime(list.get(0).getScheduledTime());
+                }
+            }
         }
         if(imageFile!=null && imageFile.getSize()>0) {
             FileBo fileBo = null;
@@ -395,26 +434,24 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
     @RequestMapping(value = "/settings")
     public String settings(HttpServletRequest request,Model model){
         Long stadiumUserId = getStadiumUser(request).getId();
-        List<ScheduledTime> list = scheduledTimeService.queryByProperty("stadiumUserId",stadiumUserId);
-        if(!list.isEmpty() && list.size()>0){
-            model.addAttribute("scheduledTime",list.get(0).getScheduledTime());
+        List<Stadium> stadialist = stadiumService.queryByProperty("stadiumUserId",stadiumUserId);
+        if(!stadialist.isEmpty() && stadialist.size()>0){
+            model.addAttribute("scheduledTime",stadialist.get(0).getScheduledTime());
         }
         return "stadiumuserjsp/parametersettings/settings";
     }
 
     @RequestMapping(value = "/saveScheduledTime")
     @ResponseBody
-    public Result saveScheduledTime(ScheduledTime scheduledTime,HttpServletRequest request){
+    public Result saveScheduledTime(Integer scheduledTime,HttpServletRequest request){
         try{
             Long stadiumUserId = getStadiumUser(request).getId();
-            List<ScheduledTime> list = scheduledTimeService.queryByProperty("stadiumUserId",stadiumUserId);
-            if(!list.isEmpty() && list.size()>0){
-                ScheduledTime st =  scheduledTimeService.queryByPK(list.get(0).getId());
-                st.setScheduledTime(scheduledTime.getScheduledTime());
-                scheduledTimeService.update(st);
-            }else {
-                scheduledTime.setStadiumUserId(stadiumUserId);
-                scheduledTimeService.save(scheduledTime);
+            List<Stadium> stadialist = stadiumService.queryByProperty("stadiumUserId",stadiumUserId);
+            if(!stadialist.isEmpty() && stadialist.size()>0){
+                for(Stadium _s : stadialist){
+                    _s.setScheduledTime(scheduledTime);
+                    stadiumService.save(_s);
+                }
             }
 
         }catch (RuntimeException e){
