@@ -38,22 +38,46 @@ public class ReserveServiceImpl extends GenericManagerImpl<Reserve,ReserveDao> i
             public Predicate toPredicate(Root<Reserve> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> list = new ArrayList<Predicate>();
                 Predicate result = null;
-                if (reserve.getStadium().getCity().getCityId() != null) {
-                    list.add(criteriaBuilder.equal(root.get("stadium").get("city").get("cityId").as(Long.class), reserve.getStadium().getCity().getCityId()));
+                if (reserve.getStadium()!=null){
+                    if (reserve.getStadium().getCity()!=null && reserve.getStadium().getCity().getCityId() != null) {
+                        list.add(criteriaBuilder.equal(root.get("stadium").get("city").get("cityId").as(Long.class), reserve.getStadium().getCity().getCityId()));
+                    }
+                    if (reserve.getStadium().getProvince()!=null && reserve.getStadium().getProvince().getProvinceId() != null) {
+                        list.add(criteriaBuilder.equal(root.get("stadium").get("province").get("provinceId").as(Long.class), reserve.getStadium().getProvince().getProvinceId()));
+                    }
+                    if (reserve.getStadium().getId() != null) {
+                        list.add(criteriaBuilder.equal(root.get("stadium").get("id").as(Long.class), reserve.getStadium().getId()));
+                    }
+                    if (StringUtils.isNotBlank(reserve.getStadium().getName())) {
+                        list.add(criteriaBuilder.like(root.get("stadium").get("name").as(String.class), "%"+reserve.getStadium().getName()+"%"));
+                    }
+
+
+                    if (reserve.getStadium().getStadiumUserId() != null) {
+                        list.add(criteriaBuilder.equal(root.get("stadium").get("stadiumUserId").as(Long.class), reserve.getStadium().getStadiumUserId()));
+                    }
+
                 }
-                if (reserve.getStadium().getProvince().getProvinceId() != null) {
-                    list.add(criteriaBuilder.equal(root.get("stadium").get("province").get("provinceId").as(Long.class), reserve.getStadium().getProvince().getProvinceId()));
+
+                if (reserve.getUser()!=null && StringUtils.isNotBlank(reserve.getUser().getNickName())) {
+                    list.add(criteriaBuilder.like(root.get("user").get("nickName").as(String.class), "%"+reserve.getUser().getNickName()+"%"));
                 }
-                if (reserve.getStadium().getId() != null) {
-                    list.add(criteriaBuilder.equal(root.get("stadium").get("id").as(Long.class), reserve.getStadium().getId()));
+
+                if (reserve.getTime() != null) {
+                    list.add(criteriaBuilder.equal(root.get("time").as(Integer.class), reserve.getTime()));
                 }
+
+                if (reserve.getReserveType() != null) {
+                    list.add(criteriaBuilder.equal(root.get("reserveType").as(Integer.class), reserve.getReserveType()));
+                }
+
                 if (reserve.getMatchType() != null) {
                     list.add(criteriaBuilder.equal(root.get("matchType").as(Integer.class), reserve.getMatchType()));
                 }
                 if (reserve.getPayment() != null) {
                     list.add(criteriaBuilder.equal(root.get("payment").as(Integer.class), reserve.getPayment()));
                 }
-                if (reserve.getSystemInsurance().getId() != null) {
+                if (reserve.getSystemInsurance()!=null && reserve.getSystemInsurance().getId() != null) {
                     list.add(criteriaBuilder.equal(root.get("systemInsurance").get("id").as(String.class), reserve.getSystemInsurance().getId()));
                 }
                 if (reserve.getStatus() != null) {

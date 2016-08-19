@@ -3,6 +3,7 @@ package com.leoman.reserve.entity;
 import com.leoman.city.entity.City;
 import com.leoman.common.entity.BaseEntity;
 import com.leoman.stadium.entity.Stadium;
+import com.leoman.stadium.entity.StadiumSub;
 import com.leoman.systemInsurance.entity.SystemInsurance;
 import com.leoman.user.entity.User;
 
@@ -24,33 +25,61 @@ public class Reserve extends BaseEntity {
     @JoinColumn(name = "stadium_id")
     private Stadium stadium;
 
+//    @ManyToOne
+//    @JoinColumn(name = "city_id")
+//    private City city;
+
     @Column(name = "city_id")
     private Long cityId;
 
-    @Column(name = "match_type")
-    private Integer matchType;
-
-    @Column(name = "price")
-    private Double price;
-
-    @Column(name = "payment")
-    private Integer payment;
+    //场次
+    @ManyToOne
+    @JoinColumn(name = "site_id")
+    private StadiumSub stadiumSub;
 
     @ManyToOne
     @JoinColumn(name = "insurance_id")
     private SystemInsurance systemInsurance;
 
+    //球场类型 N人制
+    @Column(name = "match_type")
+    private Integer matchType;
+
+    //价格
+    @Column(name = "price")
+    private Double price;
+
+    //付款方式 0:AA 1:全额
+    @Column(name = "payment")
+    private Integer payment;
+
+
+    //球赛类型 0:私人 1:公共
     @Column(name = "type")
     private Integer type;
 
+    //比赛开始时间
     @Column(name = "start_date")
     private Long startDate;
 
+    //时长
     @Column(name = "time")
     private Integer time;
 
+    //状态0:正在组队1:组队成功2:组队失败3:比赛结束
     @Column(name = "status")
     private Integer status;
+
+    //预定类型 0:散客 1:其他
+    @Column(name = "reserve_type")
+    private Integer reserveType;
+
+    //支付状态（0：未支付，1：已支付）
+    @Column(name = "pay_status")
+    private Integer payStatus;
+
+
+
 
     @Transient
     private Integer num;
@@ -149,5 +178,29 @@ public class Reserve extends BaseEntity {
 
     public void setSystemInsurance(SystemInsurance systemInsurance) {
         this.systemInsurance = systemInsurance;
+    }
+
+    public Integer getReserveType() {
+        return reserveType;
+    }
+
+    public void setReserveType(Integer reserveType) {
+        this.reserveType = reserveType;
+    }
+
+    public Integer getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(Integer payStatus) {
+        this.payStatus = payStatus;
+    }
+
+    public StadiumSub getStadiumSub() {
+        return stadiumSub;
+    }
+
+    public void setStadiumSub(StadiumSub stadiumSub) {
+        this.stadiumSub = stadiumSub;
     }
 }

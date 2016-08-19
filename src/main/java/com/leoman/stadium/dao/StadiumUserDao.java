@@ -18,15 +18,15 @@ public interface StadiumUserDao extends IBaseJpaRepository<StadiumUser> {
     public Integer stadiumNum(Long id);
 
     //当天的金额
-    @Query("SELECT SUM(a.price) FROM StadiumBooking a WHERE a.stadium.id IN (SELECT b.id FROM Stadium b WHERE b.stadiumUserId = ?1) AND a.createDate >= ?2")
+    @Query("SELECT SUM(a.price) FROM Reserve a WHERE a.stadium.id IN (SELECT b.id FROM Stadium b WHERE b.stadiumUserId = ?1) AND a.createDate >= ?2")
     public Double toDaySumPrice(Long id,Long date);
 
     //散客数量
-    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.stadium.id IN (SELECT b.id FROM Stadium b WHERE b.stadiumUserId = ?1) AND a.type=0")
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.stadium.id IN (SELECT b.id FROM Stadium b WHERE b.stadiumUserId = ?1) AND a.reserveType=0")
     public Integer individualNum(Long id);
 
     //球场积累金额
-    @Query("SELECT SUM(a.price) FROM StadiumBooking a WHERE a.stadium.id = ?1")
+    @Query("SELECT SUM(a.price) FROM Reserve a WHERE a.stadium.id = ?1")
     public Integer accumulatedAmount(Long id);
 
     //球场主登录

@@ -29,43 +29,43 @@
                 <div class="row">
                     <div class="col-md-6 m-b-15">
                         <label>logo:</label>
-                        <img id="avater" name="avater" src="${stadiumBooking.stadium.avater}" alt="">
+                        <img id="avater" name="avater" src="${reserve.stadium.avater}" alt="">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>球场名称:</label>
-                        <a href="${contextPath}/stadium/stadium/detail?id=${stadiumBooking.stadium.id}&&isEd=1" class="btn btn-block btn-alt" style="font-size: 12px;height: 30px;text-align:left;text-indent:0.5em;background-color:rgba(238, 238, 238, 0.09) !important;" >${stadiumBooking.stadium.name}</a>
+                        <a href="${contextPath}/stadium/stadium/detail?id=${reserve.stadium.id}&&isEd=1" class="btn btn-block btn-alt" style="font-size: 12px;height: 30px;text-align:left;text-indent:0.5em;background-color:rgba(238, 238, 238, 0.09) !important;" >${reserve.stadium.name}</a>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>城市:</label>
-                        <input type="text" id="cityId" value="${stadiumBooking.city.city}" name="cityId" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="cityId" value="${reserve.stadium.city.city}" name="cityId" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15">
                         <label>预约时长:</label>
-                        <input type="text" id="slogan" name="slogan" value="${stadiumBooking.bookTime}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="slogan" name="slogan" value="${reserve.time}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
                         <label>金额:</label>
-                        <input type="text" id="1" name="1" value="${stadiumBooking.price}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="1" name="1" value="${reserve.price}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
                         <label>预订人:</label>
-                        <input type="text" id="leaderUserId" name="leaderUserId" value="${stadiumBooking.user.nickName}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="leaderUserId" name="leaderUserId" value="${reserve.user.nickName}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
                     <div class="col-md-6 m-b-15" >
                         <label>预定状态:</label>
-                        <input type="text" id="status" name="status" value="<c:if test='${stadiumBooking.status eq 0}'>未使用</c:if><c:if test='${stadiumBooking.status eq 1}'>已使用</c:if><c:if test='${stadiumBooking.status eq 2}'>已退款</c:if>" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="status" name="status" value="<c:if test='${reserve.status eq 0}'>正在组队</c:if><c:if test='${reserve.status eq 1}'>组队成功</c:if><c:if test='${reserve.status eq 2}'>组队失败</c:if><c:if test='${reserve.status eq 3}'>比赛结束</c:if>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                     <div class="col-md-6 m-b-15" >
                         <label>使用开始时间:</label>
-                        <input type="text" id="startDate" name="startDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${stadiumBooking.startDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="startDate" name="startDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${reserve.startDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                     <div class="col-md-6 m-b-15" >
                         <label>预约时间:</label>
-                        <input type="text" id="createDate" name="createDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${stadiumBooking.createDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        <input type="text" id="createDate" name="createDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${reserve.createDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                     <hr class="whiter m-t-20"/>
                 </div>

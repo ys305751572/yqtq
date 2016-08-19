@@ -12,10 +12,22 @@
     <!-- CSS -->
     <%@ include file="../inc/new/css.jsp" %>
     <style>
-        .asd{
-        height: 60px;
-        width: 100px;
-        background-color: #3b97d7!important;
+        .label{
+            font-size: 15px;
+            line-height: 30px;
+            padding-left: 20px;
+        }
+        .time{
+            line-height: 60px;
+            height: 40px;
+            text-align: center;
+            font-size: 10px;
+        }
+        .base{
+            border: 2px solid #b3b8b8;
+            width: 65px;
+            height: 40px;
+            background-color: #1ab65e;
         }
     </style>
 </head>
@@ -88,18 +100,19 @@
                         <input type="text" id="giving" name="giving" value="${stadium.giving}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
                 </div>
-                <hr class="whiter m-t-20"/>
                 <c:if test="${stadium.type eq 0}">
-                    <div class="col-md-6 m-b-15">
+                    <hr class="whiter m-t-20"/>
+                    <div class="col-md-12 m-b-15">
                         <label>球场场次:</label>
-
+                        <div class="col-md-12 m-b-15">
+                            <c:forEach items="${timeList}" var="v">
+                                <a data-toggle="modal" title="" onclick="$team.fn.siteList(${v.year},${v.month},${v.day},${stadium.id})" class="btn btn-alt m-r-5">${v.month}月${v.day}号</a>
+                            </c:forEach>
+                        </div>
+                        <div id="table" class="col-md-12 m-b-15">
+                        </div>
                     </div>
                 </c:if>
-                <hr class="whiter m-t-20"/>
-                <div class="col-md-6 m-b-15">
-                    <label>球场简介:</label>
-                    <div class="wysiwye-editor" id="description" name="description">${stadium.description}</div>
-                </div>
                 <hr class="whiter m-t-20"/>
             </div>
             <div class="form-group">
@@ -127,9 +140,112 @@
         },
         fn: {
             init: function () {
+
+            },
+            siteList: function(year,month,day,stadiumId){
+                $team.fn.table();
+                var time = year+"-"+month+"-"+day;
+//                console.log(time);
+//                console.log(stadiumId);
+                $.ajax({
+                    url : "${contextPath}/admin/stadium/siteManageList",
+                    type : "POST",
+                    data : {
+                        "time" : time,
+                        "stadiumId" : stadiumId
+                    },
+                    success : function(seDate) {
+                        $("#sad label").each(function() {
+                            for(var i=0;i<seDate.length;i++){
+                                if($(this).html()==seDate[i].code){
+                                    var index = 0;
+                                    $(this).parent().find("div").each(function(){
+                                        var start = $(this).find("input[name=start]").val();
+                                        if(start==seDate[i].start){
+                                            index = 1;
+                                        }
+
+                                        var end = $(this).find("input[name=end]").val();
+                                        if(end==seDate[i].end){
+                                            $(this).css("background-color","#faffff");
+                                            index = 0;
+                                        }
+
+                                        if(index!=0){
+                                            $(this).css("background-color","#faffff");
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                    }
+                });
+
+                $.ajax({
+                    url : "${contextPath}/admin/stadium/siteTimeList",
+                    type : "POST",
+                    data : {
+                        "time" : time,
+                        "stadiumId" : stadiumId
+                    },
+                    success : function(seDate) {
+                        $("#sad label").each(function() {
+                            for(var i=0;i<seDate.length;i++){
+                                if($(this).html()==seDate[i].code){
+                                    var index = 0;
+                                    $(this).parent().find("div").each(function(){
+                                        var start = $(this).find("input[name=start]").val();
+                                        if(start==seDate[i].start){
+                                            index = 1;
+                                        }
+                                        var end = $(this).find("input[name=end]").val();
+                                        if(end==seDate[i].end){
+                                            console.log(start+" ~~ "+end);
+                                            $(this).css("background-color","#ff4d4f");
+                                            index = 0;
+                                        }
+
+                                        if(index!=0){
+                                            $(this).css("background-color","#ff4d4f");
+                                        }
+                                    })
+                                }
+                            }
+                        });
+                    }
+                });
+            },
+            table : function(){
+                $("#table").empty();
+                var html = "";
+                html += " <div style='float:left'>						";
+                html += "    <label class='label'>时间</label>          ";
+                html += "    <p class='time'>08:00~10:00</p>            ";
+                html += "    <p class='time'>10:00~12:00</p>            ";
+                html += "    <p class='time'>12:00~14:00</p>            ";
+                html += "    <p class='time'>14:00~16:00</p>            ";
+                html += "    <p class='time'>16:00~18:00</p>            ";
+                html += "    <p class='time'>18:00~20:00</p>            ";
+                html += "    <p class='time'>20:00~22:00</p>            ";
+                html += "    <p class='time'>22:00~00:00</p>            ";
+                html += "</div>                                         ";
+                html += "<c:forEach items='${stadiumSubList}' var='v'>  ";
+                html += "<div style='float:left;padding-left:10px' id='sad'>     ";
+                html += "    <label class='label'>${v.code}</label>";
+                html += "    <p><div class='base' disabled><input type='hidden' name='start' value='08:00'><input type='hidden' name='end' value='10:00'></div></p>       ";
+                html += "    <p><div class='base' disabled><input type='hidden' name='start' value='10:00'><input type='hidden' name='end' value='12:00'></div></p>       ";
+                html += "    <p><div class='base' disabled><input type='hidden' name='start' value='12:00'><input type='hidden' name='end' value='14:00'></div></p>       ";
+                html += "    <p><div class='base' disabled><input type='hidden' name='start' value='14:00'><input type='hidden' name='end' value='16:00'></div></p>       ";
+                html += "    <p><div class='base' disabled><input type='hidden' name='start' value='16:00'><input type='hidden' name='end' value='18:00'></div></p>       ";
+                html += "    <p><div class='base' disabled><input type='hidden' name='start' value='18:00'><input type='hidden' name='end' value='20:00'></div></p>       ";
+                html += "    <p><div class='base' disabled><input type='hidden' name='start' value='20:00'><input type='hidden' name='end' value='22:00'></div></p>       ";
+                html += "    <p><div class='base' disabled><input type='hidden' name='start' value='22:00'><input type='hidden' name='end' value='00:00'></div></p>       ";
+                html += "</div>                                         ";
+                html += "</c:forEach>                                   ";
+                $("#table").append(html);
             }
         }
-    }
+    };
     $(function () {
         $team.fn.init();
     })

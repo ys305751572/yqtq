@@ -18,8 +18,11 @@ public interface ReserveDao extends IBaseJpaRepository<Reserve> {
     @Query("SELECT COUNT(a) FROM UserReserveJoin a WHERE a.reserveId = ?1")
     public Integer findNum(Long reserveId);
 
-    @Query("SELECT a.id FROM StadiumBooking a WHERE a.stadium.id=?1 AND a.user.id=?2 AND a.startDate=?3")
+    @Query("SELECT a.id FROM Reserve a WHERE a.stadium.id=?1 AND a.user.id=?2 AND a.startDate=?3")
     public Long findStadiumBookingId(Long stadiumId,Long userId,Long createDate);
+
+    @Query("SELECT a.id FROM Stadium a WHERE a.stadiumUserId = ?1")
+    public List<Long> stadiumIds(Long stadiumUserId);
 
 
 }

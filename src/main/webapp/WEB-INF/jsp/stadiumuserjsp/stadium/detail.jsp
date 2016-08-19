@@ -13,13 +13,14 @@
     <%@ include file="../inc/new/css.jsp" %>
     <style>
         .label{
-            text-align: center;
-            font-size: 10px;
+            font-size: 15px;
+            line-height: 30px;
+            padding-left: 20px;
         }
         .time{
+            line-height: 60px;
             height: 40px;
-            text-align: center;
-            font-size: 10px;
+            font-size: 12px;
         }
         .base{
             border: 2px solid #b3b8b8;
@@ -28,7 +29,7 @@
             background-color: #1ab65e;
         }
         .asd{
-            background-color: #faffff;!important;
+            background-color: #ff4d4f;!important;
         }
     </style>
 </head>
@@ -103,7 +104,7 @@
                     </div>
                 </div>
                 <hr class="whiter m-t-20"/>
-                <div class="col-md-6 m-b-15">
+                <div class="col-md-12 m-b-15">
                     <label>球场场次:</label>
                     <div class="col-md-12 m-b-15">
                         <c:forEach items="${timeList}" var="v">
@@ -111,30 +112,7 @@
                         </c:forEach>
                     </div>
                     <div id="table" class="col-md-12 m-b-15">
-                        <%--<div style="float:left">--%>
-                            <%--<label class="label">时间</label>--%>
-                            <%--<p class="time">08:00~10:00</p>--%>
-                            <%--<p class="time">10:00~12:00</p>--%>
-                            <%--<p class="time">12:00~14:00</p>--%>
-                            <%--<p class="time">14:00~16:00</p>--%>
-                            <%--<p class="time">16:00~18:00</p>--%>
-                            <%--<p class="time">18:00~20:00</p>--%>
-                            <%--<p class="time">20:00~22:00</p>--%>
-                            <%--<p class="time">22:00~00:00</p>--%>
-                        <%--</div>--%>
-                        <%--<c:forEach items="${stadiumSubList}" var="v">--%>
-                        <%--<div style="float:left;padding-left:10px">--%>
-                            <%--<label class="label">${v.code}</label>--%>
-                            <%--<p><input class="base" disabled></p>--%>
-                            <%--<p><input class="base" disabled></p>--%>
-                            <%--<p><input class="base" disabled></p>--%>
-                            <%--<p><input class="base" disabled></p>--%>
-                            <%--<p><input class="base" disabled></p>--%>
-                            <%--<p><input class="base" disabled></p>--%>
-                            <%--<p><input class="base" disabled></p>--%>
-                            <%--<p><input class="base" disabled></p>--%>
-                        <%--</div>--%>
-                        <%--</c:forEach>--%>
+
                     </div>
                 </div>
                 <hr class="whiter m-t-20"/>
@@ -167,18 +145,18 @@
 
             },
             siteList: function(year,month,day,stadiumId){
+                $team.fn.table();
                 var time = year+"-"+month+"-"+day;
-                console.log(time);
-                console.log(stadiumId);
+//                console.log(time);
+//                console.log(stadiumId);
                 $.ajax({
-                    url : "${contextPath}/stadium/stadium/siteList",
+                    url : "${contextPath}/stadium/stadium/siteManageList",
                     type : "POST",
                     data : {
                         "time" : time,
                         "stadiumId" : stadiumId
                     },
                     success : function(seDate) {
-                        $team.fn.table();
                         $("#sad label").each(function() {
                             for(var i=0;i<seDate.length;i++){
                                 if($(this).html()==seDate[i].code){
@@ -196,7 +174,6 @@
                                         }
 
                                         if(index!=0){
-                                            console.log(index);
                                             $(this).css("background-color","#faffff");
                                         }
                                     })
@@ -204,7 +181,41 @@
                             }
                         })
                     }
-                })
+                });
+
+                $.ajax({
+                    url : "${contextPath}/stadium/stadium/siteTimeList",
+                    type : "POST",
+                    data : {
+                        "time" : time,
+                        "stadiumId" : stadiumId
+                    },
+                    success : function(seDate) {
+                        $("#sad label").each(function() {
+                            for(var i=0;i<seDate.length;i++){
+                                if($(this).html()==seDate[i].code){
+                                    var index = 0;
+                                    $(this).parent().find("div").each(function(){
+                                        var start = $(this).find("input[name=start]").val();
+                                        if(start==seDate[i].start){
+                                            index = 1;
+                                        }
+                                        var end = $(this).find("input[name=end]").val();
+                                        if(end==seDate[i].end){
+                                            console.log(start+" ~~ "+end);
+                                            $(this).css("background-color","#ff4d4f");
+                                            index = 0;
+                                        }
+
+                                        if(index!=0){
+                                            $(this).css("background-color","#ff4d4f");
+                                        }
+                                    })
+                                }
+                            }
+                        });
+                    }
+                });
             },
             table : function(){
                 $("#table").empty();

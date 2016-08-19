@@ -36,6 +36,9 @@ public class ReserveTeam extends BaseEntity {
     //状态0:使用 1:未使用
     @Column(name = "status")
     private Integer status;
+    //比赛开始时间
+    @Column(name = "start_date")
+    private Long startDate;
 
     public Long getStadiumId() {
         return stadiumId;
@@ -91,5 +94,13 @@ public class ReserveTeam extends BaseEntity {
 
     public void setInsuranceId(Integer insuranceId) {
         this.insuranceId = insuranceId;
+    }
+
+    public Long getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Long startDate) {
+        this.startDate = startDate;
     }
 }

@@ -106,6 +106,8 @@ public class ReserveController extends GenericEntityController<Reserve,Reserve,R
             stadium.setCity(cityId);
             stadium.setProvince(provinceId);
             reserve.setStadium(stadium);
+            //散客
+            reserve.setReserveType(0);
             Page<Reserve> page = reserveService.findPage(details,reserve,pageNum,length);
             Map<String, Object> result = DataTableFactory.fitting(draw, page);
             WebUtil.print(response, result);

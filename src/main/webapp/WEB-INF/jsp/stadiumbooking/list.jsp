@@ -41,10 +41,10 @@
                     <input type="text" class="input-sm form-control" id="name" name="name" placeholder="球场名">
                 </div>
                 <div class="col-md-2 form-group">
-                    <input type="text" class="input-sm form-control" id="bookTime" name="bookTime" placeholder="预定时长">
+                    <input type="text" class="input-sm form-control" id="reserveTime" name="reserveTime" placeholder="预定时长">
                 </div>
                 <div class="col-md-2 form-group">
-                    <select id="type" name="type" class="select">
+                    <select id="reserveType" name="reserveType" class="select">
                         <option value="">类型</option>
                         <option value="0">散客</option>
                         <option value="1">其他</option>
@@ -67,7 +67,6 @@
                     <th><input type="checkbox" class="pull-left list-parent-check"/></th>
                     <th>地区</th>
                     <th>球场名称</th>
-                    <th>场地编号</th>
                     <th>订购者</th>
                     <th>预定时长</th>
                     <th>开始使用时间</th>
@@ -116,24 +115,23 @@
                                 return checkbox;
                             }
                         },
-                        {"data": "city.city","sDefaultContent" : ""},
+                        {"data": "stadium.city.city","sDefaultContent" : ""},
                         {"data": "stadium.name","sDefaultContent" : ""},
-                        {"data": "stadiumSub.code","sDefaultContent" : ""},
                         {"data": "user.nickName","sDefaultContent" : ""},
-                        {"data": "bookTime","sDefaultContent" : ""},
+                        {"data": "time","sDefaultContent" : ""},
                         {"data": "startDate",
                             render: function (data) {
-                                return new Date(data).format("yyyy年MM月dd日 hh:mm")
+                                return new Date(data).format("yyyy-MM-dd hh:mm")
                             },
                             "sDefaultContent" : ""
                         },
                         {"data": "createDate",
                             render: function (data) {
-                                return new Date(data).format("yyyy年MM月dd日 hh:mm")
+                                return new Date(data).format("yyyy-MM-dd hh:mm")
                             },
                         "sDefaultContent" : ""
                         },
-                        {"data": "type",
+                        {"data": "reserveType",
                             render: function (data) {
                                 if(data==0){
                                     return "散客";
@@ -147,14 +145,18 @@
                         {"data": "status",
                             render: function (data) {
                                 if(data==0){
-                                    return "未使用";
+                                    return "正在组队";
                                 }
                                 if(data==1){
-                                    return "已使用";
+                                    return "组队成功";
                                 }
                                 if(data==2){
-                                    return "已退款";
+                                    return "组队失败";
                                 }
+                                if(data==3){
+                                    return "比赛结束";
+                                }
+
                             },
                             "sDefaultContent" : ""
                         },
@@ -171,8 +173,8 @@
                         aoData.provinceId = $("#province").val();
                         aoData.cityId = $("#cityId").val();
                         aoData.name = $("#name").val();
-                        aoData.bookTime = $("#bookTime").val();
-                        aoData.type = $("#type").val();
+                        aoData.time = $("#reserveTime").val();
+                        aoData.reserveType = $("#reserveType").val();
                         aoData.nickName = $("#nickName").val();
                         aoData.details = $("#details").val();
                     }

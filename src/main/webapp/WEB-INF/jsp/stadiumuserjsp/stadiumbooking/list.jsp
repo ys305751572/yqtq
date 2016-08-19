@@ -80,7 +80,7 @@
                         {"data": "stadium.name","sDefaultContent" : ""},
                         {"data": "stadiumSub.code","sDefaultContent" : ""},
                         {"data": "user.nickName","sDefaultContent" : ""},
-                        {"data": "bookTime","sDefaultContent" : ""},
+                        {"data": "time","sDefaultContent" : ""},
                         {"data": "price","sDefaultContent" : ""},//金额
                         {"data": "startDate",
                             render: function (data) {
@@ -97,13 +97,16 @@
                         {"data": "status",
                             render: function (data) {
                                 if(data==0){
-                                    return "未使用";
+                                    return "正在组队";
                                 }
                                 if(data==1){
-                                    return "已使用";
+                                    return "组队成功";
                                 }
                                 if(data==2){
-                                    return "已退款";
+                                    return "组队失败";
+                                }
+                                if(data==3){
+                                    return "比赛结束";
                                 }
                             },
                             "sDefaultContent" : ""

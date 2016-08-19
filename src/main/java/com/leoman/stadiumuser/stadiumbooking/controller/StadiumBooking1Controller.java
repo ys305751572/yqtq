@@ -7,11 +7,13 @@ import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.core.Constant;
 import com.leoman.common.factory.DataTableFactory;
+import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.service.ReserveService;
 import com.leoman.stadium.entity.Stadium;
 import com.leoman.stadium.entity.StadiumBooking;
 import com.leoman.stadium.entity.StadiumUser;
 import com.leoman.stadium.service.StadiumBookingService;
+import com.leoman.stadium.service.StadiumService;
 import com.leoman.stadium.service.impl.StadiumBookingServiceImpl;
 import com.leoman.user.entity.User;
 import com.leoman.utils.ConfigUtil;
@@ -39,6 +41,8 @@ public class StadiumBooking1Controller extends GenericEntityController<StadiumBo
     @Autowired
     private StadiumBookingService stadiumBookingService;
     @Autowired
+    private StadiumService stadiumService;
+    @Autowired
     private ReserveService reserveService;
     @Autowired
     private CityService cityService;
@@ -61,13 +65,14 @@ public class StadiumBooking1Controller extends GenericEntityController<StadiumBo
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(HttpServletRequest request,Integer draw, Integer start, Integer length, StadiumBooking stadiumBooking,String details){
-        Page<StadiumBooking> Page = null;
+        Page<Reserve> Page = null;
+        Reserve reserve = new Reserve();
         try {
-            int pagenum = getPageNum(start,length);
-            Stadium s = new Stadium();
-            s.setStadiumUserId(getStadiumUser(request).getId());
-            stadiumBooking.setStadium(s);
-            Page = stadiumBookingService.findAll(details,stadiumBooking, pagenum, length);
+            int pageNum = getPageNum(start, length);
+            Stadium stadium = new Stadium();
+            stadium.setStadiumUserId(getStadiumUser(request).getId());
+            reserve.setStadium(stadium);
+            Page = reserveService.findPage(details,reserve,pageNum,length);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,13 +88,14 @@ public class StadiumBooking1Controller extends GenericEntityController<StadiumBo
     @RequestMapping(value = "/detail")
     public String detail(Long id, Model model,Long stadiumId,Long userId,Long startDate){
         Long id1 =reserveService.findStadiumBookingId(stadiumId,userId,startDate);
+        Reserve reserve = null;
         try{
             if(id1 !=null){
-                StadiumBooking stadiumBooking = stadiumBookingService.queryByPK(id1);
-                model.addAttribute("stadiumBooking", stadiumBooking);
+                reserve = reserveService.queryByPK(id1);
+                model.addAttribute("reserve", reserve);
             }else if(id !=null){
-                StadiumBooking stadiumBooking = stadiumBookingService.queryByPK(id);
-                model.addAttribute("stadiumBooking", stadiumBooking);
+                reserve = reserveService.queryByPK(id);
+                model.addAttribute("reserve", reserve);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -102,8 +108,8 @@ public class StadiumBooking1Controller extends GenericEntityController<StadiumBo
     public Result sfInfo(Long id, Model model) {
         try {
             String msg = "";
-            StadiumBooking stadiumBooking = stadiumBookingService.queryByPK(id);
-            if(stadiumBooking == null) {
+            Reserve reserve = reserveService.queryByPK(id);
+            if(reserve == null) {
                 msg = "无法显示";
                 return Result.failure(msg);
             }

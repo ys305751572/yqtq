@@ -16,7 +16,8 @@ public interface UserDao extends IBaseJpaRepository<User>{
 
     public User findByUserId(Long userId);
 
-    @Query("SELECT SUM(a.price) FROM StadiumBooking a WHERE a.user.id=?1 AND a.status <> '2'")
+    //只要不是组队失败
+    @Query("SELECT SUM(a.price) FROM Reserve a WHERE a.user.id=?1 AND a.status <> '2'")
     public Double SumPrice(Long id);
 
 }

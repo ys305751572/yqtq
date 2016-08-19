@@ -25,10 +25,10 @@ public interface IndexDao extends IBaseJpaRepository<User>{
     @Query("SELECT COUNT(a) FROM UserVip a WHERE a.createDate >= ?1")
     public Integer newUserVipNum(Long date);
     //当天新增的散客约球
-    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.createDate >= ?1")
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.createDate >= ?1 AND a.reserveType = '0' ")
     public Integer newReserveNum(Long date);
     //当天新增的约场地
-    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.createDate >= ?1")
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.createDate >= ?1")
     public Integer newStadiumBookingNum(Long date);
     //当天新增的球队
     @Query("SELECT COUNT(a) FROM Team a WHERE a.createDate >= ?1")
@@ -45,36 +45,36 @@ public interface IndexDao extends IBaseJpaRepository<User>{
 
     //场地订单统计信息:
     //已定
-    @Query("SELECT COUNT(a) FROM StadiumBooking a")
+    @Query("SELECT COUNT(a) FROM Reserve a")
     public Integer allStadiumBookingNum();
-    //已使用
-    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.status='1'")
+    //已使用(正在比赛)
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.status='1'")
     public Integer useStadiumBookingNum();
-    //未使用
-    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.status='0'")
+    //未使用(没在比赛)
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.status <> '1'")
     public Integer notUsedStadiumBookingNum();
     //全部金额
-    @Query("SELECT SUM(a.price) FROM StadiumBooking a")
+    @Query("SELECT SUM(a.price) FROM Reserve a")
     public Integer allStadiumBookingprice();
 
     //散客统计信息:
     //组队数
-    @Query("SELECT COUNT(a) FROM Reserve a")
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.reserveType ='0'")
     public Integer allReserveNum();
     //组队成功数
-    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.status='1'")
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.status='1' AND a.reserveType ='0'")
     public Integer successReserveNum();
     //组队失败数
-    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.status='2'")
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.status='2' AND a.reserveType ='0'")
     public Integer failureReserveNum();
     //总金额
-    @Query("SELECT SUM(a.price) FROM Reserve a")
+    @Query("SELECT SUM(a.price) FROM Reserve a WHERE a.reserveType ='0'")
     public Integer allReservePrice();
     //确认金额
-    @Query("SELECT SUM(a.price) FROM Reserve a WHERE a.status='1' OR a.status='3'")
+    @Query("SELECT SUM(a.price) FROM Reserve a WHERE a.status='1' OR a.status='3' AND a.reserveType ='0' ")
     public Integer confirmReservePrice();
     //退回金额
-    @Query("SELECT SUM(a.price) FROM Reserve a WHERE a.status='2'")
+    @Query("SELECT SUM(a.price) FROM Reserve a WHERE a.status='2' AND a.reserveType ='0' ")
     public Integer backReservePrice();
 
     //看球统计信息:
@@ -95,15 +95,15 @@ public interface IndexDao extends IBaseJpaRepository<User>{
     //---------------------------------场主端--------------------------------------
 
     //最新订单
-    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.createDate >= ?1 AND a.stadium.stadiumUserId=?2")
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.createDate >= ?1 AND a.stadium.stadiumUserId=?2")
     public Integer newStadiumBooking(Long daten,Long id);
 
     //退场订单
-    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.createDate >= ?1 AND a.stadium.stadiumUserId=?2 AND a.status = '2' ")
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.createDate >= ?1 AND a.stadium.stadiumUserId=?2 AND a.status = '2' ")
     public Integer exitStadiumBooking(Long date,Long id);
 
     //成功订单
-    @Query("SELECT COUNT(a) FROM StadiumBooking a WHERE a.createDate >= ?1 AND a.stadium.stadiumUserId=?2 AND a.status = '1' ")
+    @Query("SELECT COUNT(a) FROM Reserve a WHERE a.createDate >= ?1 AND a.stadium.stadiumUserId=?2 AND a.status = '1' ")
     public Integer successfulStadiumBooking(Long date,Long id);
 
     //场地订单

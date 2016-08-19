@@ -105,24 +105,6 @@
         },
         fn: {
             init: function () {
-               var matchType = ${reserve.matchType};
-               if(matchType==3){
-                   $("#matchType").val("三人制");
-               }else if(matchType==5){
-                   $("#matchType").val("五人制");
-               }else if(matchType==7){
-                   $("#matchType").val("七人制");
-               }else if(matchType==11){
-                   $("#matchType").val("十一人制");
-               }
-
-               var payment = ${reserve.payment};
-               if(payment==0){
-                   $("#payment").val("AA");
-               }else if(payment==1){
-                   $("#payment").val("全额");
-               }
-
            },
             "detail" : function(id) {
                 window.location.href = "${contextPath}/admin/user/detail?id=" + id;
