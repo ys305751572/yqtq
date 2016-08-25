@@ -71,12 +71,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="showText" >确定禁用该账号？</h4>
+                        <div align=center>
+                            <h4 class="modal-title" id="showText" >确定禁用该账号？</h4>
+                        </div>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" align="center">
+                        <button type="button" id="confirm" class="btn btn-primary">确定</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" id="confirm" class="btn btn-primary">确定
-                        </button>
                     </div>
                     <!-- /.modal-content -->
                 </div>

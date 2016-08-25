@@ -241,7 +241,7 @@
                 html += "    <p><div class='base' disabled><input type='hidden' name='start' value='16:00'><input type='hidden' name='end' value='18:00'></div></p>       ";
                 html += "    <p><div class='base' disabled><input type='hidden' name='start' value='18:00'><input type='hidden' name='end' value='20:00'></div></p>       ";
                 html += "    <p><div class='base' disabled><input type='hidden' name='start' value='20:00'><input type='hidden' name='end' value='22:00'></div></p>       ";
-                html += "    <p><div class='base' disabled><input type='hidden' name='start' value='22:00'><input type='hidden' name='end' value='00:00'></div></p>       ";
+                html += "    <p><div class='base' disabled><input type='hidden' name='start' value='22:00'><input type='hidden' name='end' value='23:59'></div></p>       ";
                 html += "</div>                                         ";
                 html += "</c:forEach>                                   ";
                 $("#table").append(html);

@@ -6,7 +6,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">详细描述</h4>
+                <h4 class="modal-title">场地禁用时间</h4>
             </div>
             <div class="modal-body" id="reservebox">
                 <form class="form-validation" role="form">
@@ -33,16 +33,18 @@
                             <option value="18:00">18:00</option>
                             <option value="20:00">20:00</option>
                             <option value="22:00">22:00</option>
-                            <option value="24:00">24:00</option>
+                            <option value="23:59">24:00</option>
                         </select>
                     </div>
                     <input type="hidden" id="getStart" />
                     <input type="hidden" id="getEnd" />
                 </form>
             </div>
+
             <div class="modal-body" align="center">
                 <input type="submit" class="btn btn-info btn-sm" id="addEvent" value="确定">
                 <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">关闭</button>
+                <div id="but" style='float: left'></div>
             </div>
         </div>
     </div>

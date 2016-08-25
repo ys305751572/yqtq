@@ -84,6 +84,7 @@
             init: function () {
 
                 $(document).ready(function() {
+
                     var date = new Date();
                     var d = date.getDate();
                     var m = date.getMonth();
@@ -130,6 +131,9 @@
                                 });
                         },
                         eventClick : function(event){
+                            $("#but").empty();
+                            $("#but").append("<input type='submit' class='btn btn-info btn-sm' id='delEvent' value='删除' >");
+
                             var id = event.id;
                             var start = $.fullCalendar.formatDate(event.start, "HH:mm");
                             var end = $.fullCalendar.formatDate(event.end, "HH:mm");
@@ -159,12 +163,8 @@
                                 if (!(eventForm).find('.formErrorContent')[0]) {
                                     var s_time = $('#start').val();
                                     var start = selectdate +" "+ s_time;
-                                    console.log("start");
-                                    console.log(start);
                                     var e_time = $('#end').val();
                                     var end = selectdate +" "+ e_time;
-                                    console.log("end");
-                                    console.log(end);
                                     $.ajax({
                                         type: "POST",
                                         url: "${contextPath}/stadium/stadium/siteManageSave",
@@ -178,31 +178,38 @@
                                                 $common.fn.notify(result.msg);
                                                 return;
                                             }
-                                            //Render Event
-//                                            $('#calendar').fullCalendar('updateEvent',{
-//                                                title: s_time+"--"+e_time,
-//                                                start: start,
-//                                                end:  end,
-//                                                allDay: true
-//                                            },true ); //Stick the event
                                             window.location.reload();
                                         }
                                     });
 
-                                    //Render Event
-                                    $('#calendar').fullCalendar('updateEvent',{
-                                        title: s_time+"--"+e_time,
-                                        start: start,
-                                        end:  end,
-                                        allDay: true
-                                    },event ); //Stick the event
-
-                                    $('#addNew-event form')[0].reset();
-                                    $('#addNew-event').modal('hide');
                                 };
+
+
                             });
+
+                            //删除
+                            $("#delEvent").off();
+                            $("#delEvent").on('click',function(){
+                                $.ajax({
+                                    type: "POST",
+                                    url: "${contextPath}/stadium/stadium/siteManageDel",
+                                    data: {
+                                        id : id
+                                    },
+                                    success: function (result) {
+                                        if(!result.status) {
+                                            $common.fn.notify(result.msg);
+                                            return;
+                                        }
+                                        window.location.reload();
+                                    }
+                                });
+                            });
+
                         },
                         dayClick: function(date, allDay, jsEvent, view) {
+                            $('#addNew-event').modal('show');
+                            $("#but").empty();
                             //获取所有的是event
 //                            var events = $('#calendar').fullCalendar('clientEvents', function(event) {
 //                                var events = $('#calendar').fullCalendar('clientEvents', function(event) {
@@ -215,6 +222,22 @@
 //                                });
 //                                console.log(events); // do whatever with the events
 //                            })
+
+                            $("#start").val("08:00");
+                            $("#start option").each(function(){
+                                if($(this).val()==start){
+                                    $(this).attr("selected",true);
+                                }
+                            });
+                            $("#start").selectpicker('refresh');
+                            $("#end").val("10:00");
+                            $("#end option").each(function(){
+                                if($(this).val()==end){
+                                    $(this).attr("selected",true);
+                                }
+                            });
+                            $("#end").selectpicker('refresh');
+
                             $('body').off('click');
                             $('body').on('click', '#addEvent', function(){
                                 var siteId = $("#id").val();
@@ -223,12 +246,9 @@
                                 eventForm.validationEngine('validate');
                                 if (!(eventForm).find('.formErrorContent')[0]) {
                                     var s_time = $('#start').val();
-                                    console.log(s_time);
                                     var start = selectdate +" "+ s_time;
-                                    console.log(start);
                                     var e_time = $('#end').val();
                                     var end = selectdate +" "+ e_time;
-                                    console.log(end);
                                     $.ajax({
                                         type: "POST",
                                         url: "${contextPath}/stadium/stadium/siteManageSave",
@@ -242,30 +262,33 @@
                                                 $common.fn.notify(result.msg);
                                                 return;
                                             }
+                                            window.location.reload();
                                         }
                                     });
-                                    //Render Event
-                                    $('#calendar').fullCalendar('renderEvent',{
-                                        title: s_time+"--"+e_time,
-                                        start: $('#getStart').val(),
-                                        end:  $('#getEnd').val(),
-                                        allDay: true
-                                    },true ); //Stick the event
-
-                                    $('#addNew-event form')[0].reset();
-                                    $('#addNew-event').modal('hide');
+//                                    //Render Event
+//                                    $('#calendar').fullCalendar('renderEvent',{
+//                                        title: s_time+"--"+e_time,
+//                                        start: $('#getStart').val(),
+//                                        end:  $('#getEnd').val(),
+//                                        allDay: true
+//                                    },true ); //Stick the event
+//
+//                                    $('#addNew-event form')[0].reset();
+//                                    $('#addNew-event').modal('hide');
                                 };
                             });
                         },
 
 
                         //On Day Select
-                        select: function(start, end, allDay) {
-                            $('#addNew-event').modal('show');
-                            $('#addNew-event input:text').val('');
-                            $('#getStart').val(start);
-                            $('#getEnd').val(end);
-                        },
+//                        select: function(start, end, jsEvent, view) {
+//                            $('#addNew-event').modal('show');
+//                            $('#addNew-event input:text').val('');
+//                            $('#getStart').val(start);
+//                            $('#getEnd').val(end);
+//                            console.log(start);
+//                            console.log(end);
+//                        },
 
                         eventResize: function(event,dayDelta,minuteDelta,revertFunc) {
                             $('#editEvent').modal('show');
@@ -307,7 +330,9 @@
                     }
                 });
 
+
             },
+
             hid:function(){
 
                 if($(".icheckbox_minimal").attr("aria-checked")=="true"){

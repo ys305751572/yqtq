@@ -174,7 +174,7 @@
                 });
             },
             close:function (id){
-                $('#showText').html('您确定要禁用该用户吗？');
+                $('#showText').html('您确定要关闭该比赛吗？');
                 $("#delete").modal("show");
                 $("#confirm").off("click");
                 $("#confirm").on("click",function(){

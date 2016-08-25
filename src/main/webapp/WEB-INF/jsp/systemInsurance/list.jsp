@@ -51,12 +51,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="showText" >确定禁用该账号？</h4>
+                        <div align=center>
+                            <h4 class="modal-title" id="showText" ></h4>
+                        </div>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" align="center">
+                        <button type="button" id="confirm" class="btn btn-primary">确定</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" id="confirm" class="btn btn-primary">确定
-                        </button>
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -138,9 +139,9 @@
             "changeStatus": function (id,status) {
 
                 if (status == 0) {
-                    $('#showText').html('确定禁用该账号？');
+                    $('#showText').html('确定禁用该保险？');
                 } else {
-                    $('#showText').html('确定解封该账号？');
+                    $('#showText').html('确定解封该保险？');
                 }
 
 
@@ -157,7 +158,7 @@
                         "status": tempStatus
                     }, function (result) {
                         if (result == 1) {
-                            $common.fn.notify("操作成功", "success");
+//                            $common.fn.notify("操作成功", "success");
                             $("#delete").modal("hide");
                             systemInsurance.v.dTable.ajax.reload(null, false);
                         } else {

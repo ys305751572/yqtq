@@ -157,81 +157,9 @@ public class GirlController extends GenericEntityController<Girl, Girl, GirlServ
     @RequestMapping(value = "/save")
     @ResponseBody
     public Result save(Girl girl, City city,Province province, MultipartHttpServletRequest multipartRequest){
-        Girl g = null;
-        try{
-            if(null != girl.getId()){
-                g = girlService.queryByPK(girl.getId());
-            }
-            if(null != g){
-                girl.setStatus(g.getStatus());
-                girl.setCreateDate(g.getCreateDate());
-            }else {
-                girl.setStatus(0);
-            }
-            if(city != null){
-                City _city = cityService.queryByProperty("cityId",city.getCityId()).get(0);
-                girl.setCity(_city);
-            }
-            if(province != null){
-                Province _province = provinceService.queryByProperty("provinceId",province.getProvinceId()).get(0);
-                girl.setProvince(_province);
-            }
-            girlService.save(girl);
-            this.saveImage(girl,multipartRequest);
-        }catch (RuntimeException e){
-            e.printStackTrace();
-            return Result.failure();
-        }
-        return Result.success();
+        return  girlService.saveGirl(girl,city,province,multipartRequest);
     }
 
-    /**
-     * 保存图片
-     * @param girl
-     * @param multipartRequest
-     */
-    public void saveImage(Girl girl,MultipartHttpServletRequest multipartRequest){
-        Iterator<String> list = multipartRequest.getFileNames();
-        MultipartFile albumImageFile =null;
-        MultipartFile coverImageFile =null;
-        while (list.hasNext()) {
-            String fileName = list.next();
-            if (fileName.indexOf("coverImageFile") >= 0) {
-                // 封面
-                coverImageFile = multipartRequest.getFile(fileName);
-                FileBo fileBo = null;
-                try {
-                    fileBo = FileUtil.save(coverImageFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (fileBo != null && StringUtils.isNotBlank(fileBo.getPath())) {
-                    GirlImage girlImage = new GirlImage();
-                    girlImage.setGirlId(girl.getId());
-                    girlImage.setType(0);
-                    girlImage.setUrl(fileBo.getPath());
-                    girlImageService.save(girlImage);
-                }
-            }
-            if (fileName.indexOf("albumImageFile") >= 0) {
-                // 相册
-                albumImageFile = multipartRequest.getFile(fileName);
-                FileBo fileBo = null;
-                try {
-                    fileBo = FileUtil.save(albumImageFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (fileBo != null && StringUtils.isNotBlank(fileBo.getPath())) {
-                    GirlImage girlImage = new GirlImage();
-                    girlImage.setGirlId(girl.getId());
-                    girlImage.setType(1);
-                    girlImage.setUrl(fileBo.getPath());
-                    girlImageService.save(girlImage);
-                }
-            }
-        }
-    }
 
     /**
      * 编辑删除图片

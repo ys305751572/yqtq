@@ -75,7 +75,7 @@
                     <input type="text" id="num" name="num" value="${num}" class="input-sm form-control validate[required]" placeholder="..." disabled>
                 </div>
                 <hr class="whiter m-t-20"/>
-                <div class="col-md-6 m-b-15">
+                <div class="col-md-12 m-b-15">
                     <label>头像:</label>
                     <c:forEach items="${list}" var="v">
                         <a onclick="$reserve.fn.detail(${v.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">

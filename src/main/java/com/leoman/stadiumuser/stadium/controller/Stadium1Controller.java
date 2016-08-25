@@ -459,6 +459,24 @@ public class Stadium1Controller extends GenericEntityController<Stadium, Stadium
         return Result.success();
     }
 
+
+    @RequestMapping(value = "/siteManageDel")
+    @ResponseBody
+    public Result siteManageDel(Long id){
+        if(id==null) return Result.failure();
+
+        try{
+            siteManageService.delete(siteManageService.queryByPK(id));
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.print("---场次时间删除错误---");
+            return Result.failure();
+        }
+
+        return Result.success();
+    }
+
+
     @RequestMapping(value = "findTimeList")
     @ResponseBody
     public List<SiteManage> findTimeList(Long id){
