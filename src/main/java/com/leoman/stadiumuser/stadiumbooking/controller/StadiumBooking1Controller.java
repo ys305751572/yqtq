@@ -9,12 +9,10 @@ import com.leoman.common.core.Constant;
 import com.leoman.common.factory.DataTableFactory;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.service.ReserveService;
+import com.leoman.reserve.service.impl.ReserveServiceImpl;
 import com.leoman.stadium.entity.Stadium;
-import com.leoman.stadium.entity.StadiumBooking;
 import com.leoman.stadium.entity.StadiumUser;
-import com.leoman.stadium.service.StadiumBookingService;
 import com.leoman.stadium.service.StadiumService;
-import com.leoman.stadium.service.impl.StadiumBookingServiceImpl;
 import com.leoman.user.entity.User;
 import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.Result;
@@ -36,10 +34,8 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/stadium/stadiumBooking")
-public class StadiumBooking1Controller extends GenericEntityController<StadiumBooking,StadiumBooking,StadiumBookingServiceImpl>{
+public class StadiumBooking1Controller extends GenericEntityController<Reserve,Reserve,ReserveServiceImpl>{
 
-    @Autowired
-    private StadiumBookingService stadiumBookingService;
     @Autowired
     private StadiumService stadiumService;
     @Autowired
@@ -64,7 +60,7 @@ public class StadiumBooking1Controller extends GenericEntityController<StadiumBo
     }
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(HttpServletRequest request,Integer draw, Integer start, Integer length, StadiumBooking stadiumBooking,String details){
+    public Object list(HttpServletRequest request,Integer draw, Integer start, Integer length, String details){
         Page<Reserve> Page = null;
         Reserve reserve = new Reserve();
         try {

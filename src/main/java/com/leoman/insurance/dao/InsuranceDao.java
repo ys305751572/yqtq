@@ -14,4 +14,8 @@ public interface InsuranceDao extends IBaseJpaRepository<Insurance>,JpaSpecifica
 
     @Query("select a from Insurance a where a.systemInsurance.id = ?1")
     public List<Insurance> findBySysInsuranceId(Long id);
+
+    //根据预约表的预约ID和用户ID查询 对应的保险信息
+    @Query("SELECT a FROM Insurance a WHERE a.user.id=?1 AND a.reserve.id=?2")
+    public Insurance findInsurance(Long userId,Long reserveId);
 }

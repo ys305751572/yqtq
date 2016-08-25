@@ -6,13 +6,12 @@ import com.leoman.city.service.CityService;
 import com.leoman.city.service.ProvinceService;
 import com.leoman.common.controller.common.GenericEntityController;
 import com.leoman.common.factory.DataTableFactory;
+import com.leoman.insurance.entity.Insurance;
+import com.leoman.insurance.service.InsuranceService;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.service.ReserveService;
+import com.leoman.reserve.service.impl.ReserveServiceImpl;
 import com.leoman.stadium.entity.Stadium;
-import com.leoman.stadium.entity.StadiumBooking;
-import com.leoman.stadium.service.StadiumBookingService;
-import com.leoman.stadium.service.impl.StadiumBookingServiceImpl;
-import com.leoman.systemInsurance.entity.SystemInsurance;
 import com.leoman.user.entity.User;
 import com.leoman.utils.ConfigUtil;
 import com.leoman.utils.Result;
@@ -31,20 +30,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 约场地列表
  * Created by Administrator on 2016/6/16.
  */
 @Controller
 @RequestMapping(value = "/admin/stadiumBooking")
-public class StadiumBookingController extends GenericEntityController<StadiumBooking,StadiumBooking,StadiumBookingServiceImpl>{
+public class StadiumBookingController extends GenericEntityController<Reserve,Reserve,ReserveServiceImpl>{
 
-    @Autowired
-    private StadiumBookingService stadiumBookingService;
     @Autowired
     private ReserveService reserveService;
     @Autowired
     private CityService cityService;
     @Autowired
     private ProvinceService provinceService;
+    @Autowired
+    private InsuranceService insuranceService;
 
     @RequestMapping(value ="/index")
     public String index(Model model,String details){
@@ -92,6 +92,11 @@ public class StadiumBookingController extends GenericEntityController<StadiumBoo
                 reserve = reserveService.queryByPK(id);
                 model.addAttribute("reserve", reserve);
             }
+            if(reserve != null){
+                Insurance insurance = insuranceService.findInsurance(reserve.getUser().getId(),reserve.getId());
+                model.addAttribute("insurance",insurance);
+            }
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -114,5 +119,25 @@ public class StadiumBookingController extends GenericEntityController<StadiumBoo
         }
         return null;
     }
+
+    @RequestMapping(value = "/accident")
+    @ResponseBody
+    public Insurance accident(Long id,Integer num){
+        Insurance insurance = null;
+        try{
+            if(id!=null){
+                insurance = insuranceService.queryByPK(id);
+            }
+            if(insurance!=null){
+                insurance.setNum(num);
+                insuranceService.save(insurance);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return insurance;
+    }
+
+
 
 }

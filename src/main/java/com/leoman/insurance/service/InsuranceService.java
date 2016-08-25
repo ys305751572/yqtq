@@ -11,4 +11,6 @@ import java.util.List;
 public interface InsuranceService extends GenericManager<Insurance> {
 
     public List<Insurance> findBySysInsuranceId(Long id);
+
+    public Insurance findInsurance(Long userId, Long reserveId);
 }

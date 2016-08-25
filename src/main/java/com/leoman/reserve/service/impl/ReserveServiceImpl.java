@@ -1,6 +1,7 @@
 package com.leoman.reserve.service.impl;
 
 import com.leoman.common.service.impl.GenericManagerImpl;
+import com.leoman.insurance.entity.Insurance;
 import com.leoman.reserve.dao.ReserveDao;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.reserve.service.ReserveService;
@@ -106,5 +107,6 @@ public class ReserveServiceImpl extends GenericManagerImpl<Reserve,ReserveDao> i
     public Long findStadiumBookingId(Long stadiumId, Long userId, Long createDate) {
         return dao.findStadiumBookingId(stadiumId,userId,createDate);
     }
+
 
 }

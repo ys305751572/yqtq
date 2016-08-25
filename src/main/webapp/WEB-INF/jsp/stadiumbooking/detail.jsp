@@ -68,6 +68,18 @@
                         <label>预约时间:</label>
                         <input type="text" id="createDate" name="createDate" value="<date:date format='yyyy-MM-dd HH:mm' value='${reserve.createDate}'></date:date>" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
+                    <c:if test="${reserve.systemInsurance ne null}">
+                        <input type="hidden" id="insurance_id" value="${insurance.id}">
+                        <div class="col-md-6 m-b-15" >
+                            <label>购买保险人数:</label>
+                            <input type="text" id="insuranceNum" name="insuranceNum" value="${insurance.insuranceNum eq null ? 0 : insurance.insuranceNum}" class="input-sm form-control validate[required]" placeholder="..." disabled>
+                        </div>
+                        <div class="col-md-6 m-b-15" id="display">
+                            <label>事故数:</label>
+                            <input type="text" id="num" name="num" onblur="$stadiumBooking_detail.fn.check()" value="${insurance.num eq null ? 0 : insurance.num}" class="input-sm form-control validate[required]" placeholder="..." >
+                            <a onclick="$stadiumBooking_detail.fn.accident();" class="btn btn-alt m-r-5" style="margin-top: 10px !important;">确定</a>
+                        </div>
+                    </c:if>
                     <hr class="whiter m-t-20"/>
                 </div>
                 <div class="form-group">
@@ -83,7 +95,7 @@
 <!-- JS -->
 <%@ include file="../inc/new/foot.jsp" %>
 <script>
-    $team = {
+    $stadiumBooking_detail = {
         v: {
             list: [],
             chart : null,
@@ -91,14 +103,51 @@
         },
         fn: {
             init: function () {
+                var insuranceNum = $("#insuranceNum").val();
+                if(insuranceNum==0){
+                    console.log(insuranceNum);
+                    $("#display").css('display','none');
+                }else{
+                    $("#display").css('display','block');
+
+                }
             },
             "detail" : function(userId) {
                 window.location.href = "${contextPath}/admin/user/detail?userId=" + userId;
             },
+            accident : function() {
+                var id = $("#insurance_id").val();
+                var num = $("#num").val();
+                $.ajax({
+                    url : "${contextPath}/admin/stadiumBooking/accident",
+                    type : "POST",
+                    data : {
+                        "id" : id,
+                        "num" : num
+                    },
+                    success : function(result) {
+                        if(result!=null) {
+                            $("#num").val(result.num);
+                        }
+                    }
+                })
+            },
+            check : function(){
+                if(!$("#display").validationEngine("validate")) {
+                    return;
+                }
+                var insuranceNum = $("#insuranceNum").val();
+                var num = $("#num").val();
+                if(num>insuranceNum){
+                    $leoman.notify('事故人数不能大于保险购买人数', "error");
+                    $("#num").val("");
+                }
+
+            }
         }
     }
     $(function () {
-        $team.fn.init();
+        $stadiumBooking_detail.fn.init();
     })
 </script>
 <script>

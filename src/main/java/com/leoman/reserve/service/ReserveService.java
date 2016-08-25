@@ -2,6 +2,7 @@ package com.leoman.reserve.service;
 
 import com.leoman.common.service.GenericManager;
 import com.leoman.common.service.ICommonService;
+import com.leoman.insurance.entity.Insurance;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.stadium.entity.Stadium;
 import com.leoman.systemInsurance.entity.SystemInsurance;
@@ -20,5 +21,6 @@ public interface ReserveService extends GenericManager<Reserve> {
     public Integer findNum(Long reserveId);
 
     public Long findStadiumBookingId(Long stadiumId,Long userId,Long createDate);
+
 
 }

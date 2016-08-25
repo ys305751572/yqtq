@@ -1,6 +1,7 @@
 package com.leoman.reserve.dao;
 
 import com.leoman.common.dao.IBaseJpaRepository;
+import com.leoman.insurance.entity.Insurance;
 import com.leoman.reserve.entity.Reserve;
 import com.leoman.stadium.entity.Stadium;
 import com.leoman.systemInsurance.entity.SystemInsurance;
@@ -23,6 +24,8 @@ public interface ReserveDao extends IBaseJpaRepository<Reserve> {
 
     @Query("SELECT a.id FROM Stadium a WHERE a.stadiumUserId = ?1")
     public List<Long> stadiumIds(Long stadiumUserId);
+
+
 
 
 }

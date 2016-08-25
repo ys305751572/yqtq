@@ -30,9 +30,12 @@ public class Insurance extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "insurance_id")
     private SystemInsurance systemInsurance;
-
+    //事故数
     @Column(name = "num")
     private Integer num;
+    //购买保险人数
+    @Column(name = "insurance_num")
+    private Integer insuranceNum;
 
     @Column(name = "money")
     private Double money;
@@ -85,4 +88,11 @@ public class Insurance extends BaseEntity {
         this.reserveTeam = reserveTeam;
     }
 
+    public Integer getInsuranceNum() {
+        return insuranceNum;
+    }
+
+    public void setInsuranceNum(Integer insuranceNum) {
+        this.insuranceNum = insuranceNum;
+    }
 }

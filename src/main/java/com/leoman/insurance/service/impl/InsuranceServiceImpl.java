@@ -16,10 +16,15 @@ import java.util.List;
 public class InsuranceServiceImpl extends GenericManagerImpl<Insurance, InsuranceDao> implements InsuranceService {
 
     @Autowired
-    private InsuranceDao insuranceDao;
+    private InsuranceDao dao;
 
     @Override
     public List<Insurance> findBySysInsuranceId(Long id) {
-        return insuranceDao.findBySysInsuranceId(id);
+        return dao.findBySysInsuranceId(id);
+    }
+
+    @Override
+    public Insurance findInsurance(Long userId, Long reserveId) {
+        return dao.findInsurance(userId,reserveId);
     }
 }
