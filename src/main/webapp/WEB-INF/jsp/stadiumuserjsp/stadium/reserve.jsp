@@ -223,16 +223,14 @@
 //                                console.log(events); // do whatever with the events
 //                            })
 
-                            $("#start").val("08:00");
                             $("#start option").each(function(){
-                                if($(this).val()==start){
+                                if($(this).val()=="08:00"){
                                     $(this).attr("selected",true);
                                 }
                             });
                             $("#start").selectpicker('refresh');
-                            $("#end").val("10:00");
                             $("#end option").each(function(){
-                                if($(this).val()==end){
+                                if($(this).val()=="23:59"){
                                     $(this).attr("selected",true);
                                 }
                             });
@@ -347,6 +345,21 @@
         $("#chk").on("click",function(){
             alert("I'm ");
         })
+
+        $("#end").change(function(){
+            var start = $("#start").val();
+            var end = $("#end").val();
+            if(end <= start){
+                $leoman.notify('结束时间不能小于或等于开始时间', "error");
+                $("#end option").each(function(){
+                    if($(this).val()=="23:59"){
+                        $(this).attr("selected",true);
+                    }
+                });
+                $("#end").selectpicker('refresh');
+            }
+        })
+
     })
 </script>
 <script>
