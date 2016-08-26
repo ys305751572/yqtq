@@ -329,8 +329,6 @@
                         $("#div_hidden").css('display','none');
                     }
                 });
-
-
             },
 
             hid:function(){
@@ -349,7 +347,6 @@
         $("#chk").on("click",function(){
             alert("I'm ");
         })
-
     })
 </script>
 <script>

@@ -114,31 +114,38 @@
                 if($("#name").val()==""){
                     $leoman.notify('赛事名称不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($('.fileupload-preview img').size()<1 || $('.fileupload-preview img').width()==0){
                     $leoman.notify('赛事封面不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#stadiumId").val()==""){
                     $leoman.notify('球场名称不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#address").val()==""){
                     $leoman.notify('比赛地址不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#matchType").val()==""){
                     $leoman.notify('赛制不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#sDate").val()==""){
                     $leoman.notify('比赛时间不能为空', "error");
                     isCheck=false;
+                    return;
                 }
 
                 if($('.note-editable').text()==""){
                     $leoman.notify('赛事简介不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(isCheck){
                     var date = this.transdate($("#sDate").val());

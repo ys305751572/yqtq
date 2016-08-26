@@ -106,22 +106,27 @@
                 if($("#name").val()==""){
                     $leoman.notify('看球名称不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#provinceId").val()==""){
                     $leoman.notify('省份不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#cityId").val()==""){
                     $leoman.notify('城市不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($('.fileupload-preview img').size()<1 || $('.fileupload-preview img').width()==0){
                     $leoman.notify('球场封面不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($('.note-editable').text()==""){
                     $leoman.notify('球场简介不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(isCheck){
                     var code =  $('.wysiwye-editor').code();

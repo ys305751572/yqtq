@@ -98,14 +98,17 @@
                 if($("#parentId").val()==""){
                     $leoman.notify('父模块不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#name").val()==""){
                     $leoman.notify('模块名称不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#url").val()==""){
                     $leoman.notify('URL不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 console.log(isCheck);
                 if(isCheck){

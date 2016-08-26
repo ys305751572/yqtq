@@ -75,10 +75,12 @@
                 if(withdrawMoney==""){
                     $leoman.notify('提现金额不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(withdrawMoney<num){
                     $leoman.notify('金额不能小于100', "error");
                     isCheck=false;
+                    return;
                 }
                 if(isCheck){
                     var id = $("#id").val();

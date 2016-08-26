@@ -103,6 +103,7 @@
                 if(cb.length==0){
                     $leoman.notify('权限不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(isCheck){
                     admin_add.v.ids = [];

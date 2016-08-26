@@ -131,30 +131,37 @@
                 if($("#name").val()==""){
                     $leoman.notify('看球名称不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($('.fileupload-preview img').size()<2 || $('.fileupload-preview img').width()==0){
                     $leoman.notify('球队封面不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#team1name").val()==""){
                     $leoman.notify('甲方队名不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#team2name").val()==""){
                     $leoman.notify('乙方方队名不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#stadiumId").val()==""){
                     $leoman.notify('比赛地点不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#sDate").val()==""){
                     $leoman.notify('开始时间不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($('.note-editable').text()==""){
                     $leoman.notify('球场简介不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(isCheck){
                     var startDate = this.transdate($("#sDate").val());

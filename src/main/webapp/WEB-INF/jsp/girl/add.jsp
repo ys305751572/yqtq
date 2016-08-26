@@ -217,38 +217,47 @@
                 if($('#cover .fileupload-preview img').size()<1 || $('#cover .fileupload-preview img').width()==0){
                     $leoman.notify('宝贝封面不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($('#album .fileupload-preview img').size()<1 || $('#album .fileupload-preview img').width()==0){
                     $leoman.notify('宝贝相册不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#name").val()==""){
                     $leoman.notify('名称不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#provinceId").val()==""){
                     $leoman.notify('省份不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#cityId").val()==""){
                     $leoman.notify('城市不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#age").val()==""){
                     $leoman.notify('年龄不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#height").val()==""){
                     $leoman.notify('身高不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#weight").val()==""){
                     $leoman.notify('体重不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(price==""){
                     $leoman.notify('服务价格不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(price.length!=0){
                     var reg = /^([0-9]{1,8})([.]{0,1})([0-9]{0,2})$/;
@@ -260,21 +269,24 @@
                         }else{
                             $("#price").val(${girl.price});
                         }
-
                         isCheck=false;
+                        return;
                     }
                 }
                 if($("#interest").val()==""){
                     $leoman.notify('兴趣爱好不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#favoriteTeam").val()==""){
                     $leoman.notify('喜欢球队不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#profession").val()==""){
                     $leoman.notify('职业不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(isCheck){
                     $("#formId").ajaxSubmit({

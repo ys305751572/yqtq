@@ -117,10 +117,12 @@
                 if($("#name").val()==""){
                     $leoman.notify('角色名称不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(cb.length==0){
                     $leoman.notify('子模块不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(isCheck){
                     role_add.v.ids = [];

@@ -207,15 +207,18 @@
                     if($(this).val()==code){
                         $leoman.notify('已有相同号码的场地', "error");
                         check = false;
+                        return;
                     }
                 });
                 if(code==""){
                     $leoman.notify('场地编号不能为空', "error");
                     check=false;
+                    return;
                 }
                 if(price==""){
                     $leoman.notify('场地价格不能为空', "error");
                     check=false;
+                    return;
                 }
                 if(check){
                     $("#stadiumSubs").append(html);

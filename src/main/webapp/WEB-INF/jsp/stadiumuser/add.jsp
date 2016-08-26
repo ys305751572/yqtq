@@ -94,10 +94,12 @@
                 if($("#provinceId").val()==""){
                     $leoman.notify('省份不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#cityId").val()==""){
                     $leoman.notify('城市不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(isCheck){
                     var code =  $('.wysiwye-editor').code();

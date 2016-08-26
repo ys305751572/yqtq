@@ -163,6 +163,7 @@
                         $leoman.notify('错误的VIP会员价格', "error");
                         $("#price").val(${systemVips.price});
                         isCheck=false;
+                        return;
                     }
                 }
                 if(isCheck){
@@ -189,14 +190,17 @@
                 if($("#level1").val()=="" ){
                     $leoman.notify('等级不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#experience").val()=="" ){
                     $leoman.notify('经验不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(preferente=="" ){
                     $leoman.notify('折扣不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(preferente.length!=0){
                     var reg = /^([0-9])([.])([0-9])$/;
@@ -206,7 +210,8 @@
                     }else if(!reg.test(preferente)){
                         $leoman.notify('错误的折扣', "error");
                         $("#preferente").val("");
-                        isCheck=false;
+                        isCheck=false
+                        return;
                     }
                 }
                 if(isCheck){
@@ -232,6 +237,7 @@
                 if($("#vipExperience").val()==""){
                     $leoman.notify('经验设定不能为空', "error");
                     isCheck=false;
+                    return;
                 }
 
                 if(isCheck){

@@ -93,10 +93,12 @@
                 if($("#name").val()=="" || $("#name").val()==null) {
                     $leoman.notify('保险名称不能为空', "error");
                     isCheck = false;
+                    return;
                 }
                 if(price=="" || price==null) {
                     $leoman.notify('保险单价不能为空', "error");
                     isCheck = false;
+                    return;
                 }
                 if(price.length!=0){
                     var reg = /^([0-9]{1,8})([.]{0,1})([0-9]{0,2})$/;
@@ -104,11 +106,13 @@
                         $leoman.notify('错误的保险单价', "error");
                         $("#parce").val("");
                         isCheck=false;
+                        return;
                     }
                 }
                 if(bj=="" || bj==null) {
                     $leoman.notify('事故保金不能为空', "error");
                     isCheck = false;
+                    return;
                 }
                 if(bj.length!=0){
                     var reg = /^([0-9]{1,8})([.]{0,1})([0-9]{0,2})$/;
@@ -116,15 +120,18 @@
                         $leoman.notify('错误的事故保金', "error");
                         $("#bj").val("");
                         isCheck=false;
+                        return;
                     }
                 }
                 if($("#company").val()=="" || $("#company").val()==null) {
                     $leoman.notify('投保公司不能为空', "error");
                     isCheck = false;
+                    return;
                 }
                 if($('.note-editable').text()==""){
                     $leoman.notify('保险详情不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(isCheck){
                     var code = $('.wysiwye-editor').code();

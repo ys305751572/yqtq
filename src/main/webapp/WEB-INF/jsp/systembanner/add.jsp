@@ -89,10 +89,12 @@
                 if($('.fileupload-preview img').size()<1 || $('.fileupload-preview img').width()==0){
                     alert("图片不能为空!");
                     isCheck=false;
+                    return;
                 }
                 if($("#toId").val() == ""){
                     alert("跳转对象不能为空!");
                     isCheck=false;
+                    return;
                 }
                 if(isCheck){
                     var toId =  $('#toId').val();

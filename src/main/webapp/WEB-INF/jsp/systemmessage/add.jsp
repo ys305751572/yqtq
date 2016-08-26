@@ -84,16 +84,19 @@
                     return;
                 }
                 if($("#title").val()==""){
-                    alert("系统标题不能为空!");
-                    isCheck=false;
+                    $leoman.notify('系统标题不能为空', "error");
+                    isCheck = false;
+                    return;
                 }
                 if($("#toUserId").val()==1 && $("#userId").val()==""){
-                    alert("用户ID不能为空!");
+                    $leoman.notify('用户ID不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($('.note-editable').text()==""){
-                    alert("消息内容不能为空!");
+                    $leoman.notify('消息内容不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(isCheck){
                     var userType = $("#userType1").val();

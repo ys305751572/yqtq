@@ -97,6 +97,7 @@
                 if($("#nickName").val()==""){
                     $leoman.notify('姓名不能为空', "error");
                     isCheck=false;
+                    return;
                 }
 //                if($("#mobile").val()==""){
 //                    $leoman.notify('电话不能为空', "error");
@@ -105,18 +106,22 @@
                 if($("#bank").val()==""){
                     $leoman.notify('银行不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#bankCardNumber").val()==""){
                     $leoman.notify('银行卡号不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#provinceId").val()==""){
                     $leoman.notify('省份不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if($("#cityId").val()==""){
                     $leoman.notify('城市不能为空', "error");
                     isCheck=false;
+                    return;
                 }
                 if(isCheck){
                     var code =  $('.wysiwye-editor').code();
