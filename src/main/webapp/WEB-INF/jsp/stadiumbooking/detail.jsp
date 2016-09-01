@@ -28,10 +28,13 @@
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="">
                 <div class="row">
-                    <div class="col-md-6 m-b-15">
+                    <div class="col-md-12 m-b-15">
                         <label>logo:</label>
-                        <img id="avater" name="avater" src="${reserve.stadium.avaterAbsolutePath}" alt="">
                     </div>
+                    <div class="col-md-12 m-b-15">
+                        <img id="avater" name="avater" src="${reserve.stadium.avaterAbsolutePath}" alt="" style="height: 100px;width: 100px;">
+                    </div>
+                    <hr class="whiter m-t-20"/>
                     <div class="col-md-6 m-b-15">
                         <label>球场名称:</label>
                         <a href="${contextPath}/admin/stadium/detail?id=${reserve.stadium.id}&&isEd=1" class="btn btn-block btn-alt" style="font-size: 12px;height: 30px;text-align:left;text-indent:0.5em;background-color:rgba(238, 238, 238, 0.09) !important;" >${reserve.stadium.name}</a>

@@ -38,18 +38,6 @@
                         <input type="text" id="cityId" value="${stadiumUser.city.city}" name="cityId" class="input-sm form-control validate[required]" placeholder="..." disabled>
                     </div>
 
-                    <div class="col-md-6 m-b-15">
-                        <div><label>球场:</label></div>
-                        <c:forEach items="${stadium}" var="v">
-                        <a href="${contextPath}/admin/stadium/detail?id=${v.id}" >
-                            <div style="float: left;margin-right: 10px;" class="btn btn-alt m-r-5">
-                                <p>${v.name}</p>
-                                <p>${v.siteNum}个场地</p>
-                                <p>总积累金额${v.accumulatedAmount eq null ? 0.0 : v.accumulatedAmount}</p>
-                            </div>
-                        </a>
-                        </c:forEach>
-                    </div>
                     <div class="col-md-6 m-b-15" >
                         <label>电话:</label>
                         <input type="text" id="invitation" name="invitation" value="${stadiumUser.mobile}" class="input-sm form-control validate[required]" placeholder="..." disabled>
@@ -84,6 +72,19 @@
                         </c:if>
                     </div>
 
+                    <hr class="whiter m-t-20"/>
+                    <div class="col-md-12 m-b-15">
+                        <div><label>球场:</label></div>
+                        <c:forEach items="${stadium}" var="v">
+                            <a href="${contextPath}/admin/stadium/detail?id=${v.id}" >
+                                <div style="float: left;margin-right: 10px;margin-bottom:10px;" class="btn btn-alt m-r-5">
+                                    <p>${v.name}</p>
+                                    <p>${v.siteNum}个场地</p>
+                                    <p>总积累金额${v.accumulatedAmount eq null ? 0.0 : v.accumulatedAmount}</p>
+                                </div>
+                            </a>
+                        </c:forEach>
+                    </div>
                     <hr class="whiter m-t-20"/>
                 </div>
                 <div class="form-group">

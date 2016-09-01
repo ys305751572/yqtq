@@ -28,10 +28,25 @@
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${bigRace.id}">
                 <div class="row">
-                    <h3>${bigRace.name}</h3>
                     <div class="col-md-12 m-b-15">
-                        <label>比赛队伍:</label>
-                        <img src="${bigRace.avater1AbsolutePath}" alt=""> VS <img src="${bigRace.avater2AbsolutePath}" alt="">
+                        <label>比赛名称:</label>
+                        <h3>${bigRace.name}</h3>
+                    </div>
+                    <div class="col-md-12 m-b-15">
+                        <div style="float: left">
+                            <label>比赛队伍:</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 m-b-15">
+                        <div style="float: left">
+                            <img src="${bigRace.avater1AbsolutePath}" alt="" style="height: 100px;width: 100px;">
+                        </div>
+                        <div style="float: left; text-align: center;line-height: 110px;margin-right: 10px;margin-left: 10px;">
+                            VS
+                        </div>
+                        <div style="float: left">
+                            <img src="${bigRace.avater2AbsolutePath}" alt="" style="height: 100px;width: 100px;">
+                        </div>
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>地区:</label>

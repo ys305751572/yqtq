@@ -29,9 +29,11 @@
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="${watchingRace.id}">
                 <div class="row">
-                    <div class="col-md-6 m-b-15">
-                        <img src="${watchingRace.avaterAbsolutePath}" alt="">
+                    <div class="col-md-12 m-b-15">
+                        <div><label>封面:</label></div>
+                        <img src="${watchingRace.avaterAbsolutePath}" alt="" style="height: 200px;width: 300px;">
                     </div>
+                    <hr class="whiter m-t-20"/>
                     <div class="col-md-6 m-b-15">
                         <label>看球名称:</label>
                         <input type="text" id="name" name="name" value="${watchingRace.name}" class="input-sm form-control validate[required]" placeholder="..." disabled>

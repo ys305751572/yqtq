@@ -27,9 +27,9 @@
         <h1 class="page-title">用户详情</h1>
         <div class="block-area">
             <div class="row">
-                <div class="col-md-6 m-b-15">
-                    <label>头像</label>
-                    <img src="${user.avaterAbsolutePath}" alt="">
+                <div class="col-md-12 m-b-15">
+                    <div><label>头 像:</label></div>
+                    <img src="${user.avaterAbsolutePath}" alt="" style="height: 100px;width: 100px;">
                 </div>
                 <div class="col-md-6 m-b-15">
                     <label>账 号:</label>

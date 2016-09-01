@@ -46,9 +46,11 @@
         <h1 class="page-title">场地列表</h1>
         <div class="block-area">
             <div class="row">
-                <div class="col-md-6 m-b-15">
+                <div class="col-md-12 m-b-15">
                     <label>图片:</label>
-                    <img src="${stadium.avaterAbsolutePath}" alt="">
+                </div>
+                <div class="col-md-12 m-b-15">
+                    <img src="${stadium.avaterAbsolutePath}" alt="" style="height: 200px;width: 300px;">
                 </div>
                 <hr class="whiter m-t-20"/>
                 <div class="col-md-6 m-b-15">

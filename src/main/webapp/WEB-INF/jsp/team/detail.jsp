@@ -29,9 +29,9 @@
             <div class="block-area">
                 <input type="hidden" id="id" name="id" value="">
                 <div class="row">
-                    <div class="col-md-6 m-b-15">
-                        <label>logo:</label>
-                        <img id="avater" name="avater" src="${team.avaterAbsolutePath}" alt="">
+                    <div class="col-md-12 m-b-15">
+                        <div><label>logo:</label></div>
+                        <img id="avater" name="avater" src="${team.avaterAbsolutePath}" alt="" style="height: 100px; width: 100px;">
                     </div>
                     <div class="col-md-6 m-b-15">
                         <label>队名:</label>
@@ -74,8 +74,8 @@
                         <p></p>
                         <p></p>
                         <c:forEach items="${user}" var="v">
-                            <a onclick="$team.fn.detail(${v.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                                <img src="${v.avaterAbsolutePath}" alt="">
+                            <a onclick="$team.fn.detail(${v.id})" class="pirobox_gall img-popup" title="${v.nickName}">
+                                <img src="${v.avaterAbsolutePath}" alt="" style="height: 100px;width: 100px;">
                             </a>
                         </c:forEach>
                     </div>

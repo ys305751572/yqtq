@@ -76,10 +76,10 @@
                 </div>
                 <hr class="whiter m-t-20"/>
                 <div class="col-md-12 m-b-15">
-                    <label>头像:</label>
+                    <div><label>头像:</label></div>
                     <c:forEach items="${list}" var="v">
-                        <a onclick="$reserve.fn.detail(${v.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                            <img src="${v.avater}" alt="">
+                        <a onclick="$reserve.fn.detail(${v.id})" class="pirobox_gall img-popup" title="${v.nickName}">
+                            <img src="${v.avaterAbsolutePath}" alt="" style="width: 100px;height: 100px;">
                         </a>
                     </c:forEach>
                 </div>

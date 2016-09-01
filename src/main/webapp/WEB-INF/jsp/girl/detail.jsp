@@ -84,14 +84,14 @@
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15" >
-                        <label>宝贝封面:</label>
+                        <div><label>宝贝封面:</label></div>
                         <c:forEach items="${image}" var="v">
                             <c:if test="${v.type eq 0 }"><img src="${v.url}" alt=""></c:if>
                         </c:forEach>
                     </div>
                     <hr class="whiter m-t-20"/>
                     <div class="col-md-12 m-b-15" >
-                        <label>宝贝相册:</label>
+                        <div><label>宝贝相册:</label></div>
                         <c:forEach items="${image}" var="v">
                             <c:if test="${v.type eq 1}"><img src="${v.url}" alt=""></c:if>
                         </c:forEach>

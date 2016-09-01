@@ -27,17 +27,27 @@
         <h1 class="page-title">赛事列表</h1>
         <div class="block-area">
             <div class="row">
-                <div class="col-md-6 m-b-15">
-                    <label>比赛队伍:</label>
-                    <a onclick="$team.fn.sfTeamInfo(${teamRace.homeTeam.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                        <img src="${teamRace.homeTeam.avaterAbsolutePath}" alt="">
-                        ${teamRace.homeTeam.name}
-                    </a>
-                    VS
-                    <a onclick="$team.fn.sfTeamInfo(${teamRace.visitingTeam.id})" class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                        <img src="${teamRace.visitingTeam.avaterAbsolutePath}" alt="">
-                        ${teamRace.visitingTeam.name}
-                    </a>
+                <div class="col-md-12 m-b-15">
+                    <div style="float: left">
+                        <label>比赛队伍:</label>
+                    </div>
+                </div>
+                <div class="col-md-12 m-b-15">
+                    <div style="float: left">
+                        <a onclick="$team.fn.sfTeamInfo(${teamRace.homeTeam.id})" class="pirobox_gall img-popup" title="${teamRace.homeTeam.name}">
+                            <img src="${teamRace.homeTeam.avaterAbsolutePath}" alt="" style="height: 100px;width: 100px;">
+                        </a>
+                        <p style="text-align: center;">${teamRace.homeTeam.name}</p>
+                    </div>
+                    <div style="float: left; text-align: center;line-height: 110px;margin-right: 10px;">
+                        VS
+                    </div>
+                    <div style="float: left">
+                        <a onclick="$team.fn.sfTeamInfo(${teamRace.visitingTeam.id})" class="pirobox_gall img-popup" title="${teamRace.visitingTeam.name}">
+                            <img src="${teamRace.visitingTeam.avaterAbsolutePath}" alt="" style="height: 100px;width: 100px;">
+                        </a>
+                        <p style="text-align: center;">${teamRace.visitingTeam.name}</p>
+                    </div>
                 </div>
                 <hr class="whiter m-t-20"/>
                 <div class="col-md-6 m-b-15">
