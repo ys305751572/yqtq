@@ -306,25 +306,25 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-md-12 m-b-15">
-                        <h5>访问统计:</h5>
-                        <div class="table-responsive overflow">
-                            <table class="tile table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <td width="45%">今日访问</td>
-                                    <td>NULL</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>在线人数</td>
-                                    <td>NULL</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <%--<div class="col-md-12 m-b-15">--%>
+                        <%--<h5>访问统计:</h5>--%>
+                        <%--<div class="table-responsive overflow">--%>
+                            <%--<table class="tile table table-bordered table-striped">--%>
+                                <%--<thead>--%>
+                                <%--<tr>--%>
+                                    <%--<td width="45%">今日访问</td>--%>
+                                    <%--<td>NULL</td>--%>
+                                <%--</tr>--%>
+                                <%--</thead>--%>
+                                <%--<tbody>--%>
+                                <%--<tr>--%>
+                                    <%--<td>在线人数</td>--%>
+                                    <%--<td>NULL</td>--%>
+                                <%--</tr>--%>
+                                <%--</tbody>--%>
+                            <%--</table>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
                 </div>
             </section>
         </section>

@@ -201,9 +201,9 @@
                     <div style="float: left;margin-left: 15px;margin-top: 15px;">
                         <a data-toggle="modal" href="${contextPath}/stadium/stadiumBooking/index?details=3" title="成功订单" class="btn btn-alt m-r-5">成功订单( ${successfulStadiumBooking} )</a>
                     </div>
-                    <div style="float: left;margin-left: 15px;margin-top: 15px;">
-                        <a data-toggle="modal" href="${contextPath}/stadium/stadiumBooking/index" title="场地订单" class="btn btn-alt m-r-5">场地订单( ${newStadiumBooking} )和最新订单相同有问题</a>
-                    </div>
+                    <%--<div style="float: left;margin-left: 15px;margin-top: 15px;">--%>
+                        <%--<a data-toggle="modal" href="${contextPath}/stadium/stadiumBooking/index" title="场地订单" class="btn btn-alt m-r-5">场地订单( ${newStadiumBooking} )和最新订单相同有问题</a>--%>
+                    <%--</div>--%>
                     <div style="float: right;margin-right: 20px;margin-top: 15px;">
                         <a data-toggle="modal" href="${contextPath}/stadium/logout" title="退出" class="btn btn-alt m-r-5">退&nbsp;&nbsp;&nbsp;出</a>
                     </div>
